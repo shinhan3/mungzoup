@@ -26,4 +26,4 @@ jobs:
 
     # Docker Hub push (2)
     - name: docker Hub push
-      run: docker push lucaskang134/boot-prac-ci
+      run: docker push ${{ secrets.DOCKERHUB_TOKEN }}/projectdb
