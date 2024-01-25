@@ -23,10 +23,9 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
-    - name: Build the Docker image
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMG }}:latest .
-      
-
-    # Docker Hub push (2)
-    - name: docker Hub push
-      run: docker push ${{ secrets.DOCKERHUB_TOKEN }}/${{ secrets.DOCKERHUB_IMG }}:latest
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMG }}:latest
