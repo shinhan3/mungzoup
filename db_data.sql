@@ -13,7 +13,8 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-
+CREATE DATABASE IF NOT EXISTS `testdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `testdb`;
 
 -- 테이블 testdb.test 구조 내보내기
 CREATE TABLE IF NOT EXISTS `test` (
