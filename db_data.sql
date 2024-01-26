@@ -23,7 +23,7 @@ INSERT INTO `test` (`seqno`, `content`) VALUES
 	(7, '테스트7'),
 	(8, '테스트8'),
 	(9, '테스트9'),
-	(10, '테스트10 Action 테스트9');
+	(10, '테스트10 Action 테스트10');
 
 -- 테이블 testdb.test2 구조 내보내기
 CREATE TABLE IF NOT EXISTS `test2` (
