@@ -14,6 +14,10 @@ target/
 .sts4-cache
 *.properties
 *.vscode
+# mvnw
+# mvnw.cmd
+# .mvn/*
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

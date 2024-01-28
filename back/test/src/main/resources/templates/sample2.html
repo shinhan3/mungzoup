@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+	<h1>test</h1>
+	
+	<table th:with="target=${loginUser}, friend=${myFriend}">
+	<tr>
+		<th>seqno</th>
+		<th>content</th>
+	</tr>
+	<tr th:each="t,status2:${test}" >
+		<td th:text="${t.seqno}"></td>
+		<td th:text="${t.content}"></td>
+	</tr>
+	</table>
+	
+	<form action="insertTest">
+		<input name="content">
+		<input type="submit">
+	</form>
+	
+</body>
+</html>
