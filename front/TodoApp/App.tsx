@@ -25,27 +25,28 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import DateHead from './src/DateHead';
-import AddTodo from './src/AddTodo';
+import AddTodo from './src/Footer';
+import Content from './src/Content';
 
 function App(props) {
   const today = new Date();
   console.log(today);
   return (
-    <SafeAreaView>
-      <View>
-        <Text>TodoApp</Text>
-        <DateHead data={today}></DateHead>
-        <Text style={styles.DataHead}>야호 할일 없다</Text>
-        <AddTodo></AddTodo>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <DateHead data={today}></DateHead>
+      <Content />
+      <AddTodo />
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
-  DataHead: {
+  container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+  item: {
+    height: 50,
+    backgroundColor: 'steelblue',
   },
 });
 export default App;

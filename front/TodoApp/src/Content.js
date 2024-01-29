@@ -1,13 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import Test2 from './test/Test2';
 
-function DateHead(props) {
+function Content(props) {
   return (
     <View style={styles.item}>
-      <Text>
-        {props.data.getFullYear()}년{props.data.getMonth() + 1}월{' '}
-        {props.data.getDate()}일
-      </Text>
+      <Text>대충 내용</Text>
+      <Test2></Test2>
     </View>
   );
 }
@@ -17,8 +16,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   item: {
-    height: 50,
+    height: 500,
     backgroundColor: 'steelblue',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
-export default DateHead;
+export default Content;

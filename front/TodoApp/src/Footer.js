@@ -3,15 +3,19 @@ import {StyleSheet, Text, View} from 'react-native';
 
 function AddTodo(props) {
   return (
-    <View style={styles.block}>
+    <View style={styles.item}>
       <Text>하아</Text>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  block: {
-    height: 64,
-    backgroundColor: 'red',
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  item: {
+    height: 50,
+    backgroundColor: 'steelblue',
   },
 });
 export default AddTodo;
