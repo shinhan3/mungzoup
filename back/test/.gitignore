@@ -12,6 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+back/.metadata
 # *.properties
 *.MF
 ### IntelliJ IDEA ###
