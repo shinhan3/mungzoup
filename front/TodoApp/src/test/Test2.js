@@ -1,6 +1,14 @@
 import axios from 'axios';
 import React, {Component, useEffect, useState} from 'react';
-import {Alert, Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import {
   Table,
@@ -110,56 +118,72 @@ function Test2(props) {
     //   });
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.item}>
-        <Text>seq</Text>
-      </View>
-      <View style={styles.item}>
-        <Text>content</Text>
-      </View>
-      <View style={styles.item}>
-        <Text>delete</Text>
-      </View>
-      {testList.map(testData => (
-        <>
+    <ScrollView styles={styles.content}>
+      <View>
+        <View style={styles.container}>
           <View style={styles.item}>
-            <Text>{testData.seqno}</Text>
+            <Text>seq</Text>
           </View>
           <View style={styles.item}>
-            {/* <Text>{testData.content}</Text> */}
-            <TextInput
-              value={testData.content}
-              onChangeText={e => {
-                changeList(testData.seqno, testData.content, e);
-              }}
-              onSubmitEditing={() => {
-                updateTest(testData.seqno, testData.content);
-              }}></TextInput>
+            <Text>content</Text>
           </View>
           <View style={styles.item}>
-            <Button
-              onPress={() => {
-                deleteTest(testData.seqno);
-              }}
-              title="delete"></Button>
+            <Text>delete</Text>
           </View>
-        </>
-      ))}
-      <TextInput
-        value={test.content}
-        style={styles.inputBox}
-        onChangeText={change}></TextInput>
-      <Button onPress={aaa} title="aaa"></Button>
-      <Button onPress={insertTest} title="input"></Button>
-    </View>
+          {testList.map(testData => (
+            <>
+              <View style={styles.item}>
+                <Text>{testData.seqno}</Text>
+              </View>
+              <View style={styles.item}>
+                {/* <Text>{testData.content}</Text> */}
+                <TextInput
+                  value={testData.content}
+                  onChangeText={e => {
+                    changeList(testData.seqno, testData.content, e);
+                  }}
+                  onSubmitEditing={() => {
+                    updateTest(testData.seqno, testData.content);
+                  }}></TextInput>
+              </View>
+              <View style={styles.item}>
+                <Button
+                  onPress={() => {
+                    deleteTest(testData.seqno);
+                  }}
+                  title="delete"></Button>
+              </View>
+            </>
+          ))}
+          <TextInput
+            value={test.content}
+            style={styles.inputBox}
+            onChangeText={change}></TextInput>
+          <Button onPress={aaa} title="aaa"></Button>
+          <Button onPress={insertTest} title="input"></Button>
+          <Button
+            title="Test1로 이동"
+            onPress={() => {
+              props.navigation.navigate('P1');
+            }}></Button>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     width: 300,
+    justifyContent: 'center',
+    // alignItems: 'center',
   },
   item: {
     width: 100,
