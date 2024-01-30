@@ -1,15 +1,27 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import Test2 from './test/Test2';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Test from './test/Test';
+
+const Stack = createNativeStackNavigator();
 
 function Content(props) {
   return (
-    <View style={styles.item}>
-      <Text>대충 내용</Text>
-      <Test2></Test2>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="P1" component={Test}></Stack.Screen>
+        <Stack.Screen name="P2" component={Test2}></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+// <View style={styles.item}>
+//       <Text>대충 내용</Text>
+//     </View>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,4 +34,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
 export default Content;

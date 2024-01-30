@@ -12,7 +12,9 @@ target/
 .settings
 .springBeans
 .sts4-cache
-*.properties
+# *.properties
+application.properties
+awsAuth.properties
 *.vscode
 # mvnw
 # mvnw.cmd
