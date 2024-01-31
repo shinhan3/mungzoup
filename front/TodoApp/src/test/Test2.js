@@ -168,6 +168,8 @@ function Test2(props) {
             }}></Button>
         </View>
       </View>
+
+      <View style={styles.footer}></View>
     </ScrollView>
   );
 }
@@ -194,6 +196,9 @@ const styles = StyleSheet.create({
   inputBox: {
     width: 100,
     backgroundColor: 'blue',
+  },
+  footer: {
+    height: 10,
   },
 });
 export default Test2;

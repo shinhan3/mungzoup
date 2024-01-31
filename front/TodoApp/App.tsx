@@ -11,6 +11,7 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import DateHead from './src/DateHead';
 import AddTodo from './src/Footer';
 import Content from './src/Content';
+import {View} from 'react-native';
 
 function App(props) {
   const today = new Date();
@@ -31,6 +32,9 @@ const styles = StyleSheet.create({
   item: {
     height: 50,
     backgroundColor: 'steelblue',
+  },
+  footer: {
+    height: 10,
   },
 });
 export default App;
