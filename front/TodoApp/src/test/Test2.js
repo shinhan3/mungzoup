@@ -30,6 +30,7 @@ function Test2(props) {
   };
   const deleteTest = e => {
     console.log(e);
+    //axios delete
     axios.delete(`http://10.0.2.2:5000/delete.do/${e}`).then(res => {
       console.log(res.data);
       setTestList([...res.data]);
@@ -49,6 +50,7 @@ function Test2(props) {
   };
   const updateTest = (seq, content) => {
     console.log(seq, content, 'enter');
+    //axios put
     axios
       .put('http://10.0.2.2:5000/updateTest.do', {
         seqno: seq,
@@ -75,6 +77,7 @@ function Test2(props) {
   };
   const insertTest = () => {
     console.log(test);
+    //axios post
     axios
       .post('http://10.0.2.2:5000/insertTest.do', test)
       .then(res => {
@@ -88,6 +91,7 @@ function Test2(props) {
 
   useEffect(() => {
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    //axios get
     axios
       .get('http://10.0.2.2:5000/getTest.do')
       .then(res => {
@@ -100,6 +104,7 @@ function Test2(props) {
   }, []);
   const aaa = () => {
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    //axios get
     axios
       .get('http://10.0.2.2:5000/getTest.do')
       .then(res => {
@@ -117,6 +122,7 @@ function Test2(props) {
     //     console.log(err);
     //   });
   };
+  //ScrollView => 스크롤
   return (
     <ScrollView styles={styles.content}>
       <View>
@@ -164,6 +170,7 @@ function Test2(props) {
           <Button
             title="Test1로 이동"
             onPress={() => {
+              // 페이지 이동 버튼
               props.navigation.navigate('P1');
             }}></Button>
         </View>

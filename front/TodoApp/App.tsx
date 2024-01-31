@@ -11,7 +11,6 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import DateHead from './src/DateHead';
 import AddTodo from './src/Footer';
 import Content from './src/Content';
-import {View} from 'react-native';
 
 function App(props) {
   const today = new Date();

@@ -11,7 +11,10 @@ const Stack = createNativeStackNavigator();
 function Content(props) {
   return (
     <NavigationContainer>
+      {/* Routes */}
       <Stack.Navigator screenOptions={{headerShown: false}}>
+        {/* Route */}
+        <Stack.Screen name="P3" component={Test3}></Stack.Screen>
         <Stack.Screen name="P1" component={Test}></Stack.Screen>
         <Stack.Screen name="P2" component={Test2}></Stack.Screen>
       </Stack.Navigator>

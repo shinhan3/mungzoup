@@ -6,6 +6,7 @@ function Test(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.item}>이동화면</Text>
+      {/* Image */}
       <Image style={styles.img} source={hi}></Image>
       <Image style={styles.img} source={require('../image/hi.jpg')}></Image>
       <Image
@@ -16,6 +17,7 @@ function Test(props) {
       <Button
         title="Test2로 이동"
         onPress={() => {
+          // 페이지 이동 버튼
           props.navigation.navigate('P2');
         }}></Button>
     </View>
