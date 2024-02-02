@@ -5,6 +5,7 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Test from './test/Test';
+import Test3 from './test/Test3';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ function Content(props) {
         {/* Route */}
         <Stack.Screen name="P1" component={Test}></Stack.Screen>
         <Stack.Screen name="P2" component={Test2}></Stack.Screen>
+        <Stack.Screen name="P3" component={Test3}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

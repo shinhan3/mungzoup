@@ -12,6 +12,7 @@ back/.metadata
 .settings
 .springBeans
 .sts4-cache
+yarn.lock
 # *.properties
 application.properties
 awsAuth.properties

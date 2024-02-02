@@ -2,11 +2,11 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 function DateHead(props) {
+  const today = new Date();
   return (
     <View style={styles.item}>
       <Text>
-        {props.data.getFullYear()}년{props.data.getMonth() + 1}월{' '}
-        {props.data.getDate()}일
+        {today.getFullYear()}년{today.getMonth() + 1}월 {today.getDate()}일
       </Text>
     </View>
   );

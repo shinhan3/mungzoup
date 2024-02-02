@@ -17,9 +17,9 @@ function App(props) {
   console.log(today);
   return (
     <SafeAreaView style={styles.container}>
-      <DateHead data={today}></DateHead>
+      {/* <DateHead></DateHead> */}
       <Content />
-      <AddTodo />
+      {/* <AddTodo /> */}
     </SafeAreaView>
   );
 }
