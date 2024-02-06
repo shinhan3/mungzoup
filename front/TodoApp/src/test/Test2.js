@@ -168,10 +168,9 @@ function Test2(props) {
           <Button onPress={aaa} title="aaa"></Button>
           <Button onPress={insertTest} title="input"></Button>
           <Button
-            title="Test3로 이동"
+            title="내 장소 등록"
             onPress={() => {
-              // 페이지 이동 버튼
-              props.navigation.navigate('P3');
+              props.navigation.navigate('InsertWalkSpot');
             }}></Button>
         </View>
       </View>
