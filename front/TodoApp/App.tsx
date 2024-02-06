@@ -11,18 +11,28 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import DateHead from './src/DateHead';
 import AddTodo from './src/Footer';
 import Content from './src/Content';
+import AppTest from './src/test/AppTest';
 
 function App(props) {
   const today = new Date();
   console.log(today);
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <DateHead></DateHead> */}
-      <Content />
-      {/* <AddTodo /> */}
-    </SafeAreaView>
+    <>
+      <AppTest />
+    </>
   );
 }
+{
+  /* <SafeAreaView style={styles.container}>
+      <Content />
+    </SafeAreaView> 
+    
+     <>
+      <AppTest />
+    </>
+    */
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
