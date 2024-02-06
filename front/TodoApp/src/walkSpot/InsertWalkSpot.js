@@ -4,7 +4,11 @@ import {Button, View} from 'react-native';
 function InsertWalkSpot(props) {
   return (
     <View>
-      <Button onPress={insertSpot}>등록</Button>
+      <Button
+        onPress={() => {
+          props.navigation.navigate('A4');
+        }}
+        title="등록"></Button>
     </View>
   );
 }

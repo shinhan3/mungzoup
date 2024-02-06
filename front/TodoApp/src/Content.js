@@ -8,6 +8,7 @@ import InsertWalkSpot from './walkSpot/InsertWalkSpot';
 import Test from './test/Test';
 import Test3 from './test/Test3';
 import MapTest from './test/MapTest';
+import Test2 from './test/Test2';
 
 const Stack = createNativeStackNavigator();
 

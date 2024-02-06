@@ -1,49 +1,51 @@
 import * as React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, ScrollView} from 'react-native';
 import FormContainer3 from '../components/FormContainer3';
 import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 
 const Frame1 = () => {
   return (
-    <View style={styles.view}>
-      <FormContainer3 />
-      <MiracleBenefitContainer
-        dimensionCode={require('../assets/arrow2.png')}
-        benefits="미라클 혜택"
-      />
-      <Text style={styles.ment1}>
-        <Text>
-          <Text
-            style={[
-              styles.text,
-              styles.textTypo2,
-            ]}>{`멍줍 카드를 사용한 똑똑한 소비자를 위한 추천!
+    <ScrollView>
+      <View style={styles.view}>
+        <FormContainer3 />
+        <MiracleBenefitContainer
+          dimensionCode={require('../assets/arrow2.png')}
+          benefits="미라클 혜택"
+        />
+        <Text style={styles.ment1}>
+          <Text>
+            <Text
+              style={[
+                styles.text,
+                styles.textTypo2,
+              ]}>{`멍줍 카드를 사용한 똑똑한 소비자를 위한 추천!
 `}</Text>
-          <Text style={[styles.text1, styles.textTypo]}>{`멍줍 카드만의 
+            <Text style={[styles.text1, styles.textTypo]}>{`멍줍 카드만의 
 미라클 조합으로, 최대 혜택을!
  
 `}</Text>
+          </Text>
         </Text>
-      </Text>
-      <Text style={styles.ment2}>
-        <Text style={[styles.text2, styles.textTypo]}>박멍줍</Text>
-        <Text style={[styles.text3, styles.textTypo2]}>
-          님의 이번달 혜택은?
+        <Text style={styles.ment2}>
+          <Text style={[styles.text2, styles.textTypo]}>박멍줍</Text>
+          <Text style={[styles.text3, styles.textTypo2]}>
+            님의 이번달 혜택은?
+          </Text>
         </Text>
-      </Text>
-      <Text style={styles.manual}>
-        <Text style={styles.manualTxt}>
-          <Text style={styles.textTypo}> </Text>
-          <Text
-            style={
-              styles.text4
-            }>{`·자세한 카드별 서비스 내용 및 서비스 적용 기준은 카테고리 어쩌고 저쩌고 아아아아아아가나다라마바사아자차카타파하아야어여오요우유으이나동물병원미용위탁관리식당카페
+        <Text style={styles.manual}>
+          <Text style={styles.manualTxt}>
+            <Text style={styles.textTypo}> </Text>
+            <Text
+              style={
+                styles.text4
+              }>{`·자세한 카드별 서비스 내용 및 서비스 적용 기준은 카테고리 어쩌고 저쩌고 아아아아아아가나다라마바사아자차카타파하아야어여오요우유으이나동물병원미용위탁관리식당카페
 · 자세한 문의는 멍줍 고객센터(1588-3333)로 문의 부탁드립니다. 
 `}</Text>
+          </Text>
         </Text>
-      </Text>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
 
-const FormContainer = () => {
+const FormContainer = props => {
+  console.log('aa', props);
   return (
     <View style={[styles.topbox, styles.topboxPosition]}>
       <View style={[styles.topbox, styles.topboxPosition]}>
@@ -21,14 +22,19 @@ const FormContainer = () => {
           source={require('../assets/moneyimage.png')}
         />
       </View>
-      <View style={[styles.benefitBtn, styles.benefitLayout]}>
+      <TouchableOpacity
+        style={[styles.benefitBtn, styles.benefitLayout]}
+        onPress={() => {
+          // console.log(props.props.navigation.navigate(''));
+          props.props.navigation.navigate('Frame1');
+        }}>
         <Text style={styles.text2}>최대 혜택 적용하기</Text>
         <View style={[styles.benefitBtnChild, styles.benefitLayout]} />
         <Image
           style={styles.benefitIcon}
           source={require('../assets/benefit.png')}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
