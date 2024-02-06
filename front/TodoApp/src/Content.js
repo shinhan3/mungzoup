@@ -5,6 +5,9 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MyWalkSpotList from './walkSpot/MyWalkSpotList';
 import InsertWalkSpot from './walkSpot/InsertWalkSpot';
+import Test from './test/Test';
+import Test3 from './test/Test3';
+import MapTest from './test/MapTest';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +23,10 @@ function Content(props) {
         <Stack.Screen
           name="InsertWalkSpot"
           component={InsertWalkSpot}></Stack.Screen>
+        <Stack.Screen name="A4" component={MapTest}></Stack.Screen>
+        <Stack.Screen name="P1" component={Test}></Stack.Screen>
+        <Stack.Screen name="P2" component={Test2}></Stack.Screen>
+        <Stack.Screen name="P3" component={Test3}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
