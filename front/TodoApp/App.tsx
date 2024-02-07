@@ -17,9 +17,9 @@ function App(props) {
   const today = new Date();
   console.log(today);
   return (
-    <>
-      <AppTest />
-    </>
+    <SafeAreaView style={styles.container}>
+      <Content />
+    </SafeAreaView>
   );
 }
 {

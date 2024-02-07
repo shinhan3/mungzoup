@@ -1,10 +1,38 @@
-import React from 'react';
-import {View, Text, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, Image, PermissionsAndroid, Platform} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import hi from '../image/hi.jpg';
 import axios from 'axios';
-
-function MapTest() {
+function SelectMap() {
+  const [currentLocation, setCurrentLocation] = useState(null);
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+    }
+  }, []);
+  useEffect(() => {
+    const watchId = Geolocation.watchPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setCurrentLocation({latitude, longitude});
+      },
+      error => {
+        console.log(error);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 0,
+        distanceFilter: 1,
+      },
+    );
+    return () => {
+      Geolocation.clearWatch(watchId);
+    };
+  }, []);
   return (
     <>
       <View style={{flex: 1}}>
@@ -12,7 +40,6 @@ function MapTest() {
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
           customMapStyle={[]}
-          //신한DS 위치 정적으로 박아놨음.
           initialRegion={{
             latitude: 37.55929,
             longitude: 126.9227,
@@ -30,11 +57,16 @@ function MapTest() {
                 },
               )
               .then(response => {
-                console.log(response.data);
                 console.log(response.data.documents[0].address_name);
                 console.log(response.data.documents[0].y); //위도
                 console.log(response.data.documents[0].x); //경도
                 const location = response.data.documents[0];
+
+                props.navigation.navigate('InsertWalkSpot', {
+                  address_name: location.address_name,
+                  latitude: location.y,
+                  longitude: location.x,
+                });
               })
               .catch(err => {
                 console.log(err);
@@ -269,4 +301,4 @@ const MapStyle = [
     ],
   },
 ];
-export default MapTest;
+export default SelectMap;
