@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Slf4j
@@ -17,9 +19,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IssuedPageController {
     @Autowired
     userRepository userRep;
-
-    @GetMapping("/getIssuedPageData.do")
-    public List<String[]> f1() {
-        return (List<String[]>) userRep.IssuedPageData("asme12");
+    // get 방식은 RequestBody 사용불가
+    @GetMapping("/getIssuedPageData.do/{user}")
+    public List<String[]> f1(@PathVariable String user) {
+        log.info(user.toString());
+        return (List<String[]>) userRep.IssuedPageData(user);
     }
 }

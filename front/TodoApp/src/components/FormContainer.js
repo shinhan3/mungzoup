@@ -26,7 +26,7 @@ const FormContainer = props => {
         style={[styles.benefitBtn, styles.benefitLayout]}
         onPress={() => {
           // console.log(props.props.navigation.navigate(''));
-          props.props.navigation.navigate('Frame1');
+          props.props.navigation.push('Frame1');
         }}>
         <Text style={styles.text2}>최대 혜택 적용하기</Text>
         <View style={[styles.benefitBtnChild, styles.benefitLayout]} />

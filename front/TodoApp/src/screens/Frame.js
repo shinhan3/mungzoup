@@ -1,58 +1,77 @@
 import * as React from 'react';
-import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
+import {Text, StyleSheet, View, Image, ScrollView, Alert} from 'react-native';
 import FormContainer from '../components/FormContainer';
 import CardContainer from '../components/CardContainer';
 import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
 
 const Frame = props => {
   const [data, setData] = React.useState([]);
-  React.useEffect(() => {
-    axios
-      .get('http://10.0.2.2:5000/getIssuedPageData.do')
-      .then(res => {
-        console.log(res.data[0]);
-        setData([...res.data[0]]);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
-  // console.log(props.navigation);
+  const userId = 'asme12';
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('마운트될 떄 된다.1');
+      axios
+        .get(`http://10.0.2.2:5000/getIssuedPageData.do/${userId}`)
+        .then(res => {
+          console.log(res.data.length);
+          if (res.data.length > 0) {
+            setData([...res.data[0]]);
+          } else {
+            Alert.alert('', '멍줍카드 먼저 발급 후 이용해주세요', [
+              {
+                text: 'ok',
+                onPress: () => {
+                  console.log('alert');
+                  props.navigation.navigate('PLAYmainwonny');
+                },
+                style: 'destructive',
+              },
+            ]);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, []),
+  );
   return (
     <ScrollView>
-      <View style={styles.view}>
-        <View style={styles.main}>
-          <FormContainer props={props} />
-          <Text style={styles.bannerTitle}>
-            <Text style={styles.text}>{`멍줍 서비스 `}</Text>
-            <Text style={styles.text1}>{data[0]}개월</Text>
-            <Text style={styles.text}> 째 이용 중</Text>
-          </Text>
-          <View style={[styles.eventBanner1, styles.eventLayout]}>
-            <View style={[styles.eventDiv, styles.eventLayout]} />
-            <View style={styles.eventText}>
-              <Text style={styles.headerMenu}>
-                <Text style={styles.text}>{`내 댕댕이를 위한 서비스
+      {data.length > 0 && (
+        <View style={styles.view}>
+          <View style={styles.main}>
+            <FormContainer props={props} />
+            <Text style={styles.bannerTitle}>
+              <Text style={styles.text}>{`멍줍 서비스 `}</Text>
+              <Text style={styles.text1}>{data[0]}개월</Text>
+              <Text style={styles.text}> 째 이용 중</Text>
+            </Text>
+            <View style={[styles.eventBanner1, styles.eventLayout]}>
+              <View style={[styles.eventDiv, styles.eventLayout]} />
+              <View style={styles.eventText}>
+                <Text style={styles.headerMenu}>
+                  <Text style={styles.text}>{`내 댕댕이를 위한 서비스
 여기에 `}</Text>
-                <Text style={styles.text1}>다</Text>
-                <Text style={styles.text}> 있다!</Text>
-              </Text>
+                  <Text style={styles.text1}>다</Text>
+                  <Text style={styles.text}> 있다!</Text>
+                </Text>
+              </View>
+              <Image
+                style={[styles.phoneBenefitIcon, styles.menuDivPosition]}
+                source={require('../assets/phone-benefit.png')}
+              />
             </View>
-            <Image
-              style={[styles.phoneBenefitIcon, styles.menuDivPosition]}
-              source={require('../assets/phone-benefit.png')}
-            />
+            <CardContainer data={data} />
           </View>
-          <CardContainer data={data} />
+          <View style={styles.headerPosition}>
+            <View style={[styles.headerDiv, styles.headerPosition]} />
+            <Text style={[styles.headerTitle, styles.headerTitleFlexBox]}>
+              멍줍 카드
+            </Text>
+          </View>
         </View>
-        <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.headerTitleFlexBox]}>
-            멍줍 카드
-          </Text>
-        </View>
-      </View>
+      )}
     </ScrollView>
   );
 };

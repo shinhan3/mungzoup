@@ -4,7 +4,7 @@ import FormContainer3 from '../components/FormContainer3';
 import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 
-const Frame1 = () => {
+const Frame1 = props => {
   return (
     <ScrollView>
       <View style={styles.view}>
@@ -12,6 +12,7 @@ const Frame1 = () => {
         <MiracleBenefitContainer
           dimensionCode={require('../assets/arrow2.png')}
           benefits="미라클 혜택"
+          navigation={props.navigation}
         />
         <Text style={styles.ment1}>
           <Text>
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     display: 'flex',
     alignItems: 'center',
-    height: 73,
+    // height: 103,
     color: Color.colorDarkgray_200,
     width: 292,
     textAlign: 'left',

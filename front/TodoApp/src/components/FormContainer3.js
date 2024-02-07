@@ -2,33 +2,43 @@ import * as React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Color, FontFamily, FontSize} from '../GlobalStyles';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
 
 const FormContainer3 = () => {
   const totalSize = 210;
   const totalPercent = 2.0;
-  const [petHospital, setPetHospital] = React.useState(0.4);
-  const [petShop, setPetShop] = React.useState(1.2);
-  const [restaurant, setRestaurant] = React.useState(0.4);
-  const [beauty, setBeauty] = React.useState(0.8);
-  const [consignmentManagement, setConsignmentManagement] = React.useState(1.2);
-  React.useEffect(() => {
-    axios.get('http://10.0.2.2:5000/getbenefitPre.do').then(res => {
-      // console.log(res.data);
-      res.data.map((value, index) => {
-        console.log(value);
-        switch (value[0]) {
-          case '식당/카페':
-            break;
-          case '반려동물용품':
-            break;
-          case '동물병원':
-            break;
-          case '미용':
-            break;
-        }
+  const [petHospital, setPetHospital] = React.useState(0.0);
+  const [petShop, setPetShop] = React.useState(0.0);
+  const [restaurant, setRestaurant] = React.useState(0.0);
+  const [beauty, setBeauty] = React.useState(0.0);
+  const [consignmentManagement, setConsignmentManagement] = React.useState(0.0);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios.get('http://10.0.2.2:5000/getbenefitPre.do').then(res => {
+        // console.log(res.data);
+        res.data.map((value, index) => {
+          console.log(value);
+          switch (value[0]) {
+            case '식당/카페':
+              setRestaurant(value[1]);
+              break;
+            case '반려동물용품':
+              setPetShop(value[1]);
+              break;
+            case '동물병원':
+              setPetHospital(value[1]);
+              break;
+            case '미용':
+              setBeauty(value[1]);
+              break;
+            case '위탁관리':
+              setConsignmentManagement(value[1]);
+              break;
+          }
+        });
       });
-    });
-  }, []);
+    }, []),
+  );
   return (
     <View style={[styles.miraclebenefit, styles.cateDivLayout]}>
       <View style={[styles.cateDiv, styles.catePosition]} />
