@@ -1,36 +1,45 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import CardContainer1 from '../components/CardContainer1';
 import {Color, FontFamily, FontSize} from '../GlobalStyles';
+import {ScrollView} from 'react-native';
 
-const PLAY1 = () => {
+const PLAY1 = ({navigation}) => {
   return (
-    <View style={styles.play}>
-      <View style={styles.header}>
-        <View style={[styles.headerDiv, styles.divPosition]} />
-        <Text style={styles.headerTitle}>산책</Text>
-        <Image
-          style={[styles.arrowIcon, styles.arrowIconLayout]}
-          source={require('../assets/arrow2.png')}
-        />
-      </View>
-      <View style={styles.main}>
-        <View style={styles.mapPosition}>
-          <View style={[styles.map1, styles.mapPosition]} />
-          <Text style={styles.text}>지도</Text>
+    <ScrollView>
+      <View style={styles.play}>
+        <View style={styles.header}>
+          <View style={[styles.headerDiv, styles.divPosition]} />
+          <Text style={styles.headerTitle}>산책</Text>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(navigation);
+              navigation.goBack('PLAYmainwonny');
+            }}>
+            <Image
+              style={[styles.arrowIcon, styles.arrowIconLayout]}
+              source={require('../assets/arrow2.png')}
+            />
+          </TouchableOpacity>
         </View>
-        <CardContainer1 />
+        <View style={styles.main}>
+          <View style={styles.mapPosition}>
+            <View style={[styles.map1, styles.mapPosition]} />
+            <Text style={styles.text}>지도</Text>
+          </View>
+          <CardContainer1 />
+        </View>
+        <View style={[styles.favoriteListBtn, styles.arrowIconLayout]}>
+          <Image
+            style={[styles.arrowIcon1, styles.arrowIconLayout]}
+            source={require('../assets/arrow3.png')}
+          />
+          <Text style={[styles.favoriteListLink, styles.play1Clr]}>
+            즐겨찾기 목록 보기
+          </Text>
+        </View>
       </View>
-      <View style={[styles.favoriteListBtn, styles.arrowIconLayout]}>
-        <Image
-          style={[styles.arrowIcon1, styles.arrowIconLayout]}
-          source={require('../assets/arrow3.png')}
-        />
-        <Text style={[styles.favoriteListLink, styles.play1Clr]}>
-          즐겨찾기 목록 보기
-        </Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

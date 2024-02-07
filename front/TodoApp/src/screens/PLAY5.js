@@ -1,29 +1,37 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import {ScrollView} from 'react-native';
 
-const PLAY5 = () => {
+const PLAY5 = ({navigation}) => {
   return (
-    <View style={styles.play}>
-      <View style={[styles.main, styles.mainPosition]}>
-        <View style={styles.mapPosition}>
-          <View style={[styles.map1, styles.mapPosition]} />
-          <Text style={[styles.title, styles.titleTypo]}>지도</Text>
+    <ScrollView>
+      <View style={styles.play}>
+        <View style={[styles.main, styles.mainPosition]}>
+          <View style={styles.mapPosition}>
+            <View style={[styles.map1, styles.mapPosition]} />
+            <Text style={[styles.title, styles.titleTypo]}>지도</Text>
+          </View>
+          <DetailCard />
         </View>
-        <DetailCard />
+        <View style={styles.headerPosition}>
+          <View style={[styles.headerDiv, styles.headerPosition]} />
+          <Text style={[styles.headerTitle, styles.titleTypo]}>
+            숨은 인기 가맹점
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack('PLAYmainwonny');
+            }}>
+            <Image
+              style={styles.arrowIcon}
+              source={require('../assets/arrow4.png')}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.headerPosition}>
-        <View style={[styles.headerDiv, styles.headerPosition]} />
-        <Text style={[styles.headerTitle, styles.titleTypo]}>
-          숨은 인기 가맹점
-        </Text>
-        <Image
-          style={styles.arrowIcon}
-          source={require('../assets/arrow4.png')}
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
