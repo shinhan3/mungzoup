@@ -12,7 +12,7 @@ function MapTest() {
           style={{flex: 1}}
           //   loadingBackgroundColor={true}
           provider={PROVIDER_GOOGLE}
-          customMapStyle={[]}
+          customMapStyle={MapStyle}
           initialRegion={{
             latitude: 37.55929,
             longitude: 126.9227,
@@ -42,6 +42,15 @@ function MapTest() {
           }}>
           <Marker
             coordinate={{latitude: 37.55929, longitude: 126.9227}}
+            title="ANT 빌딩"
+            description="테스트">
+            <Image
+              source={hi}
+              style={{width: 30, height: 30}}
+              resizeMethod="contain"></Image>
+          </Marker>
+          <Marker
+            coordinate={{latitude: 37.5595, longitude: 126.9227}}
             title="ANT 빌딩"
             description="테스트">
             <Image

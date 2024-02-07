@@ -1,8 +1,16 @@
 import * as React from 'react';
-import {Text, StyleSheet, View, ImageSourcePropType, Image} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ImageSourcePropType,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 
-const FormContainer2 = ({dimensions, productDimensions}) => {
+const FormContainer2 = ({dimensions, productDimensions, navigation}) => {
+  console.log(navigation, 'aaa');
   return (
     <View style={[styles.petBanner1, styles.divPosition]}>
       <Text style={[styles.petBannerTitle, styles.textTypo]}>
@@ -22,18 +30,23 @@ const FormContainer2 = ({dimensions, productDimensions}) => {
             <Text style={styles.text4}>하자!</Text>
           </Text>
         </Text>
-        <View style={[styles.petwalkbtn, styles.petwalkbtnLayout]}>
-          <View style={[styles.petwalkdiv, styles.petwalkbtnLayout]} />
-          <View style={[styles.petwalklink, styles.titlePosition]}>
-            <Text style={[styles.eventText, styles.textTypo]}>
-              산책하러 가기
-            </Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('PLAY1');
+          }}>
+          <View style={[styles.petwalkbtn, styles.petwalkbtnLayout]}>
+            <View style={[styles.petwalkdiv, styles.petwalkbtnLayout]} />
+            <View style={[styles.petwalklink, styles.titlePosition]}>
+              <Text style={[styles.eventText, styles.textTypo]}>
+                산책하러 가기
+              </Text>
+            </View>
           </View>
-        </View>
-        <Image
-          style={[styles.arrowIcon, styles.iconPosition]}
-          source={require('../assets/arrow.png')}
-        />
+          <Image
+            style={[styles.arrowIcon, styles.iconPosition]}
+            source={require('../assets/arrow.png')}
+          />
+        </TouchableOpacity>
         <View style={styles.petBannerImg}>
           <View style={[styles.card, styles.cardLayout]}>
             <View style={[styles.cardDiv, styles.cardLayout]} />
@@ -141,7 +154,7 @@ const styles = StyleSheet.create({
   },
   petwalklink: {
     left: 21,
-    width: 75,
+    width: 90,
     height: 19,
   },
   petwalkbtn: {

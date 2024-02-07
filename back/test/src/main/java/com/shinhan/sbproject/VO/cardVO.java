@@ -1,6 +1,10 @@
 package com.shinhan.sbproject.VO;
 
 
+import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -30,4 +34,6 @@ public class cardVO {
 	private String CVC;
 	private String CARD_PASSWORD;
 	private Integer POINT;
+	@CreationTimestamp
+	private Timestamp INSERT_DAY;
 }

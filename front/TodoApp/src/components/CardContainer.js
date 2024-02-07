@@ -2,46 +2,47 @@ import * as React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import axios from 'axios';
 
-const CardContainer = () => {
+const CardContainer = ({data}) => {
   return (
     <View style={styles.card}>
       <View style={[styles.cardimg, styles.cardimgLayout]}>
         <LinearGradient
-          style={[styles.cardDiv, styles.cardimgLayout]}
+          style={[styles.cardDiv1, styles.cardimgLayout1]}
           locations={[0, 1]}
-          colors={['#62aea9', 'rgba(163, 174, 98, 0.5)']}
-        />
-        <Text style={[styles.title, styles.titleTypo]}>
-          <Text style={styles.mg}>{`MG멍줍 카드
+          colors={['#62aea9', 'rgba(163, 174, 98, 0.5)']}>
+          <Text style={[styles.title, styles.titleTypo]}>
+            <Text style={styles.mg}>{`MG멍줍 카드
 `}</Text>
-          <Text style={styles.text}>미라크루</Text>
-        </Text>
-        <Image
-          style={[styles.logoIcon, styles.logoIconPosition]}
-          source={require('../assets/logo.png')}
-        />
-        <Image
-          style={styles.cardNameIcon}
-          source={require('../assets/cardname.png')}
-        />
+            <Text style={styles.text}>미라크루</Text>
+          </Text>
+          <Image
+            style={[styles.logoIcon, styles.logoIconPosition1]}
+            source={require('../assets/logo.png')}
+          />
+          <Image
+            style={styles.cardNameIcon}
+            source={require('../assets/cardname.png')}
+          />
+        </LinearGradient>
       </View>
       <View style={[styles.background, styles.logoIconPosition]} />
       <View style={[styles.cardinfo3, styles.cardinfoLayout]}>
         <Text style={styles.title1}>구독 시작일</Text>
-        <Text style={[styles.content, styles.contentTypo]}>2023.11.08</Text>
+        <Text style={[styles.content, styles.contentTypo]}>{data[2]}</Text>
       </View>
       <View style={[styles.cardinfo2, styles.cardinfoPosition]}>
         <Text style={styles.title1}>멍줍카드</Text>
         <Text style={styles.contentTypo}>
-          <Text style={styles.text1}>3개월</Text>
-          <Text style={styles.text2}> 째 구독 혜택 받는 중</Text>
+          <Text style={styles.text1}>{data[1]}개월</Text>
+          <Text style={styles.text2}> 째 구독 혜택 중</Text>
         </Text>
       </View>
       <View style={[styles.cardinfo1, styles.cardinfoPosition]}>
         <Text style={styles.title1}>이번 달 이용금액</Text>
         <Text style={[styles.content2, styles.logoIconPosition]}>
-          320,500원
+          {data[3]}원
         </Text>
       </View>
     </View>
@@ -50,9 +51,22 @@ const CardContainer = () => {
 
 const styles = StyleSheet.create({
   cardimgLayout: {
-    height: 251,
-    width: 453,
+    height: 453,
+    width: 251,
     left: 251,
+    // top: 0,
+    transform: [
+      {
+        rotate: '90deg',
+      },
+    ],
+    position: 'absolute',
+  },
+  cardimgLayout1: {
+    height: 453,
+    width: 251,
+    left: 0,
+    // top: 0,
     transform: [
       {
         rotate: '90deg',
@@ -66,7 +80,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   logoIconPosition: {
-    left: 0,
+    left: -1,
+    position: 'absolute',
+  },
+  logoIconPosition1: {
+    left: 108,
+    top: 311,
     position: 'absolute',
   },
   cardinfoLayout: {
@@ -89,12 +108,25 @@ const styles = StyleSheet.create({
   cardDiv: {
     top: 251,
     borderRadius: 10,
+    position: 'absolute',
     backgroundColor: 'transparent',
-    transform: [
-      {
-        rotate: '90deg',
-      },
-    ],
+    // transform: [
+    //   {
+    //     rotate: '90deg',
+    //   },
+    // ],
+  },
+
+  cardDiv1: {
+    top: 251,
+    borderRadius: 10,
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    // transform: [
+    //   {
+    //     rotate: '90deg',
+    //   },
+    // ],
   },
   mg: {
     fontSize: FontSize.size_2xl_5,
@@ -103,10 +135,15 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_mini,
   },
   title: {
-    top: 298,
+    top: 100,
     color: Color.bgWhite,
-    left: 20,
+    left: 110,
     position: 'absolute',
+    transform: [
+      {
+        rotate: '180deg',
+      },
+    ],
   },
   logoIcon: {
     borderTopLeftRadius: 10,
@@ -114,19 +151,19 @@ const styles = StyleSheet.create({
     height: 141,
     transform: [
       {
-        rotate: '90deg',
+        rotate: '180deg',
       },
     ],
     top: 0,
   },
   cardNameIcon: {
-    top: 83,
-    left: 105,
+    top: 220,
+    left: 0,
     width: 142,
     height: 160,
     transform: [
       {
-        rotate: '90deg',
+        rotate: '180deg',
       },
     ],
     position: 'absolute',
@@ -145,7 +182,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     backgroundColor: Color.bgWhite,
     height: 87,
-    width: 251,
+    width: 253,
   },
   title1: {
     color: Color.colorDarkgray_100,
@@ -162,7 +199,7 @@ const styles = StyleSheet.create({
   },
   cardinfo3: {
     top: 412,
-    width: 55,
+    width: 60,
     position: 'absolute',
   },
   text1: {
