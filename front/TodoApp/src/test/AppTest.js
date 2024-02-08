@@ -28,11 +28,13 @@ import BackgroundBtn from '../components/BackgroundBtn';
 import SexSelect from '../components/SexSelect';
 import SexSelectSuText from '../components/SexSelectSuText';
 import PLAY5 from '../screens/PLAY5';
+import InsertWalkSpot from '../screens/InsertWalkSpot';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import SelectMap from '../screens/SelectMap';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -152,6 +154,16 @@ const AppTest = () => {
             <Stack.Screen
               name="Frame1"
               component={Frame1}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="InsertWalkSpot"
+              component={InsertWalkSpot}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="SelectMap"
+              component={SelectMap}
               options={{headerShown: false}}
             />
             <Stack.Screen

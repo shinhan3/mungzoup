@@ -32,7 +32,7 @@ const FormContainer2 = ({dimensions, productDimensions, navigation}) => {
         </Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('PLAY1');
+            navigation.navigate('PLAY');
           }}>
           <View style={[styles.petwalkbtn, styles.petwalkbtnLayout]}>
             <View style={[styles.petwalkdiv, styles.petwalkbtnLayout]} />
