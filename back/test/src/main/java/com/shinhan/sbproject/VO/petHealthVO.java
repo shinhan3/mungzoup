@@ -26,12 +26,12 @@ import lombok.ToString;
 @Entity
 @Table(name = "pet_health")
 
-public class petHealthVO {
+public class PetHealthVO {
 	@Id
-	private Integer PET_ID;
+	private Integer petId;
 	@OneToOne
 	@MapsId
-	@JoinColumn(name = "PET_ID")
-	private petsVO pet;
+	@JoinColumn(name = "petId")
+	private PetsVO pet;
 	
 }

@@ -27,21 +27,21 @@ import lombok.ToString;
 @Entity
 @Table(name = "pets")
 
-public class petsVO {
+public class PetsVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer PET_ID;
-	private String NAME;
-	private String IMAGE;
-	private Boolean SEX;
-	private Date BIRTH;
-	private Float WEIGHT;
-	private String BREED; 
+	private Integer petId;
+	private String name;
+	private String image;
+	private Boolean sex;
+	private Date birth;
+	private Float weight;
+	private String breed; 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "userId")
 	private userVO user;
-	private Double PET_LATITUDE;
-	private Double PET_LONGITUDE;
+	private Double petLatitude;
+	private Double petLongitude;
 
 	
 	

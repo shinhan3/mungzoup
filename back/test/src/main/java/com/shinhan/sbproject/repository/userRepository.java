@@ -8,13 +8,13 @@ import org.springframework.data.repository.query.Param;
 
 import com.shinhan.sbproject.VO.userVO;
 
-public interface userRepository extends CrudRepository<userVO, String>{
-	@Query(value ="SELECT TIMESTAMPDIFF(MONTH,user.subscribe_day,NOW()) AS userMenth "
-    +",TIMESTAMPDIFF(MONTH,card.INSERT_DAY,NOW()) AS cardMenth "
-    +",DATE_FORMAT(card.INSERT_DAY,'%Y-%m-%d') AS insertCard "
-    +", FORMAT( SUM(payment.PRICE),'#,#') AS price "
-    +"FROM user JOIN card USING (CARD_ID) JOIN payment USING(USER_ID) "
-    +"WHERE user_id= :userId AND TIMESTAMPDIFF(MONTH,payment.PAYMENT_DATE,NOW())=0 "
-    +"GROUP BY user_id ", nativeQuery = true)
+public interface UserRepository extends CrudRepository<userVO, String>{
+	@Query(value ="SELECT (SELECT TIMESTAMPDIFF(MONTH,user.subscribe_day,NOW()) FROM user WHERE user_id = :userId) AS userMenth, "
+    +"(SELECT TIMESTAMPDIFF(MONTH,card.INSERT_DAY,NOW()) FROM user JOIN card USING(card_id) WHERE user_id = :userId) AS cardMenth,"
+    +"(SELECT DATE_FORMAT(card.INSERT_DAY,'%Y-%m-%d') FROM user JOIN card USING(card_id) WHERE user_id = :userId) AS insertCard, "
+    +"(SELECT  IFNULL(FORMAT( SUM(payment.PRICE),'#,#'),0) FROM payment WHERE user_id = :userId) AS price"
+    , nativeQuery = true)
     List<String[]> IssuedPageData(@Param("userId") String userId);
+    @Query(value="SELECT user_id FROM user JOIN card USING(card_id)", nativeQuery = true)
+    List<String> getUsers();
 }

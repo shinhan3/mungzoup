@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 
-import com.shinhan.sbproject.VO.ratingCategoryVO;
+import com.shinhan.sbproject.VO.RatingCategoryVO;
 
-public interface ratingCategoryRepository extends CrudRepository<ratingCategoryVO, Integer>{
+public interface RatingCategoryRepository extends CrudRepository<RatingCategoryVO, Integer>{
 	
     @Query(value="select rp.review_content, rp.count, r.image " +
             "from rating_category r, " + 

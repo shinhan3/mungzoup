@@ -1,12 +1,25 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, ImageSourcePropType, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageSourcePropType,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {Color, FontSize, FontFamily} from '../GlobalStyles';
 
-const MiracleBenefitContainer = ({dimensionCode, benefits}) => {
+const MiracleBenefitContainer = ({dimensionCode, benefits, navigation, go}) => {
   return (
     <View style={styles.headerPosition}>
       <View style={[styles.headerDiv, styles.headerPosition]} />
-      <Image style={styles.arrowIcon} source={dimensionCode} />
+      <TouchableOpacity
+        onPress={() => {
+          console.log(navigation);
+          navigation.navigate(go);
+        }}>
+        <Image style={styles.arrowIcon} source={dimensionCode} />
+      </TouchableOpacity>
       <Text style={styles.headerTitle}>{benefits}</Text>
     </View>
   );

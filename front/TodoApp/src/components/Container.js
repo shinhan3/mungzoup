@@ -8,8 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
+import {useNavigation} from '@react-navigation/native';
 
-const Container = ({dimensionCode, navigation}) => {
+
+const Container = ({dimensionCode}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.petBanner3}>
       <Text style={[styles.petBannerTitle, styles.text2Typo]}>

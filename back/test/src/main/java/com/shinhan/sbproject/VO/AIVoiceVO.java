@@ -33,14 +33,14 @@ import lombok.ToString;
 public class AIVoiceVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer AI_VOICE_ID;
-	private String OUTPUT_VALUE;
+	private Integer aiVoiceId;
+	private String outputValue;
 	
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "userId")
 	private userVO user;
 	@CreationTimestamp
-	private Timestamp AI_VOICE_INSERT_DAY;
+	private Timestamp aiVoiceInsertDay;
 	
 	
 }

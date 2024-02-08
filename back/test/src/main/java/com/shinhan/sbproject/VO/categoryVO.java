@@ -24,10 +24,10 @@ import lombok.ToString;
 @Entity
 @Table(name = "category")
 
-public class categoryVO {
+public class CategoryVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer CATEGORY_ID;
-	private String CATEGORY_NAME;
-	private String IMAGE;
+	private Integer categoryId;
+	private String categoryName;
+	private String image;
 }

@@ -1,9 +1,16 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import FavoriteListContainer from '../components/FavoriteListContainer';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 
-const PLAY = () => {
+const PLAY = props => {
   return (
     <View style={styles.play}>
       <View style={[styles.header, styles.divPosition1]}>
@@ -11,18 +18,25 @@ const PLAY = () => {
         <Text style={[styles.headerTitle, styles.txtFlexBox]}>
           나의 산책 목록
         </Text>
-        <Image
-          style={styles.arrowIcon}
-          source={require('../assets/arrow2.png')}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.goBack('PLAYmainwonny');
+          }}>
+          <Image
+            style={styles.arrowIcon}
+            source={require('../assets/arrow2.png')}
+          />
+        </TouchableOpacity>
       </View>
       <FavoriteListContainer />
-      <Pressable
+      <TouchableOpacity
         style={[styles.insertplaceBtn, styles.txtLayout]}
-        insert-myplace="내 장소">
+        onPress={() => {
+          props.navigation.navigate('InsertWalkSpot');
+        }}>
         <View style={[styles.div, styles.divPosition1]} />
-        <Text style={[styles.txt, styles.txtLayout]}>{`+ 내 장소 `}</Text>
-      </Pressable>
+        <Text style={[styles.txt, styles.txtLayout]}>+ 내 장소</Text>
+      </TouchableOpacity>
     </View>
   );
 };

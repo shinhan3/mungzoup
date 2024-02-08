@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import {ScrollView} from 'react-native';
 
 const PLAY5 = ({navigation}) => {
   return (
@@ -21,7 +22,6 @@ const PLAY5 = ({navigation}) => {
           </View>
           <DetailCard navigation={navigation} />
         </View>
-
         <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
           <Text style={[styles.headerTitle, styles.titleTypo]}>

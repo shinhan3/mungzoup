@@ -30,22 +30,22 @@ import lombok.ToString;
 @Entity
 @Table(name = "pet_history")
 
-public class petHistoryVO {
+public class PetHistoryVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer PET_HISTORY_ID;
+	private Integer petHistoryId;
 	@CreationTimestamp
-	private Timestamp INSERT_DAY;
-	private Integer PET_TIME;
-	private Float DISTANCE;
-	private Double START_LATITUDE;
-	private Double START_LONGITUDE;
+	private Timestamp insertDay;
+	private Integer petTime;
+	private Float distance;
+	private Double startLatitude;
+	private Double startLongitude;
 	
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "userId")
 	private userVO user;
 	@ManyToOne
-	@JoinColumn(name = "SPOT_ID")
+	@JoinColumn(name = "spotId")
 	private walkSpotVO spot;
 	
 	

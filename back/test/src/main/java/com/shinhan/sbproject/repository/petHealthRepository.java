@@ -2,9 +2,9 @@ package com.shinhan.sbproject.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.shinhan.sbproject.VO.petHealthVO;
-import com.shinhan.sbproject.VO.petsVO;
+import com.shinhan.sbproject.VO.PetHealthVO;
+import com.shinhan.sbproject.VO.PetsVO;
 
-public interface petHealthRepository extends CrudRepository<petHealthVO, Integer>{
+public interface PetHealthRepository extends CrudRepository<PetHealthVO, Integer>{
 	
 }
