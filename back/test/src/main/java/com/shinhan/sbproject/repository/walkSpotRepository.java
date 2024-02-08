@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.shinhan.sbproject.VO.walkSpotVO;
 
-public interface walkSpotRepository extends CrudRepository<walkSpotVO, Integer>{
+public interface WalkSpotRepository extends CrudRepository<walkSpotVO, Integer>{
 	
 }

@@ -3,8 +3,8 @@ package com.shinhan.sbproject.repository;
 import org.springframework.data.repository.CrudRepository;
 
 
-import com.shinhan.sbproject.VO.ratingCategoryVO;
+import com.shinhan.sbproject.VO.RatingCategoryVO;
 
-public interface ratingCategoryRepository extends CrudRepository<ratingCategoryVO, Integer>{
+public interface RatingCategoryRepository extends CrudRepository<RatingCategoryVO, Integer>{
 	
 }

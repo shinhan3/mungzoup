@@ -29,13 +29,13 @@ import lombok.ToString;
 
 public class userVO {
 	@Id
-	private String USER_ID;
-	private String USER_PASSWORD;
-	private String USER_NAME;
+	private String userId;
+	private String userPassword;
+	private String userName;
 	@OneToOne
-	@JoinColumn(name = "CARD_ID")
-	private cardVO CARD;
+	@JoinColumn(name = "cardId")
+	private CardVO card;
 	@CreationTimestamp
-	private Timestamp SUBSCRIBE_DAY;
+	private Timestamp subscribeDay;
 	
 }

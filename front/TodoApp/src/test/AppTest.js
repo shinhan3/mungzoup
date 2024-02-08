@@ -65,18 +65,21 @@ function BottomTabsRoot({navigation}) {
               const isFocused = state.index === index;
               return (
                 <Pressable
-                  style={{
-                    width: 102,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
+                  style={
+                    index < 3 && {
+                      width: 102,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }
+                  }
                   key={index}
                   onPress={() => {
                     console.log(state.routes[index].name);
-                    navigation.navigate({
-                      name: state.routes[index].name,
-                      merge: true,
-                    });
+                    index < 3 &&
+                      navigation.navigate({
+                        name: state.routes[index].name,
+                        merge: true,
+                      });
                   }}>
                   {activeIndex === index
                     ? bottomTabItemsActive[index] || item
@@ -103,7 +106,7 @@ function BottomTabsRoot({navigation}) {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Frame1"
+        name="Frame1Test"
         component={Frame1}
         options={{headerShown: false}}
       />

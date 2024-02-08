@@ -12,6 +12,7 @@ import DateHead from './src/DateHead';
 import AddTodo from './src/Footer';
 import Content from './src/Content';
 import AppTest from './src/test/AppTest';
+import Test2 from './src/test/Test2';
 
 function App(props) {
   const today = new Date();

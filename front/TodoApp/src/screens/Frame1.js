@@ -3,15 +3,40 @@ import {Text, StyleSheet, View, ScrollView} from 'react-native';
 import FormContainer3 from '../components/FormContainer3';
 import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import {useFocusEffect} from '@react-navigation/core';
+import axios from 'axios';
 
 const Frame1 = props => {
+  const userId = 'user1';
+  const [discountPrice, setDiscountPrice] = React.useState({
+    userName: '',
+    discount: 0,
+  });
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('test2007');
+      axios
+        .get(`http://10.0.2.2:5000/getUserNameAndDiscountPrice.do/${userId}`)
+        .then(res => {
+          console.log(res.data);
+          setDiscountPrice({
+            userName: res.data[0][0],
+            discount: Number(res.data[0][1]),
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, []),
+  );
   return (
     <ScrollView>
       <View style={styles.view}>
-        <FormContainer3 />
+        <FormContainer3 discount={discountPrice.discount} />
         <MiracleBenefitContainer
           dimensionCode={require('../assets/arrow2.png')}
           benefits="미라클 혜택"
+          go={'Frame'}
           navigation={props.navigation}
         />
         <Text style={styles.ment1}>
@@ -29,7 +54,9 @@ const Frame1 = props => {
           </Text>
         </Text>
         <Text style={styles.ment2}>
-          <Text style={[styles.text2, styles.textTypo]}>박멍줍</Text>
+          <Text style={[styles.text2, styles.textTypo]}>
+            {discountPrice.userName}
+          </Text>
           <Text style={[styles.text3, styles.textTypo2]}>
             님의 이번달 혜택은?
           </Text>

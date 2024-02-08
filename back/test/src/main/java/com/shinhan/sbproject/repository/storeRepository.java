@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.shinhan.sbproject.VO.storeVO;
 
-public interface storeRepository extends CrudRepository<storeVO, Integer>{
+public interface StoreRepository extends CrudRepository<storeVO, Integer>{
 	
 }

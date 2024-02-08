@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import {Color, FontSize, FontFamily} from '../GlobalStyles';
 
-const MiracleBenefitContainer = ({dimensionCode, benefits, navigation}) => {
+const MiracleBenefitContainer = ({dimensionCode, benefits, navigation, go}) => {
   return (
     <View style={styles.headerPosition}>
       <View style={[styles.headerDiv, styles.headerPosition]} />
       <TouchableOpacity
         onPress={() => {
           console.log(navigation);
-          navigation.goBack('Frame1');
+          navigation.navigate(go);
         }}>
         <Image style={styles.arrowIcon} source={dimensionCode} />
       </TouchableOpacity>
