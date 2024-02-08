@@ -33,8 +33,9 @@ public class userVO {
 	private String userPassword;
 	private String userName;
 	@OneToOne
-	@JoinColumn(name = "CARD_ID")
-	private cardVO card;
+
+	@JoinColumn(name = "cardId")
+	private CardVO card;
 	@CreationTimestamp
 	private Timestamp subscribeDay;
 	

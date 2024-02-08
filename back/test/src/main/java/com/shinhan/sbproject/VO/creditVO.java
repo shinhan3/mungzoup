@@ -33,18 +33,18 @@ import lombok.ToString;
 		columnNames={"CATEGORY_ID","LEVEL"}
 )
 })
-public class creditVO {
+public class CreditVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CREDIT_ID")
-	private Integer CREDIT_ID;
+	// @Column(name = "CREDIT_ID")
+	private Integer creditId;
 	@ManyToOne
-	@JoinColumn(name = "CATEGORY_ID")
-	private categoryVO category;
-	@Column(name = "LEVEL")
-	private Integer LEVEL;
-	@Column(name = "PERCENT")
-	private Double PERCENT;
-	@Column(name = "ACCUMULATED_VALUE")
-	private Integer ACCUMULATED_VALUE;
+	@JoinColumn(name = "categoryId")
+	private CategoryVO category;
+	// @Column(name = "LEVEL")
+	private Integer level;
+	// @Column(name = "PERCENT")
+	private Double percent;
+	// @Column(name = "ACCUMULATED_VALUE")
+	private Integer accumulatedValue;
 }

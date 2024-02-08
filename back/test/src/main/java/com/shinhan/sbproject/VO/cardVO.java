@@ -26,14 +26,14 @@ import lombok.ToString;
 @Entity
 @Table(name = "card")
 
-public class cardVO {
+public class CardVO {
 	@Id
-	private String CARD_ID;
-	private String EXPIRED_YEAR;
-	private String EXPIRED_MONTH;
-	private String CVC;
-	private String CARD_PASSWORD;
-	private Integer POINT;
+	private String cardId;
+	private String expiredYear;
+	private String expiredMonth;
+	private String cvc;
+	private String cardPassword;
+	private Integer point;
 	@CreationTimestamp
-	private Timestamp INSERT_DAY;
+	private Timestamp insertDay;
 }

@@ -30,20 +30,20 @@ import lombok.ToString;
 @Entity
 @Table(name = "benefit_history")
 
-public class benefitVO {
+public class BenefitVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer BENEFIT_HISTORY_ID;
-	private Boolean BENEFIT_TYPE;
+	private Integer benefitHistoryId;
+	private Boolean benefitType;
 	@ManyToOne
-	@JoinColumn(name = "CARD_ID")
-	private cardVO card;
+	@JoinColumn(name = "cardId")
+	private CardVO card;
 	@CreationTimestamp
-	private Timestamp DATE;
+	private Timestamp date;
 
-	private Boolean IS_MAX_BENEFIT;
-	private Boolean CONFIRMED;
+	private Boolean isMaxBenefit;
+	private Boolean confirmed;
 	@ManyToOne
-	@JoinColumn(name = "CREDIT_ID")
-	private creditVO credit;
+	@JoinColumn(name = "creditId")
+	private CreditVO credit;
 }

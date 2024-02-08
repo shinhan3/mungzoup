@@ -31,16 +31,16 @@ public class storeVO {
 	@Id
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer STORE_ID;
+	private Integer storeId;
 	@ManyToOne
-	@JoinColumn(name = "CATEGORY_ID")
-	private categoryVO category;
-	private Integer POST_COUNT;
-	private String STORE_NAME;
-	private String STORE_ADDRESS;
-	private Double STORE_LATITUDE;
-	private Double STORE_LONGITUDE;
-	private String OPEN_TIME;
-	private String CLOSED_DAYS;
+	@JoinColumn(name = "categoryId")
+	private CategoryVO category;
+	private Integer postCount;
+	private String storeName;
+	private String storeAddress;
+	private Double storeLatitude;
+	private Double storeLongitude;
+	private String openTime;
+	private String closedDays;
 	
 }

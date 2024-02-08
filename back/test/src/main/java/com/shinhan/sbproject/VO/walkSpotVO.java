@@ -37,7 +37,7 @@ public class walkSpotVO {
 	private String spotAddress;
 	
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "userId")
 	private userVO user;
 	
 	

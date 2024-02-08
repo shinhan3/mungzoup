@@ -8,15 +8,15 @@ import {useFocusEffect} from '@react-navigation/core';
 
 const Frame = props => {
   const [data, setData] = React.useState([]);
-  const userId = 'asme12';
+  const userId = 'user1';
   useFocusEffect(
     React.useCallback(() => {
       console.log('마운트될 떄 된다.1');
       axios
         .get(`http://10.0.2.2:5000/getIssuedPageData.do/${userId}`)
         .then(res => {
-          console.log(res.data.length);
-          if (res.data.length > 0) {
+          console.log(res.data[0][1]);
+          if (res.data[0][1] != null) {
             setData([...res.data[0]]);
           } else {
             Alert.alert('', '멍줍카드 먼저 발급 후 이용해주세요', [

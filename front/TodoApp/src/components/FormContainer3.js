@@ -4,7 +4,7 @@ import {Color, FontFamily, FontSize} from '../GlobalStyles';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
 
-const FormContainer3 = () => {
+const FormContainer3 = props => {
   const totalSize = 210;
   const totalPercent = 2.0;
   const [petHospital, setPetHospital] = React.useState(0.0);
@@ -198,7 +198,12 @@ const FormContainer3 = () => {
       <Text style={[styles.title, styles.cate5Position]}>
         <Text style={[styles.text, styles.textTypo]}>{`미라클 조합으로
 `}</Text>
-        <Text style={styles.text1}>5,000원</Text>
+        <Text style={styles.text1}>
+          {props.discount
+            .toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          원
+        </Text>
         <Text style={[styles.text, styles.textTypo]}>을 할인받아요!</Text>
       </Text>
     </View>

@@ -25,9 +25,10 @@ import lombok.ToString;
 @Entity
 @Table(name = "rating_category")
 
-public class ratingCategoryVO {
+public class RatingCategoryVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer RATING_CATEGORY_ID;
-	private String REVIEW_CONTENT;
+	private Integer ratingCategoryId;
+	private String reviewContent;
+	private String image;
 }
