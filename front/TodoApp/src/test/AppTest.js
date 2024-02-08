@@ -34,6 +34,8 @@ import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+global.Buffer = global.Buffer || require('buffer').Buffer;
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({navigation}) {
