@@ -39,7 +39,7 @@ public class PetsVO {
 	private String breed; 
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	private userVO user;
+	private UserVO user;
 	private Double petLatitude;
 	private Double petLongitude;
 

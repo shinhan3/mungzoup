@@ -95,11 +95,11 @@ function BottomTabsRoot({navigation}) {
           </View>
         );
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Frame2"
         component={Frame2}
         options={{headerShown: false}}
-      />
+      /> */}
       <Tab.Screen
         name="PLAYmainwonny"
         component={PLAYmainwonny}

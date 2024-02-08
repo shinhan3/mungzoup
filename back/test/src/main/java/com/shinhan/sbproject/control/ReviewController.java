@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shinhan.sbproject.repository.ratingCategoryRepository;
-import com.shinhan.sbproject.repository.storeRepository;
+import com.shinhan.sbproject.repository.RatingCategoryRepository;
+import com.shinhan.sbproject.repository.StoreRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,10 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewController {
 
     @Autowired
-    storeRepository storeRepo;
+    StoreRepository storeRepo;
 
     @Autowired
-    ratingCategoryRepository reviewRepo;
+    RatingCategoryRepository reviewRepo;
 
     @GetMapping("/review.do/{storeId}")
     public Map<String, Object> displayStoreAndReview(@PathVariable("storeId")Integer storeId){

@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.shinhan.sbproject.VO.userVO;
+import com.shinhan.sbproject.VO.UserVO;
 
-public interface UserRepository extends CrudRepository<userVO, String>{
+public interface UserRepository extends CrudRepository<UserVO, String>{
 	@Query(value ="SELECT (SELECT TIMESTAMPDIFF(MONTH,user.subscribe_day,NOW()) FROM user WHERE user_id = :userId) AS userMenth, "
     +"(SELECT TIMESTAMPDIFF(MONTH,card.INSERT_DAY,NOW()) FROM user JOIN card USING(card_id) WHERE user_id = :userId) AS cardMenth,"
     +"(SELECT DATE_FORMAT(card.INSERT_DAY,'%Y-%m-%d') FROM user JOIN card USING(card_id) WHERE user_id = :userId) AS insertCard, "

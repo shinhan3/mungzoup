@@ -3,7 +3,7 @@ package com.shinhan.sbproject.control;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shinhan.sbproject.VO.testVO;
-import com.shinhan.sbproject.VO.walkSpotVO;
+import com.shinhan.sbproject.VO.WalkSpotVO;
 import com.shinhan.sbproject.repository.testRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +53,7 @@ public class Controller {
         return (List<testVO>) testRep.findAll();
     }
     @PostMapping("/test.do")
-    public void postMethodName(walkSpotVO test1) {
+    public void postMethodName(WalkSpotVO test1) {
         System.out.println(test1.toString()+"===");
     }
     

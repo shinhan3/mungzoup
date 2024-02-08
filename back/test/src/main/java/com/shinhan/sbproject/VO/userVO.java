@@ -27,7 +27,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "user")
 
-public class userVO {
+public class UserVO {
 	@Id
 	private String userId;
 	private String userPassword;

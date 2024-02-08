@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
-import {ScrollView} from 'react-native';
 
 const PLAY5 = ({navigation}) => {
   return (

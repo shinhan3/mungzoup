@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.shinhan.sbproject.VO.userVO;
-import com.shinhan.sbproject.VO.walkSpotVO;
+import com.shinhan.sbproject.VO.UserVO;
+import com.shinhan.sbproject.VO.WalkSpotVO;
 
 
-public interface walkSpotRepository extends CrudRepository<walkSpotVO, Integer>{
-	List<walkSpotVO> findByUser(userVO user);
+public interface WalkSpotRepository extends CrudRepository<WalkSpotVO, Integer>{
+	List<WalkSpotVO> findByUser(UserVO user);
 
 }

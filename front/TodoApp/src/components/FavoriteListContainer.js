@@ -17,10 +17,8 @@ export const FindWalkSpotByUser = () => {
   const [spotList, setSpotList] = React.useState([]);
   const userId = 'user1';
   React.useEffect(() => {
-    axios({
-      url: `http://10.0.2.2:5000/selectWalkSpotAll.do/${userId}`,
-      type: 'get',
-    })
+    axios
+      .get(`http://10.0.2.2:5000/selectWalkSpotAll.do/${userId}`)
       .then(res => {
         setSpotList(res.data);
       })
@@ -37,7 +35,7 @@ export const FindWalkSpotByUser = () => {
           <View style={styles.spotList}>
             <Text>{item.spotName}</Text>
             <Text>{item.spotAddress}</Text>
-            <Text>{getDistanceFormula(lat1, lon1, lat2, lon2)}</Text>
+            {/* <Text>{getDistanceFormula(lat1, lon1, lat2, lon2)}</Text> */}
           </View>
         )}
       />

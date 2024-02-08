@@ -38,7 +38,7 @@ public class AIFaceVO {
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	private userVO user;
+	private UserVO user;
 	
 	@CreationTimestamp
 	private Timestamp aiFaceInsertDay;

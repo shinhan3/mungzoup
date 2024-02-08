@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.shinhan.sbproject.VO.storeVO;
+import com.shinhan.sbproject.VO.StoreVO;
 
-import com.shinhan.sbproject.repository.storeRepository;
+import com.shinhan.sbproject.repository.StoreRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,11 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 public class StoreController {
 
     @Autowired
-    storeRepository storeRepo;
+    StoreRepository storeRepo;
 
     @GetMapping("/storeList.do")
-    public List<storeVO> getStoreList(){
-        List<storeVO> slist = storeRepo.selectAll5();
+    public List<StoreVO> getStoreList(){
+        List<StoreVO> slist = storeRepo.selectAll5();
         return slist;
     }
 }

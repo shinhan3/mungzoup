@@ -32,13 +32,13 @@ public class PaymentVO {
 	private Integer PAY_NUM;
 	@ManyToOne
 	@JoinColumn(name = "storeId")
-	private storeVO store;
+	private StoreVO store;
 	@ManyToOne
 	@JoinColumn(name = "benefitHistoryId")
 	private BenefitVO benefit;
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	private userVO user;
+	private UserVO user;
 	private Integer price;
 	@CreationTimestamp
 	private Timestamp paymentDate;

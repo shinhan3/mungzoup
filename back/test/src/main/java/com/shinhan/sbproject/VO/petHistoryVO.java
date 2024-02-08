@@ -43,10 +43,10 @@ public class PetHistoryVO {
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	private userVO user;
+	private UserVO user;
 	@ManyToOne
 	@JoinColumn(name = "spotId")
-	private walkSpotVO spot;
+	private WalkSpotVO spot;
 	
 	
 }

@@ -2,7 +2,7 @@ package com.shinhan.sbproject.control;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shinhan.sbproject.VO.userVO;
+import com.shinhan.sbproject.VO.UserVO;
 import com.shinhan.sbproject.repository.BenefitRepository;
 import com.shinhan.sbproject.repository.PaymentRepository;
 import com.shinhan.sbproject.repository.UserRepository;
@@ -30,7 +30,7 @@ public class PaymentController {
         List<String[]> result = (List<String[]>) paymentRep.getUserNameAndDiscountPrice(user);
         log.info(result.size()+"");
         if(result.size()==0){
-            userVO userValue = (userVO) userRep.findById(user).orElse(null);
+            UserVO userValue = (UserVO) userRep.findById(user).orElse(null);
             String arr[] = new String[2];
             arr[0] = userValue.getUserName();
             arr[1] = "0";

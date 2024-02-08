@@ -27,7 +27,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "walk_spot")
 
-public class walkSpotVO {
+public class WalkSpotVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer spotId;
@@ -38,7 +38,7 @@ public class walkSpotVO {
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
-	private userVO user;
+	private UserVO user;
 	
 	
 }
