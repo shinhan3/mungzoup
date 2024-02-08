@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 back/.metadata
+front/TOdoApp/package-lock.json
 ### STS ###
 .apt_generated
 .classpath
@@ -38,3 +39,6 @@ build/
 
 ### VS Code ###
 .vscode/
+front/TodoApp/package-lock.json
+front/TodoApp/package-lock.json
+front/TodoApp/package-lock.json
