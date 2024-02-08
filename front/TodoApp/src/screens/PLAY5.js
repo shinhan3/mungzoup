@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import {ScrollView} from 'react-native';
@@ -13,7 +20,7 @@ const PLAY5 = ({navigation}) => {
             <View style={[styles.map1, styles.mapPosition]} />
             <Text style={[styles.title, styles.titleTypo]}>지도</Text>
           </View>
-          <DetailCard />
+          <DetailCard navigation={navigation} />
         </View>
         <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
@@ -22,7 +29,7 @@ const PLAY5 = ({navigation}) => {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.goBack('PLAYmainwonny');
+              navigation.navigate('PLAYmainwonny');
             }}>
             <Image
               style={styles.arrowIcon}

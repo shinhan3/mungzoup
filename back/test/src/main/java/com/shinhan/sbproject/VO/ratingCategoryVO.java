@@ -28,6 +28,7 @@ import lombok.ToString;
 public class RatingCategoryVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Integer ratingCategoryId;
 	private String reviewContent;
 	private String image;

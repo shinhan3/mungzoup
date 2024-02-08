@@ -12,7 +12,8 @@ import FormData from 'form-data';
 import OcrTest from '../components/OcrTest';
 
 const PLAYmainwonny = props => {
-  console.log(props);
+  console.log(props, 'ssss');
+
   return (
     <ScrollView>
       <View style={styles.playmainwonny}>
@@ -25,7 +26,10 @@ const PLAYmainwonny = props => {
           <ContainerCardFormFilter
             dimensions={require('../assets/petbannerimg.png')}
           />
-          <Container dimensionCode={require('../assets/petbannerimg1.png')} />
+          <Container
+            navigation={props.navigation}
+            dimensionCode={require('../assets/petbannerimg1.png')}
+          />
           <FormContainer1 />
         </View>
         <View style={styles.headerPosition}>

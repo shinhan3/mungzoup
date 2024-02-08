@@ -2,20 +2,22 @@ import * as React from 'react';
 import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
 import {FontFamily, Color, FontSize} from '../GlobalStyles';
 
-const StoreInfoContainer = () => {
+const StoreInfoContainer = ({storeInfo}) => {
   return (
     <View style={styles.storeinfoPosition}>
       <View style={[styles.storeInfoDiv, styles.storeinfoPosition]} />
       <Text style={[styles.payTitle, styles.payTypo]}>
-        24시 멍냥마켓 파장점
+        {storeInfo.storeName}
       </Text>
       <Text style={[styles.payDate, styles.textFlexBox]}>
-        서울시 마포구 월드컵북로 68번길 100
+        {storeInfo.storeAddress}
       </Text>
-      <Image
-        style={styles.payCategoryImgIcon}
-        source={require('../assets/paycategoryimg.png')}
-      />
+      {storeInfo.imagePath && (
+        <Image
+          style={styles.payCategoryImgIcon}
+          source={{uri: storeInfo.imagePath}}
+        />
+      )}
       <Pressable
         style={[styles.reviewbtn, styles.reviewbtnLayout]}
         insert-review="리뷰 등록">

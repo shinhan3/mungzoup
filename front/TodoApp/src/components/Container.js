@@ -10,6 +10,7 @@ import {
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 import {useNavigation} from '@react-navigation/native';
 
+
 const Container = ({dimensionCode}) => {
   const navigation = useNavigation();
   return (
@@ -33,17 +34,16 @@ const Container = ({dimensionCode}) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('PLAY5');
-          }}>
-          <View style={[styles.petplacebtn, styles.petplacebtnLayout]}>
-            <View style={[styles.petplacediv, styles.petplacebtnLayout]} />
-            <Text style={[styles.petplacelink, styles.arrowIconPosition]}>
-              추천받으러 가기
-            </Text>
-            <Image
-              style={[styles.arrowIcon, styles.arrowIconPosition]}
-              source={require('../assets/arrow.png')}
-            />
-          </View>
+          }}
+          style={[styles.petplacebtn, styles.petplacebtnLayout]}>
+          <View style={[styles.petplacediv, styles.petplacebtnLayout]} />
+          <Text style={[styles.petplacelink, styles.arrowIconPosition]}>
+            추천받으러 가기
+          </Text>
+          <Image
+            style={[styles.arrowIcon, styles.arrowIconPosition]}
+            source={require('../assets/arrow.png')}
+          />
         </TouchableOpacity>
         <Text style={styles.petBannerTxt2}>{`sns게시물 수 대비 실 결제건수로
 반려인들이 실제로 많이 찾는 장소를 알려드릴게요!`}</Text>

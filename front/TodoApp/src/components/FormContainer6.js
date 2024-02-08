@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
 import {Border, FontSize, FontFamily, Color} from '../GlobalStyles';
 
-const FormContainer6 = () => {
+const FormContainer6 = ({reviewInfo, totalCount}) => {
   return (
     <View style={styles.selectionbox}>
       <View style={styles.storereviewtitle}>
@@ -12,94 +12,24 @@ const FormContainer6 = () => {
           source={require('../assets/check.png')}
         />
         <Text style={styles.participants}>
-          <Text style={styles.text}>46</Text>
+          <Text style={styles.text}>{totalCount}</Text>
           <Text style={styles.text1}>회</Text>
         </Text>
       </View>
-      <View style={[styles.reivew1, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill, styles.barPosition]} />
-        <Image
-          style={[styles.iconImg, styles.iconLayout2]}
-          source={require('../assets/iconimg.png')}
-        />
-        <Text style={[styles.content, styles.countTypo]}>
-          가격이 합리적이에요
-        </Text>
-        <Text style={[styles.count, styles.countTypo]}>25</Text>
-      </View>
-      <View style={[styles.reivew2, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill, styles.barPosition]} />
-        <Image
-          style={[styles.iconImg1, styles.iconLayout]}
-          source={require('../assets/iconimg1.png')}
-        />
-        <Text style={[styles.content, styles.countTypo]}>종류가 다양해요</Text>
-        <Text style={[styles.count, styles.countTypo]}>25</Text>
-      </View>
-      <View style={[styles.reivew3, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill2, styles.barPosition]} />
-        <Text style={[styles.content, styles.countTypo]}>시설이 깔끔해요</Text>
-        <Image
-          style={[styles.iconImg2, styles.iconLayout2]}
-          source={require('../assets/iconimg2.png')}
-        />
-        <Text style={[styles.count2, styles.countTypo]}>16</Text>
-      </View>
-      <View style={[styles.reivew4, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill3, styles.barPosition]} />
-        <Image
-          style={[styles.iconImg3, styles.iconLayout]}
-          source={require('../assets/iconimg3.png')}
-        />
-        <Text style={[styles.content, styles.countTypo]}>품질이 좋아요</Text>
-        <Text style={[styles.count, styles.countTypo]}>11</Text>
-      </View>
-      <View style={[styles.reivew5, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill4, styles.barPosition]} />
-        <Text style={[styles.content, styles.countTypo]}>매장이 넓어요</Text>
-        <Image
-          style={[styles.iconImg4, styles.iconLayout]}
-          source={require('../assets/iconimg4.png')}
-        />
-        <Text style={[styles.count2, styles.countTypo]}>10</Text>
-      </View>
-      <View style={[styles.reivew6, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill5, styles.barPosition]} />
-        <Image
-          style={[styles.iconImg1, styles.iconLayout]}
-          source={require('../assets/iconimg1.png')}
-        />
-        <Text style={[styles.content, styles.countTypo]}>아기자기해요</Text>
-        <Text style={[styles.count5, styles.countTypo]}>7</Text>
-      </View>
-      <View style={[styles.reivew7, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <View style={[styles.barFill6, styles.barPosition]} />
-        <Image
-          style={[styles.iconImg1, styles.iconLayout]}
-          source={require('../assets/iconimg5.png')}
-        />
-        <Text style={[styles.content, styles.countTypo]}>
-          특색 있는 제품이 많아요
-        </Text>
-        <Text style={[styles.count5, styles.countTypo]}>5</Text>
-      </View>
-      <View style={[styles.reivew8, styles.reivewShadowBox]}>
-        <View style={[styles.bar, styles.barPosition]} />
-        <Image
-          style={[styles.iconImg1, styles.iconLayout]}
-          source={require('../assets/iconimg6.png')}
-        />
-        <Text style={[styles.content, styles.countTypo]}>트렌디해요</Text>
-        <View style={[styles.barFill7, styles.barPosition]} />
-        <Text style={[styles.count5, styles.countTypo]}>2</Text>
-      </View>
+
+      {reviewInfo &&
+        Array.isArray(reviewInfo) &&
+        reviewInfo.map((review, seq) => (
+          <View style={styles.reivew1}>
+            <View style={[styles.barFill, styles.barPosition]} />
+            <Image
+              style={[styles.iconImg, styles.iconLayout2]}
+              source={{uri: review.imagePath}}
+            />
+            <Text style={styles.content}>{review.reviewContent}</Text>
+            <Text style={styles.count}>{review.count}</Text>
+          </View>
+        ))}
     </View>
   );
 };
@@ -118,6 +48,10 @@ const styles = StyleSheet.create({
     left: 0,
     width: 300,
     position: 'absolute',
+  },
+  barFill: {
+    backgroundColor: Color.colorLightcyan_100,
+    width: 198,
   },
   barPosition: {
     borderRadius: Border.br_8xs,
@@ -186,7 +120,7 @@ const styles = StyleSheet.create({
   },
   storereviewtitle: {
     left: 5,
-    width: 125,
+    width: 150,
     height: 43,
     top: 0,
     position: 'absolute',
@@ -194,10 +128,6 @@ const styles = StyleSheet.create({
   bar: {
     backgroundColor: Color.colorWhitesmoke_200,
     width: 300,
-  },
-  barFill: {
-    backgroundColor: Color.colorLightcyan_100,
-    width: 198,
   },
   iconImg: {
     top: 10,
