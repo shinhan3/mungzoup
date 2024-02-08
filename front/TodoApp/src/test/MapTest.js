@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import hi from '../image/hi.jpg';
+import hi from '../image/puppy.png';
 import axios from 'axios';
 
 function MapTest() {
@@ -29,10 +29,9 @@ function MapTest() {
                 },
               )
               .then(response => {
-                console.log(response.data);
                 console.log(response.data.documents[0].address_name);
-                console.log(response.data.documents[0].y); //위도
-                console.log(response.data.documents[0].x); //경도
+                console.log(response.data.documents[0].y);
+                console.log(response.data.documents[0].x);
                 const location = response.data.documents[0];
               })
               .catch(err => {
@@ -41,11 +40,11 @@ function MapTest() {
           }}>
           <Marker
             coordinate={{latitude: 37.55929, longitude: 126.9227}}
-            title="ANT 빌딩"
+            title="멍줍이"
             description="테스트">
             <Image
               source={hi}
-              style={{width: 30, height: 30}}
+              style={{width: 35, height: 35}}
               resizeMethod="contain"></Image>
           </Marker>
           <Marker

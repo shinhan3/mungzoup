@@ -8,12 +8,9 @@ import PLAY from '../screens/PLAY';
 import Frame1 from '../screens/Frame1';
 import PLAY1 from '../screens/PLAY1';
 import PLAY2 from '../screens/PLAY2';
-import Frame2 from '../screens/Frame2';
-import Frame3 from '../screens/Frame3';
 import PLAY3 from '../screens/PLAY3';
 import PLAY4 from '../screens/PLAY4';
 import Wonny from '../screens/Wonny';
-import Frame4 from '../screens/Frame4';
 import PLAYmainwonny1 from '../screens/PLAYmainwonny1';
 import MenuHome from '../components/MenuHome';
 import MenuHome1 from '../components/MenuHome1';
@@ -34,6 +31,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MyDaeng from '../screens/MyDaengMain';
+import MyDaenegRegister from '../screens/MyDaengRegister';
+import MyDaengDetail from '../screens/MyDaengUpdate';
+import MyDaengUpdate from '../screens/MyDaengUpdate';
 import SelectMap from '../screens/SelectMap';
 
 const Stack = createNativeStackNavigator();
@@ -103,6 +104,11 @@ function BottomTabsRoot({navigation}) {
         options={{headerShown: false}}
       />
       <Tab.Screen
+        name="MyDaeng"
+        component={MyDaeng}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
         name="Frame"
         component={Frame}
         options={{headerShown: false}}
@@ -155,6 +161,11 @@ const AppTest = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
+              name="MyDaeng"
+              component={MyDaeng}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
               name="Frame1"
               component={Frame1}
               options={{headerShown: false}}
@@ -180,8 +191,8 @@ const AppTest = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="Frame3"
-              component={Frame3}
+              name="MyDaenegRegister"
+              component={MyDaenegRegister}
               options={{headerShown: false}}
             />
             <Stack.Screen
@@ -200,8 +211,8 @@ const AppTest = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="Frame4"
-              component={Frame4}
+              name="MyDaengUpdate"
+              component={MyDaengUpdate}
               options={{headerShown: false}}
             />
             <Stack.Screen

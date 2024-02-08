@@ -1,11 +1,13 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image,ScrollView,TouchableOpacity} from 'react-native';
 import FormContainer7 from '../components/FormContainer7';
 import CardContainer2 from '../components/CardContainer2';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 
-const PLAY4 = () => {
+const PLAY4 = (props) => {
+  console.log(props);
   return (
+    <ScrollView>
     <View style={styles.play}>
       <View style={styles.main}>
         <Text style={[styles.contentHead, styles.contentHeadFlexBox]}>
@@ -23,12 +25,15 @@ const PLAY4 = () => {
         <Text style={[styles.headerTitle, styles.contentHeadFlexBox]}>
           산책의 역사
         </Text>
+        <TouchableOpacity onPress={()=>{props.navigation.goBack('MyDaeng');}}>
         <Image
           style={styles.arrowIcon}
           source={require('../assets/arrow2.png')}
         />
+        </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
