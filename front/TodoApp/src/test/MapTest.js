@@ -11,8 +11,7 @@ function MapTest() {
         <MapView
           style={{flex: 1}}
           provider={PROVIDER_GOOGLE}
-          customMapStyle={[]}
-          //신한DS 위치 정적으로 박아놨음.
+          customMapStyle={MapStyle}
           initialRegion={{
             latitude: 37.55929,
             longitude: 126.9227,
@@ -42,6 +41,15 @@ function MapTest() {
           }}>
           <Marker
             coordinate={{latitude: 37.55929, longitude: 126.9227}}
+            title="ANT 빌딩"
+            description="테스트">
+            <Image
+              source={hi}
+              style={{width: 30, height: 30}}
+              resizeMethod="contain"></Image>
+          </Marker>
+          <Marker
+            coordinate={{latitude: 37.5595, longitude: 126.9227}}
             title="ANT 빌딩"
             description="테스트">
             <Image

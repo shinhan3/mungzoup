@@ -38,14 +38,14 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({navigation}) {
   const [bottomTabItemsNormal] = React.useState([
-    <MenuHome1 />,
-    <MenuPlay1 />,
     <MenuPet1 />,
+    <MenuPlay1 />,
+    <MenuHome1 />,
   ]);
   const [bottomTabItemsActive] = React.useState([
-    <MenuHome />,
-    <MenuPlay />,
     <MenuPet />,
+    <MenuPlay />,
+    <MenuHome />,
   ]);
   return (
     <Tab.Navigator
@@ -58,13 +58,21 @@ function BottomTabsRoot({navigation}) {
               width: 360,
               height: 62,
               flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
             {bottomTabItemsNormal.map((item, index) => {
               const isFocused = state.index === index;
               return (
                 <Pressable
+                  style={{
+                    width: 102,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
                   key={index}
                   onPress={() => {
+                    console.log(state.routes[index].name);
                     navigation.navigate({
                       name: state.routes[index].name,
                       merge: true,
@@ -80,8 +88,8 @@ function BottomTabsRoot({navigation}) {
         );
       }}>
       <Tab.Screen
-        name="Frame"
-        component={Frame}
+        name="Frame2"
+        component={Frame2}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -90,8 +98,13 @@ function BottomTabsRoot({navigation}) {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Frame2"
-        component={Frame2}
+        name="Frame"
+        component={Frame}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Frame1"
+        component={Frame1}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
