@@ -37,6 +37,8 @@ import MyDaengDetail from '../screens/MyDaengUpdate';
 import MyDaengUpdate from '../screens/MyDaengUpdate';
 import SelectMap from '../screens/SelectMap';
 
+global.Buffer = global.Buffer || require('buffer').Buffer;
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({navigation}) {
