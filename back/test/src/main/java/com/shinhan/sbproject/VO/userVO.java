@@ -33,6 +33,7 @@ public class userVO {
 	private String userPassword;
 	private String userName;
 	@OneToOne
+
 	@JoinColumn(name = "cardId")
 	private CardVO card;
 	@CreationTimestamp
