@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   menuPlay: {
     height: 38,
-    width: 25,
+    width: 32,
   },
 });
 

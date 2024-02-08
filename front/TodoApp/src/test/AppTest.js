@@ -25,6 +25,7 @@ import BackgroundBtn from '../components/BackgroundBtn';
 import SexSelect from '../components/SexSelect';
 import SexSelectSuText from '../components/SexSelectSuText';
 import PLAY5 from '../screens/PLAY5';
+import InsertWalkSpot from '../screens/InsertWalkSpot';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
@@ -34,19 +35,20 @@ import MyDaeng from '../screens/MyDaengMain';
 import MyDaenegRegister from '../screens/MyDaengRegister';
 import MyDaengDetail from '../screens/MyDaengUpdate';
 import MyDaengUpdate from '../screens/MyDaengUpdate';
+import SelectMap from '../screens/SelectMap';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 function BottomTabsRoot({navigation}) {
   const [bottomTabItemsNormal] = React.useState([
-    <MenuHome1 />,
-    <MenuPlay1 />,
     <MenuPet1 />,
+    <MenuPlay1 />,
+    <MenuHome1 />,
   ]);
   const [bottomTabItemsActive] = React.useState([
-    <MenuHome />,
-    <MenuPlay />,
     <MenuPet />,
+    <MenuPlay />,
+    <MenuHome />,
   ]);
   return (
     <Tab.Navigator
@@ -59,17 +61,28 @@ function BottomTabsRoot({navigation}) {
               width: 360,
               height: 62,
               flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
             {bottomTabItemsNormal.map((item, index) => {
               const isFocused = state.index === index;
               return (
                 <Pressable
+                  style={
+                    index < 3 && {
+                      width: 102,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }
+                  }
                   key={index}
                   onPress={() => {
-                    navigation.navigate({
-                      name: state.routes[index].name,
-                      merge: true,
-                    });
+                    console.log(state.routes[index].name);
+                    index < 3 &&
+                      navigation.navigate({
+                        name: state.routes[index].name,
+                        merge: true,
+                      });
                   }}>
                   {activeIndex === index
                     ? bottomTabItemsActive[index] || item
@@ -81,8 +94,8 @@ function BottomTabsRoot({navigation}) {
         );
       }}>
       <Tab.Screen
-        name="Frame"
-        component={Frame}
+        name="Frame2"
+        component={Frame2}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -93,6 +106,16 @@ function BottomTabsRoot({navigation}) {
       <Tab.Screen
         name="MyDaeng"
         component={MyDaeng}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Frame"
+        component={Frame}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Frame1Test"
+        component={Frame1}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
@@ -145,6 +168,16 @@ const AppTest = () => {
             <Stack.Screen
               name="Frame1"
               component={Frame1}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="InsertWalkSpot"
+              component={InsertWalkSpot}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="SelectMap"
+              component={SelectMap}
               options={{headerShown: false}}
             />
             <Stack.Screen

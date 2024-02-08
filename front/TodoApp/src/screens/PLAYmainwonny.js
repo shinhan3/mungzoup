@@ -6,7 +6,8 @@ import Container from '../components/Container';
 import FormContainer1 from '../components/FormContainer1';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 
-const PLAYmainwonny = () => {
+const PLAYmainwonny = props => {
+  console.log(props);
   return (
     <ScrollView>
       <View style={styles.playmainwonny}>
@@ -14,6 +15,7 @@ const PLAYmainwonny = () => {
           <FormContainer2
             dimensions={require('../assets/image-41.png')}
             productDimensions={require('../assets/dogimg.png')}
+            navigation={props.navigation}
           />
           <ContainerCardFormFilter
             dimensions={require('../assets/petbannerimg.png')}

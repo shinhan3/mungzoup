@@ -1,8 +1,17 @@
 import * as React from 'react';
-import {Text, StyleSheet, View, ImageSourcePropType, Image} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ImageSourcePropType,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
+import {useNavigation} from '@react-navigation/native';
 
 const ContainerCardFormFilter = ({dimensions}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.petBanner2}>
       <Text style={[styles.petBannerTitle, styles.eventTextTypo]}>
@@ -22,21 +31,27 @@ const ContainerCardFormFilter = ({dimensions}) => {
             styles.petPosition,
           ]}>{`멍줍이 ‘전국 반려동물 동반 가능 문화시설 위치 데이터’를
 기반으로 분석했어요.`}</Text>
-        <View
-          style={[styles.recommandplacebtn, styles.recommandplacebtnLayout]}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log(navigation);
+            navigation.navigate('PLAY2');
+          }}>
           <View
-            style={[styles.recommandplacediv, styles.recommandplacebtnLayout]}
-          />
-          <Image
-            style={[styles.arrowIcon, styles.iconPosition]}
-            source={require('../assets/arrow1.png')}
-          />
-          <View style={[styles.recommandplacelink, styles.eventTextLayout]}>
-            <Text style={[styles.eventText, styles.eventTextLayout]}>
-              보러가기
-            </Text>
+            style={[styles.recommandplacebtn, styles.recommandplacebtnLayout]}>
+            <View
+              style={[styles.recommandplacediv, styles.recommandplacebtnLayout]}
+            />
+            <Image
+              style={[styles.arrowIcon, styles.iconPosition]}
+              source={require('../assets/arrow1.png')}
+            />
+            <View style={[styles.recommandplacelink, styles.eventTextLayout]}>
+              <Text style={[styles.eventText, styles.eventTextLayout]}>
+                보러가기
+              </Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
         <Image
           style={[styles.petBannerImgIcon, styles.iconPosition]}
           source={dimensions}

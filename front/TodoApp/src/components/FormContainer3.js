@@ -1,8 +1,44 @@
-import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { Color, FontFamily, FontSize } from "../GlobalStyles";
+import * as React from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import {Color, FontFamily, FontSize} from '../GlobalStyles';
+import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
 
-const FormContainer3 = () => {
+const FormContainer3 = props => {
+  const totalSize = 210;
+  const totalPercent = 2.0;
+  const [petHospital, setPetHospital] = React.useState(0.0);
+  const [petShop, setPetShop] = React.useState(0.0);
+  const [restaurant, setRestaurant] = React.useState(0.0);
+  const [beauty, setBeauty] = React.useState(0.0);
+  const [consignmentManagement, setConsignmentManagement] = React.useState(0.0);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios.get('http://10.0.2.2:5000/getbenefitPre.do').then(res => {
+        // console.log(res.data);
+        res.data.map((value, index) => {
+          console.log(value);
+          switch (value[0]) {
+            case '식당/카페':
+              setRestaurant(value[1]);
+              break;
+            case '반려동물용품':
+              setPetShop(value[1]);
+              break;
+            case '동물병원':
+              setPetHospital(value[1]);
+              break;
+            case '미용':
+              setBeauty(value[1]);
+              break;
+            case '위탁관리':
+              setConsignmentManagement(value[1]);
+              break;
+          }
+        });
+      });
+    }, []),
+  );
   return (
     <View style={[styles.miraclebenefit, styles.cateDivLayout]}>
       <View style={[styles.cateDiv, styles.catePosition]} />
@@ -22,10 +58,18 @@ const FormContainer3 = () => {
               style={[
                 styles.cate1ThismonthGraphItem,
                 styles.thismonthItemPosition,
+                {width: (petHospital / totalPercent) * totalSize},
               ]}
             />
           </View>
-          <Text style={[styles.percent, styles.percentLayout]}>0.4%</Text>
+          <Text
+            style={[
+              styles.percent,
+              styles.percentLayout,
+              {width: (petHospital / totalPercent) * totalSize - 20},
+            ]}>
+            {petHospital}%
+          </Text>
         </View>
       </View>
       <View style={[styles.cate2, styles.cateLayout]}>
@@ -44,10 +88,18 @@ const FormContainer3 = () => {
               style={[
                 styles.cate2ThismonthGraphItem,
                 styles.thismonthItemPosition,
+                {width: (petShop / totalPercent) * totalSize},
               ]}
             />
           </View>
-          <Text style={[styles.percent1, styles.percentTypo]}>1.2%</Text>
+          <Text
+            style={[
+              styles.percent1,
+              styles.percentTypo,
+              {width: (petShop / totalPercent) * totalSize - 20},
+            ]}>
+            {petShop}%
+          </Text>
         </View>
       </View>
       <View style={[styles.cate3, styles.cateLayout]}>
@@ -66,10 +118,18 @@ const FormContainer3 = () => {
               style={[
                 styles.cate1ThismonthGraphItem,
                 styles.thismonthItemPosition,
+                {width: (restaurant / totalPercent) * totalSize},
               ]}
             />
           </View>
-          <Text style={[styles.percent2, styles.percentTypo]}>0.4%</Text>
+          <Text
+            style={[
+              styles.percent1,
+              styles.percentTypo,
+              {width: (restaurant / totalPercent) * totalSize - 20},
+            ]}>
+            {restaurant}%
+          </Text>
         </View>
       </View>
       <View style={[styles.cate4, styles.cateLayout]}>
@@ -88,10 +148,18 @@ const FormContainer3 = () => {
               style={[
                 styles.cate4ThismonthGraphItem,
                 styles.thismonthItemPosition,
+                {width: (beauty / totalPercent) * totalSize},
               ]}
             />
           </View>
-          <Text style={[styles.percent3, styles.percentTypo]}>0.8%</Text>
+          <Text
+            style={[
+              styles.percent1,
+              styles.percentTypo,
+              {width: (beauty / totalPercent) * totalSize - 20},
+            ]}>
+            {beauty}%
+          </Text>
         </View>
       </View>
       <View style={[styles.cate5, styles.cate5Position]}>
@@ -107,10 +175,18 @@ const FormContainer3 = () => {
               style={[
                 styles.cate5ThismonthGraphItem,
                 styles.thismonthItemPosition,
+                {width: (consignmentManagement / totalPercent) * totalSize},
               ]}
             />
           </View>
-          <Text style={[styles.percent4, styles.percentTypo]}>1.6%</Text>
+          <Text
+            style={[
+              styles.percent1,
+              styles.percentTypo,
+              {width: (consignmentManagement / totalPercent) * totalSize - 20},
+            ]}>
+            {consignmentManagement}%
+          </Text>
         </View>
       </View>
       <View style={styles.legend}>
@@ -122,7 +198,12 @@ const FormContainer3 = () => {
       <Text style={[styles.title, styles.cate5Position]}>
         <Text style={[styles.text, styles.textTypo]}>{`미라클 조합으로
 `}</Text>
-        <Text style={styles.text1}>5,000원</Text>
+        <Text style={styles.text1}>
+          {props.discount
+            .toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+          원
+        </Text>
         <Text style={[styles.text, styles.textTypo]}>을 할인받아요!</Text>
       </Text>
     </View>
@@ -133,7 +214,7 @@ const styles = StyleSheet.create({
   cateDivLayout: {
     height: 405,
     width: 360,
-    position: "absolute",
+    position: 'absolute',
   },
   catePosition: {
     top: 0,
@@ -143,17 +224,17 @@ const styles = StyleSheet.create({
     width: 307,
     left: 30,
     height: 18,
-    position: "absolute",
+    position: 'absolute',
   },
   textTypo: {
     color: Color.colorDarkslategray_200,
     fontFamily: FontFamily.notoSansKRMedium,
-    fontWeight: "500",
+    fontWeight: '500',
   },
   cate1Layout: {
     height: 12,
     width: 228,
-    position: "absolute",
+    position: 'absolute',
   },
   thismonthChildPosition: {
     backgroundColor: Color.colorWhitesmoke_300,
@@ -164,60 +245,60 @@ const styles = StyleSheet.create({
   thismonthItemPosition: {
     backgroundColor: Color.new1,
     left: 0,
-    position: "absolute",
+    position: 'absolute',
   },
   percentLayout: {
     width: 26,
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex',
   },
   percentTypo: {
     color: Color.colorWhitesmoke_300,
-    textAlign: "right",
+    textAlign: 'right',
     fontSize: FontSize.size_4xs_6,
     fontFamily: FontFamily.notoSansKRMedium,
-    fontWeight: "500",
+    fontWeight: '500',
     top: 0,
-    position: "absolute",
+    position: 'absolute',
   },
   cate5Position: {
     left: 28,
-    position: "absolute",
+    position: 'absolute',
   },
   cate5Layout: {
-    width: 231,
+    width: 210,
     height: 12,
-    position: "absolute",
+    position: 'absolute',
   },
   percentTypo1: {
-    textAlign: "right",
+    textAlign: 'right',
     fontFamily: FontFamily.notoSansKRMedium,
-    fontWeight: "500",
+    fontWeight: '500',
     top: 0,
-    position: "absolute",
+    position: 'absolute',
   },
   cateDiv: {
     backgroundColor: Color.colorWhitesmoke_100,
     height: 405,
     width: 360,
-    position: "absolute",
+    position: 'absolute',
   },
   cateName: {
     fontSize: FontSize.size_smi_2,
-    textAlign: "left",
+    textAlign: 'left',
     top: 0,
     left: 0,
-    position: "absolute",
+    position: 'absolute',
   },
   cate1Info: {
-    width: 45,
+    width: 50,
     height: 18,
-    position: "absolute",
+    position: 'absolute',
   },
   cate1ThismonthGraphChild: {
     height: 12,
-    width: 228,
-    position: "absolute",
+    width: 210,
+    position: 'absolute',
   },
   cate1ThismonthGraphItem: {
     borderRadius: 6,
@@ -232,15 +313,15 @@ const styles = StyleSheet.create({
   },
   percent: {
     color: Color.colorWhitesmoke_200,
-    textAlign: "right",
+    textAlign: 'right',
     fontFamily: FontFamily.notoSansKRMedium,
-    fontWeight: "500",
+    fontWeight: '500',
     top: 0,
-    position: "absolute",
+    position: 'absolute',
     fontSize: FontSize.size_4xs_6,
     width: 26,
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex',
     left: 17,
   },
   cate1Miracle: {
@@ -252,9 +333,9 @@ const styles = StyleSheet.create({
     height: 18,
   },
   cate2Info: {
-    width: 68,
+    width: 70,
     height: 18,
-    position: "absolute",
+    position: 'absolute',
   },
   cate2ThismonthGraphItem: {
     width: 137,
@@ -264,10 +345,21 @@ const styles = StyleSheet.create({
     top: 0,
   },
   percent1: {
-    left: 109,
+    // left: 109,
+    // width: 26,
+    // alignItems: 'center',
+    // display: 'flex',
+    color: Color.colorWhitesmoke_200,
+    textAlign: 'right',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontWeight: '500',
+    top: 0,
+    position: 'absolute',
+    fontSize: FontSize.size_4xs_6,
     width: 26,
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex',
+    left: 17,
   },
   cate2: {
     top: 189,
@@ -276,12 +368,12 @@ const styles = StyleSheet.create({
   cate3Info: {
     width: 57,
     height: 18,
-    position: "absolute",
+    position: 'absolute',
   },
   percent2: {
     width: 26,
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex',
     left: 17,
     color: Color.colorWhitesmoke_300,
   },
@@ -292,7 +384,7 @@ const styles = StyleSheet.create({
   cate4Info: {
     width: 23,
     height: 18,
-    position: "absolute",
+    position: 'absolute',
   },
   cate4ThismonthGraphItem: {
     width: 90,
@@ -353,21 +445,21 @@ const styles = StyleSheet.create({
     left: 274,
     width: 64,
     height: 9,
-    position: "absolute",
+    position: 'absolute',
   },
   text: {
     fontSize: FontSize.size_mini_7,
   },
   text1: {
     fontSize: FontSize.size_mid_1,
-    fontWeight: "700",
+    fontWeight: '700',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,
   },
   title: {
     top: 25,
     lineHeight: 24,
-    textAlign: "left",
+    textAlign: 'left',
   },
   miraclebenefit: {
     top: 284,

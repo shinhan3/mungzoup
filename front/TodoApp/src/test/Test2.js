@@ -172,6 +172,18 @@ function Test2(props) {
             onPress={() => {
               props.navigation.navigate('InsertWalkSpot');
             }}></Button>
+          <Button
+            title="테스트"
+            onPress={() => {
+              axios.post('http://10.0.2.2:5000/test.do', null, {
+                params: {
+                  SPOT_NAME: 'test',
+                  SPOT_LATITUDE: 127.01235,
+                  SPOT_LONGITUDE: 36.465423,
+                  SPOT_ADDRESS: 'test2',
+                },
+              });
+            }}></Button>
         </View>
       </View>
 
