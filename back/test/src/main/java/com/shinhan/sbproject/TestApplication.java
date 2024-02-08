@@ -49,7 +49,7 @@ public class TestApplication {
 		//져니 브랜치 생성 완 
 	}
 
-	@Scheduled(fixedDelay = 10000000) 
+	// @Scheduled(fixedDelay = 10000000) 
 	public void scheduleFixedRateTask() {
 		List<String> users=userRep.getUsers();
 		creditMap = new HashMap<>();
