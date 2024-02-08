@@ -1,8 +1,15 @@
 import * as React from 'react';
-import {Text, StyleSheet, View, ImageSourcePropType, Image} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ImageSourcePropType,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 
-const Container = ({dimensionCode}) => {
+const Container = ({dimensionCode, navigation}) => {
   return (
     <View style={styles.petBanner3}>
       <Text style={[styles.petBannerTitle, styles.text2Typo]}>
@@ -21,7 +28,11 @@ const Container = ({dimensionCode}) => {
           </Text>
           <Text style={styles.text5}>을 추천해요!</Text>
         </Text>
-        <View style={[styles.petplacebtn, styles.petplacebtnLayout]}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('PLAY5');
+          }}
+          style={[styles.petplacebtn, styles.petplacebtnLayout]}>
           <View style={[styles.petplacediv, styles.petplacebtnLayout]} />
           <Text style={[styles.petplacelink, styles.arrowIconPosition]}>
             추천받으러 가기
@@ -30,7 +41,7 @@ const Container = ({dimensionCode}) => {
             style={[styles.arrowIcon, styles.arrowIconPosition]}
             source={require('../assets/arrow.png')}
           />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.petBannerTxt2}>{`sns게시물 수 대비 실 결제건수로
 반려인들이 실제로 많이 찾는 장소를 알려드릴게요!`}</Text>
       </View>

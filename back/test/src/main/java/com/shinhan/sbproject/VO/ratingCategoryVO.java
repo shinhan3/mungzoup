@@ -30,4 +30,5 @@ public class ratingCategoryVO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer RATING_CATEGORY_ID;
 	private String REVIEW_CONTENT;
+	private String IMAGE;
 }

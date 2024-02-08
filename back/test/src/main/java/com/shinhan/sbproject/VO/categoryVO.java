@@ -29,4 +29,5 @@ public class categoryVO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer CATEGORY_ID;
 	private String CATEGORY_NAME;
+	private String IMAGE;
 }

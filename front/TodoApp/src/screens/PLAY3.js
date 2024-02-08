@@ -1,26 +1,50 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import FormContainer6 from '../components/FormContainer6';
 import StoreInfoContainer from '../components/StoreInfoContainer';
 import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
 import {FontSize, FontFamily, Color} from '../GlobalStyles';
+import axios from 'axios';
 
-const PLAY3 = () => {
+const PLAY3 = ({navigation, route}) => {
+  const {storeId} = route.params;
+  const [storeInfo, setStoreInfo] = React.useState({});
+  const [reviewInfo, setReviewInfo] = React.useState({});
+  const [totalCount, setTotalCount] = React.useState();
+  React.useEffect(() => {
+    //console.log(storeId);
+    axios
+      .get(`http://10.0.2.2:5000/review.do/${storeId}`)
+      .then(res => {
+        // console.log(res.data.storeInfo);
+        // console.log(res.data.reviewInfo);
+        // console.log(res.data.totalCount);
+        setStoreInfo(res.data.storeInfo);
+        setReviewInfo(res.data.reviewInfo);
+        setTotalCount(res.data.totalCount);
+      })
+      .catch();
+  }, []);
   return (
     <View style={styles.play}>
       <View style={styles.main}>
-        <FormContainer6 />
-        <StoreInfoContainer />
+        <FormContainer6 reviewInfo={reviewInfo} totalCount={totalCount} />
+        <StoreInfoContainer storeInfo={storeInfo} />
         <Image
           style={styles.arrowIcon}
           source={require('../assets/arrow7.png')}
         />
         <Text style={styles.foldBtn}>접기</Text>
       </View>
-      <MiracleBenefitContainer
-        dimensionCode={require('../assets/arrow8.png')}
-        benefits="리뷰"
-      />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('PLAY5');
+        }}>
+        <MiracleBenefitContainer
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="리뷰"
+        />
+      </TouchableOpacity>
     </View>
   );
 };
