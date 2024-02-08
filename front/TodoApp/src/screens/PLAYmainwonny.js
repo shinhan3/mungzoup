@@ -11,7 +11,8 @@ import RNFS from 'react-native-fs';
 import FormData from 'form-data';
 import OcrTest from '../components/OcrTest';
 
-const PLAYmainwonny = () => {
+const PLAYmainwonny = props => {
+  console.log(props);
   return (
     <ScrollView>
       <View style={styles.playmainwonny}>
@@ -19,6 +20,7 @@ const PLAYmainwonny = () => {
           <FormContainer2
             dimensions={require('../assets/image-41.png')}
             productDimensions={require('../assets/dogimg.png')}
+            navigation={props.navigation}
           />
           <ContainerCardFormFilter
             dimensions={require('../assets/petbannerimg.png')}

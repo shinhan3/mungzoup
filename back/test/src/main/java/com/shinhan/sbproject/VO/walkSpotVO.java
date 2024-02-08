@@ -30,14 +30,14 @@ import lombok.ToString;
 public class walkSpotVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer SPOT_ID;
-	private String SPOT_NAME;
-	private Double SPOT_LATITUDE;
-	private Double SPOT_LONGITUDE;
-	private String SPOT_ADDRESS;
+	private Integer spotId;
+	private String spotName;
+	private Double spotLatitude;
+	private Double spotLongitude;
+	private String spotAddress;
 	
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "userId")
 	private userVO user;
 	
 	

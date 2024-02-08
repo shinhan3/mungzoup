@@ -27,23 +27,23 @@ import lombok.ToString;
 @Entity
 @Table(name = "payment")
 
-public class paymentVO {
+public class PaymentVO {
 	@Id
 	private Integer PAY_NUM;
 	@ManyToOne
-	@JoinColumn(name = "STORE_ID")
+	@JoinColumn(name = "storeId")
 	private storeVO store;
 	@ManyToOne
-	@JoinColumn(name = "BENEFIT_HISTORY_ID")
-	private benefitVO benefit;
+	@JoinColumn(name = "benefitHistoryId")
+	private BenefitVO benefit;
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
-	private userVO USER;
-	private Integer PRICE;
+	@JoinColumn(name = "userId")
+	private userVO user;
+	private Integer price;
 	@CreationTimestamp
-	private Timestamp PAYMENT_DATE;
+	private Timestamp paymentDate;
 	@ManyToOne
-	@JoinColumn(name = "RATING_CATEGORY_ID")
-	private ratingCategoryVO ratingCategory;
+	@JoinColumn(name = "ratingCategoryId")
+	private RatingCategoryVO ratingCategory;
 	
 }
