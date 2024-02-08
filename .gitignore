@@ -14,6 +14,7 @@ front/TOdoApp/package-lock.json
 .springBeans
 .sts4-cache
 yarn.lock
+package-lock.json
 # *.properties
 application.properties
 awsAuth.properties
