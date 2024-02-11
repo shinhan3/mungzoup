@@ -100,14 +100,15 @@ function BottomTabsRoot({navigation}) {
         component={Frame2}
         options={{headerShown: false}}
       /> */}
-      <Tab.Screen
-        name="PLAYmainwonny"
-        component={PLAYmainwonny}
-        options={{headerShown: false}}
-      />
+
       <Tab.Screen
         name="MyDaeng"
         component={MyDaeng}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="PLAYmainwonny"
+        component={PLAYmainwonny}
         options={{headerShown: false}}
       />
       <Tab.Screen
