@@ -16,7 +16,6 @@ const MiracleBenefitContainer = ({dimensionCode, benefits, navigation, go}) => {
       <View style={[styles.headerDiv, styles.headerPosition]} />
       <TouchableOpacity
         onPress={() => {
-          console.log(navigation);
           navigation.navigate(go);
         }}>
         <Image style={styles.arrowIcon} source={dimensionCode} />

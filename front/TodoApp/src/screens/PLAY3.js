@@ -29,22 +29,24 @@ const PLAY3 = ({navigation, route}) => {
     <View style={styles.play}>
       <View style={styles.main}>
         <FormContainer6 reviewInfo={reviewInfo} totalCount={totalCount} />
-        <StoreInfoContainer storeInfo={storeInfo} />
+        <StoreInfoContainer
+          storeInfo={storeInfo}
+          storeId={storeId}
+          navigation={navigation}
+        />
         <Image
           style={styles.arrowIcon}
           source={require('../assets/arrow7.png')}
         />
         <Text style={styles.foldBtn}>접기</Text>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('PLAY5');
-        }}>
-        <MiracleBenefitContainer
-          dimensionCode={require('../assets/arrow8.png')}
-          benefits="리뷰"
-        />
-      </TouchableOpacity>
+
+      <MiracleBenefitContainer
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="리뷰"
+        navigation={navigation}
+        go="PLAY5"
+      />
     </View>
   );
 };

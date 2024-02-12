@@ -12,7 +12,7 @@ const OcrTest = () => {
   const [ocrResult, setOcrResult] = React.useState(null);
 
   const imagePath =
-    'https://newsimg.hankookilbo.com/2018/01/08/201801081486192270_1.jpg';
+    'https://mblogthumb-phinf.pstatic.net/MjAyMjA3MDdfNzQg/MDAxNjU3MTc0ODg0MDg1.5q0e4cKC-y4LNtm0WTpDh1mTboBcI1zrY_pvc_Vqrdog.QbfFHjUMv2Dt7-0eSzSCD04k4r5LOGeKwYjrzXNTyKMg.JPEG.wnlsml/SE-3cccb10b-a460-4ffa-94ce-9150a0681444.jpg?type=w800';
 
   // 이미지를 base64 형식으로 인코딩한 문자열을 사용하여 OCR 요청
   async function requestWithBase64() {

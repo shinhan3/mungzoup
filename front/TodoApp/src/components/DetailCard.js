@@ -38,12 +38,12 @@ const DetailCard = ({navigation}) => {
         storeList.map((store, seq) => (
           <View style={styles.my}>
             <Text style={styles.textTypo1}>
-              <Text style={styles.text1}>{store.store_NAME}</Text>
+              <Text style={styles.text1}>{store.storeName}</Text>
             </Text>
             <Pressable
               style={styles.button}
               onPress={() =>
-                navigation.navigate('PLAY3', {storeId: store.store_ID})
+                navigation.navigate('PLAY3', {storeId: store.storeId})
               }>
               <View style={[styles.backgroundbtn, styles.buttonLayout]} />
               <Text style={[styles.textBtn, styles.textTypo]}>{`자세히

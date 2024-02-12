@@ -36,6 +36,7 @@ import MyDaenegRegister from '../screens/MyDaengRegister';
 import MyDaengDetail from '../screens/MyDaengUpdate';
 import MyDaengUpdate from '../screens/MyDaengUpdate';
 import SelectMap from '../screens/SelectMap';
+import OcrInput from '../components/OcrInput';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -225,6 +226,11 @@ const AppTest = () => {
             <Stack.Screen
               name="PLAY5"
               component={PLAY5}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="OcrInput"
+              component={OcrInput}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

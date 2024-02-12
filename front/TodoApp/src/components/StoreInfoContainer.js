@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
 import {FontFamily, Color, FontSize} from '../GlobalStyles';
+import OcrTest from './OcrTest';
 
-const StoreInfoContainer = ({storeInfo}) => {
+const StoreInfoContainer = ({storeInfo, storeId, navigation}) => {
   return (
     <View style={styles.storeinfoPosition}>
       <View style={[styles.storeInfoDiv, styles.storeinfoPosition]} />
@@ -19,6 +20,7 @@ const StoreInfoContainer = ({storeInfo}) => {
         />
       )}
       <Pressable
+        onPress={() => navigation.navigate('OcrInput', {storeId: storeId})}
         style={[styles.reviewbtn, styles.reviewbtnLayout]}
         insert-review="리뷰 등록">
         <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
