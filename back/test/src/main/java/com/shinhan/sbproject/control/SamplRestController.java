@@ -1,6 +1,10 @@
 package com.shinhan.sbproject.control;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,58 +42,50 @@ public class SamplRestController {
 	@Autowired
 	testRepository testepo;
 	
+	static int ROW = 0;
+	static int FEATURE = 0;
+
 	@GetMapping("/sample5")
-	public String f6(){
-		String data = "";
-		File h5File = new File("C:\\Users\\asme1\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\updated_model_test1.h5");
-		System.out.println(h5File.getAbsolutePath());
-		try {
-            // h5 파일을 로드하여 MultiLayerNetwork 객체로 변환
-            MultiLayerNetwork model = KerasModelImport.importKerasSequentialModelAndWeights(h5File.getAbsolutePath());
-            
-            // 모델을 사용하여 무언가를 수행하거나 예측을 수행할 수 있습니다.
-            // 예: model.predict(input);
-            
-            System.out.println("모델을 성공적으로 로드했습니다.");
-        } catch (Exception e) {
-            System.err.println("모델을 로드하는 중 오류가 발생했습니다:");
-            e.printStackTrace();
-        }
-
-		return data;
-	}
-	@GetMapping("/sample4")
-	public String f5(){
-		System.out.println(TensorFlow.version());
+	public String f6() throws IOException{
 		String data = "";
 		
-		TensorFlowService tensor = new TensorFlowService();
-		// tensor.loadModel();
-		System.out.println("b =========");
-		double[] input = {
-					0.024607861004964433,0.020642437620128296,0.013267491324965762,0.006374325441045003,0.0021865418664049723,0.00022236018980389545,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0002965611727244366,0.002298349109143865,0.005634662332094636,0.01275213054105628,0.013827164801784862,0.014753918474826743,0.01564360200094695,0.017756600375482438,0.01345646333256811,0.007043327915118295,0.003002681900655694,0.0012233148484152828,0.0001112104407650257,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.00014819559225727266,0.001852444964240819,0.0035566943313423724,0.007224535360539195,0.010521887396887851,0.017561178261002963,0.010003202806900422
-				};
-		float[] input_float = new float[48];
-		for(int i =0;i<input.length;i++){
-			input_float[i]=(float)input[i];
+		System.out.println("TensorFlow version : "+TensorFlow.version());
+		
+		String filePath = "C:\\Users\\asme1\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
+		
+		//get shape of data
+		getDataSize(filePath);
+		System.out.print("[number of row] ==> "+ ROW);
+		System.out.println(" / [number of feature] ==> "+ FEATURE);
+		float[][] testInput = new float[ROW][FEATURE];
+		
+		//insert csv data to matrix
+		csvToMtrx(filePath, testInput);
+		printMatrix(testInput);
+		System.out.println("tttt");
+
+		try(SavedModelBundle b = SavedModelBundle.load("C:\\Users\\asme1\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\tmp\\fromPython", "serve")){
+			
+			System.out.println("tttt");
+			//create a session from the Bundle
+			Session sess = b.session();
+			
+			//create an input Tensor
+			Tensor x = Tensor.create(testInput);
+			System.out.println("tttt");
+			//run the model and get the result
+			float[][] y = sess.runner()
+					.feed("x", x)
+					.fetch("h")
+					.run()
+					.get(0)
+					.copyTo(new float[ROW][1]);
+			
+			//print out the result
+			for(int i=0; i<y.length;i++)
+				System.out.println("결과: "+y[i][0]);
 		}
-		float[] result = tensor.predict(input_float);
-		// System.out.println(Arrays.toString(result));
 
-		
-
-		// try(SavedModelBundle b = SavedModelBundle.load("C:\\Users\\asme1\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\aaa\\mobilenet\\1", "serve")){
-		// 	System.out.println("tryaaaa");
-		// 	Session sess =b.session();
-		// 	Double[] input = {
-		// 		0.024607861004964433,0.020642437620128296,0.013267491324965762,0.006374325441045003,0.0021865418664049723,0.00022236018980389545,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0002965611727244366,0.002298349109143865,0.005634662332094636,0.01275213054105628,0.013827164801784862,0.014753918474826743,0.01564360200094695,0.017756600375482438,0.01345646333256811,0.007043327915118295,0.003002681900655694,0.0012233148484152828,0.0001112104407650257,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.00014819559225727266,0.001852444964240819,0.0035566943313423724,0.007224535360539195,0.010521887396887851,0.017561178261002963,0.010003202806900422
-		// 	};
-
-		// 	Tensor x = Tensor.create(input);
-		// 	Double[][] y = sess.runner().feed("x", x).fetch("h").run().get(0).copyTo(new Double[48][1]);
-		// 	data = y.toString();
-		// 	System.out.println(data);
-		// }
 		return data;
 	}
 
@@ -124,6 +120,56 @@ public class SamplRestController {
 		return (List<testVO>)testepo.findAll();
 	}
 	
-	
+	public void getDataSize(String filePath) throws IOException {
+		try {
+			//read csv data file
+			File csv = new File(filePath);
+			BufferedReader br = new BufferedReader(new FileReader(csv));
+			String line = "";
+			String[] field = null;
+			
+			while((line=br.readLine())!=null) {
+				field = line.split(",");
+				ROW++;
+			}
+			
+			FEATURE = field.length;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	public void printMatrix(float[][] mtrx) {
+		System.out.println("============ARRAY VALUES============");
+		for(int i=0; i<mtrx.length; i++) {
+			if(i==0)
+				System.out.print("[");
+			else
+				System.out.println();
+			for(int j =0; j<mtrx[i].length; j++) {
+				System.out.print("["+mtrx[i][j]+"]");
+			}
+		}
+		System.out.println("]");
+	}
+	public void csvToMtrx(String filePath, float[][] mtrx) throws IOException {
+		try {
+			//read csv data file
+			File csv = new File(filePath);
+			BufferedReader br = new BufferedReader(new FileReader(csv));
+			String line = "";
+			String[] field = null;
+			
+			for(int i=0; i<mtrx.length; i++) {
+				if((line=br.readLine())!= null) {
+					field = line.split(",");
+					for(int j=0; j<field.length; j++) {
+						mtrx[i][j] = Float.parseFloat(field[j]);
+					}
+				}
+			}
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
