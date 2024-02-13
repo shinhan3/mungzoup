@@ -2,8 +2,10 @@ package com.shinhan.sbproject.control;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shinhan.sbproject.VO.PetHistoryVO;
 import com.shinhan.sbproject.VO.UserVO;
 import com.shinhan.sbproject.VO.WalkSpotVO;
+import com.shinhan.sbproject.repository.PetHistoryRepository;
 import com.shinhan.sbproject.repository.WalkSpotRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class WalkSpotController {
     @Autowired
     WalkSpotRepository walkRep;
+    PetHistoryRepository petHistoryRep;
 
     @PostMapping("/insertWalkSpot.do")
     public void f1(@RequestBody WalkSpotVO walk) {
@@ -34,4 +37,15 @@ public class WalkSpotController {
         UserVO user = UserVO.builder().userId(userId).build();
         return walkRep.findByUser(user);
     }
+
+    @PostMapping("/insertPetHistory.do/{spotId},{userId}")
+    public void postMethodName(@PathVariable String userId, @PathVariable String spotId) {
+        PetHistoryVO phVO =  PetHistoryVO.builder()
+        .petTime()
+        .distance()
+        .startLatitude()
+        .startLongitude()
+        .build();
+    }
+    
 }
