@@ -6,7 +6,20 @@ import {View} from 'react-native';
 
 const FormDropdown = () => {
   const [dropdownBoxOpen, setDropdownBoxOpen] = useState(false);
-  const [dropdownBoxValue, setDropdownBoxValue] = useState();
+  const [dropdownBoxValue, setDropdownBoxValue] = useState('지역');
+  const [pickingArea, setPickingArea] = useState(null);
+
+  const items = [
+    {label: '강남구', value: '강남구'},
+    {label: '마포구', value: '마포구'},
+    {label: '송파구', value: '송파구'},
+    {label: '종로구', value: '종로구'},
+  ];
+
+  const handleValueChange = value => {
+    setDropdownBoxValue(value);
+    setPickingArea(value); // 선택된 지역을 pickingArea에 설정
+  };
 
   return (
     <View style={styles.dropdownBox}>
@@ -15,9 +28,10 @@ const FormDropdown = () => {
         open={dropdownBoxOpen}
         setOpen={setDropdownBoxOpen}
         value={dropdownBoxValue}
-        setValue={setDropdownBoxValue}
-        items={[]}
+        setValue={handleValueChange}
+        items={items}
         dropDownContainerStyle={styles.dropdownBoxdropDownContainer}
+        placeholder="ㅈㅣ역"
       />
     </View>
   );
@@ -25,7 +39,7 @@ const FormDropdown = () => {
 
 const styles = StyleSheet.create({
   dropdownBoxdropDownContainer: {
-    backgroundColor: '#62aea9',
+    backgroundColor: '#ffffff',
   },
   dropdownpicker: {
     backgroundColor: Color.new1,
@@ -33,10 +47,10 @@ const styles = StyleSheet.create({
   dropdownBox: {
     position: 'absolute',
     top: 37,
-    left: 236,
+    left: 230,
     borderRadius: Border.br_3xs,
-    width: 84,
-    height: 35,
+    width: 100,
+    height: 235,
     overflow: 'hidden',
   },
 });

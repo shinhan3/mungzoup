@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Slf4j
 @RestController
 public class AreaPickingController {
     @Autowired
     StoreRepository sRepo;
 
-    @GetMapping("/areaPicking.do/{pickingArea}")
-    public Listt<Object[]> selectArea(@PathVariable String pickingArea) {
-        return (List<Object[]>) sRepo.selectArea(null);
-    }
+    //@GetMapping("/areaPicking.do/{pickingArea}")
+    //public List<Object[]> selectArea(@PathVariable String pickingArea) {
+    //    return (List<Object[]>) sRepo.selectArea(null);
+    //}
     
     
 }
