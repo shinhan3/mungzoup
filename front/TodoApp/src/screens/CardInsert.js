@@ -1,23 +1,14 @@
-import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import FavoriteListContainer from '../components/FavoriteListContainer';
-import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Border, Color, FontFamily, FontSize} from '../GlobalStyles';
 
-const PLAY = props => {
+function CardInsert(props) {
+  console.log(props);
   return (
-    <View style={styles.play}>
+    <View>
       <View style={[styles.header, styles.divPosition1]}>
         <View style={[styles.haederDiv, styles.divPosition]} />
-        <Text style={[styles.headerTitle, styles.txtFlexBox]}>
-          나의 산책 목록
-        </Text>
+        <Text style={[styles.headerTitle, styles.txtFlexBox]}>카드 발급</Text>
         <TouchableOpacity
           onPress={() => {
             props.navigation.goBack('PLAYmainwonny');
@@ -28,19 +19,9 @@ const PLAY = props => {
           />
         </TouchableOpacity>
       </View>
-      <FavoriteListContainer navigation={props.navigation} />
-      <TouchableOpacity
-        style={[styles.insertplaceBtn, styles.txtLayout]}
-        onPress={() => {
-          props.navigation.navigate('InsertWalkSpot');
-        }}>
-        <View style={[styles.div, styles.divPosition1]} />
-        <Text style={[styles.txt, styles.txtLayout]}>+ 내 장소</Text>
-      </TouchableOpacity>
     </View>
   );
-};
-
+}
 const styles = StyleSheet.create({
   divPosition1: {
     left: 0,
@@ -49,7 +30,7 @@ const styles = StyleSheet.create({
   },
   divPosition: {
     backgroundColor: Color.colorWhitesmoke_100,
-    width: 420,
+    width: 360,
     left: 0,
     top: 0,
     position: 'absolute',
@@ -98,8 +79,9 @@ const styles = StyleSheet.create({
     height: 52,
   },
   headerTitle: {
+    marginLeft: -102,
     top: 9,
-    marginLeft: 100,
+    left: '50%',
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
     width: 204,
@@ -116,6 +98,7 @@ const styles = StyleSheet.create({
     left: 14,
     width: 26,
     height: 24,
+    position: 'absolute',
     overflow: 'hidden',
   },
   header: {
@@ -130,7 +113,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 29,
     width: 100,
-    marginLeft: 30,
   },
   txt: {
     left: 13,
@@ -147,7 +129,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     height: 30,
     top: 0,
-    marginLeft: 27,
   },
   insertplaceBtn: {
     top: 92,
@@ -162,5 +143,4 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 });
-
-export default PLAY;
+export default CardInsert;

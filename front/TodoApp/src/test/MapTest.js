@@ -19,6 +19,7 @@ function MapTest() {
             longitudeDelta: 0.005,
           }}
           onPress={d => {
+            console.log('aaa');
             axios
               .get(
                 `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${d.nativeEvent.coordinate.longitude}&y=${d.nativeEvent.coordinate.latitude}`,
@@ -29,6 +30,7 @@ function MapTest() {
                 },
               )
               .then(response => {
+                console.log(response);
                 console.log(response.data.documents[0].address_name);
                 console.log(response.data.documents[0].y);
                 console.log(response.data.documents[0].x);

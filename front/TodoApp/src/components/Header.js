@@ -10,13 +10,12 @@ import {
 import {Color, FontSize, FontFamily} from '../GlobalStyles';
 // 필독
 // go의 값은 뒤로 갈 이름을 넣어주세요 예 Frame => back 쓰지 말기!!!
-const MiracleBenefitContainer = ({dimensionCode, benefits, navigation, go}) => {
+const Header = ({dimensionCode, benefits, navigation, go}) => {
   return (
     <View style={styles.headerPosition}>
       <View style={[styles.headerDiv, styles.headerPosition]} />
       <TouchableOpacity
         onPress={() => {
-          console.log(navigation);
           navigation.navigate(go);
         }}>
         <Image style={styles.arrowIcon} source={dimensionCode} />
@@ -71,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MiracleBenefitContainer;
+export default Header;

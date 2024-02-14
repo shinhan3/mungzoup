@@ -10,7 +10,6 @@ import {
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 import {useNavigation} from '@react-navigation/native';
 
-
 const Container = ({dimensionCode}) => {
   const navigation = useNavigation();
   return (
@@ -33,7 +32,7 @@ const Container = ({dimensionCode}) => {
         </Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('PLAY5');
+            navigation.navigate('HiddenPopularStores');
           }}
           style={[styles.petplacebtn, styles.petplacebtnLayout]}>
           <View style={[styles.petplacediv, styles.petplacebtnLayout]} />

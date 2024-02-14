@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import axios from 'axios';
+import LocationContext from '../test/LocationContext ';
 
 export function getDistanceFormula(lat1, lon1, lat2, lon2) {
   //하버시안 공식
@@ -32,7 +33,7 @@ export function getDistanceFormula(lat1, lon1, lat2, lon2) {
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   //d -> 대원거리와 지구의 반지름을 곱하여 두 지점 사이의 거리를 나타내는 값
   // 거리 기본 단위가 km이므로, x 1000을 하여 meter로 변환
-  var d = R * c * 1000;
+  var d = R * c;
   d = d.toFixed(2); //소수점 두자리까지만 나타냄
   return d;
 }
@@ -43,11 +44,12 @@ function deg2rad(x) {
 }
 
 function SelectMap(props) {
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
+  const {latitude, longitude} = useContext(LocationContext);
   const mapRef = useRef(); // MapView 참조를 저장할 ref 생성
 
-  useEffect(() => {
+  /*  useEffect(() => {
     const watchId = Geolocation.watchPosition(
       position => {
         setLatitude(position.coords.latitude);
@@ -61,7 +63,7 @@ function SelectMap(props) {
 
     //컴포넌트가 언마운트될 때 watch 중지
     return () => Geolocation.clearWatch(watchId);
-  }, []);
+  }, []);*/
 
   if (latitude === null || longitude === null) {
     // 위치 정보를 가져오는 동안은 빈 뷰를 렌더링
@@ -113,13 +115,15 @@ function SelectMap(props) {
                 longitudeDelta: 0.005,
               }}
               onPress={d => {
+                const clickedLatitude = d.nativeEvent.coordinate.latitude;
+                const clickedLongitude = d.nativeEvent.coordinate.longitude;
                 axios
                   .get(
                     `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${d.nativeEvent.coordinate.longitude}&y=${d.nativeEvent.coordinate.latitude}`,
                     {
                       headers: {
                         Authorization:
-                          'KakaoAK 7530b3bd67ff412ca4f7a3f29b5904a9',
+                          'KakaoAK b3e94d38f2ac985e22246a5d1d0da2ea',
                       },
                     },
                   )
@@ -132,16 +136,16 @@ function SelectMap(props) {
                     const distance = getDistanceFormula(
                       latitude,
                       longitude,
-                      location.y,
-                      location.x,
+                      clickedLatitude,
+                      clickedLongitude,
                     );
                     console.log(`남은 거리: ${distance} m`);
                     console.log('==========================================');
 
                     props.navigation.navigate('InsertWalkSpot', {
                       address: response.data.documents[0].address_name,
-                      latitude: response.data.documents[0].y,
-                      longitude: response.data.documents[0].x,
+                      latitude: clickedLatitude,
+                      longitude: clickedLongitude,
                       distance: distance,
                     });
                   })
