@@ -25,6 +25,7 @@ import BackgroundBtn from '../components/BackgroundBtn';
 import SexSelect from '../components/SexSelect';
 import SexSelectSuText from '../components/SexSelectSuText';
 import PLAY5 from '../screens/PLAY5';
+import PLAY6FindMyDog from '../screens/PLAY6FindMyDog';
 import InsertWalkSpot from '../screens/InsertWalkSpot';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -101,13 +102,13 @@ function BottomTabsRoot({navigation}) {
         options={{headerShown: false}}
       /> */}
       <Tab.Screen
-        name="PLAYmainwonny"
-        component={PLAYmainwonny}
+        name="MyDaeng"
+        component={MyDaeng}
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="MyDaeng"
-        component={MyDaeng}
+        name="PLAYmainwonny"
+        component={PLAYmainwonny}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -225,6 +226,11 @@ const AppTest = () => {
             <Stack.Screen
               name="PLAY5"
               component={PLAY5}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="PLAY6FindMyDog"
+              component={PLAY6FindMyDog}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

@@ -30,7 +30,7 @@ const PLAYmainwonny = props => {
             navigation={props.navigation}
             dimensionCode={require('../assets/petbannerimg1.png')}
           />
-          <FormContainer1 />
+          <FormContainer1 navigation={props.navigation} />
         </View>
         <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
@@ -39,7 +39,8 @@ const PLAYmainwonny = props => {
           </Text>
         </View>
       </View>
-      <OcrTest></OcrTest>
+
+      {/* <OcrTest></OcrTest> */}
     </ScrollView>
   );
 };
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
     width: '100%',
-    height: 1042,
+    height: 1200,
     overflow: 'hidden',
   },
 });

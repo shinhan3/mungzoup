@@ -31,6 +31,7 @@ export const FontSize = {
   size_6xs_1: 6,
   size_4xs_6: 9,
   size_smi_2: 12,
+  size_smi_1: 11,
   size_11xl: 30,
   size_31xl: 50,
   size_6xl: 25,
@@ -75,6 +76,7 @@ export const Color = {
   colorLightcyan_700: 'rgba(199, 236, 229, 0.1)',
   mainYellow: '#eae03a',
   colorGray: 'rgba(0, 0, 0, 0.08)',
+  new: '#eb674a',
 };
 /* border radiuses */
 export const Border = {

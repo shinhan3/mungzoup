@@ -10,9 +10,11 @@ const OcrTest = () => {
   //OCR TEST
   // OCR 결과를 저장할 state를 생성합니다.
   const [ocrResult, setOcrResult] = React.useState(null);
+  const [storeInferTexts, setStoreInferTexts] = React.useState(null);
+  const [addressInferTexts, setAddressInferTexts] = React.useState(null);
 
   const imagePath =
-    'https://newsimg.hankookilbo.com/2018/01/08/201801081486192270_1.jpg';
+    'https://cdn.banksalad.com/entities/etc/1517463655748-%EC%98%81%EC%88%98%EC%A6%9D.jpg';
 
   // 이미지를 base64 형식으로 인코딩한 문자열을 사용하여 OCR 요청
   async function requestWithBase64() {
@@ -55,8 +57,46 @@ const OcrTest = () => {
         const allInferTexts = res.data.images.flatMap(image =>
           image.fields.map(field => field.inferText),
         );
+        //가맹점명 가져오기
+        const storeInferTexts = res.data.images.flatMap(image =>
+          image.fields.flatMap(field => {
+            // 가맹점이라는 단어를 찾습니다.
+            if (field.inferText === '가맹점') {
+              const index = image.fields.indexOf(field);
+              // 가맹점 다음에 오는 ':' 문자를 찾습니다.
+              if (image.fields[index + 1].inferText === ':') {
+                // ':' 다음에 오는 문자열이 원하는 값입니다.
+                return image.fields[index + 2].inferText;
+              }
+            }
+          }),
+        );
+        // 가맹점명 추출 후 상태에 저장
+        setStoreInferTexts(storeInferTexts);
 
-        setOcrResult(JSON.stringify(res.data, null, 2)); //응답 json data 전부 가져오기
+        //주소 가져오기
+        const addressInferTexts = res.data.images.flatMap(image =>
+          image.fields.flatMap(field => {
+            // 주소라는 단어를 찾습니다.
+            if (field.inferText === '소') {
+              const index = image.fields.indexOf(field);
+              // 주소 다음에 오는 ':' 문자를 찾습니다.
+              if (image.fields[index + 1].inferText === ':') {
+                // ':' 다음에 오는 문자열이 원하는 값입니다.
+                return (
+                  image.fields[index + 3].inferText +
+                  ' ' +
+                  image.fields[index + 4].inferText +
+                  ' ' +
+                  image.fields[index + 5].inferText
+                );
+              }
+            }
+          }),
+        );
+        setOcrResult(addressInferTexts);
+        //setOcrResult(allInferTexts);
+        //setOcrResult(JSON.stringify(res.data, null, 2)); //응답 json data 전부 가져오기
       }
     } catch (error) {
       console.error('requestWithBase64 error', error.response || error);
@@ -86,7 +126,12 @@ const OcrTest = () => {
           <Text style={{backgroundColor: 'red', color: 'white'}}>
             OCR 결과:
           </Text>
-          <Text style={{color: 'black'}}>{ocrResult}</Text>
+          {/* <Text style={{color: 'black'}}>{ocrResult}</Text> */}
+          <View style={{color: 'black'}}>
+            {ocrResult.map((text, index) => (
+              <Text key={index}>{text}</Text>
+            ))}
+          </View>
         </View>
       )}
     </View>
