@@ -21,10 +21,13 @@ const FormDropdown = () => {
     const value = selectedItem();
     console.log('여까진옴? ', value);
     setDropdownBoxValue(value);
+    console.log('hi');
     try {
+      console.log('hiiiiii');
       const response = await axios.get(
         `http://10.0.2.2:5000/areaPicking.do/${value}`,
       );
+      console.log('lol');
       console.log('응답 데이터: ', response.data);
     } catch (error) {
       console.error(error);
@@ -72,11 +75,10 @@ const FormDropdown = () => {
         containerStyle={styles.dropdownBox}
         style={styles.dropdownpicker}
         dropDownContainerStyle={styles.dropdownBoxdropDownContainer}
-        // onChangeItem={(selectedItem)=>{handleValueChange();}}
-        onChangeItem={selectedItem => {
-          console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-          console.log(selectedItem, 'aaaaaaaaaaaaaaaa');
-        }}
+        // onChangeItem={selectedItem => {
+        //   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+        //   console.log(selectedItem, 'aaaaaaaaaaaaaaaa');
+        // }}
       />
     </View>
   );
