@@ -233,31 +233,31 @@ const AppTest = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
-              name="HiddenPopularStores"
-              component={HiddenPopularStores}
-              options={{headerShown: false}}
+                name="HiddenPopularStores"
+                component={HiddenPopularStores}
+                options={{headerShown: false}}
               />
               <Stack.Screen
-              name="Review"
-              component={Review}
-              options={{headerShown: false}}
+                name="Review"
+                component={Review}
+                options={{headerShown: false}}
               />
               <Stack.Screen
-              name="ReviewSelect"
-              component={ReviewSelect}
-              options={{headerShown: false}}
+                name="ReviewSelect"
+                component={ReviewSelect}
+                options={{headerShown: false}}
               />
               <Stack.Screen
-              name="OcrInput"
-              component={OcrInput}
-              options={{headerShown: false}}
+                name="OcrInput"
+                component={OcrInput}
+                options={{headerShown: false}}
               />
 
               <Stack.Screen
-              name="CardInsert"
-              component={CardInsert}
-              options={{headerShown: false}}
-            />
+                name="CardInsert"
+                component={CardInsert}
+                options={{headerShown: false}}
+              />
             </Stack.Navigator>
           ) : (
             <Screen1 />
