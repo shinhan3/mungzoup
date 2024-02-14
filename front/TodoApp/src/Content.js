@@ -10,6 +10,7 @@ import MapTest from './test/MapTest';
 import Test2 from './test/Test2';
 import SelectMap from './walkSpot/SelectMap';
 import axios from 'axios';
+import ImageTest from './test/ImageTest';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +45,10 @@ function Content(props) {
       {/* Routes */}
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {/* Route */}
-        <Stack.Screen
+
+        <Stack.Screen name="P3" component={ImageTest}></Stack.Screen>
+
+        {/* <Stack.Screen
           name="MyWalkSpotList"
           component={MyWalkSpotList}></Stack.Screen>
         <Stack.Screen
@@ -54,7 +58,7 @@ function Content(props) {
         <Stack.Screen name="A4" component={MapTest}></Stack.Screen>
         <Stack.Screen name="P1" component={Test}></Stack.Screen>
         <Stack.Screen name="P2" component={Test2}></Stack.Screen>
-        <Stack.Screen name="P3" component={Test3}></Stack.Screen>
+        <Stack.Screen name="P3" component={Test3}></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
