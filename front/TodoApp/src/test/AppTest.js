@@ -8,9 +8,9 @@ import PLAY from '../screens/PLAY';
 import Frame1 from '../screens/Frame1';
 import PLAY1 from '../screens/PLAY1';
 import PLAY2 from '../screens/PLAY2';
-import PLAY3 from '../screens/PLAY3';
+import Review from '../screens/Review';
 import PLAY4 from '../screens/PLAY4';
-import Wonny from '../screens/Wonny';
+import ReviewSelect from '../screens/ReviewSelect';
 import PLAYmainwonny1 from '../screens/PLAYmainwonny1';
 import MenuHome from '../components/MenuHome';
 import MenuHome1 from '../components/MenuHome1';
@@ -199,8 +199,8 @@ const AppTest = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="PLAY3"
-              component={PLAY3}
+              name="Review"
+              component={Review}
               options={{headerShown: false}}
             />
             <Stack.Screen
@@ -209,8 +209,8 @@ const AppTest = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="Wonny"
-              component={Wonny}
+              name="ReviewSelect"
+              component={ReviewSelect}
               options={{headerShown: false}}
             />
             <Stack.Screen

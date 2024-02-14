@@ -18,4 +18,7 @@ public interface RatingCategoryRepository extends CrudRepository<RatingCategoryV
                 "GROUP BY r.review_content) rp " +
             "where r.review_content = rp.review_content", nativeQuery=true)
     List<Object[]> selectContnetAndCount(Integer storeId);
+
+    @Query(value="select * from rating_category", nativeQuery=true)
+    List<RatingCategoryVO> selectAll();
 }

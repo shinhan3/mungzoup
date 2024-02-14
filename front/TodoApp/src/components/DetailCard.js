@@ -43,7 +43,7 @@ const DetailCard = ({navigation}) => {
             <Pressable
               style={styles.button}
               onPress={() =>
-                navigation.navigate('PLAY3', {storeId: store.storeId})
+                navigation.navigate('Review', {storeId: store.storeId})
               }>
               <View style={[styles.backgroundbtn, styles.buttonLayout]} />
               <Text style={[styles.textBtn, styles.textTypo]}>{`자세히

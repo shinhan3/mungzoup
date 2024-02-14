@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import FormContainer6 from '../components/FormContainer6';
+import ReviewInfoContainer from '../components/ReviewInfoContainer';
 import StoreInfoContainer from '../components/StoreInfoContainer';
-import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
+import Header from '../components/Header';
 import {FontSize, FontFamily, Color} from '../GlobalStyles';
 import axios from 'axios';
 
-const PLAY3 = ({navigation, route}) => {
+const Review = ({navigation, route}) => {
   const {storeId} = route.params;
   const [storeInfo, setStoreInfo] = React.useState({});
   const [reviewInfo, setReviewInfo] = React.useState({});
@@ -35,11 +35,16 @@ const PLAY3 = ({navigation, route}) => {
   return (
     <View style={styles.play}>
       <View style={styles.main}>
-        <FormContainer6 reviewInfo={reviewInfo} totalCount={totalCount} />
         <StoreInfoContainer storeInfo={storeInfo} />
+        <ReviewInfoContainer reviewInfo={reviewInfo} totalCount={totalCount} />
 
         <Pressable
-          onPress={() => navigation.navigate('OcrInput', {storeId: storeId})}
+          onPress={() =>
+            navigation.navigate('OcrInput', {
+              storeId: storeId,
+              storeInfo: storeInfo,
+            })
+          }
           style={[styles.reviewbtn, styles.reviewbtnLayout]}
           insert-review="리뷰 등록">
           <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
@@ -53,7 +58,7 @@ const PLAY3 = ({navigation, route}) => {
         <Text style={styles.foldBtn}>접기</Text>
       </View>
 
-      <MiracleBenefitContainer
+      <Header
         dimensionCode={require('../assets/arrow8.png')}
         benefits="리뷰"
         navigation={navigation}
@@ -160,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PLAY3;
+export default Review;

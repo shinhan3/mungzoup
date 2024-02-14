@@ -13,13 +13,14 @@ import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import axios from 'axios';
 import RNFS from 'react-native-fs';
 import FormData from 'form-data';
-import MiracleBenefitContainer from './MiracleBenefitContainer';
+import Header from './Header';
 import {launchImageLibrary} from 'react-native-image-picker';
 import OcrTest from './OcrTest';
 
 const OcrInput = ({navigation, route}) => {
   const {storeId} = route.params;
-  //console.log(storeId);
+  const {storeInfo} = route.params;
+  //console.log(storeInfo);
   const [response, setResponse] = React.useState('');
   const [imageUrl, setImageUrl] = React.useState('');
 
@@ -74,7 +75,7 @@ const OcrInput = ({navigation, route}) => {
   return (
     <View>
       <ScrollView>
-        <MiracleBenefitContainer
+        <Header
           dimensionCode={require('../assets/arrow8.png')}
           benefits="영수증"
           navigation={navigation}
@@ -110,8 +111,9 @@ const OcrInput = ({navigation, route}) => {
               justifyContent: 'center',
             }}
             onPress={() =>
-              navigation.navigate('Wonny', {
+              navigation.navigate('ReviewSelect', {
                 storeId: storeId,
+                storeInfo: storeInfo,
                 imageUrl: imageUrl,
               })
             }>
