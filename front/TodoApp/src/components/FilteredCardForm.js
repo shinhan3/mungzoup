@@ -1,66 +1,88 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, FlatList} from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
+import axios from 'axios';
 
 const FilteredCardForm = () => {
+  const [data, setData] = React.useState([]);
+  React.useEffect(() => {
+    fetchData(); // 컴포넌트가 마운트될 때 데이터 가져오기
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        'http://10.0.2.2:5000/areaPicking.do/{pickingArea}',
+      );
+      setData(response.data); // 가져온 데이터를 상태에 설정
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   return (
-    <View style={styles.list1}>
-      <View style={styles.background} />
-      <View style={[styles.insertplaceBtn, styles.txtLayout]}>
-        <View style={styles.div} />
-        <Text style={[styles.txt, styles.txtTypo]}>{`+ 내 장소 `}</Text>
-      </View>
-      <Image
-        style={styles.recommendImgIcon}
-        source={require('../assets/recommendimg.png')}
-      />
-      <Text style={styles.recommendTxt}>
-        <Text style={styles.text}>
-          <Text style={styles.text1}>{`짚풀생활사박물관 `}</Text>
-        </Text>
-        <Text style={styles.text2}>
-          <Text style={styles.text}>
-            <Text style={styles.text4}>{`박물관
-`}</Text>
-          </Text>
-          <Text style={[styles.text5, styles.txtTypo]}>
-            서울특별시 종로구 성균관로4길 45
-          </Text>
-        </Text>
-      </Text>
-      <View style={[styles.toggle, styles.toggleLayout]}>
-        <View style={[styles.toggleChild, styles.line1Border]} />
-        <View style={[styles.opentimeline, styles.opentimelineLayout]}>
-          <View style={styles.opentimePosition}>
+    <FlatList
+      data={data}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({item}) => {
+        return (
+          <View style={styles.listItems}>
+            <View style={styles.background} />
+            <View style={[styles.insertplaceBtn, styles.txtLayout]}>
+              <View style={styles.div} />
+              <Text style={[styles.txt, styles.txtTypo]}>{`+ 내 장소 `}</Text>
+            </View>
             <Image
-              style={[styles.opentimeChild, styles.opentimePosition]}
-              source={require('../assets/rectangle-2710.png')}
+              style={styles.recommendImgIcon}
+              source={require('../assets/recommendimg.png')}
             />
-            <Text style={[styles.text6, styles.textTypo]}>운영시간</Text>
-          </View>
-          <Text style={[styles.opentimetext, styles.textTypo]}>
-            월~금 09:00~21:00, 토 09:00~20:00
-          </Text>
-        </View>
-        <View style={[styles.opentimeline1, styles.opentimelineLayout]}>
-          <View style={styles.opentimePosition}>
+            <Text style={styles.recommendTxt}>
+              <Text style={styles.text}>
+                <Text style={styles.text1}>{item.store_name}</Text>
+              </Text>
+              <Text style={styles.text2}>
+                <Text style={styles.text}>
+                  <Text style={styles.text4}>{item.category_name}</Text>
+                </Text>
+                <Text style={[styles.text5, styles.txtTypo]}>
+                  {item.store_address}
+                </Text>
+              </Text>
+            </Text>
+            <View style={[styles.toggle, styles.toggleLayout]}>
+              <View style={[styles.toggleChild, styles.line1Border]} />
+              <View style={[styles.opentimeline, styles.opentimelineLayout]}>
+                <View style={styles.opentimePosition}>
+                  <Image
+                    style={[styles.opentimeChild, styles.opentimePosition]}
+                    source={require('../assets/rectangle-2710.png')}
+                  />
+                  <Text style={[styles.text6, styles.textTypo]}>운영시간</Text>
+                </View>
+                <Text style={[styles.opentimetext, styles.textTypo]}>
+                  {item.open_time}
+                </Text>
+              </View>
+              <View style={[styles.opentimeline1, styles.opentimelineLayout]}>
+                <View style={styles.opentimePosition}>
+                  <Image
+                    style={[styles.opentimeChild, styles.opentimePosition]}
+                    source={require('../assets/rectangle-2710.png')}
+                  />
+                  <Text style={[styles.text7, styles.textTypo]}>휴무일</Text>
+                </View>
+                <Text style={[styles.opentimetext, styles.textTypo]}>
+                  {item.closed_days}
+                </Text>
+              </View>
+            </View>
             <Image
-              style={[styles.opentimeChild, styles.opentimePosition]}
-              source={require('../assets/rectangle-2710.png')}
+              style={styles.toggleUpbtnIcon}
+              source={require('../assets/toggle-upbtn.png')}
             />
-            <Text style={[styles.text7, styles.textTypo]}>휴무일</Text>
+            <View style={[styles.line1, styles.line1Border]} />
           </View>
-          <Text style={[styles.opentimetext, styles.textTypo]}>
-            매주 토, 일, 법정공휴일
-          </Text>
-        </View>
-      </View>
-      <Image
-        style={styles.toggleUpbtnIcon}
-        source={require('../assets/toggle-upbtn.png')}
-      />
-      <View style={[styles.line1, styles.line1Border]} />
-    </View>
+        );
+      }}
+    />
   );
 };
 

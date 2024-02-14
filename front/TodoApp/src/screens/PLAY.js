@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 29,
     width: 100,
+    marginLeft: 30,
   },
   txt: {
     left: 13,
@@ -146,6 +147,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     height: 30,
     top: 0,
+    marginLeft: 27,
   },
   insertplaceBtn: {
     top: 92,
