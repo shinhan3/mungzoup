@@ -36,6 +36,7 @@ import MyDaenegRegister from '../screens/MyDaengRegister';
 import MyDaengDetail from '../screens/MyDaengUpdate';
 import MyDaengUpdate from '../screens/MyDaengUpdate';
 import SelectMap from '../screens/SelectMap';
+import CardInsert from '../screens/CardInsert';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -95,12 +96,6 @@ function BottomTabsRoot({navigation}) {
           </View>
         );
       }}>
-      {/* <Tab.Screen
-        name="Frame2"
-        component={Frame2}
-        options={{headerShown: false}}
-      /> */}
-
       <Tab.Screen
         name="MyDaeng"
         component={MyDaeng}
@@ -226,6 +221,11 @@ const AppTest = () => {
             <Stack.Screen
               name="PLAY5"
               component={PLAY5}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="CardInsert"
+              component={CardInsert}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
