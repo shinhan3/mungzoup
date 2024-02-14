@@ -12,6 +12,9 @@ import com.shinhan.sbproject.VO.StoreVO;
 import com.shinhan.sbproject.repository.StoreRepository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Slf4j
 @RestController
@@ -25,4 +28,7 @@ public class StoreController {
         List<StoreVO> slist = storeRepo.selectAll5();
         return slist;
     }
+
+    
+    
 }

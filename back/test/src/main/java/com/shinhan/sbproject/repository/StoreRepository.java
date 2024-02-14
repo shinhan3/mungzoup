@@ -11,10 +11,11 @@ public interface StoreRepository extends CrudRepository<StoreVO, Integer>{
 	@Query("select s from StoreVO s where s.storeId between 0 and 8")
     List<StoreVO> selectAll5();
 
-  @Query("select s.storeName, s.storeAddress, c.categoryId, c.image " + 
+    @Query("select s.storeName, s.storeAddress, c.categoryId, c.image " + 
                 "from StoreVO s inner join CategoryVO c on s.category = c " + 
                 "where s.storeId = ?1")
     List<Object[]> selectNameAndAddress(Integer storeId);
+
 	@Query("select storeName from StoreVO where storeAddress like %?1%")
     String selectByStoreAddress(String address);
 

@@ -24,6 +24,7 @@ import FemaleBox1 from '../components/FemaleBox1';
 import BackgroundBtn from '../components/BackgroundBtn';
 import SexSelect from '../components/SexSelect';
 import SexSelectSuText from '../components/SexSelectSuText';
+import PLAY6FindMyDog from '../screens/PLAY6FindMyDog';
 import HiddenPopularStores from '../screens/HiddenPopularStores';
 import InsertWalkSpot from '../screens/InsertWalkSpot';
 
@@ -218,11 +219,6 @@ const AppTest = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
-                name="Wonny"
-                component={Wonny}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
                 name="MyDaengUpdate"
                 component={MyDaengUpdate}
                 options={{headerShown: false}}
@@ -256,6 +252,11 @@ const AppTest = () => {
               <Stack.Screen
                 name="CardInsert"
                 component={CardInsert}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PLAY6FindMyDog"
+                component={PLAY6FindMyDog}
                 options={{headerShown: false}}
               />
             </Stack.Navigator>

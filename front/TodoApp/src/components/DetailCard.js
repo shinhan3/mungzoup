@@ -10,7 +10,7 @@ const DetailCard = ({navigation}) => {
     axios
       .get('http://10.0.2.2:5000/storeList.do')
       .then(res => {
-        //console.log(res.data);
+        console.log(res.data);
         setStoreList(res.data);
       })
       .catch(err => {});
@@ -46,8 +46,7 @@ const DetailCard = ({navigation}) => {
                 navigation.navigate('Review', {storeId: store.storeId})
               }>
               <View style={[styles.backgroundbtn, styles.buttonLayout]} />
-              <Text style={[styles.textBtn, styles.textTypo]}>{`자세히
-`}</Text>
+              <Text style={[styles.textBtn, styles.textTypo]}>{`자세히`}</Text>
             </Pressable>
           </View>
         ))}
