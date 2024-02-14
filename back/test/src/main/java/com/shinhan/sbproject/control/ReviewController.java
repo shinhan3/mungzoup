@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shinhan.sbproject.VO.RatingCategoryVO;
 import com.shinhan.sbproject.repository.RatingCategoryRepository;
 import com.shinhan.sbproject.repository.StoreRepository;
 
@@ -24,6 +25,11 @@ public class ReviewController {
 
     @Autowired
     RatingCategoryRepository reviewRepo;
+
+    @GetMapping("/reviewAll.do")
+    public List<RatingCategoryVO> reviewAll(){
+        return reviewRepo.selectAll();
+    }
 
     @GetMapping("/review.do/{storeId}")
     public Map<String, Object> displayStoreAndReview(@PathVariable("storeId")Integer storeId){

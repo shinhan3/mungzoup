@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.shinhan.sbproject.VO.StoreVO;
 
 public interface StoreRepository extends CrudRepository<StoreVO, Integer>{
-	@Query("select s from StoreVO s where s.storeId between 7 and 11")
+	@Query("select s from StoreVO s where s.storeId between 0 and 8")
     List<StoreVO> selectAll5();
 
   @Query("select s.storeName, s.storeAddress, c.categoryId, c.image " + 

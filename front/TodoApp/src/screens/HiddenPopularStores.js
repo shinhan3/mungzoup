@@ -10,7 +10,7 @@ import {
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 
-const PLAY5 = ({navigation}) => {
+const HiddenPopularStores = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.play}>
@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PLAY5;
+export default HiddenPopularStores;

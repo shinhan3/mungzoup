@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
 import {Border, FontSize, FontFamily, Color} from '../GlobalStyles';
 
-const FormContainer6 = ({reviewInfo, totalCount}) => {
+const ReviewInfoContainer = ({reviewInfo, totalCount}) => {
   return (
     <View style={styles.selectionbox}>
       <View style={styles.storereviewtitle}>
@@ -239,4 +239,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormContainer6;
+export default ReviewInfoContainer;

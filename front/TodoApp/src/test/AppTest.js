@@ -8,9 +8,9 @@ import PLAY from '../screens/PLAY';
 import Frame1 from '../screens/Frame1';
 import PLAY1 from '../screens/PLAY1';
 import PLAY2 from '../screens/PLAY2';
-import PLAY3 from '../screens/PLAY3';
+import Review from '../screens/Review';
 import PLAY4 from '../screens/PLAY4';
-import Wonny from '../screens/Wonny';
+import ReviewSelect from '../screens/ReviewSelect';
 import PLAYmainwonny1 from '../screens/PLAYmainwonny1';
 import MenuHome from '../components/MenuHome';
 import MenuHome1 from '../components/MenuHome1';
@@ -24,7 +24,7 @@ import FemaleBox1 from '../components/FemaleBox1';
 import BackgroundBtn from '../components/BackgroundBtn';
 import SexSelect from '../components/SexSelect';
 import SexSelectSuText from '../components/SexSelectSuText';
-import PLAY5 from '../screens/PLAY5';
+import HiddenPopularStores from '../screens/HiddenPopularStores';
 import InsertWalkSpot from '../screens/InsertWalkSpot';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -38,6 +38,7 @@ import MyDaengUpdate from '../screens/MyDaengUpdate';
 import Geolocation from '@react-native-community/geolocation';
 import LocationContext from './LocationContext ';
 import SelectMap from '../screens/SelectMap';
+import OcrInput from '../components/OcrInput';
 import WalkingHistory from '../screens/WalkingHistory';
 import CardInsert from '../screens/CardInsert';
 
@@ -212,11 +213,6 @@ const AppTest = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
-                name="PLAY3"
-                component={PLAY3}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
                 name="PLAY4"
                 component={WalkingHistory}
                 options={{headerShown: false}}
@@ -237,10 +233,26 @@ const AppTest = () => {
                 options={{headerShown: false}}
               />
               <Stack.Screen
-                name="PLAY5"
-                component={PLAY5}
-                options={{headerShown: false}}
+              name="HiddenPopularStores"
+              component={HiddenPopularStores}
+              options={{headerShown: false}}
               />
+              <Stack.Screen
+              name="Review"
+              component={Review}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="ReviewSelect"
+              component={ReviewSelect}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="OcrInput"
+              component={OcrInput}
+              options={{headerShown: false}}
+              />
+
               <Stack.Screen
               name="CardInsert"
               component={CardInsert}
