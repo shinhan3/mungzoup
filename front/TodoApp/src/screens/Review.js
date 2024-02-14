@@ -62,7 +62,7 @@ const Review = ({navigation, route}) => {
         dimensionCode={require('../assets/arrow8.png')}
         benefits="리뷰"
         navigation={navigation}
-        go="PLAY5"
+        go="HiddenPopularStores"
       />
     </View>
   );

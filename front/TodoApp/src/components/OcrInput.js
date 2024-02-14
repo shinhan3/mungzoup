@@ -79,7 +79,7 @@ const OcrInput = ({navigation, route}) => {
           dimensionCode={require('../assets/arrow8.png')}
           benefits="영수증"
           navigation={navigation}
-          go="PLAY5"
+          go="HiddenPopularStores"
         />
         <View style={{flex: 1, padding: 16, marginTop: 100}}>
           {response && (

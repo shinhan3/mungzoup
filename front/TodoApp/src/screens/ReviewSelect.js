@@ -119,7 +119,7 @@ const ReviewSelect = ({navigation, route}) => {
           dimensionCode={require('../assets/arrow8.png')}
           benefits="리뷰 등록"
           navigation={navigation}
-          go="PLAY5"
+          go="HiddenPopularStores"
         />
         <ReviewList review={review} navigation={navigation}></ReviewList>
       </View>

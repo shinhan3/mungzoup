@@ -24,7 +24,7 @@ import FemaleBox1 from '../components/FemaleBox1';
 import BackgroundBtn from '../components/BackgroundBtn';
 import SexSelect from '../components/SexSelect';
 import SexSelectSuText from '../components/SexSelectSuText';
-import PLAY5 from '../screens/PLAY5';
+import HiddenPopularStores from '../screens/HiddenPopularStores';
 import InsertWalkSpot from '../screens/InsertWalkSpot';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -224,8 +224,8 @@ const AppTest = () => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="PLAY5"
-              component={PLAY5}
+              name="HiddenPopularStores"
+              component={HiddenPopularStores}
               options={{headerShown: false}}
             />
             <Stack.Screen
