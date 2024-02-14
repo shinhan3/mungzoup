@@ -28,7 +28,7 @@ const PLAY = props => {
           />
         </TouchableOpacity>
       </View>
-      <FavoriteListContainer />
+      <FavoriteListContainer navigation={props.navigation} />
       <TouchableOpacity
         style={[styles.insertplaceBtn, styles.txtLayout]}
         onPress={() => {
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   divPosition: {
     backgroundColor: Color.colorWhitesmoke_100,
-    width: 360,
+    width: 420,
     left: 0,
     top: 0,
     position: 'absolute',
@@ -98,9 +98,8 @@ const styles = StyleSheet.create({
     height: 52,
   },
   headerTitle: {
-    marginLeft: -102,
     top: 9,
-    left: '50%',
+    marginLeft: 100,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
     width: 204,
@@ -117,7 +116,6 @@ const styles = StyleSheet.create({
     left: 14,
     width: 26,
     height: 24,
-    position: 'absolute',
     overflow: 'hidden',
   },
   header: {

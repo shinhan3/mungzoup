@@ -95,7 +95,11 @@ function InsertWalkSpot(props) {
               inputContainerStyle={{borderBottomWidth: 0, height: '100%'}}
               inputStyle={{paddingTop: 0, paddingBottom: 0}}
             />
-            <Text style={styles.addressDistance}>내 위치에서 {distance} m</Text>
+            {distance && (
+              <Text style={styles.addressDistance}>
+                내 위치에서 {distance} m
+              </Text>
+            )}
             <TouchableOpacity
               style={styles.addressBtns}
               onPress={() => {
@@ -156,8 +160,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   header: {
-    height: 52,
-    width: 360,
+    height: 50,
+    backgroundColor: Color.colorWhitesmoke_100,
   },
   content: {
     margin: 26,

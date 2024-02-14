@@ -45,6 +45,4 @@ public class AIFaceVO {
 	
 	@CreationTimestamp
 	private Timestamp aiFaceInsertDay;
-	
-	
 }

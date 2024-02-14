@@ -12,6 +12,7 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import axios from 'axios';
+import PLAY from './PLAY';
 
 export function getDistanceFormula(lat1, lon1, lat2, lon2) {
   //하버시안 공식
@@ -119,7 +120,7 @@ function SelectMap(props) {
                     {
                       headers: {
                         Authorization:
-                          'KakaoAK 7530b3bd67ff412ca4f7a3f29b5904a9',
+                          'KakaoAK b3e94d38f2ac985e22246a5d1d0da2ea',
                       },
                     },
                   )
