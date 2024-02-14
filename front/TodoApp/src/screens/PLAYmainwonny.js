@@ -39,7 +39,6 @@ const PLAYmainwonny = props => {
           </Text>
         </View>
       </View>
-      <OcrTest></OcrTest>
     </ScrollView>
   );
 };

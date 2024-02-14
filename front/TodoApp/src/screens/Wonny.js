@@ -1,193 +1,290 @@
 import * as React from 'react';
-import {Text, StyleSheet, View, Pressable, Image} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Pressable,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
+import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
+import StoreInfoContainer from '../components/StoreInfoContainer';
+import axios from 'axios';
 
-const Wonny = () => {
+const Wonny = ({navigation, route}) => {
+  const {storeId} = route.params;
+  const {imageUrl} = route.params;
+  const [storeInfo, setStoreInfo] = React.useState({});
+  const [ocrStoreName, setOcrStoreName] = React.useState('');
+  const [ocrStoreAddress, setOcrStoreAddress] = React.useState('');
+  const [isEqual, setIsEqual] = React.useState(0);
+
+  //OCR을 수행할 이미지 경로
+  const imagePath = imageUrl;
+
+  // 이미지를 base64 형식으로 인코딩한 문자열을 사용하여 OCR 요청
+  async function requestWithBase64() {
+    try {
+      const response = await axios.get(imagePath, {
+        responseType: 'arraybuffer',
+      });
+      const base64String = Buffer.from(response.data, 'binary').toString(
+        'base64',
+      );
+
+      // base64String은 base64로 인코딩된 이미지 데이터입니다.
+      // 이제 이 문자열을 API 요청에 사용할 수 있습니다.
+      const res = await axios.post(
+        'https://126gsgqg8r.apigw.ntruss.com/custom/v1/28287/088ec5206fb1259c78c14dadc3037c29edc153a902324804fbf03bead877038f/general',
+        {
+          images: [
+            {
+              format: 'jpg', // file format
+              name: 'testReceipt', // image name
+              data: base64String, // image base64 string(only need part of data). Example: base64String.split(',')[1]
+            },
+          ],
+          requestId: 'unique-request-id-1', // unique string, 보통 UUID 사용
+          timestamp: Date.now(),
+          version: 'V2',
+        },
+        {
+          headers: {
+            'X-OCR-SECRET': 'WGt5SVdRcUJtV1JPcVhlb0tMWFBkaGhhQXJXYlhwRkM=', // Secret Key
+          },
+        },
+      );
+
+      if (res.status === 200) {
+        //console.log('requestWithBase64 response:', res.data);
+        // OCR 결과를 state에 저장합니다.
+        //inferText 모두 가져오기
+        const allInferTexts = res.data.images.flatMap(image =>
+          image.fields.map(field => field.inferText),
+        );
+        console.log(allInferTexts);
+        const ocrStoreNameIndex = allInferTexts.indexOf('명');
+        const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 2];
+        setOcrStoreName(preOcrStoreName);
+        const ocrStoreAddressIndex = allInferTexts.indexOf('소재지');
+        const preOcrStoreAddress = allInferTexts
+          .slice(ocrStoreAddressIndex + 2, ocrStoreAddressIndex + 5)
+          .join(' ');
+        setOcrStoreAddress(preOcrStoreAddress);
+      }
+    } catch (error) {
+      console.error('requestWithBase64 error', error.response || error);
+    }
+  }
+
+  React.useEffect(() => {
+    axios
+      .get(`http://10.0.2.2:5000/reviewSelect.do/${storeId}`)
+      .then(res => {
+        setStoreInfo(res.data.storeInfo);
+      })
+      .catch();
+  }, []);
+
+  React.useEffect(() => {
+    requestWithBase64();
+  }, []);
+
+  React.useEffect(() => {
+    if (ocrStoreName && ocrStoreAddress) {
+      if (
+        storeInfo.storeName === ocrStoreName &&
+        storeInfo.storeAddress.includes(ocrStoreAddress)
+      ) {
+        console.log(storeInfo.storeName, ocrStoreName);
+        console.log(storeInfo.storeAddress, ocrStoreAddress);
+        setIsEqual(1);
+      } else {
+        console.log(storeInfo.storeName, 'dfsd', ocrStoreName);
+        console.log(storeInfo.storeAddress, 'dfsd', ocrStoreAddress);
+        setIsEqual(2);
+      }
+    }
+  }, [ocrStoreName, ocrStoreAddress]);
+
   return (
-    <View style={styles.wonny}>
-      <View style={styles.main}>
-        <View style={styles.selectionbox}>
-          <View style={styles.storereviewTitle}>
-            <Text style={[styles.text, styles.textTypo]}>
-              <Text style={styles.text1}>{`어떤 점이 좋았나요? `}</Text>
-              <Text style={styles.text2}>(1개)</Text>
-            </Text>
-            <Text style={styles.text3}>
-              이 가게에 어울리는 키워드를 골라주세요.
-            </Text>
-          </View>
-          <Text style={[styles.text4, styles.textTypo]}>시술/서비스</Text>
-          <View style={[styles.reivew1, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/notodogface.png')}
-            />
-            <Text style={styles.text5}>반려동물을 잘 다뤄줘요</Text>
-          </View>
-          <View style={[styles.reivew2, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Text style={styles.text5}>맞춤 케어를 잘해줘요</Text>
-            <Image
-              style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
-              source={require('../assets/ggcheckr.png')}
-            />
-          </View>
-          <View style={[styles.reivew3, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <View style={styles.parent}>
-              <Text style={[styles.text7, styles.textTypo]}>
-                시술이 꼼꼼해요
+    <ScrollView>
+      <View style={styles.wonny}>
+        <MiracleBenefitContainer
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="리뷰 등록"
+          navigation={navigation}
+          go="PLAY5"
+        />
+
+        <View style={styles.main}>
+          <StoreInfoContainer storeInfo={storeInfo} />
+          <View style={styles.selectionbox}>
+            <View style={styles.storereviewTitle}>
+              <Text style={[styles.text, styles.textTypo]}>
+                <Text style={styles.text1}>{`어떤 점이 좋았나요? `}</Text>
+                <Text style={styles.text2}>(1개)</Text>
               </Text>
+              <Text style={styles.text3}>
+                이 가게에 어울리는 키워드를 골라주세요.
+              </Text>
+            </View>
+            <Text style={[styles.text4, styles.textTypo]}>시술/서비스</Text>
+            <View style={[styles.reivew1, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
               <Image
-                style={styles.flatColorIconssearch}
-                source={require('../assets/flatcoloriconssearch.png')}
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/notodogface.png')}
+              />
+              <Text style={styles.text5}>반려동물을 잘 다뤄줘요</Text>
+            </View>
+            <View style={[styles.reivew2, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Text style={styles.text5}>맞춤 케어를 잘해줘요</Text>
+              <Image
+                style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
+                source={require('../assets/ggcheckr.png')}
               />
             </View>
+            <View style={[styles.reivew3, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <View style={styles.parent}>
+                <Text style={[styles.text7, styles.textTypo]}>
+                  시술이 꼼꼼해요
+                </Text>
+                <Image
+                  style={styles.flatColorIconssearch}
+                  source={require('../assets/flatcoloriconssearch.png')}
+                />
+              </View>
+            </View>
+            <View style={[styles.reivew4, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/emojionev1document.png')}
+              />
+              <Text style={styles.text5}>관리법을 잘 알려줘요</Text>
+            </View>
+            <View style={[styles.reivew5, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Text style={styles.text5}>위생적으로 케어해줘요</Text>
+              <Image
+                style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
+                source={require('../assets/materialsymbolscleanhandsrounded.png')}
+              />
+            </View>
+            <View style={[styles.reivew6, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Text style={styles.text5}>매장이 청결해요</Text>
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/group.png')}
+              />
+            </View>
+            <View style={[styles.reivew7, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/notolotionbottle.png')}
+              />
+              <Text style={styles.text5}>좋은 제품을 사용해요</Text>
+            </View>
+            <View style={[styles.reivew8, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
+                source={require('../assets/iconimg.png')}
+              />
+              <Text style={styles.text5}>스타일 추천을 잘해줘요</Text>
+            </View>
+            <View style={[styles.reivew9, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Text style={styles.text5}>선생님이 열정적이에요</Text>
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/notofire.png')}
+              />
+            </View>
+            <Text style={[styles.text14, styles.textTypo]}>시설/가격</Text>
+            <View style={[styles.reivew11, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
+                source={require('../assets/iconimg.png')}
+              />
+              <Text style={styles.text5}>가격이 합리적이에요</Text>
+            </View>
+            <View style={[styles.reivew21, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/iconimg1.png')}
+              />
+              <Text style={styles.text5}>종류가 다양해요</Text>
+            </View>
+            <View style={[styles.reivew31, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Text style={styles.text5}>시설이 깔끔해요</Text>
+              <Image
+                style={[
+                  styles.healthiconscleanHands,
+                  styles.ggcheckRIconLayout,
+                ]}
+                source={require('../assets/iconimg2.png')}
+              />
+            </View>
+            <View style={[styles.reivew41, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/iconimg3.png')}
+              />
+              <Text style={styles.text5}>품질이 좋아요</Text>
+            </View>
+            <View style={[styles.reivew51, styles.reivewLayout]}>
+              <View style={[styles.reivew5Item, styles.reivew5ItemLayout]} />
+              <Text style={styles.text5}>매장이 넓어요</Text>
+              <Image
+                style={[styles.notoeyesIcon, styles.iconLayout]}
+                source={require('../assets/iconimg4.png')}
+              />
+            </View>
+            <View style={[styles.reivew61, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/iconimg1.png')}
+              />
+              <Text style={styles.text5}>아기자기해요</Text>
+            </View>
+            <View style={[styles.reivew71, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/iconimg5.png')}
+              />
+              <Text style={styles.text5}>특색 있는 제품이 많아요</Text>
+            </View>
+            <View style={[styles.reivew81, styles.reivewLayout]}>
+              <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
+              <Image
+                style={[styles.notodogFaceIcon, styles.iconLayout]}
+                source={require('../assets/iconimg6.png')}
+              />
+              <Text style={styles.text5}>트렌디해요</Text>
+            </View>
+            <Pressable
+              style={[styles.savebtn, styles.savebtnPosition]}
+              submit-btn="제출">
+              <View style={[styles.rectangle, styles.rectanglePosition]} />
+              <Text style={[styles.text23, styles.textFlexBox]}>제출</Text>
+            </Pressable>
           </View>
-          <View style={[styles.reivew4, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/emojionev1document.png')}
-            />
-            <Text style={styles.text5}>관리법을 잘 알려줘요</Text>
-          </View>
-          <View style={[styles.reivew5, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Text style={styles.text5}>위생적으로 케어해줘요</Text>
-            <Image
-              style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
-              source={require('../assets/materialsymbolscleanhandsrounded.png')}
-            />
-          </View>
-          <View style={[styles.reivew6, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Text style={styles.text5}>매장이 청결해요</Text>
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/group.png')}
-            />
-          </View>
-          <View style={[styles.reivew7, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/notolotionbottle.png')}
-            />
-            <Text style={styles.text5}>좋은 제품을 사용해요</Text>
-          </View>
-          <View style={[styles.reivew8, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
-              source={require('../assets/iconimg.png')}
-            />
-            <Text style={styles.text5}>스타일 추천을 잘해줘요</Text>
-          </View>
-          <View style={[styles.reivew9, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Text style={styles.text5}>선생님이 열정적이에요</Text>
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/notofire.png')}
-            />
-          </View>
-          <Text style={[styles.text14, styles.textTypo]}>시설/가격</Text>
-          <View style={[styles.reivew11, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
-              source={require('../assets/iconimg.png')}
-            />
-            <Text style={styles.text5}>가격이 합리적이에요</Text>
-          </View>
-          <View style={[styles.reivew21, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/iconimg1.png')}
-            />
-            <Text style={styles.text5}>종류가 다양해요</Text>
-          </View>
-          <View style={[styles.reivew31, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Text style={styles.text5}>시설이 깔끔해요</Text>
-            <Image
-              style={[styles.healthiconscleanHands, styles.ggcheckRIconLayout]}
-              source={require('../assets/iconimg2.png')}
-            />
-          </View>
-          <View style={[styles.reivew41, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/iconimg3.png')}
-            />
-            <Text style={styles.text5}>품질이 좋아요</Text>
-          </View>
-          <View style={[styles.reivew51, styles.reivewLayout]}>
-            <View style={[styles.reivew5Item, styles.reivew5ItemLayout]} />
-            <Text style={styles.text5}>매장이 넓어요</Text>
-            <Image
-              style={[styles.notoeyesIcon, styles.iconLayout]}
-              source={require('../assets/iconimg4.png')}
-            />
-          </View>
-          <View style={[styles.reivew61, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/iconimg1.png')}
-            />
-            <Text style={styles.text5}>아기자기해요</Text>
-          </View>
-          <View style={[styles.reivew71, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/iconimg5.png')}
-            />
-            <Text style={styles.text5}>특색 있는 제품이 많아요</Text>
-          </View>
-          <View style={[styles.reivew81, styles.reivewLayout]}>
-            <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-            <Image
-              style={[styles.notodogFaceIcon, styles.iconLayout]}
-              source={require('../assets/iconimg6.png')}
-            />
-            <Text style={styles.text5}>트렌디해요</Text>
-          </View>
-          <Pressable
-            style={[styles.savebtn, styles.savebtnPosition]}
-            submit-btn="제출">
-            <View style={[styles.rectangle, styles.rectanglePosition]} />
-            <Text style={[styles.text23, styles.textFlexBox]}>제출</Text>
-          </Pressable>
-        </View>
-        <View style={styles.storeinfoPosition}>
-          <View style={[styles.storeinfoChild, styles.storeinfoPosition]} />
-          <Text style={[styles.payTitle, styles.payTypo]}>
-            24시 멍냥마켓 파장점
-          </Text>
-          <Text style={[styles.payDate, styles.text25Typo]}>
-            서울시 마포구 월드컵북로 68번길 100
-          </Text>
-          <Image
-            style={styles.paycategoryIcon1}
-            source={require('../assets/paycategoryimg.png')}
-          />
         </View>
       </View>
-      <View style={styles.headerPosition}>
-        <View style={[styles.headerChild, styles.headerPosition]} />
-        <Text style={[styles.text24, styles.text24Position]}>리뷰 등록</Text>
-        <Image
-          style={[styles.mingcuterightLineIcon, styles.text24Position]}
-          source={require('../assets/mingcuterightline2.png')}
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

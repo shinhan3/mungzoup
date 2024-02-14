@@ -25,6 +25,26 @@ public class ReviewController {
     @Autowired
     RatingCategoryRepository reviewRepo;
 
+    @GetMapping("/reviewSelect.do/{storeId}")
+    public Map<String,Object> displayStore(@PathVariable("storeId")Integer storeId){
+
+        Map<String, Object> map = new HashMap<>();
+
+        String userId = "asme12";
+
+        List<Object[]> storeInfoList = storeRepo.selectNameAndAddress(storeId); 
+        Map<String, Object> storeInfo = new HashMap<>();
+        storeInfo.put("storeName", storeInfoList.get(0)[0]);
+        storeInfo.put("storeAddress", storeInfoList.get(0)[1]);
+        storeInfo.put("categoryId", storeInfoList.get(0)[2]);
+        storeInfo.put("imagePath", storeInfoList.get(0)[3]);
+
+        map.put("storeInfo",storeInfo);
+        map.put("userId",userId);
+
+        return map;
+    }
+
     @GetMapping("/review.do/{storeId}")
     public Map<String, Object> displayStoreAndReview(@PathVariable("storeId")Integer storeId){
         Map<String, Object> map = new HashMap<>(); //가게정보 + 가게리뷰

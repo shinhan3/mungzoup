@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import FormContainer6 from '../components/FormContainer6';
 import StoreInfoContainer from '../components/StoreInfoContainer';
 import MiracleBenefitContainer from '../components/MiracleBenefitContainer';
@@ -29,15 +36,20 @@ const PLAY3 = ({navigation, route}) => {
     <View style={styles.play}>
       <View style={styles.main}>
         <FormContainer6 reviewInfo={reviewInfo} totalCount={totalCount} />
-        <StoreInfoContainer
-          storeInfo={storeInfo}
-          storeId={storeId}
-          navigation={navigation}
-        />
-        <Image
-          style={styles.arrowIcon}
-          source={require('../assets/arrow7.png')}
-        />
+        <StoreInfoContainer storeInfo={storeInfo} />
+
+        <Pressable
+          onPress={() => navigation.navigate('OcrInput', {storeId: storeId})}
+          style={[styles.reviewbtn, styles.reviewbtnLayout]}
+          insert-review="리뷰 등록">
+          <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
+          <Image
+            style={styles.materialSymbolscameraIcon}
+            source={require('../assets/materialsymbolscamera.png')}
+          />
+          <View style={[styles.reviewbtnChild, styles.reviewbtnLayout]} />
+        </Pressable>
+
         <Text style={styles.foldBtn}>접기</Text>
       </View>
 
@@ -52,6 +64,53 @@ const PLAY3 = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    top: 3,
+    left: 16,
+    fontSize: FontSize.size_8xs,
+    letterSpacing: 0,
+    lineHeight: 8,
+    fontWeight: '700',
+    fontFamily: FontFamily.notoSansKRBold,
+    color: Color.new1,
+    textAlign: 'center',
+    justifyContent: 'center',
+    width: 30,
+    height: 12,
+  },
+  textFlexBox: {
+    alignItems: 'center',
+    display: 'flex',
+    position: 'absolute',
+  },
+  reviewbtnLayout: {
+    width: 51,
+    height: 18,
+    position: 'absolute',
+  },
+  materialSymbolscameraIcon: {
+    top: 2,
+    left: 3,
+    width: 13,
+    height: 14,
+    overflow: 'hidden',
+    position: 'absolute',
+  },
+  reviewbtnChild: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    borderColor: Color.new1,
+    borderWidth: 0.2,
+    width: 51,
+    left: 0,
+    top: 0,
+  },
+  reviewbtn: {
+    left: 299,
+    top: 20,
+    width: 51,
+  },
+
   menuLayout: {
     height: 38,
     width: 25,
