@@ -64,7 +64,7 @@ const ReviewSelect = ({navigation, route}) => {
         const allInferTexts = res.data.images.flatMap(image =>
           image.fields.map(field => field.inferText),
         );
-        //console.log(allInferTexts);
+        console.log(allInferTexts);
         const ocrStoreNameIndex = allInferTexts.indexOf('명');
         const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 2];
         setOcrStoreName(preOcrStoreName);
@@ -91,7 +91,7 @@ const ReviewSelect = ({navigation, route}) => {
   }, []);
 
   React.useEffect(() => {
-    //requestWithBase64();
+    requestWithBase64();
   }, []);
 
   React.useEffect(() => {

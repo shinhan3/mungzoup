@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.shinhan.sbproject.VO.AIFaceVO;
 
-public interface AIFaceRepository extends CrudRepository<AIFaceVO, Integer>{
+public interface AIFaceRepository extends CrudRepository<AIFaceVO, String>{
     AIFaceVO findByProtectionId(String protectionId);
 	
 }
