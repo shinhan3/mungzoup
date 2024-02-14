@@ -1,38 +1,43 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, Image, PermissionsAndroid, Platform} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import hi from '../image/hi.jpg';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
 function SelectMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'android') {
+        PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+      }
+    }, []),
+  );
+  useFocusEffect(
+    useCallback(() => {
+      const watchId = Geolocation.watchPosition(
+        position => {
+          const {latitude, longitude} = position.coords;
+          setCurrentLocation({latitude, longitude});
+        },
+        error => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 20000,
+          maximumAge: 0,
+          distanceFilter: 1,
+        },
       );
-    }
-  }, []);
-  useEffect(() => {
-    const watchId = Geolocation.watchPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        setCurrentLocation({latitude, longitude});
-      },
-      error => {
-        console.log(error);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 0,
-        distanceFilter: 1,
-      },
-    );
-    return () => {
-      Geolocation.clearWatch(watchId);
-    };
-  }, []);
+      return () => {
+        Geolocation.clearWatch(watchId);
+      };
+    }, []),
+  );
   return (
     <>
       <View style={{flex: 1}}>
@@ -79,7 +84,7 @@ function SelectMap() {
             <Image
               source={hi}
               style={{width: 30, height: 30}}
-              resizeMethod="contain"></Image>
+              resizeMethod="auto"></Image>
           </Marker>
         </MapView>
       </View>

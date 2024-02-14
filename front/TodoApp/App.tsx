@@ -19,7 +19,7 @@ function App(props) {
   console.log(today);
   return (
     <>
-    <AppTest />
+      <AppTest />
     </>
   );
 }

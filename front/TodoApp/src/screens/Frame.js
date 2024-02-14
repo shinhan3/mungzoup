@@ -8,7 +8,7 @@ import {useFocusEffect} from '@react-navigation/core';
 
 const Frame = props => {
   const [data, setData] = React.useState([]);
-  const userId = 'user1';
+  const userId = 'user2';
   useFocusEffect(
     React.useCallback(() => {
       console.log('마운트될 떄 된다.1');
@@ -21,7 +21,15 @@ const Frame = props => {
           } else {
             Alert.alert('', '멍줍카드 먼저 발급 후 이용해주세요', [
               {
-                text: 'ok',
+                text: '카드 발급',
+                onPress: () => {
+                  console.log('alert');
+                  props.navigation.navigate('CardInsert');
+                },
+                style: 'destructive',
+              },
+              {
+                text: '취소',
                 onPress: () => {
                   console.log('alert');
                   props.navigation.navigate('PLAYmainwonny');
