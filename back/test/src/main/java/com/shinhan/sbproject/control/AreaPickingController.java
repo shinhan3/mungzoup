@@ -18,6 +18,7 @@ public class AreaPickingController {
     @GetMapping("/areaPicking.do/{pickingArea}")
     public List<Object[]> selectArea(@PathVariable String pickingArea) {
         System.out.println("picking area: " + pickingArea);
-        return sRepo.selectArea("%" + pickingArea + "%");
+        return sRepo.selectArea(pickingArea);
     }   
 }
+

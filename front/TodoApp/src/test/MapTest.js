@@ -19,16 +19,18 @@ function MapTest() {
             longitudeDelta: 0.005,
           }}
           onPress={d => {
+            console.log('aaa');
             axios
               .get(
                 `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${d.nativeEvent.coordinate.longitude}&y=${d.nativeEvent.coordinate.latitude}`,
                 {
                   headers: {
-                    Authorization: 'KakaoAK 7530b3bd67ff412ca4f7a3f29b5904a9',
+                    Authorization: 'KakaoAK b3e94d38f2ac985e22246a5d1d0da2ea',
                   },
                 },
               )
               .then(response => {
+                console.log(response);
                 console.log(response.data.documents[0].address_name);
                 console.log(response.data.documents[0].y);
                 console.log(response.data.documents[0].x);

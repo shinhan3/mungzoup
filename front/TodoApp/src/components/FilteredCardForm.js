@@ -1,23 +1,32 @@
-import * as React from 'react';
+
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Image, FlatList} from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
 import axios from 'axios';
+import FormDropdown from './FormDropdown'; // FormDropdown 컴포넌트 임포트
 
 const FilteredCardForm = () => {
+  const [dropdownBoxValue, setDropdownBoxValue] = useState('지역'); // 드롭다운 박스의 선택된 값 상태
+  const [dropdownBoxOpen, setDropdownBoxOpen] = useState(false); // 드롭다운 박스의 열림 상태
+
   const [data, setData] = React.useState([]);
   React.useEffect(() => {
     fetchData(); // 컴포넌트가 마운트될 때 데이터 가져오기
-  }, []);
+  }, [dropdownBoxValue]); // dropdownBoxValue가 변경될 때마다 호출되도록
+
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'http://10.0.2.2:5000/areaPicking.do/{pickingArea}',
-      );
+      const response = await axios.get('http://10.0.2.2:5000/areaPicking.do', {
+        params: {
+          pickingArea: dropdownBoxValue, // dropdownBoxValue를 사용하여 API 호출
+        },
+      }
       setData(response.data); // 가져온 데이터를 상태에 설정
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+
   return (
     <FlatList
       data={data}
@@ -87,6 +96,9 @@ const FilteredCardForm = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   txtLayout: {
     height: 16,
     position: 'absolute',

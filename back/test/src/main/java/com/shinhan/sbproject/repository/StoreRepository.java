@@ -20,7 +20,7 @@ public interface StoreRepository extends CrudRepository<StoreVO, Integer>{
 
     @Query(value = "SELECT c.category_name, s.STORE_NAME, s.STORE_ADDRESS, s.OPEN_TIME, s.CLOSED_DAYS " +
             "FROM store s JOIN category c ON s.category_id = c.CATEGORY_ID " +
-            "WHERE STORE_ADDRESS = ?1", nativeQuery = true)
+            "WHERE STORE_ADDRESS LIKE %?1%", nativeQuery = true)
     List<Object[]> selectArea(String pickingArea);
 
 }

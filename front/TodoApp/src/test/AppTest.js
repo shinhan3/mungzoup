@@ -39,6 +39,8 @@ import Geolocation from '@react-native-community/geolocation';
 import LocationContext from './LocationContext ';
 import SelectMap from '../screens/SelectMap';
 import WalkingHistory from '../screens/WalkingHistory';
+import CardInsert from '../screens/CardInsert';
+
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 const Stack = createNativeStackNavigator();
@@ -97,19 +99,14 @@ function BottomTabsRoot({navigation}) {
           </View>
         );
       }}>
-      {/* <Tab.Screen
-        name="Frame2"
-        component={Frame2}
-        options={{headerShown: false}}
-      /> */}
-      <Tab.Screen
-        name="PLAYmainwonny"
-        component={PLAYmainwonny}
-        options={{headerShown: false}}
-      />
       <Tab.Screen
         name="MyDaeng"
         component={MyDaeng}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="PLAYmainwonny"
+        component={PLAYmainwonny}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -244,6 +241,11 @@ const AppTest = () => {
                 component={PLAY5}
                 options={{headerShown: false}}
               />
+              <Stack.Screen
+              name="CardInsert"
+              component={CardInsert}
+              options={{headerShown: false}}
+            />
             </Stack.Navigator>
           ) : (
             <Screen1 />

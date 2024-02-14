@@ -31,20 +31,18 @@ import lombok.ToString;
 @Table(name = "ai_face")
 
 public class AIFaceVO {
-   @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private String protectionId;
-   private String breed;
-   private String img;
-   private String shelter;
-   // private String outputValue;
-   
-   @ManyToOne
-   @JoinColumn(name = "userId")
-   private UserVO user;
-   
-   @CreationTimestamp
-   private Timestamp aiFaceInsertDay;
-   
-   
+	@Id
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String protectionId;
+	private String breed;
+	private String img;
+	private String shelter;
+	// private String outputValue;
+	
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private UserVO user;
+	
+	@CreationTimestamp
+	private Timestamp aiFaceInsertDay;
 }
