@@ -15,10 +15,10 @@ public class AreaPickingController {
     @Autowired
     StoreRepository sRepo;
 
-    //@GetMapping("/areaPicking.do/{pickingArea}")
-    //public List<Object[]> selectArea(@PathVariable String pickingArea) {
-    //    return (List<Object[]>) sRepo.selectArea(null);
-    //}
-    
-    
+    @GetMapping("/areaPicking.do/{pickingArea}")
+    public List<Object[]> selectArea(@PathVariable String pickingArea) {
+        System.out.println("picking area: " + pickingArea);
+        return sRepo.selectArea(pickingArea);
+    }   
 }
+

@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {StyleSheet} from 'react-native';
+import axios from 'axios';
 import {Color, Border} from '../GlobalStyles';
-import {View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/core';
 
 const FormDropdown = () => {
   const [dropdownBoxOpen, setDropdownBoxOpen] = useState(false);
   const [dropdownBoxValue, setDropdownBoxValue] = useState('지역');
-  const [pickingArea, setPickingArea] = useState(null);
 
   const items = [
     {label: '강남구', value: '강남구'},
@@ -16,22 +16,67 @@ const FormDropdown = () => {
     {label: '종로구', value: '종로구'},
   ];
 
-  const handleValueChange = value => {
+  const handleValueChange = async selectedItem => {
+    console.log('여기까지 옴?', selectedItem());
+    const value = selectedItem();
+    console.log('여까진옴? ', value);
     setDropdownBoxValue(value);
-    setPickingArea(value); // 선택된 지역을 pickingArea에 설정
+    try {
+      const response = await axios.get(
+        `http://10.0.2.2:5000/areaPicking.do/${value}`,
+      );
+      console.log('응답 데이터: ', response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('여기까지 옴?', selectedItem);
+  //     const value2 = selectedItem.value;
+  //     setDropdownBoxValue(value2);
+  //     console.log('hoooo', value2);
+  //     axios
+  //       .get('http://10.0.2.2:5000/areaPicking.do', value2)
+  //       .then(res => {
+  //         console.log('ㅎㅇzzz', res.data);
+  //       })
+  //       .catch(err => console.log(err));
+  //   }, []),
+  // );
+
+  /* useFocusEffect(
+    useCallback(() => {
+      const value2 = selectedItem.value;
+      setDropdownBoxValue(value2);
+      console.log('hoooo', value2);
+      axios
+        .get('http://10.0.2.2:5000/areaPicking.do', value2)
+        .then(res => {
+          console.log('ㅎㅇzzz', res.data);
+        })
+        .catch(err => console.log(err));
+    }, []),
+  );*/
+
   return (
-    <View style={styles.dropdownBox}>
+    <View style={{flex: 1}}>
       <DropDownPicker
-        style={styles.dropdownpicker}
         open={dropdownBoxOpen}
         setOpen={setDropdownBoxOpen}
         value={dropdownBoxValue}
         setValue={handleValueChange}
         items={items}
+        placeholder="지역"
+        containerStyle={styles.dropdownBox}
+        style={styles.dropdownpicker}
         dropDownContainerStyle={styles.dropdownBoxdropDownContainer}
-        placeholder="ㅈㅣ역"
+        // onChangeItem={(selectedItem)=>{handleValueChange();}}
+        onChangeItem={selectedItem => {
+          console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+          console.log(selectedItem, 'aaaaaaaaaaaaaaaa');
+        }}
       />
     </View>
   );
@@ -52,6 +97,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 235,
     overflow: 'hidden',
+    zIndex: 999,
   },
 });
 
