@@ -35,8 +35,12 @@ import MyDaeng from '../screens/MyDaengMain';
 import MyDaenegRegister from '../screens/MyDaengRegister';
 import MyDaengDetail from '../screens/MyDaengUpdate';
 import MyDaengUpdate from '../screens/MyDaengUpdate';
+import Geolocation from '@react-native-community/geolocation';
+import LocationContext from './LocationContext ';
 import SelectMap from '../screens/SelectMap';
 import OcrInput from '../components/OcrInput';
+import WalkingHistory from '../screens/WalkingHistory';
+import CardInsert from '../screens/CardInsert';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -96,19 +100,14 @@ function BottomTabsRoot({navigation}) {
           </View>
         );
       }}>
-      {/* <Tab.Screen
-        name="Frame2"
-        component={Frame2}
-        options={{headerShown: false}}
-      /> */}
-      <Tab.Screen
-        name="PLAYmainwonny"
-        component={PLAYmainwonny}
-        options={{headerShown: false}}
-      />
       <Tab.Screen
         name="MyDaeng"
         component={MyDaeng}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="PLAYmainwonny"
+        component={PLAYmainwonny}
         options={{headerShown: false}}
       />
       <Tab.Screen
@@ -127,7 +126,8 @@ function BottomTabsRoot({navigation}) {
 
 const AppTest = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(false);
-
+  const [latitude, setLatitude] = React.useState(null);
+  const [longitude, setLongitude] = React.useState(null);
   // const [fontsLoaded, error] = useFonts({
   //   'NotoSansKR-Light': require('../assets/fonts/NotoSansKR-Light.otf'),
   //   'NotoSansKR-Regular': require('../assets/fonts/NotoSansKR-Regular.otf'),
@@ -138,9 +138,22 @@ const AppTest = () => {
   // });
 
   React.useEffect(() => {
+    const watchId = Geolocation.watchPosition(
+      position => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, distanceFilter: 10},
+    );
+
     setTimeout(() => {
       setHideSplashScreen(true);
     }, 2000);
+
+    return () => Geolocation.clearWatch(watchId);
   }, []);
 
   // if (!fontsLoaded && !error) {
@@ -149,95 +162,108 @@ const AppTest = () => {
 
   return (
     <>
-      <NavigationContainer>
-        {hideSplashScreen ? (
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="BottomTabsRoot" component={BottomTabsRoot} />
-            <Stack.Screen
-              name="Screen1"
-              component={Screen1}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="PLAY"
-              component={PLAY}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="MyDaeng"
-              component={MyDaeng}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Frame1"
-              component={Frame1}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="InsertWalkSpot"
-              component={InsertWalkSpot}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="SelectMap"
-              component={SelectMap}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="PLAY1"
-              component={PLAY1}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="PLAY2"
-              component={PLAY2}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="MyDaenegRegister"
-              component={MyDaenegRegister}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Review"
-              component={Review}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="PLAY4"
-              component={PLAY4}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="ReviewSelect"
-              component={ReviewSelect}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="MyDaengUpdate"
-              component={MyDaengUpdate}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="PLAYmainwonny1"
-              component={PLAYmainwonny1}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
+      <LocationContext.Provider value={{latitude, longitude}}>
+        <NavigationContainer>
+          {hideSplashScreen ? (
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="BottomTabsRoot" component={BottomTabsRoot} />
+              <Stack.Screen
+                name="Screen1"
+                component={Screen1}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PLAY"
+                component={PLAY}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyDaeng"
+                component={MyDaeng}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Frame1"
+                component={Frame1}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="InsertWalkSpot"
+                component={InsertWalkSpot}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="SelectMap"
+                component={SelectMap}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PLAY1"
+                component={PLAY1}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PLAY2"
+                component={PLAY2}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyDaenegRegister"
+                component={MyDaenegRegister}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PLAY4"
+                component={WalkingHistory}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Wonny"
+                component={Wonny}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyDaengUpdate"
+                component={MyDaengUpdate}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PLAYmainwonny1"
+                component={PLAYmainwonny1}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
               name="HiddenPopularStores"
               component={HiddenPopularStores}
               options={{headerShown: false}}
-            />
-            <Stack.Screen
+              />
+              <Stack.Screen
+              name="Review"
+              component={Review}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="ReviewSelect"
+              component={ReviewSelect}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
               name="OcrInput"
               component={OcrInput}
               options={{headerShown: false}}
+              />
+
+              <Stack.Screen
+              name="CardInsert"
+              component={CardInsert}
+              options={{headerShown: false}}
             />
-          </Stack.Navigator>
-        ) : (
-          <Screen1 />
-        )}
-      </NavigationContainer>
+            </Stack.Navigator>
+          ) : (
+            <Screen1 />
+          )}
+        </NavigationContainer>
+      </LocationContext.Provider>
     </>
   );
 };

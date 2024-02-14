@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import {Input} from 'react-native-elements';
-import {useFocusEffect} from '@react-navigation/core';
 import axios from 'axios';
 function InsertWalkSpot(props) {
   var address = props.route.params ? props.route.params.address : '';
@@ -18,8 +17,9 @@ function InsertWalkSpot(props) {
   var longitude = props.route.params ? props.route.params.longitude : '';
   var distance = props.route.params ? props.route.params.distance : '';
   const [name, setName] = useState('');
+  const [spotList, setSpotList] = useState([]);
+
   const insertWalkSpotfunction = () => {
-    // axios.get
     if (props.route.params) {
       console.log(name, latitude, longitude, address);
       const data = {
@@ -29,7 +29,16 @@ function InsertWalkSpot(props) {
         spotAddress: address,
         user: {userId: 'user1'},
       };
-      axios.post('http://10.0.2.2:5000/insertWalkSpot.do', data);
+      axios
+        .post('http://10.0.2.2:5000/insertWalkSpot.do', data)
+        .then(res => {
+          const newSpot = res.data;
+          setSpotList(prevSpotList => [...prevSpotList, newSpot]);
+          props.navigation.navigate('PLAY');
+        })
+        .catch(err => {
+          err;
+        });
     }
   };
 
@@ -95,7 +104,11 @@ function InsertWalkSpot(props) {
               inputContainerStyle={{borderBottomWidth: 0, height: '100%'}}
               inputStyle={{paddingTop: 0, paddingBottom: 0}}
             />
-            <Text style={styles.addressDistance}>내 위치에서 {distance} m</Text>
+            {distance && (
+              <Text style={styles.addressDistance}>
+                내 위치에서 {distance} m
+              </Text>
+            )}
             <TouchableOpacity
               style={styles.addressBtns}
               onPress={() => {
@@ -114,7 +127,6 @@ function InsertWalkSpot(props) {
             disabled={name === '' || address === ''}
             onPress={() => {
               insertWalkSpotfunction();
-              props.navigation.navigate('PLAY');
             }}>
             <Text style={styles.btnText}>등록</Text>
           </TouchableOpacity>
@@ -156,8 +168,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   header: {
-    height: 52,
-    width: 360,
+    height: 50,
+    backgroundColor: Color.colorWhitesmoke_100,
   },
   content: {
     margin: 26,

@@ -10,43 +10,42 @@ import {ScrollView} from 'react-native';
 
 const PLAY2 = ({navigation}) => {
   return (
-    <ScrollView>
-      <View style={styles.play}>
-        <View style={[styles.main, styles.mainPosition]}>
-          <View style={[styles.recommendlist, styles.mainPosition]}>
-            <FilteredCardForm2 />
-            <FormContainer4 />
-            <FilteredCardForm1 />
-            <FilteredCardForm />
-          </View>
-          <View style={styles.upperPart}>
-            <FormDropdown />
-            <View style={styles.regiontext}>
-              <Text style={[styles.contentTitle, styles.titlePosition]}>
-                나들이 지역
-              </Text>
-              <Text style={styles.contentDetail}>{`사랑스러운 나의 멍멍이와
-방문하고 싶은 지역을 골라보세요.`}</Text>
-            </View>
-          </View>
+    <View style={styles.play}>
+      <View style={[styles.main, styles.mainPosition]}>
+        <View style={[styles.recommendlist, styles.mainPosition]}>
+
+          {/*
+          <FilteredCardForm2 />
+          <FormContainer4 />
+  */}
         </View>
-        <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.titlePosition]}>
-            줍줍 장소
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack('PLAYmainwonny');
-            }}>
-            <Image
-              style={styles.arrowIcon}
-              source={require('../assets/arrow4.png')}
-            />
-          </TouchableOpacity>
+        <View style={styles.upperPart}>
+          <FormDropdown />
+          <View style={styles.regiontext}>
+            <Text style={[styles.contentTitle, styles.titlePosition]}>
+              나들이 지역
+            </Text>
+            <Text style={styles.contentDetail}>{`사랑스러운 나의 멍멍이와
+방문하고 싶은 지역을 골라보세요.`}</Text>
+          </View>
         </View>
       </View>
-    </ScrollView>
+      <View style={styles.headerPosition}>
+        <View style={[styles.headerDiv, styles.headerPosition]} />
+        <Text style={[styles.headerTitle, styles.titlePosition]}>
+          줍줍 장소
+        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack('PLAYmainwonny');
+          }}>
+          <Image
+            style={styles.arrowIcon}
+            source={require('../assets/arrow4.png')}
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
