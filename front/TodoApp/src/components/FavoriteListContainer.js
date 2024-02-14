@@ -1,9 +1,17 @@
-import * as React from 'react';
-import {Text, StyleSheet, View, FlatList, TouchableOpacity} from 'react-native';
+import React, {useCallback, useContext, useState} from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {FontSize, FontFamily, Color} from '../GlobalStyles';
 import axios from 'axios';
 import {getDistanceFormula} from '../screens/SelectMap';
-
+import LocationContext from '../test/LocationContext ';
+import {useFocusEffect} from '@react-navigation/core';
 function FavoriteListContainer(props) {
   return (
     <View style={styles.main}>
@@ -14,20 +22,34 @@ function FavoriteListContainer(props) {
 }
 
 export function FindWalkSpotByUser(props) {
-  const [spotList, setSpotList] = React.useState([]);
+  const [spotList, setSpotList] = useState([]);
   const userId = 'user1';
-  const latitude = 37.559245;
-  const longitude = 126.92273666666667;
-  React.useEffect(() => {
+  var {latitude, longitude} = useContext(LocationContext);
+  const deleteWalkSpotfunction = spotId => {
     axios
-      .get(`http://10.0.2.2:5000/selectWalkSpotAll.do/${userId}`)
+      .delete(`http://10.0.2.2:5000/deleteWalkSpot.do/${spotId}`)
       .then(res => {
-        setSpotList(res.data);
+        setSpotList(prevSpotList =>
+          prevSpotList.filter(item => item.spotId !== spotId),
+        );
       })
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get(`http://10.0.2.2:5000/selectWalkSpotAll.do/${userId}`)
+        .then(res => {
+          setSpotList(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, []),
+  );
   return (
     <FlatList
       data={spotList}
@@ -42,18 +64,29 @@ export function FindWalkSpotByUser(props) {
         );
         return (
           <View style={styles.spotList}>
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('PLAY1', {
-                  spotName: item.spotName,
-                  spotLongitude: item.spotLongitude,
-                  spotLatitude: item.spotLatitude,
-                });
-              }}>
-              <Text style={styles.spotName}>{item.spotName}</Text>
-            </TouchableOpacity>
+            <View style={styles.spotListFirst}>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('PLAY1', {
+                    spotId: item.spotId,
+                    spotName: item.spotName,
+                    spotLongitude: item.spotLongitude,
+                    spotLatitude: item.spotLatitude,
+                  });
+                }}>
+                <Text style={styles.spotName}>{item.spotName}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  deleteWalkSpotfunction(item.spotId);
+                }}>
+                <Image
+                  source={require('../assets/trash_can.png')}
+                  style={styles.deleteImg}></Image>
+              </TouchableOpacity>
+            </View>
             <Text style={styles.spotAddress}>{item.spotAddress}</Text>
-            <Text style={styles.distance}>{`거리: ${distance}m`}</Text>
+            <Text style={styles.distance}>{`거리: ${distance}km`}</Text>
           </View>
         );
       }}
@@ -79,6 +112,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: 'white',
     fontFamily: FontFamily.notoSansKRMedium,
+    borderTopWidth: 1,
+    borderTopColor: '#A7A7A7',
   },
   spotName: {
     fontSize: 18,
@@ -93,6 +128,15 @@ const styles = StyleSheet.create({
   },
   distance: {
     marginLeft: 20,
+  },
+  deleteImg: {
+    marginTop: 5,
+    width: 20,
+    height: 20,
+    marginLeft: 10,
+  },
+  spotListFirst: {
+    flexDirection: 'row',
   },
 });
 

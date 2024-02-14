@@ -23,5 +23,4 @@ public interface StoreRepository extends CrudRepository<StoreVO, Integer>{
             "WHERE STORE_ADDRESS LIKE %?1%", nativeQuery = true)
     List<Object[]> selectArea(String pickingArea);
 
-
 }

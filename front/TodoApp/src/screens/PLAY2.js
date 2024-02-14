@@ -13,6 +13,7 @@ const PLAY2 = ({navigation}) => {
     <View style={styles.play}>
       <View style={[styles.main, styles.mainPosition]}>
         <View style={[styles.recommendlist, styles.mainPosition]}>
+
           {/*
           <FilteredCardForm2 />
           <FormContainer4 />

@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Image, FlatList} from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
@@ -19,7 +20,7 @@ const FilteredCardForm = () => {
         params: {
           pickingArea: dropdownBoxValue, // dropdownBoxValue를 사용하여 API 호출
         },
-      });
+      }
       setData(response.data); // 가져온 데이터를 상태에 설정
     } catch (error) {
       console.error('Error fetching data:', error);
