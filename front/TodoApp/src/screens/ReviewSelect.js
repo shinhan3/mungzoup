@@ -6,9 +6,11 @@ import {
   Pressable,
   Image,
   ScrollView,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
-import Header from '../components/Header';
+import HeaderComponent from '../components/HeaderComponent';
 import StoreInfoContainer from '../components/StoreInfoContainer';
 import axios from 'axios';
 
@@ -18,8 +20,52 @@ const ReviewSelect = ({navigation, route}) => {
   const {imageUrl} = route.params;
   const [ocrStoreName, setOcrStoreName] = React.useState('');
   const [ocrStoreAddress, setOcrStoreAddress] = React.useState('');
+  const [ocrPrice, setOcrPrice] = React.useState('');
   const [isEqual, setIsEqual] = React.useState(0);
   const [review, setReview] = React.useState([]);
+  const [reviewId, setReviewId] = React.useState();
+  const [selectedReview, setSelectedReview] = React.useState();
+
+  const alertFail = () => {
+    Alert.alert('', '영수증이 가게정보와 일치하지 않습니다.', [
+      {
+        text: '확인',
+        onPress: () => {
+          navigation.navigate('HiddenPopularStores');
+        },
+        style: 'destructive',
+      },
+    ]);
+  };
+
+  const onPressReview = r => {
+    setReviewId(r.ratingCategoryId);
+    setSelectedReview(r.ratingCategoryId);
+  };
+
+  const onSubmitReview = () => {
+    const data = {
+      storeId: storeId,
+      reviewId: reviewId,
+      ocrPrice: ocrPrice,
+    };
+    axios
+      .post('http://10.0.2.2:5000/insertReview.do', data)
+      .then(res => {
+        Alert.alert('', '리뷰가 등록되었습니다.', [
+          {
+            text: '확인',
+            onPress: () => {
+              navigation.navigate('HiddenPopularStores');
+            },
+            style: 'destructive',
+          },
+        ]);
+      })
+      .catch(err => {
+        console.log('error');
+      });
+  };
 
   //OCR을 수행할 이미지 경로
   const imagePath = imageUrl;
@@ -64,7 +110,7 @@ const ReviewSelect = ({navigation, route}) => {
         const allInferTexts = res.data.images.flatMap(image =>
           image.fields.map(field => field.inferText),
         );
-        console.log(allInferTexts);
+        //console.log(allInferTexts);
         const ocrStoreNameIndex = allInferTexts.indexOf('명');
         const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 2];
         setOcrStoreName(preOcrStoreName);
@@ -74,6 +120,10 @@ const ReviewSelect = ({navigation, route}) => {
           .slice(ocrStoreAddressIndex + 2, ocrStoreAddressIndex + 5)
           .join(' ');
         setOcrStoreAddress(preOcrStoreAddress);
+
+        const ocrPriceIndex = allInferTexts.indexOf('청구금액:');
+        const ocrPrice = allInferTexts[ocrPriceIndex + 1]; //string
+        setOcrPrice(ocrPrice);
       }
     } catch (error) {
       console.error('requestWithBase64 error', error.response || error);
@@ -102,32 +152,44 @@ const ReviewSelect = ({navigation, route}) => {
       ) {
         //console.log(storeInfo.storeName, ocrStoreName);
         //console.log(storeInfo.storeAddress, ocrStoreAddress);
-        setIsEqual(1);
+        setIsEqual(2);
       } else {
         //console.log(storeInfo.storeName, '222', ocrStoreName);
         //console.log(storeInfo.storeAddress, '222', ocrStoreAddress);
-        setIsEqual(2);
+        setIsEqual(1);
       }
     }
   }, [ocrStoreName, ocrStoreAddress]);
 
   return (
-    <View style={styles.wonny}>
-      <View style={styles.main}>
-        <StoreInfoContainer storeInfo={storeInfo} />
-        <Header
+    <ScrollView>
+      <View style={styles.wonny}>
+        <HeaderComponent
           dimensionCode={require('../assets/arrow8.png')}
           benefits="리뷰 등록"
           navigation={navigation}
           go="HiddenPopularStores"
         />
-        <ReviewList review={review} navigation={navigation}></ReviewList>
+        <View style={styles.main}>
+          <StoreInfoContainer storeInfo={storeInfo} />
+          {isEqual === 2 ? (
+            <ReviewList
+              review={review}
+              onPressReview={onPressReview}
+              selectedReview={selectedReview}
+              onSubmitReview={onSubmitReview}></ReviewList>
+          ) : isEqual === 1 ? (
+            alertFail()
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
-function ReviewList({review, navigation}) {
+function ReviewList({review, onPressReview, selectedReview, onSubmitReview}) {
   return (
     <View style={styles.selectionbox}>
       <View style={styles.storereviewTitle}>
@@ -140,29 +202,56 @@ function ReviewList({review, navigation}) {
         </Text>
       </View>
       <Text style={[styles.text14, styles.textTypo]}>시설/가격</Text>
-      <View style={[styles.reivew1, styles.reivewLayout]}>
-        <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-        <Image
-          style={[styles.notodogFaceIcon, styles.iconLayout]}
-          source={require('../assets/notodogface.png')}
-        />
-        <Text style={styles.text5}>가격이 합리적이에요</Text>
-      </View>
-
+      {review &&
+        review.slice(0, 8).map((r, seq) => (
+          <Pressable
+            style={[styles.reivew11, styles.reivewLayout]}
+            key={seq}
+            onPress={() => onPressReview(r)}>
+            <View
+              style={[
+                styles.reivew1Child,
+                styles.reivew5ItemLayout,
+                selectedReview === r.ratingCategoryId ? styles.selected : '',
+              ]}
+            />
+            <Image
+              style={[styles.notodogFaceIcon, styles.iconLayout]}
+              source={{uri: r.image}}
+            />
+            <Text style={styles.text5}>{r.reviewContent}</Text>
+          </Pressable>
+        ))}
       <Text style={[styles.text4, styles.textTypo]}>시술/서비스</Text>
-      <View style={[styles.reivew11, styles.reivewLayout]}>
-        <View style={[styles.reivew1Child, styles.reivew5ItemLayout]} />
-        <Image
-          style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
-          source={require('../assets/iconimg.png')}
-        />
-        <Text style={styles.text5}>반려동물을 잘 다뤄줘요</Text>
-      </View>
+      {review &&
+        review.slice(8, 17).map((r, seq) => (
+          <Pressable
+            style={[styles.reivew1, styles.reivewLayout]}
+            key={seq}
+            onPress={() => onPressReview(r)}>
+            <View
+              style={[
+                styles.reivew1Child,
+                styles.reivew5ItemLayout,
+                selectedReview === r.ratingCategoryId ? styles.selected : '',
+              ]}
+            />
+            <Image
+              style={[styles.ggcheckRIcon, styles.ggcheckRIconLayout]}
+              source={{uri: r.image}}
+            />
+            <Text style={styles.text5}>{r.reviewContent}</Text>
+          </Pressable>
+        ))}
 
       <Pressable
-        style={[styles.savebtn, styles.savebtnPosition]}
-        submit-btn="제출">
-        <View style={[styles.rectangle, styles.rectanglePosition]} />
+        style={[
+          styles.savebtn,
+          styles.savebtnPosition,
+          {backgroundColor: selectedReview ? Color.new1 : '#DDDDDD'},
+        ]}
+        onPress={() => onSubmitReview()}
+        disabled={!selectedReview}>
         <Text style={[styles.text23, styles.textFlexBox]}>제출</Text>
       </Pressable>
     </View>
@@ -180,8 +269,7 @@ const styles = StyleSheet.create({
   reivewLayout: {
     height: 33,
     width: 300,
-    left: 1,
-    position: 'absolute',
+    marginBottom: 10,
   },
   reivew5ItemLayout: {
     borderRadius: Border.br_8xs,
@@ -209,10 +297,7 @@ const styles = StyleSheet.create({
     bottom: '0%',
     width: '100%',
   },
-  rectanglePosition: {
-    top: '0%',
-    position: 'absolute',
-  },
+
   textFlexBox: {
     width: 204,
     justifyContent: 'center',
@@ -278,7 +363,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   reivew1: {
-    top: 486,
+    top: 150,
     shadowOpacity: 1,
     shadowOffset: {
       width: 1,
@@ -301,7 +386,7 @@ const styles = StyleSheet.create({
     left: 5,
   },
   reivew11: {
-    top: 93,
+    top: 97,
     shadowOpacity: 1,
     shadowOffset: {
       width: 1,
@@ -314,15 +399,7 @@ const styles = StyleSheet.create({
     width: 300,
     left: 1,
   },
-  rectangle: {
-    height: '100%',
-    borderRadius: Border.br_9xs,
-    backgroundColor: Color.new1,
-    right: '0%',
-    left: '0%',
-    bottom: '0%',
-    width: '100%',
-  },
+
   text23: {
     left: 49,
     fontSize: FontSize.size_sm,
@@ -338,6 +415,7 @@ const styles = StyleSheet.create({
     height: '4.55%',
     top: '95.45%',
     position: 'absolute',
+    borderRadius: Border.br_9xs,
   },
   selectionbox: {
     top: 91,
@@ -347,10 +425,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   main: {
-    top: 52,
+    top: 60,
     height: 1037,
     width: 360,
-    left: 0,
+    left: 24,
     position: 'absolute',
   },
   headerChild: {
@@ -372,6 +450,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
   },
+  selected: {backgroundColor: Color.new1, opacity: 0.7},
 });
 
 export default ReviewSelect;

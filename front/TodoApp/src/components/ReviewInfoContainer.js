@@ -4,6 +4,41 @@ import {Border, FontSize, FontFamily, Color} from '../GlobalStyles';
 
 const ReviewInfoContainer = ({reviewInfo, totalCount}) => {
   return (
+    <>
+      {totalCount > 0 ? (
+        <ReviewList
+          reviewInfo={reviewInfo}
+          totalCount={totalCount}></ReviewList>
+      ) : (
+        <NoReviewList totalCount={totalCount}></NoReviewList>
+      )}
+    </>
+  );
+};
+
+function NoReviewList({totalCount}) {
+  return (
+    <View style={styles.selectionbox}>
+      <View style={styles.storereviewtitle}>
+        <Text style={styles.title}>이런 점이 좋았어요</Text>
+        <Image
+          style={styles.checkIcon}
+          source={require('../assets/check.png')}
+        />
+        <Text style={styles.participants}>
+          <Text style={styles.text}>{totalCount}</Text>
+          <Text style={styles.text1}>회</Text>
+        </Text>
+      </View>
+      <View style={styles.noList}>
+        <Text>등록된 리뷰가 없습니다.</Text>
+      </View>
+    </View>
+  );
+}
+
+function ReviewList({reviewInfo, totalCount}) {
+  return (
     <View style={styles.selectionbox}>
       <View style={styles.storereviewtitle}>
         <Text style={styles.title}>이런 점이 좋았어요</Text>
@@ -20,8 +55,14 @@ const ReviewInfoContainer = ({reviewInfo, totalCount}) => {
       {reviewInfo &&
         Array.isArray(reviewInfo) &&
         reviewInfo.map((review, seq) => (
-          <View style={styles.reivew1}>
-            <View style={[styles.barFill, styles.barPosition]} />
+          <View style={styles.reivew1} key={seq}>
+            <View style={[styles.bar, styles.barPosition]} />
+            <View
+              style={[
+                styles.barFill(review.count / totalCount),
+                styles.barPosition,
+              ]}
+            />
             <Image
               style={[styles.iconImg, styles.iconLayout2]}
               source={{uri: review.imagePath}}
@@ -32,7 +73,7 @@ const ReviewInfoContainer = ({reviewInfo, totalCount}) => {
         ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   reivewShadowBox: {
@@ -49,10 +90,24 @@ const styles = StyleSheet.create({
     width: 300,
     position: 'absolute',
   },
-  barFill: {
-    backgroundColor: Color.colorLightcyan_100,
-    width: 198,
+  bar: {
+    backgroundColor: Color.colorWhitesmoke_200,
+    width: 300,
   },
+  barFill: percent => ({
+    backgroundColor: '#A1E0D8',
+    opacity:
+      percent > 0.8
+        ? 1
+        : percent > 0.6
+        ? 0.8
+        : percent > 0.4
+        ? 0.6
+        : percent > 0.2
+        ? 0.4
+        : 0.2,
+    width: percent * 300,
+  }),
   barPosition: {
     borderRadius: Border.br_8xs,
     height: 33,
@@ -125,24 +180,26 @@ const styles = StyleSheet.create({
     top: 0,
     position: 'absolute',
   },
-  bar: {
-    backgroundColor: Color.colorWhitesmoke_200,
-    width: 300,
-  },
   iconImg: {
     top: 10,
   },
   content: {
     left: 40,
     color: Color.colorDarkslategray_200,
-    top: 7,
+    top: 5.5,
   },
   count: {
-    left: 272,
-    color: Color.colorLightgreen,
+    top: -13.5,
+    left: 280,
+    color: '#7CA7D1',
   },
   reivew1: {
     top: 58,
+  },
+  noList: {
+    left: 5,
+    top: 65,
+    position: 'absolute',
   },
   iconImg1: {
     top: '30.3%',

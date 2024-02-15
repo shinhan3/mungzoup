@@ -8,7 +8,6 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';

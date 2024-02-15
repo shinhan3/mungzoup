@@ -6,10 +6,11 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import ReviewInfoContainer from '../components/ReviewInfoContainer';
 import StoreInfoContainer from '../components/StoreInfoContainer';
-import Header from '../components/Header';
+import HeaderComponent from '../components/HeaderComponent';
 import {FontSize, FontFamily, Color} from '../GlobalStyles';
 import axios from 'axios';
 
@@ -33,54 +34,51 @@ const Review = ({navigation, route}) => {
       .catch();
   }, []);
   return (
-    <View style={styles.play}>
-      <View style={styles.main}>
-        <StoreInfoContainer storeInfo={storeInfo} />
-        <ReviewInfoContainer reviewInfo={reviewInfo} totalCount={totalCount} />
-
-        <Pressable
-          onPress={() =>
-            navigation.navigate('OcrInput', {
-              storeId: storeId,
-              storeInfo: storeInfo,
-            })
-          }
-          style={[styles.reviewbtn, styles.reviewbtnLayout]}
-          insert-review="리뷰 등록">
-          <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
-          <Image
-            style={styles.materialSymbolscameraIcon}
-            source={require('../assets/materialsymbolscamera.png')}
+    <ScrollView>
+      <View style={styles.play}>
+        <HeaderComponent
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="리뷰"
+          navigation={navigation}
+          go="HiddenPopularStores"
+        />
+        <View style={styles.main}>
+          <StoreInfoContainer storeInfo={storeInfo} />
+          <ReviewInfoContainer
+            reviewInfo={reviewInfo}
+            totalCount={totalCount}
           />
-          <View style={[styles.reviewbtnChild, styles.reviewbtnLayout]} />
-        </Pressable>
-
-        <Text style={styles.foldBtn}>접기</Text>
+          <Pressable
+            onPress={() =>
+              navigation.navigate('OcrInput', {
+                storeId: storeId,
+                storeInfo: storeInfo,
+              })
+            }
+            style={[styles.reviewbtn, styles.reviewbtnLayout]}
+            insert-review="리뷰 등록">
+            <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
+            <Image
+              style={styles.materialSymbolscameraIcon}
+              source={require('../assets/materialsymbolscamera.png')}
+            />
+            <View style={[styles.reviewbtnChild, styles.reviewbtnLayout]} />
+          </Pressable>
+        </View>
       </View>
-
-      <Header
-        dimensionCode={require('../assets/arrow8.png')}
-        benefits="리뷰"
-        navigation={navigation}
-        go="HiddenPopularStores"
-      />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   text: {
-    top: 3,
-    left: 16,
-    fontSize: FontSize.size_8xs,
-    letterSpacing: 0,
-    lineHeight: 8,
-    fontWeight: '700',
+    top: 5,
+    left: 22,
+    fontSize: FontSize.size_5xs,
+    fontWeight: '800',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,
-    textAlign: 'center',
-    justifyContent: 'center',
-    width: 30,
+    width: 40,
     height: 12,
   },
   textFlexBox: {
@@ -89,13 +87,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   reviewbtnLayout: {
-    width: 51,
-    height: 18,
+    width: 60,
+    height: 23,
     position: 'absolute',
   },
   materialSymbolscameraIcon: {
-    top: 2,
-    left: 3,
+    top: 4,
+    left: 4,
     width: 13,
     height: 14,
     overflow: 'hidden',
@@ -106,14 +104,12 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: Color.new1,
     borderWidth: 0.2,
-    width: 51,
     left: 0,
     top: 0,
   },
   reviewbtn: {
-    left: 299,
-    top: 20,
-    width: 51,
+    left: 280,
+    top: 18,
   },
 
   menuLayout: {
@@ -150,12 +146,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   main: {
-    top: 52,
+    top: 60,
     height: 570,
     width: 360,
-    left: 0,
+    left: 24,
     position: 'absolute',
   },
+
   play: {
     backgroundColor: Color.colorGhostwhite,
     flex: 1,

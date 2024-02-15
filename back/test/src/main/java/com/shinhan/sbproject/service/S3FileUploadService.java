@@ -31,15 +31,16 @@ public class S3FileUploadService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile){
+    public String upload(MultipartFile file){
         //파일이름 지정
         String fileName = "image/receipt";
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(multipartFile.getContentType());
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
 
-        try (InputStream inputStream = multipartFile.getInputStream()) {
+        try (InputStream inputStream = file.getInputStream()) {
             //Amazon S3에 객체 업로드
-            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, metadata)
             .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
         }

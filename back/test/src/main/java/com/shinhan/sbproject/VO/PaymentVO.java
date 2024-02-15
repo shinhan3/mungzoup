@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,6 +31,7 @@ import lombok.ToString;
 
 public class PaymentVO {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer PAY_NUM;
 	@ManyToOne
 	@JoinColumn(name = "storeId")

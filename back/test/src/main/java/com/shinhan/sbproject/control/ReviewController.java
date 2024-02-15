@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shinhan.sbproject.VO.PaymentVO;
 import com.shinhan.sbproject.VO.RatingCategoryVO;
+import com.shinhan.sbproject.VO.StoreVO;
+import com.shinhan.sbproject.VO.UserVO;
+import com.shinhan.sbproject.repository.PaymentRepository;
 import com.shinhan.sbproject.repository.RatingCategoryRepository;
 import com.shinhan.sbproject.repository.StoreRepository;
+import com.shinhan.sbproject.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Slf4j
 @RestController
@@ -26,10 +34,47 @@ public class ReviewController {
     @Autowired
     RatingCategoryRepository reviewRepo;
 
+    @Autowired
+    UserRepository userRepo;
+
+    @Autowired
+    PaymentRepository payRepo;
+
     @GetMapping("/reviewAll.do")
     public List<RatingCategoryVO> reviewAll(){
         return reviewRepo.selectAll();
     }
+
+@PostMapping("/insertReview.do")
+public void insertReview(@RequestBody Map<String,Object> data) {
+    String userId = "asme12";
+    int storeId = (Integer)data.get("storeId");
+    int reviewId = (Integer)data.get("reviewId");
+    String strPrice = (String)data.get("ocrPrice");
+    //가격문자열에 콤마 여부 따져서 ""으로 대체해주기
+    if(strPrice.contains(",")){
+        strPrice = strPrice.replace(",", "");
+    }
+    int price = Integer.parseInt(strPrice);
+
+    StoreVO store = new StoreVO();
+    store.setStoreId(storeId);
+    UserVO user = new UserVO();
+    user.setUserId(userId);
+    RatingCategoryVO review = new RatingCategoryVO();
+    review.setRatingCategoryId(reviewId);
+
+    //payment테이블에 데이터 삽입
+    PaymentVO payment = PaymentVO.builder()
+                                .store(store)
+                                .user(user)
+                                .price(price)
+                                .ratingCategory(review)
+                                .build();
+    
+    payRepo.save(payment);
+}
+
 
     @GetMapping("/review.do/{storeId}")
     public Map<String, Object> displayStoreAndReview(@PathVariable("storeId")Integer storeId){

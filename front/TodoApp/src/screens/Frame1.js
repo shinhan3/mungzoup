@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Text, StyleSheet, View, ScrollView} from 'react-native';
 import FormContainer3 from '../components/FormContainer3';
-import Header from '../components/Header';
+import HeaderComponent from '../components/HeaderComponent';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import {useFocusEffect} from '@react-navigation/core';
 import axios from 'axios';
@@ -33,7 +33,7 @@ const Frame1 = props => {
     <ScrollView>
       <View style={styles.view}>
         <FormContainer3 discount={discountPrice.discount} />
-        <Header
+        <HeaderComponent
           dimensionCode={require('../assets/arrow2.png')}
           benefits="미라클 혜택"
           go={'Frame'}

@@ -2,6 +2,7 @@ package com.shinhan.sbproject.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -16,9 +17,10 @@ public interface RatingCategoryRepository extends CrudRepository<RatingCategoryV
                 "on p.rating_category_id = r.rating_category_id " + 
                 "WHERE p.store_id = ?1 " + 
                 "GROUP BY r.review_content) rp " +
-            "where r.review_content = rp.review_content", nativeQuery=true)
+            "where r.review_content = rp.review_content order by rp.count desc", nativeQuery=true)
     List<Object[]> selectContnetAndCount(Integer storeId);
 
     @Query(value="select * from rating_category", nativeQuery=true)
     List<RatingCategoryVO> selectAll();
+
 }

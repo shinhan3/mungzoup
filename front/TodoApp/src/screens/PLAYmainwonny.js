@@ -2,14 +2,9 @@ import * as React from 'react';
 import {StyleSheet, View, Text, ScrollView, Pressable} from 'react-native';
 import FormContainer2 from '../components/FormContainer2';
 import ContainerCardFormFilter from '../components/ContainerCardFormFilter';
-import Container from '../components/Container';
+import StoreRecommendContainer from '../components/StoreRecommendContainer';
 import FormContainer1 from '../components/FormContainer1';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
-//OCR TEST_이미지 파일 읽기
-import axios from 'axios';
-import RNFS from 'react-native-fs';
-import FormData from 'form-data';
-import OcrTest from '../components/OcrTest';
 
 const PLAYmainwonny = props => {
   console.log(props, 'ssss');
@@ -26,7 +21,7 @@ const PLAYmainwonny = props => {
           <ContainerCardFormFilter
             dimensions={require('../assets/petbannerimg.png')}
           />
-          <Container
+          <StoreRecommendContainer
             navigation={props.navigation}
             dimensionCode={require('../assets/petbannerimg1.png')}
           />
