@@ -139,7 +139,7 @@ function SelectMap(props) {
                       clickedLatitude,
                       clickedLongitude,
                     );
-                    console.log(`남은 거리: ${distance} m`);
+                    console.log(`남은 거리: ${distance} km`);
                     console.log('==========================================');
 
                     props.navigation.navigate('InsertWalkSpot', {
