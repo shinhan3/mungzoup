@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Slf4j
@@ -19,8 +20,8 @@ public class BenefitController {
     @Autowired
     BenefitRepository benefitRep;
 
-    @GetMapping("/getbenefitPre.do")
-    public List<String[]> f1() { 
-        return (List<String[]>) benefitRep.getbenefitPre("asme12");
+    @GetMapping("/getbenefitPre.do/{UserId}")
+    public List<String[]> f1(@PathVariable("UserId")String userId) { 
+        return (List<String[]>) benefitRep.getbenefitPre(userId);
     }
 }

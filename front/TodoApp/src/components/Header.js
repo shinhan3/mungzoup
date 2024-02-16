@@ -28,7 +28,8 @@ const Header = ({dimensionCode, benefits, navigation, go}) => {
 const styles = StyleSheet.create({
   headerPosition: {
     height: 52,
-    width: 360,
+    // width: 360,
+    width: 420,
     left: 0,
     top: 0,
     position: 'absolute',

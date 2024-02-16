@@ -5,13 +5,17 @@ import Header from '../components/Header';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import {useFocusEffect} from '@react-navigation/core';
 import axios from 'axios';
+import FooterComponent from './FooterComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {USERID} from '../UserId';
 
 const Frame1 = props => {
-  const userId = 'user1';
+  const userId = USERID;
   const [discountPrice, setDiscountPrice] = React.useState({
     userName: '',
     discount: 0,
   });
+  console.log(props.navigation, 'aaaaaa');
   useFocusEffect(
     React.useCallback(() => {
       console.log('test2007');
@@ -30,50 +34,57 @@ const Frame1 = props => {
     }, []),
   );
   return (
-    <ScrollView>
-      <View style={styles.view}>
-        <FormContainer3 discount={discountPrice.discount} />
-        <Header
-          dimensionCode={require('../assets/arrow2.png')}
-          benefits="미라클 혜택"
-          go={'Frame'}
-          navigation={props.navigation}
-        />
-        <Text style={styles.ment1}>
-          <Text>
-            <Text
-              style={[
-                styles.text,
-                styles.textTypo2,
-              ]}>{`멍줍 카드를 사용한 똑똑한 소비자를 위한 추천!
+    <>
+      <ScrollView>
+        <View style={styles.view}>
+          <FormContainer3 discount={discountPrice.discount} />
+          <Header
+            dimensionCode={require('../assets/arrow2.png')}
+            benefits="미라클 혜택"
+            go={'Frame'}
+            navigation={props.navigation}
+          />
+          <Text style={styles.ment1}>
+            <Text>
+              <Text
+                style={[
+                  styles.text,
+                  styles.textTypo2,
+                ]}>{`멍줍 카드를 사용한 똑똑한 소비자를 위한 추천!
 `}</Text>
-            <Text style={[styles.text1, styles.textTypo]}>{`멍줍 카드만의 
+              <Text style={[styles.text1, styles.textTypo]}>{`멍줍 카드만의 
 미라클 조합으로, 최대 혜택을!
  
 `}</Text>
+            </Text>
           </Text>
-        </Text>
-        <Text style={styles.ment2}>
-          <Text style={[styles.text2, styles.textTypo]}>
-            {discountPrice.userName}
+          <Text style={styles.ment2}>
+            <Text style={[styles.text2, styles.textTypo]}>
+              {discountPrice.userName}
+            </Text>
+            <Text style={[styles.text3, styles.textTypo2]}>
+              님의 이번달 혜택은?
+            </Text>
           </Text>
-          <Text style={[styles.text3, styles.textTypo2]}>
-            님의 이번달 혜택은?
-          </Text>
-        </Text>
-        <Text style={styles.manual}>
-          <Text style={styles.manualTxt}>
-            <Text style={styles.textTypo}> </Text>
-            <Text
-              style={
-                styles.text4
-              }>{`·자세한 카드별 서비스 내용 및 서비스 적용 기준은 카테고리 어쩌고 저쩌고 아아아아아아가나다라마바사아자차카타파하아야어여오요우유으이나동물병원미용위탁관리식당카페
+          <Text style={styles.manual}>
+            <Text style={styles.manualTxt}>
+              <Text style={styles.textTypo}> </Text>
+              <Text
+                style={
+                  styles.text4
+                }>{`·자세한 카드별 서비스 내용 및 서비스 적용 기준은 카테고리 어쩌고 저쩌고 아아아아아아가나다라마바사아자차카타파하아야어여오요우유으이나동물병원미용위탁관리식당카페
 · 자세한 문의는 멍줍 고객센터(1588-3333)로 문의 부탁드립니다. 
 `}</Text>
+            </Text>
           </Text>
-        </Text>
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={false}
+        cardBoolean={true}
+        navigation={props.navigation}></FooterComponent>
+    </>
   );
 };
 

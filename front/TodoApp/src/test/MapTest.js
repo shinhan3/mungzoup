@@ -47,7 +47,7 @@ function MapTest() {
             <Image
               source={hi}
               style={{width: 35, height: 35}}
-              resizeMethod="contain"></Image>
+              resizeMethod="auto"></Image>
           </Marker>
           <Marker
             coordinate={{latitude: 37.5595, longitude: 126.9227}}
@@ -56,7 +56,7 @@ function MapTest() {
             <Image
               source={hi}
               style={{width: 30, height: 30}}
-              resizeMethod="contain"></Image>
+              resizeMethod="auto"></Image>
           </Marker>
         </MapView>
       </View>

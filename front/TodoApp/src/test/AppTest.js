@@ -42,6 +42,8 @@ import SelectMap from '../screens/SelectMap';
 import OcrInput from '../components/OcrInput';
 import WalkingHistory from '../screens/WalkingHistory';
 import CardInsert from '../screens/CardInsert';
+import FavoriteListContainer from '../components/FavoriteListContainer';
+import FooterComponent from '../screens/FooterComponent';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -66,7 +68,7 @@ function BottomTabsRoot({navigation}) {
         return (
           <View
             style={{
-              width: 360,
+              width: 'auto',
               height: 62,
               flexDirection: 'row',
               alignItems: 'center',
@@ -117,8 +119,8 @@ function BottomTabsRoot({navigation}) {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Frame1Test"
-        component={Frame1}
+        name="InsertWalkSpot"
+        component={InsertWalkSpot}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
@@ -137,7 +139,6 @@ const AppTest = () => {
   //   'IBMPlexSansKR-Bold': require('../assets/fonts/IBMPlexSansKR-Bold.ttf'),
   //   'Inter-Medium': require('../assets/fonts/Inter-Medium.ttf'),
   // });
-
   React.useEffect(() => {
     const watchId = Geolocation.watchPosition(
       position => {
@@ -178,11 +179,11 @@ const AppTest = () => {
                 component={PLAY}
                 options={{headerShown: false}}
               />
-              <Stack.Screen
+              {/* <Stack.Screen
                 name="MyDaeng"
                 component={MyDaeng}
                 options={{headerShown: false}}
-              />
+              /> */}
               <Stack.Screen
                 name="Frame1"
                 component={Frame1}
@@ -257,6 +258,11 @@ const AppTest = () => {
               <Stack.Screen
                 name="PLAY6FindMyDog"
                 component={PLAY6FindMyDog}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="FooterComponent"
+                component={FooterComponent}
                 options={{headerShown: false}}
               />
             </Stack.Navigator>

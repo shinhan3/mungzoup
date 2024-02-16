@@ -13,10 +13,12 @@ import AddTodo from './src/Footer';
 import Content from './src/Content';
 import AppTest from './src/test/AppTest';
 import Test2 from './src/test/Test2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function App(props) {
-  const today = new Date();
-  console.log(today);
+  // const today = new Date();
+  // console.log(today);
+  AsyncStorage.setItem('userId', 'asme12');
   return (
     <>
       <AppTest />

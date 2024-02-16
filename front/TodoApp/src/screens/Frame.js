@@ -5,10 +5,16 @@ import CardContainer from '../components/CardContainer';
 import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SyncStorage from 'react-native-sync-storage';
+import {USERID} from '../UserId';
 
 const Frame = props => {
   const [data, setData] = React.useState([]);
-  const userId = 'user2';
+  // const [userId, setUserId] = React.useState([]);
+  const userId = USERID;
+  console.log(userId, 'ddd');
+
   useFocusEffect(
     React.useCallback(() => {
       console.log('마운트될 떄 된다.1');

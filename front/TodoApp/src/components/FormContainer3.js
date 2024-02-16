@@ -3,6 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Color, FontFamily, FontSize} from '../GlobalStyles';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
+import {USERID} from '../UserId';
 
 const FormContainer3 = props => {
   const totalSize = 210;
@@ -12,9 +13,10 @@ const FormContainer3 = props => {
   const [restaurant, setRestaurant] = React.useState(0.0);
   const [beauty, setBeauty] = React.useState(0.0);
   const [consignmentManagement, setConsignmentManagement] = React.useState(0.0);
+  const userId = USERID;
   useFocusEffect(
     React.useCallback(() => {
-      axios.get('http://10.0.2.2:5000/getbenefitPre.do').then(res => {
+      axios.get(`http://10.0.2.2:5000/getbenefitPre.do/${userId}`).then(res => {
         // console.log(res.data);
         res.data.map((value, index) => {
           console.log(value);
@@ -67,6 +69,7 @@ const FormContainer3 = props => {
               styles.percent,
               styles.percentLayout,
               {width: (petHospital / totalPercent) * totalSize - 20},
+              petHospital == 0 && {color: Color.colorDarkslategray_200},
             ]}>
             {petHospital}%
           </Text>
@@ -97,6 +100,7 @@ const FormContainer3 = props => {
               styles.percent1,
               styles.percentTypo,
               {width: (petShop / totalPercent) * totalSize - 20},
+              petShop == 0 && {color: Color.colorDarkslategray_200},
             ]}>
             {petShop}%
           </Text>
@@ -127,6 +131,7 @@ const FormContainer3 = props => {
               styles.percent1,
               styles.percentTypo,
               {width: (restaurant / totalPercent) * totalSize - 20},
+              restaurant == 0 && {color: Color.colorDarkslategray_200},
             ]}>
             {restaurant}%
           </Text>
@@ -157,6 +162,7 @@ const FormContainer3 = props => {
               styles.percent1,
               styles.percentTypo,
               {width: (beauty / totalPercent) * totalSize - 20},
+              beauty == 0 && {color: Color.colorDarkslategray_200},
             ]}>
             {beauty}%
           </Text>
@@ -184,6 +190,9 @@ const FormContainer3 = props => {
               styles.percent1,
               styles.percentTypo,
               {width: (consignmentManagement / totalPercent) * totalSize - 20},
+              consignmentManagement == 0 && {
+                color: Color.colorDarkslategray_200,
+              },
             ]}>
             {consignmentManagement}%
           </Text>
