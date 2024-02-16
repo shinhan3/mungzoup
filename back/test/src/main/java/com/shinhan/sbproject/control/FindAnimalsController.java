@@ -42,7 +42,7 @@ public class FindAnimalsController {
          System.out.println(Arrays.toString(imageFile.getInputStream().readAllBytes()));
          System.out.println(imageFile.getInputStream().readAllBytes().length);
 
-         File convFile = new File("C:\\Users\\User\\git\\shinhanProject\\project3\\front\\TodoApp\\src\\assets\\도착위치.png");
+         File convFile = new File("C:\\Users\\User\\git\\mungzoup\\project3\\front\\TodoApp\\src\\assets\\도착위치.png");
          convFile.createNewFile();
          FileOutputStream fos = new FileOutputStream(convFile);
          fos.write(imageFile.getBytes());
