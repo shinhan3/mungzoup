@@ -106,7 +106,7 @@ function InsertWalkSpot(props) {
             />
             {distance && (
               <Text style={styles.addressDistance}>
-                내 위치에서 {distance} m
+                내 위치에서 {distance} km
               </Text>
             )}
             <TouchableOpacity
