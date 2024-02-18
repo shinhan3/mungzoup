@@ -1,56 +1,92 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import {View, Text, Image} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import hi from '../image/puppy.png';
+import my from '../assets/my.png';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
 import {USERID} from '../UserId';
+import LocationContext from '../test/LocationContext ';
 
 function MyPets(porps) {
   const userId = USERID;
   console.log(userId);
-  const initPet = porps.pets;
-  console.log(initPet[0].petLatitude);
+  console.log('porps', porps);
+  // const initMy = porps.mylocation;
+  // console.log(initMy);
+  const {latitude, longitude} = useContext(LocationContext);
+  console.log('porps123', latitude, longitude);
+  const mapRef = useRef();
+  const mylocation =
+    porps.mylocation.longitude < 0
+      ? {latitude: latitude, longitude: longitude}
+      : porps.mylocation;
+  console.log('porps', mylocation);
+
+  const moveMapToLocation = () => {
+    const newCoordinate = {
+      latitude: latitude, // 이동할 위치의 위도
+      longitude: longitude, // 이동할 위치의 경도
+    };
+    if (mapRef.current) {
+      mapRef.current.animateToRegion({
+        latitude: newCoordinate.latitude,
+        longitude: newCoordinate.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      });
+    }
+  };
+  moveMapToLocation();
+  console.log('current', mapRef.current);
+  console.log(latitude, longitude, 'aaa');
 
   return (
     <>
       <View style={{flex: 1}}>
-        <MapView
-          style={{flex: 1}}
-          provider={PROVIDER_GOOGLE}
-          customMapStyle={MapStyle}
-          initialRegion={{
-            latitude: initPet[0].petLatitude,
-            longitude: initPet[0].petLongitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-          }}>
-          {porps.pets.map((pet, index) => (
+        {latitude && (
+          <MapView
+            ref={mapRef}
+            style={{flex: 1}}
+            // provider={PROVIDER_GOOGLE}
+            customMapStyle={MapStyle}
+            initialRegion={{
+              // latitude: initPet[0].petLatitude,
+              // longitude: initPet[0].petLongitude,
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+            }}>
+            {porps.pets.map((pet, index) => (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: pet.petLatitude,
+                  longitude: pet.petLongitude,
+                }}
+                title={pet.name}
+                // description="테스트"
+              >
+                <Image
+                  source={hi}
+                  style={{width: 35, height: 35}}
+                  resizeMethod="auto"></Image>
+              </Marker>
+            ))}
             <Marker
-              key={index}
               coordinate={{
-                latitude: pet.petLatitude,
-                longitude: pet.petLongitude,
+                latitude: latitude,
+                longitude: longitude,
               }}
-              title={pet.name}
-              // description="테스트"
-            >
+              title="내 위치">
               <Image
-                source={hi}
+                source={my}
                 style={{width: 35, height: 35}}
                 resizeMethod="auto"></Image>
             </Marker>
-          ))}
-          {/* <Marker
-            coordinate={{latitude: 37.55929, longitude: 126.9227}}
-            title="멍줍이"
-            description="테스트">
-            <Image
-              source={hi}
-              style={{width: 35, height: 35}}
-              resizeMethod="auto"></Image>
-          </Marker> */}
-        </MapView>
+          </MapView>
+        )}
       </View>
     </>
   );

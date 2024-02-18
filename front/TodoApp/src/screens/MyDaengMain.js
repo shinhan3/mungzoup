@@ -21,6 +21,7 @@ import MyPets from '../components/MyPets';
 import {useFocusEffect} from '@react-navigation/core';
 import axios from 'axios';
 import {USERID} from '../UserId';
+import Geolocation from '@react-native-community/geolocation';
 
 const MyDaeng = props => {
   console.log(props);
@@ -29,6 +30,35 @@ const MyDaeng = props => {
   const [pets, setPets] = useState([]);
   const userId = USERID;
   console.log(userId);
+  // const [latitude, setLatitude] = useState(0.0);
+  // const [longitude, setLongitude] = useState(0.0);
+
+  const [mylocation, setMylocation] = useState({latitude: 0.0, longitude: 0.0});
+
+  const getGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(
+          'aaaagccccccccccc',
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        setMylocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+    );
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getGeolocation();
+    }, []),
+  );
   const getPet = () => {
     axios
       .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
@@ -40,6 +70,7 @@ const MyDaeng = props => {
         console.log(err);
       });
   };
+
   useFocusEffect(
     useCallback(() => {
       axios
@@ -51,6 +82,30 @@ const MyDaeng = props => {
         .catch(err => {
           console.log(err);
         });
+    }, []),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      // const watchId =
+      Geolocation.watchPosition(
+        position => {
+          console.log(
+            'aaaagccccccccccc',
+            position.coords.latitude,
+            position.coords.longitude,
+          );
+          setMylocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        error => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, distanceFilter: 10}, //10m 이동할 떄 마다 Check
+      );
+      // console.log('watchId aaaaaaaaa', watchId);
     }, []),
   );
   useFocusEffect(
@@ -76,7 +131,7 @@ const MyDaeng = props => {
               resizeMode="cover"
               source={require('../assets/myDogMap.png')}></Image>
           ) : (
-            <MyPets pets={pets} />
+            <MyPets pets={pets} mylocation={mylocation} />
           )}
           <View>
             <Text style={styles.manual}>
