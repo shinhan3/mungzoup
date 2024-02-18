@@ -18,8 +18,7 @@ const ReviewSelect = ({navigation, route}) => {
   const {storeId} = route.params;
   const {storeInfo} = route.params;
   const {imageUrl} = route.params;
-  const [ocrStoreName, setOcrStoreName] = React.useState('');
-  const [ocrStoreAddress, setOcrStoreAddress] = React.useState('');
+  const [ocrList, setOcrList] = React.useState();
   const [ocrPrice, setOcrPrice] = React.useState('');
   const [isEqual, setIsEqual] = React.useState(0);
   const [review, setReview] = React.useState([]);
@@ -111,17 +110,7 @@ const ReviewSelect = ({navigation, route}) => {
           image.fields.map(field => field.inferText),
         );
         console.log(allInferTexts);
-        const ocrStoreNameIndex = allInferTexts.indexOf('명');
-        const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 3];
-        console.log(preOcrStoreName);
-        setOcrStoreName(preOcrStoreName);
-
-        const ocrStoreAddressIndex = allInferTexts.indexOf('소재지:');
-        const preOcrStoreAddress = allInferTexts
-          .slice(ocrStoreAddressIndex + 2, ocrStoreAddressIndex + 5)
-          .join(' ');
-        console.log(preOcrStoreAddress);
-        setOcrStoreAddress(preOcrStoreAddress);
+        setOcrList(allInferTexts);
 
         const ocrPriceIndex = allInferTexts.indexOf('청구금액:');
         const ocrPrice = allInferTexts[ocrPriceIndex + 1]; //string
@@ -148,21 +137,22 @@ const ReviewSelect = ({navigation, route}) => {
   }, []);
 
   React.useEffect(() => {
-    if (ocrStoreName && ocrStoreAddress) {
+    if (ocrList) {
+      const storeAddressList = storeInfo.storeAddress.split(' ');
+      const ocrListIndex = ocrList.indexOf(storeAddressList[1]);
+      const storeAddressPart = ocrList
+        .slice(ocrListIndex, ocrListIndex + 2)
+        .join(' ');
       if (
-        storeInfo.storeName === ocrStoreName &&
-        storeInfo.storeAddress.includes(ocrStoreAddress)
+        ocrList.includes(storeInfo.storeName) &&
+        storeInfo.storeAddress.includes(storeAddressPart)
       ) {
-        //console.log(storeInfo.storeName, ocrStoreName);
-        //console.log(storeInfo.storeAddress, ocrStoreAddress);
         setIsEqual(2);
       } else {
-        //console.log(storeInfo.storeName, '222', ocrStoreName);
-        //console.log(storeInfo.storeAddress, '222', ocrStoreAddress);
         setIsEqual(1);
       }
     }
-  }, [ocrStoreName, ocrStoreAddress]);
+  }, [ocrList]);
 
   return (
     <ScrollView>
