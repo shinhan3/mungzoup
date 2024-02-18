@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AreaPickingController {
     @Autowired
     StoreRepository sRepo; 
- 
+  
     @GetMapping("/areaPicking.do/{pickingArea}")
     public List<Object[]> selectArea(@PathVariable String pickingArea) {
         System.out.println("picking area: " + pickingArea);
