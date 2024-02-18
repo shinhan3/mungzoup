@@ -8,6 +8,7 @@ import {
   ScrollView,
   Pressable,
   Button,
+  ImageEditor,
 } from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
@@ -25,12 +26,16 @@ const PLAY6FindMyDog = ({navigation}) => {
   const onSubmitImage = () => {
     ImageResizer.createResizedImage(
       response['assets'][0].uri,
-      30,
-      30,
+      32,
+      32,
       'PNG',
       100,
     )
       .then(resizedImage => {
+        Image.getSize(resizedImage.uri, (width, height) => {
+          console.log('width', width); // Check the width of the resized image
+          console.log('height', height); // Check the height of the resized image
+        });
         const data = new FormData();
         data.append('imageFile', {
           name: response['assets'][0].fileName,
@@ -120,7 +125,7 @@ const PLAY6FindMyDog = ({navigation}) => {
                 <Image
                   style={[styles.icon, styles.iconLayout]}
                   resizeMode="cover"
-                  source={require('../assets/-20240204-211558-1.png')}
+                  source={{uri: animalData.img}}
                 />
                 <Text style={[styles.text2, styles.textTypo]}>100%</Text>
               </View>

@@ -73,6 +73,7 @@ public class SamplRestController {
 			fos.write(imageFile.getBytes());
 			fos.close();
 
+			//실제로 받아오는 코드
 			BufferedImage imageRgb=convertBytesToRGBImage(imageFile.getBytes());
 			System.out.println(imageRgb.toString()+"aaaaa");
 			
@@ -88,31 +89,36 @@ public class SamplRestController {
 			// System.out.println(c.getBlue());  // = (dataBuffInt[100] >> 0)  & 0xFF
 			// System.out.println(c.getAlpha()); // = (dataBuffInt[100] >> 24) & 0xFF
 
+			//[개수][30][30][rgb] 형태로 넣어줌
 			float[][][][] input= rgbImageToArray(30,30,dataBuffInt);
 			System.out.println(input[0].length);
 			String filePath = "C:\\Users\\asme1\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
 			
 
-			try(SavedModelBundle b = SavedModelBundle.load("C:\\Users\\User\\git\\shinhanProject\\project3\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\aaa", "serve")){
+			try(SavedModelBundle b = SavedModelBundle.load("C:\\Users\\User\\git\\shinhanProject\\project3\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\aaa", "serve")){ 
+				//default가 서브, 도커에 생긴 aaa를 컨트롤러 아래로 복붙
 				
 				System.out.println("tttt");
 				//create a session from the Bundle
 				Session sess = b.session();
 				
 				//create an input Tensor
-				Tensor x = Tensor.create(input);
+				Tensor x = Tensor.create(input); //tensor 데이터 타입으로 바꿔줌
 				System.out.println("tttt");
 				//run the model and get the result
 				float[][] y = sess.runner()
-						.feed("conv2d_input", x)
-						.fetch("dense_1/Softmax")
+						.feed("conv2d_input", x) //model에 다이렉트로 입력값을 넣어준다
+						.fetch("dense_1/Softmax") //output name //dense_2/Softmax로 변경
 						.run()
-						.get(0)
-						.copyTo(new float[1][2]);
+						.get(0) //몇 번째 요소 받아올지, 어차피 데이터 하나라 0
+						.copyTo(new float[1][2]); //class 2개, 입력 1개라 다음과 같이 선언함. [[],[]]
 				
 				//print out the result
 				for(int i=0; i<y.length;i++)
-					System.out.println(y[i][1]+"결과: "+y[i][0]);
+					System.out.println(y[i][1]+"결과: "+y[i][0]); //2classification : [0][1] or [1][0]으로 출력
+					// [[0],[1]]: others, [[1],[0]]: robot
+					// [0][1]=1 => others
+					// [0][0]=1 => robots
 				}
 
 		}else{
