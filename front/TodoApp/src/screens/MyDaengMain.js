@@ -22,6 +22,7 @@ import {useFocusEffect} from '@react-navigation/core';
 import axios from 'axios';
 import {USERID} from '../UserId';
 import Geolocation from '@react-native-community/geolocation';
+import MyCarousel from '../components/aa';
 
 const MyDaeng = props => {
   console.log(props);
@@ -117,6 +118,16 @@ const MyDaeng = props => {
       };
     }, [pets]),
   );
+  const [petList, setPetList] = React.useState([]);
+  React.useEffect(() => {
+    axios
+      .get('http://10.0.2.2:5000/petList.do')
+      .then(res => {
+        console.log(res.data);
+        setPetList(res.data);
+      })
+      .catch(err => {});
+  }, []);
   return (
     <ScrollView style={{marginLeft: 30}}>
       <View style={styles.view}>
@@ -133,6 +144,7 @@ const MyDaeng = props => {
           ) : (
             <MyPets pets={pets} mylocation={mylocation} />
           )}
+
           <View>
             <Text style={styles.manual}>
               <Text style={styles.manualTxt}>
@@ -147,47 +159,6 @@ const MyDaeng = props => {
               </Text>
             </Text>
           </View>
-        </View>
-        <View style={[styles.healthbox, styles.healthboxPosition]}>
-          <Image
-            style={[styles.backgroundIcon, styles.iconPosition]}
-            resizeMode="cover"
-            source={require('../assets/background33.png')}
-          />
-          <View style={[styles.title1, styles.text3Layout]}>
-            <Text style={[styles.text3, styles.textTypo2]}>건강 요약</Text>
-          </View>
-          <View style={[styles.group, styles.kmPosition]}>
-            <Text style={[styles.text4, styles.textTypo1]}>질병</Text>
-            <Text style={[styles.text5, styles.textLayout]}>有</Text>
-          </View>
-          <View style={styles.kg}>
-            <Text style={styles.text6}>7</Text>
-            <Text style={styles.kg1}>kg</Text>
-            <View style={[styles.kgChild, styles.childBorder]} />
-          </View>
-          <Image
-            style={[
-              styles.mingcuterightLineIcon,
-              styles.mingcuterightIconPosition,
-            ]}
-            resizeMode="cover"
-            source={require('../assets/mingcuterightline.png')}
-          />
-          <Text style={[styles.text7, styles.textTypo]}>건강리포트</Text>
-          <Image
-            style={[styles.graphicon, styles.graphiconPosition]}
-            resizeMode="cover"
-            source={require('../assets/graphicon.png')}
-          />
-          <Image
-            style={[
-              styles.materialSymbolshomeHealthIcon,
-              styles.eventText2Position,
-            ]}
-            resizeMode="cover"
-            source={require('../assets/materialsymbolshomehealth.png')}
-          />
         </View>
         <View style={[styles.walkingBox, styles.healthboxPosition]}>
           <Image
@@ -230,50 +201,10 @@ const MyDaeng = props => {
             source={require('../assets/graphicon1.png')}
           />
         </View>
-        <View>
-          <Text style={[styles.profileTitle, styles.donationPosition]}>
-            마이댕 프로필
-          </Text>
-          <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
-            <Image
-              style={[styles.arrowIcon, styles.arrowIconLayout]}
-              resizeMode="cover"
-              source={require('../assets/arrow.png')}
-            />
-            <View style={{marginLeft: 10}}>
-              <Pressable
-                onPress={() => {
-                  props.navigation.navigate('MyDaengUpdate');
-                }}>
-                <Image
-                  style={[styles.profileimageIcon, styles.petprofileboxLayout]}
-                  resizeMode="cover"
-                  source={require('../assets/profileimage.png')}
-                />
-              </Pressable>
-              <View style={[styles.petinfotext, styles.timeChildLayout]}>
-                <Text
-                  style={[
-                    styles.doginfo,
-                    styles.textLayout1,
-                  ]}>{`5세 - 여아`}</Text>
-                <View style={[styles.timeChild, styles.timeChildLayout]} />
-                <Text style={[styles.dogname, styles.text10Position]}>
-                  멍줍이
-                </Text>
-              </View>
-            </View>
-            <Image
-              style={[styles.arrowIcon1, styles.arrowIconLayout]}
-              resizeMode="cover"
-              source={require('../assets/mingcuterightline1.png')}
-            />
-          </View>
-        </View>
         <Pressable
           style={[styles.walkbtn, styles.eventLayout2]}
           onPress={() => {
-            props.navigation.navigate('PLAY1');
+            props.navigation.navigate('PLAY');
           }}>
           <View style={[styles.walkDiv, styles.eventLayout2]} />
           <Image
@@ -287,6 +218,74 @@ const MyDaeng = props => {
             <Text style={styles.text1}>을 시작해보세요!</Text>
           </Text>
         </Pressable>
+
+        {/* <MyCarousel /> */}
+        <View>
+          <Text style={[styles.profileTitle, styles.donationPosition]}>
+            마이댕 프로필
+          </Text>
+        </View>
+        {petList.length > 0 ? (
+          petList.map((pet, seq) => (
+            <View key={pet.petId}>
+              <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
+                <Image
+                  style={[styles.arrowIcon, styles.arrowIconLayout]}
+                  resizeMode="cover"
+                  source={require('../assets/arrow.png')}
+                />
+                <View style={{marginLeft: 10}}>
+                  <Pressable
+                    onPress={() => {
+                      props.navigation.navigate('MyDaenegUpdate', {
+                        petId: pet.petId,
+                      });
+                    }}>
+                    <Image
+                      style={[
+                        styles.profileimageIcon,
+                        styles.petprofileboxLayout,
+                      ]}
+                      resizeMode="cover"
+                      source={require('../assets/profileimage.png')}
+                    />
+                  </Pressable>
+                  <View style={[styles.petinfotext, styles.timeChildLayout]}>
+                    <Text style={[styles.doginfo, styles.textLayout1]}>
+                      {new Date(pet.birth).toISOString().split('T')[0]} -{' '}
+                      {pet.sex ? 'Male' : 'Female'}
+                    </Text>
+                    <View style={[styles.timeChild, styles.timeChildLayout]} />
+                    <Text style={[styles.dogname, styles.text10Position]}>
+                      {pet.name}
+                    </Text>
+                  </View>
+                </View>
+                <Image
+                  style={[styles.arrowIcon1, styles.arrowIconLayout]}
+                  resizeMode="cover"
+                  source={require('../assets/mingcuterightline1.png')}
+                />
+              </View>
+            </View>
+          ))
+        ) : (
+          <Pressable
+            style={[styles.newprofilebtn, styles.newprofilebtnLayout]}
+            onPress={() => {
+              props.navigation.navigate('MyDaenegRegister');
+            }}>
+            <View style={[styles.backgroundbtn, styles.newprofilebtnLayout]} />
+            <Text style={[styles.textbtn, styles.event3Position]}>
+              마이댕 등록하기
+            </Text>
+            <Image
+              style={[styles.vectorIcon1, styles.iconLayout]}
+              resizeMode="cover"
+              source={require('../assets/vector1.png')}
+            />
+          </Pressable>
+        )}
         <View style={[styles.event, styles.eventLayout2]}>
           <Pressable
             onPress={() => {
@@ -398,21 +397,6 @@ const MyDaeng = props => {
             마이댕
           </Text>
         </View>
-        <Pressable
-          style={[styles.newprofilebtn, styles.newprofilebtnLayout]}
-          onPress={() => {
-            props.navigation.navigate('MyDaenegRegister');
-          }}>
-          <View style={[styles.backgroundbtn, styles.newprofilebtnLayout]} />
-          <Text style={[styles.textbtn, styles.event3Position]}>
-            마이댕 등록하기
-          </Text>
-          <Image
-            style={[styles.vectorIcon1, styles.iconLayout]}
-            resizeMode="cover"
-            source={require('../assets/vector1.png')}
-          />
-        </Pressable>
       </View>
       {/* </View> */}
     </ScrollView>
@@ -587,7 +571,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventLayout2: {
-    width: 316,
+    left: 11,
+    width: 300,
     position: 'absolute',
   },
   walkTextPosition: {
@@ -995,7 +980,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_3xs,
   },
   walkbtn: {
-    top: 467,
+    top: 330,
     left: 7,
     height: 31,
   },
@@ -1193,8 +1178,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   newprofilebtn: {
-    top: 519,
-    left: 173,
+    top: 120,
+    left: 100,
   },
   view: {
     backgroundColor: Color.colorGhostwhite,
