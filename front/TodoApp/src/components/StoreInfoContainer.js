@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
 import {FontFamily, Color, FontSize} from '../GlobalStyles';
-import OcrTest from './OcrTest';
 
 const StoreInfoContainer = ({storeInfo}) => {
   return (

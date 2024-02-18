@@ -56,30 +56,15 @@ public class SamplRestController {
 	public String imageTest(MultipartFile imageFile) throws IOException {
 		System.out.println("들어옴");
 		if(imageFile != null){
-			System.out.println("들어옴2");
-			Base64.Encoder encoder = Base64.getEncoder();
-			byte[] photoEnode = encoder.encode(imageFile.getBytes());
-			System.out.println(Arrays.toString(photoEnode));
-			String photoImg = new String(photoEnode, "UTF8");
-			System.out.println(photoEnode.length);
-			System.out.println(imageFile.getBytes().length);
-			System.out.println(photoImg);
-			System.out.println(Arrays.toString(imageFile.getInputStream().readAllBytes()));
-			System.out.println(imageFile.getInputStream().readAllBytes().length);
 
-			File convFile = new File("C:\\Users\\User\\Desktop\\리뷰 사진\\test.png");
-			convFile.createNewFile();
-			FileOutputStream fos = new FileOutputStream(convFile);
-			fos.write(imageFile.getBytes());
-			fos.close();
-
-			//실제로 받아오는 코드
 			BufferedImage imageRgb=convertBytesToRGBImage(imageFile.getBytes());
+
 			System.out.println(imageRgb.toString()+"aaaaa");
 			
 			int w = imageRgb.getWidth();
 			int h = imageRgb.getHeight();
 			
+			//프론트단에서 이미지 resize해서 가져옴(30,30)
 			int[] dataBuffInt = imageRgb.getRGB(0, 0, 30, 30, null, 0, w); 
 			System.out.println(dataBuffInt.length);
 			// Color c = new Color(dataBuffInt[1000],false);
@@ -89,7 +74,6 @@ public class SamplRestController {
 			// System.out.println(c.getBlue());  // = (dataBuffInt[100] >> 0)  & 0xFF
 			// System.out.println(c.getAlpha()); // = (dataBuffInt[100] >> 24) & 0xFF
 
-			//[개수][30][30][rgb] 형태로 넣어줌
 			float[][][][] input= rgbImageToArray(30,30,dataBuffInt);
 			System.out.println(input[0].length);
 			String filePath = "C:\\Users\\asme1\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";

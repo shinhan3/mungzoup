@@ -7,34 +7,26 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import DetailCard from '../components/DetailCard';
+import StoreDetail from '../components/StoreDetail';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import HeaderComponent from '../components/HeaderComponent';
 
 const HiddenPopularStores = ({navigation}) => {
   return (
     <ScrollView>
+      <HeaderComponent
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="숨은 인기 가맹점"
+        navigation={navigation}
+        go="PLAYmainwonny"
+      />
       <View style={styles.play}>
         <View style={[styles.main, styles.mainPosition]}>
           <View style={styles.mapPosition}>
             <View style={[styles.map1, styles.mapPosition]} />
             <Text style={[styles.title, styles.titleTypo]}>지도</Text>
           </View>
-          <DetailCard navigation={navigation} />
-        </View>
-        <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.titleTypo]}>
-            숨은 인기 가맹점
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('PLAYmainwonny');
-            }}>
-            <Image
-              style={styles.arrowIcon}
-              source={require('../assets/arrow4.png')}
-            />
-          </TouchableOpacity>
+          <StoreDetail navigation={navigation} />
         </View>
       </View>
     </ScrollView>
@@ -128,6 +120,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   play: {
+    marginTop: 60,
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
     width: '100%',

@@ -39,7 +39,7 @@ import MyDaengUpdate from '../screens/MyDaengUpdate';
 import Geolocation from '@react-native-community/geolocation';
 import LocationContext from './LocationContext ';
 import SelectMap from '../screens/SelectMap';
-import OcrInput from '../components/OcrInput';
+import OcrInput from '../screens/OcrInput';
 import WalkingHistory from '../screens/WalkingHistory';
 import CardInsert from '../screens/CardInsert';
 import FavoriteListContainer from '../components/FavoriteListContainer';

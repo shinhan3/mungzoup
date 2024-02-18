@@ -13,9 +13,9 @@ import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import axios from 'axios';
 import RNFS from 'react-native-fs';
 import FormData from 'form-data';
-import Header from './Header';
+import HeaderComponent from '../components/HeaderComponent';
 import {launchImageLibrary} from 'react-native-image-picker';
-import OcrTest from './OcrTest';
+import {inlineStyles} from 'react-native-svg';
 
 const OcrInput = ({navigation, route}) => {
   const {storeId} = route.params;
@@ -74,58 +74,83 @@ const OcrInput = ({navigation, route}) => {
 
   return (
     <View>
-      <ScrollView>
-        <Header
-          dimensionCode={require('../assets/arrow8.png')}
-          benefits="영수증"
-          navigation={navigation}
-          go="HiddenPopularStores"
-        />
-        <View style={{flex: 1, padding: 16, marginTop: 100}}>
-          {response && (
-            <Image source={{uri: response.assets[0].uri}} style={styles.img} />
-          )}
-          <Pressable
+      <HeaderComponent
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="영수증"
+        navigation={navigation}
+        go="HiddenPopularStores"
+      />
+      <View>
+        <Image
+          style={[styles.inputimgIcon, response ? {borderRadius: 10} : {}]}
+          source={
+            response
+              ? {uri: response.assets[0].uri}
+              : require('../assets/inputImg.png')
+          }></Image>
+        <Text style={[styles.receiptInfo]}>영수증을 등록해주세요.</Text>
+        <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
+          <Text style={{color: 'white', fontSize: 18}}>앨범 찾기</Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.receiptBtn,
+            {backgroundColor: response ? Color.new1 : '#DDDDDD'},
+          ]}
+          onPress={() =>
+            navigation.navigate('ReviewSelect', {
+              storeId: storeId,
+              storeInfo: storeInfo,
+              imageUrl: imageUrl,
+            })
+          }
+          disabled={!response}>
+          <Text
             style={{
-              backgroundColor: '#4287f5',
-              padding: 12,
-              borderRadius: 8,
-              marginTop: 20,
-              marginLeft: 60,
-              marginRight: 60,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onPress={() => onSelectImage()}>
-            <Text style={{color: 'white', fontSize: 18}}>앨범 찾기</Text>
-          </Pressable>
-          <Pressable
-            style={{
-              backgroundColor: '#4287f5',
-              padding: 12,
-              borderRadius: 8,
-              marginTop: 50,
-              marginLeft: 60,
-              marginRight: 60,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onPress={() =>
-              navigation.navigate('ReviewSelect', {
-                storeId: storeId,
-                storeInfo: storeInfo,
-                imageUrl: imageUrl,
-              })
-            }>
-            <Text style={{color: 'white', fontSize: 18}}>영수증 등록</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+              color: Color.bgWhite,
+              fontSize: 18,
+            }}>
+            영수증 등록
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  receiptInfo: {
+    top: 300,
+    left: 140,
+    color: '#62AEA9',
+    opacity: 0.6,
+  },
+  albumBtn: {
+    backgroundColor: Color.new1,
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 450,
+    marginLeft: 60,
+    marginRight: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  receiptBtn: {
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 20,
+    marginLeft: 60,
+    marginRight: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputimgIcon: {
+    top: 150,
+    height: 200,
+    width: 350,
+    left: 35,
+    position: 'absolute',
+  },
   img: {
     height: 120,
     width: 120,

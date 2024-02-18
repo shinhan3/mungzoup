@@ -2,7 +2,7 @@ import * as React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import FormContainer2 from '../components/FormContainer2';
 import ContainerCardFormFilter from '../components/ContainerCardFormFilter';
-import Container from '../components/Container';
+import StoreRecommendContainer from '../components/StoreRecommendContainer';
 import FormContainer8 from '../components/FormContainer8';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 
@@ -17,7 +17,9 @@ const PLAYmainwonny1 = () => {
         <ContainerCardFormFilter
           dimensions={require('../assets/petbannerimg2.png')}
         />
-        <Container dimensionCode={require('../assets/petbannerimg3.png')} />
+        <StoreRecommendContainer
+          dimensionCode={require('../assets/petbannerimg3.png')}
+        />
         <FormContainer8 />
       </View>
       <View style={styles.headerPosition}>

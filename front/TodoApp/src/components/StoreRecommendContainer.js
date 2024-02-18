@@ -10,7 +10,7 @@ import {
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 import {useNavigation} from '@react-navigation/native';
 
-const Container = ({dimensionCode}) => {
+const StoreRecommendContainer = ({dimensionCode}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.petBanner3}>
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Container;
+export default StoreRecommendContainer;

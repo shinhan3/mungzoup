@@ -4,13 +4,13 @@ import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
 import {useFocusEffect} from '@react-navigation/core';
 import axios from 'axios';
 
-const DetailCard = ({navigation}) => {
+const StoreDetail = ({navigation}) => {
   const [storeList, setStoreList] = React.useState([]);
   React.useEffect(() => {
     axios
       .get('http://10.0.2.2:5000/storeList.do')
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         setStoreList(res.data);
       })
       .catch(err => {});
@@ -36,7 +36,7 @@ const DetailCard = ({navigation}) => {
 
       {storeList &&
         storeList.map((store, seq) => (
-          <View style={styles.my}>
+          <View style={styles.my} key={seq}>
             <Text style={styles.textTypo1}>
               <Text style={styles.text1}>{store.storeName}</Text>
             </Text>
@@ -311,4 +311,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailCard;
+export default StoreDetail;

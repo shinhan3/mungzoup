@@ -10,7 +10,7 @@ import {
 import {Color, FontSize, FontFamily} from '../GlobalStyles';
 // 필독
 // go의 값은 뒤로 갈 이름을 넣어주세요 예 Frame => back 쓰지 말기!!!
-const Header = ({dimensionCode, benefits, navigation, go}) => {
+const HeaderComponent = ({dimensionCode, benefits, navigation, go}) => {
   return (
     <View style={styles.headerPosition}>
       <View style={[styles.headerDiv, styles.headerPosition]} />
@@ -28,9 +28,8 @@ const Header = ({dimensionCode, benefits, navigation, go}) => {
 const styles = StyleSheet.create({
   headerPosition: {
     height: 52,
-    // width: 360,
-    width: 420,
-    left: 0,
+    width: 360,
+    left: 12,
     top: 0,
     position: 'absolute',
   },
@@ -71,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default HeaderComponent;

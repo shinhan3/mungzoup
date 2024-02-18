@@ -15,6 +15,8 @@ public interface UserRepository extends CrudRepository<UserVO, String>{
     +"(SELECT  IFNULL(FORMAT( SUM(payment.PRICE),'#,#'),0) FROM payment WHERE user_id = :userId) AS price"
     , nativeQuery = true)
     List<String[]> IssuedPageData(@Param("userId") String userId);
+
     @Query(value="SELECT user_id FROM user JOIN card USING(card_id)", nativeQuery = true)
     List<String> getUsers();
+
 }
