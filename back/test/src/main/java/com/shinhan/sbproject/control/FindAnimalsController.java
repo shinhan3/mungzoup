@@ -12,6 +12,7 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,10 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class FindAnimalsController {
 
+
+	@Value("${model.path}")
+	String modelPath;
+
    @Autowired
    AIFaceRepository aiRepo;
 
@@ -40,6 +45,7 @@ public class FindAnimalsController {
     @PostMapping("/findAnimals")
      public String imageTest(MultipartFile imageFile) throws IOException {
       //System.out.println("들어옴");
+		 System.out.println("modelPath===================================== "+modelPath);
       if(imageFile != null){
          //System.out.println("들어옴2");
          Base64.Encoder encoder = Base64.getEncoder();
@@ -51,11 +57,11 @@ public class FindAnimalsController {
          System.out.println(photoImg);
          System.out.println(Arrays.toString(imageFile.getInputStream().readAllBytes()));
          System.out.println(imageFile.getInputStream().readAllBytes().length);
-         File convFile = new File("D:\\[교육] 신한DS SW 아카데미 자료\\[final project] 멍줍\\inputImg\\도착위치.png");
-         convFile.createNewFile();
-         FileOutputStream fos = new FileOutputStream(convFile);
-         fos.write(imageFile.getBytes());
-         fos.close();
+        //  File convFile = new File("D:\\[교육] 신한DS SW 아카데미 자료\\[final project] 멍줍\\inputImg\\도착위치.png");
+        //  convFile.createNewFile();
+        //  FileOutputStream fos = new FileOutputStream(convFile);
+        //  fos.write(imageFile.getBytes());
+        //  fos.close();
 
          //---------------------------
          // protectionId가 n20240213인 AIFaceVO 객체를 가져옵니다.
@@ -79,9 +85,10 @@ public class FindAnimalsController {
          //[개수][32][32][rgb] 형태로 넣어줌
 		float[][][][] input= rgbImageToArray(32,32,dataBuffInt);
 		System.out.println(input[0].length);
-		String filePath = "C:\\Users\\wldnj\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
+		// String filePath = "C:\\Users\\wldnj\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
 			
-         try(SavedModelBundle b = SavedModelBundle.load("C:\\Users\\User\\git\\shinhanProject\\project3\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\abcd", "serve")){ 
+
+         try(SavedModelBundle b = SavedModelBundle.load(modelPath+"/abcd", "serve")){ 
 				//default가 서브, 도커에 생긴 abcd를 컨트롤러 아래로 복붙
 				
 				System.out.println("tttt");

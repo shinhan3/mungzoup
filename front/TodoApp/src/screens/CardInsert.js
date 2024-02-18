@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Border, Color, FontFamily, FontSize} from '../GlobalStyles';
 import FooterComponent from './FooterComponent';
-import Header from '../components/Header';
+import HeaderComponent from '../components/HeaderComponent';
 import DialogInput from 'react-native-dialog-input';
 import axios from 'axios';
 import {USERID} from '../UserId';
@@ -45,11 +45,11 @@ function CardInsert(props) {
   return (
     <View style={styles.CardComponent}>
       <View style={[styles.header]}>
-        <Header
+        <HeaderComponent
           navigation={props.navigation}
           dimensionCode={require('../assets/arrow8.png')}
           benefits="카드 발급"
-          go="PLAYmainwonny"></Header>
+          go="PLAYmainwonny"></HeaderComponent>
       </View>
       <View style={styles.contents}>
         <View style={[styles.content, hidden && {height: 200}]}>

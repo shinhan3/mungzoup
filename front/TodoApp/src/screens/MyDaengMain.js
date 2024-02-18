@@ -123,7 +123,7 @@ const MyDaeng = props => {
     axios
       .get('http://10.0.2.2:5000/petList.do')
       .then(res => {
-        console.log(res.data);
+        console.log('list', res.data);
         setPetList(res.data);
       })
       .catch(err => {});

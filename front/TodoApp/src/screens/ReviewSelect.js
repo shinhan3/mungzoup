@@ -110,19 +110,22 @@ const ReviewSelect = ({navigation, route}) => {
         const allInferTexts = res.data.images.flatMap(image =>
           image.fields.map(field => field.inferText),
         );
-        //console.log(allInferTexts);
+        console.log(allInferTexts);
         const ocrStoreNameIndex = allInferTexts.indexOf('명');
-        const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 2];
+        const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 3];
+        console.log(preOcrStoreName);
         setOcrStoreName(preOcrStoreName);
 
-        const ocrStoreAddressIndex = allInferTexts.indexOf('소재지');
+        const ocrStoreAddressIndex = allInferTexts.indexOf('소재지:');
         const preOcrStoreAddress = allInferTexts
           .slice(ocrStoreAddressIndex + 2, ocrStoreAddressIndex + 5)
           .join(' ');
+        console.log(preOcrStoreAddress);
         setOcrStoreAddress(preOcrStoreAddress);
 
         const ocrPriceIndex = allInferTexts.indexOf('청구금액:');
         const ocrPrice = allInferTexts[ocrPriceIndex + 1]; //string
+        console.log(ocrPrice);
         setOcrPrice(ocrPrice);
       }
     } catch (error) {
