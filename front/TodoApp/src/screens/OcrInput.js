@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
-//OCR TEST_이미지 파일 읽기
 import axios from 'axios';
 import RNFS from 'react-native-fs';
 import FormData from 'form-data';
