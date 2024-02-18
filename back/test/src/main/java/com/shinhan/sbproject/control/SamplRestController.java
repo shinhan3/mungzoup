@@ -108,7 +108,7 @@ public class SamplRestController {
 				//run the model and get the result
 				float[][] y = sess.runner()
 						.feed("conv2d_input", x) //model에 다이렉트로 입력값을 넣어준다
-						.fetch("dense_1/Softmax") //output name
+						.fetch("dense_1/Softmax") //output name //dense_2/Softmax로 변경
 						.run()
 						.get(0) //몇 번째 요소 받아올지, 어차피 데이터 하나라 0
 						.copyTo(new float[1][2]); //class 2개, 입력 1개라 다음과 같이 선언함. [[],[]]
