@@ -39,6 +39,7 @@ const FormContainer1 = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
         <View style={[styles.chart, styles.iconLayout]}>
           <Text style={[styles.text5, styles.aiTypo]}>
             <Text style={styles.text6}>{`전국 모든지역 유기동물 현황`}</Text>
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   },
   iconLayout: {
     top: 30,
-    width: 135,
+    width: 123,
     position: 'absolute',
   },
   similarDiv: {
