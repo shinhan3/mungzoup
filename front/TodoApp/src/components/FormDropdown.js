@@ -17,18 +17,19 @@ const FormDropdown = () => {
   ];
 
   const handleValueChange = async selectedItem => {
-    console.log('여기까지 옴?', selectedItem());
+    //console.log('여기까지 옴?', selectedItem());
     const value = selectedItem();
-    console.log('여까진옴? ', value);
+    //console.log('여까진옴? ', value);
     setDropdownBoxValue(value);
-    console.log('hi');
+    //console.log('hi');
     try {
-      console.log('hiiiiii');
+      //console.log('hiiiiii');
       const response = await axios.get(
         `http://10.0.2.2:5000/areaPicking.do/${value}`,
       );
-      console.log('lol');
+      //console.log('lol');
       console.log('응답 데이터: ', response.data);
+      console.log('응답 데이터의 개수: ', response.data.length);
     } catch (error) {
       console.error(error);
     }

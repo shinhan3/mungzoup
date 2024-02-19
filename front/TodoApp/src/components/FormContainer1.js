@@ -45,11 +45,20 @@ const FormContainer1 = () => {
             <Text style={styles.text6}>{`전국 모든지역 유기동물 현황`}</Text>
             <Text style={styles.text7}>(2022.06.01 ~ 2024.02.13)</Text>
           </Text>
-          <Image
-            style={[styles.icon, styles.iconLayout]}
-            resizeMode="cover"
-            source={require('../assets/chart.png')}
-          />
+          <View style={styles.container}>
+            <Image
+              style={[styles.icon, styles.iconLayout]}
+              resizeMode="cover"
+              source={require('../assets/chart.png')}
+            />
+            <View style={styles.overlay}>
+              <Text style={styles.textOverlay}>전체 두수</Text>
+              <View style={styles.inlineText}>
+                <Text style={styles.numberText}>194,190</Text>
+                <Text style={styles.unitText}>마리</Text>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
 
@@ -59,6 +68,40 @@ const FormContainer1 = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 73,
+    left: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textOverlay: {
+    color: Color.new1,
+    fontSize: FontSize.size_4xs_6,
+    textAlign: 'center',
+    fontFamily: FontFamily.notoSansKRMedium,
+  },
+  inlineText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: FontSize.size_4xs_6,
+    fontFamily: FontFamily.notoSansKRMedium,
+  },
+  numberText: {
+    color: Color.new1,
+    marginRight: 5,
+    fontSize: FontSize.size_smi,
+    fontFamily: FontFamily.notoSansKRMedium,
+  },
+  unitText: {
+    color: Color.new1,
+    fontSize: FontSize.size_4xs_6,
+    fontFamily: FontFamily.notoSansKRMedium,
+  },
   textTypo1: {
     fontSize: FontSize.size_smi_2,
     textAlign: 'left',
@@ -85,7 +128,6 @@ const styles = StyleSheet.create({
   iconLayout: {
     top: 30,
     width: 123,
-    position: 'absolute',
   },
   similarDiv: {
     backgroundColor: Color.colorWhitesmoke_200,
@@ -169,14 +211,15 @@ const styles = StyleSheet.create({
   },
   text5: {
     top: 165,
-    left: 65,
+    left: 70,
     textAlign: 'center',
   },
   icon: {
     borderRadius: 34,
     height: 121.5,
-    left: 55,
+    left: 62,
     top: 0,
+    position: 'absolute',
   },
   chart: {
     top: 44,

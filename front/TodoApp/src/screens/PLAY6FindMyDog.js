@@ -131,9 +131,6 @@ const PLAY6FindMyDog = ({navigation}) => {
                   resizeMode="cover"
                   source={{uri: animalData.img}}
                 />
-                <Text style={[styles.text2, styles.textTypo]}>
-                  {Math.floor(percent * 1000) / 10}%
-                </Text>
               </View>
             )}
             {animalData && (
@@ -173,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     borderRadius: Border.br_8xs,
     padding: 10,
-    marginTop: 15, // 필요한 만큼의 마진을 추가
+    marginTop: 15,
     position: 'absolute',
     top: 285,
     left: 225,
@@ -407,6 +404,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 892,
     overflow: 'hidden',
+    marginLeft: 27,
   },
 });
 
