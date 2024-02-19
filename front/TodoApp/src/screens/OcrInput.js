@@ -16,6 +16,7 @@ import FormData from 'form-data';
 import HeaderComponent from '../components/HeaderComponent';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {inlineStyles} from 'react-native-svg';
+import FooterComponent from './FooterComponent';
 
 const OcrInput = ({navigation, route}) => {
   const {storeId} = route.params;
@@ -73,7 +74,7 @@ const OcrInput = ({navigation, route}) => {
   }, [response]);
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <HeaderComponent
         dimensionCode={require('../assets/arrow8.png')}
         benefits="영수증"
@@ -114,6 +115,11 @@ const OcrInput = ({navigation, route}) => {
           </Text>
         </Pressable>
       </View>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
     </View>
   );
 };

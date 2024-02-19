@@ -10,26 +10,34 @@ import {
 import StoreDetail from '../components/StoreDetail';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import HeaderComponent from '../components/HeaderComponent';
+import FooterComponent from './FooterComponent';
 
 const HiddenPopularStores = ({navigation}) => {
   return (
-    <ScrollView>
-      <HeaderComponent
-        dimensionCode={require('../assets/arrow8.png')}
-        benefits="숨은 인기 가맹점"
-        navigation={navigation}
-        go="PLAYmainwonny"
-      />
-      <View style={styles.play}>
-        <View style={[styles.main, styles.mainPosition]}>
-          <View style={styles.mapPosition}>
-            <View style={[styles.map1, styles.mapPosition]} />
-            <Text style={[styles.title, styles.titleTypo]}>지도</Text>
+    <>
+      <ScrollView>
+        <HeaderComponent
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="숨은 인기 가맹점"
+          navigation={navigation}
+          go="PLAYmainwonny"
+        />
+        <View style={styles.play}>
+          <View style={[styles.main, styles.mainPosition]}>
+            <View style={styles.mapPosition}>
+              <View style={[styles.map1, styles.mapPosition]} />
+              <Text style={[styles.title, styles.titleTypo]}>지도</Text>
+            </View>
+            <StoreDetail navigation={navigation} />
           </View>
-          <StoreDetail navigation={navigation} />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 

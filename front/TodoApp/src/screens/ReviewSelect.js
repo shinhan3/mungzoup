@@ -13,6 +13,8 @@ import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
 import HeaderComponent from '../components/HeaderComponent';
 import StoreInfoContainer from '../components/StoreInfoContainer';
 import axios from 'axios';
+import FooterComponent from './FooterComponent';
+import {USERID} from '../UserId';
 
 const ReviewSelect = ({navigation, route}) => {
   const {storeId} = route.params;
@@ -47,6 +49,7 @@ const ReviewSelect = ({navigation, route}) => {
       storeId: storeId,
       reviewId: reviewId,
       ocrPrice: ocrPrice,
+      userId: USERID,
     };
     axios
       .post('http://10.0.2.2:5000/insertReview.do', data)
@@ -109,12 +112,12 @@ const ReviewSelect = ({navigation, route}) => {
         const allInferTexts = res.data.images.flatMap(image =>
           image.fields.map(field => field.inferText),
         );
-        console.log(allInferTexts);
+        //console.log(allInferTexts);
         setOcrList(allInferTexts);
 
         const ocrPriceIndex = allInferTexts.indexOf('청구금액:');
         const ocrPrice = allInferTexts[ocrPriceIndex + 1]; //string
-        console.log(ocrPrice);
+        //console.log(ocrPrice);
         setOcrPrice(ocrPrice);
       }
     } catch (error) {
@@ -155,30 +158,37 @@ const ReviewSelect = ({navigation, route}) => {
   }, [ocrList]);
 
   return (
-    <ScrollView>
-      <View style={styles.wonny}>
-        <HeaderComponent
-          dimensionCode={require('../assets/arrow8.png')}
-          benefits="리뷰 등록"
-          navigation={navigation}
-          go="HiddenPopularStores"
-        />
-        <View style={styles.main}>
-          <StoreInfoContainer storeInfo={storeInfo} />
-          {isEqual === 2 ? (
-            <ReviewList
-              review={review}
-              onPressReview={onPressReview}
-              selectedReview={selectedReview}
-              onSubmitReview={onSubmitReview}></ReviewList>
-          ) : isEqual === 1 ? (
-            alertFail()
-          ) : (
-            <></>
-          )}
+    <>
+      <ScrollView>
+        <View style={styles.wonny}>
+          <HeaderComponent
+            dimensionCode={require('../assets/arrow8.png')}
+            benefits="리뷰 등록"
+            navigation={navigation}
+            go="HiddenPopularStores"
+          />
+          <View style={styles.main}>
+            <StoreInfoContainer storeInfo={storeInfo} />
+            {isEqual === 2 ? (
+              <ReviewList
+                review={review}
+                onPressReview={onPressReview}
+                selectedReview={selectedReview}
+                onSubmitReview={onSubmitReview}></ReviewList>
+            ) : isEqual === 1 ? (
+              alertFail()
+            ) : (
+              <></>
+            )}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 
