@@ -19,20 +19,23 @@ import {
 } from 'victory-native';
 
 function WalkingHistory(props) {
-  const [petInfo, setPetInfo] = useState([]);
-  const userId = 'user1';
-  const [selectedPetInfo, setSelectedPetInfo] = useState({});
-  const [gasReduction, setGasReduction] = useState(0);
-  const [calConsumption, setCalConsumption] = useState(0);
+  const [petInfo, setPetInfo] = useState([]); //petInfo (List)
+  const userId = 'user1'; //UserId
+  const [selectedPetInfo, setSelectedPetInfo] = useState(null); //선택된 petInfo
+  const [gasReduction, setGasReduction] = useState(0); //탄소 배출량
+  const [calConsumption, setCalConsumption] = useState(0); //칼로리 소모량
+  const [weekOffset, setWeekOffset] = useState(0); //저번주 이번주 왔다갔다 하기 위함.
+  const daynames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
 
-  //victory-native
-  const currentDate = new Date();
-  const sevenDaysAgo = currentDate.setDate(currentDate.getDate() - 7);
-  const filteredPetInfo = petInfo
-    .filter(item => new Date(item[0]) >= sevenDaysAgo && item[3] != null)
-    .slice(-7); // 최근 7일의 데이터만 추출
-
-  const dataVic = filteredPetInfo.map((item, index) => ({
+  const dataVic = petInfo.map((item, index) => ({
     date: item[0].substring(0, 10),
     x: item[0].substring(8, 10),
     y: item[3],
@@ -40,30 +43,34 @@ function WalkingHistory(props) {
   //-------------------------------------------------------------------
 
   var dayOfWeek = '';
-  switch (selectedPetInfo[0]) {
-    case 'Monday':
-      dayOfWeek = '(월)';
-      break;
-    case 'Tuesday':
-      dayOfWeek = '(화)';
-      break;
-    case 'Wednesday':
-      dayOfWeek = '(수)';
-      break;
-    case 'Thursday':
-      dayOfWeek = '(목)';
-      break;
-    case 'Friday':
-      dayOfWeek = '(금)';
-      break;
-    case 'Saturday':
-      dayOfWeek = '(토)';
-      break;
-    case 'Sunday':
-      dayOfWeek = '(일)';
-      break;
-    default:
-      dayOfWeek = '';
+  if (selectedPetInfo && selectedPetInfo.length > 0) {
+    switch (
+      selectedPetInfo[1] // [0]: 날짜, [1]: 요일
+    ) {
+      case 'Monday':
+        dayOfWeek = '(월)';
+        break;
+      case 'Tuesday':
+        dayOfWeek = '(화)';
+        break;
+      case 'Wednesday':
+        dayOfWeek = '(수)';
+        break;
+      case 'Thursday':
+        dayOfWeek = '(목)';
+        break;
+      case 'Friday':
+        dayOfWeek = '(금)';
+        break;
+      case 'Saturday':
+        dayOfWeek = '(토)';
+        break;
+      case 'Sunday':
+        dayOfWeek = '(일)';
+        break;
+      default:
+        dayOfWeek = '';
+    }
   }
   const kcalAndCarbon = totalDistance => {
     const newGasReduction = Number((totalDistance * 200).toFixed(0)); // 1km 당 200g 감축
@@ -74,7 +81,7 @@ function WalkingHistory(props) {
 
   useFocusEffect(
     useCallback(() => {
-      if (selectedPetInfo[2]) {
+      if (selectedPetInfo) {
         kcalAndCarbon(selectedPetInfo[2]);
       }
     }, [selectedPetInfo]),
@@ -85,33 +92,88 @@ function WalkingHistory(props) {
       axios
         .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
         .then(res => {
-          setPetInfo(res.data);
+          const rawData = res.data;
+
+          const lastSevenDays = Array.from({length: 7}, (value, index) => {
+            //7일치 데이터 생성
+            const d = new Date();
+            d.setDate(d.getDate() - (6 - index + weekOffset * 7)); //오름차순
+            d.setHours(0, 0, 0, 0);
+            // 시간 부분을 제거
+            return d;
+          });
+          const processedData = lastSevenDays.map(day => {
+            // DB에서 가져온 날짜 데이터를 YYYY-MM-DD 형식의 문자열로 변환
+            const found = rawData.find(item => {
+              const itemDate = new Date(item[0]);
+              itemDate.setHours(0, 0, 0, 0);
+              return (
+                itemDate.toISOString().substring(0, 10) ===
+                day.toISOString().substring(0, 10)
+              ); // 문자열로 변환하여 날짜 비교
+            });
+            const dayname = daynames[day.getDay()];
+            if (found) {
+              const date = found[0];
+              return [date, dayname, found[2], found[3]];
+            }
+            return [day.toISOString().substring(0, 10), dayname, 0, 0]; // 데이터가 없으면 0으로 처리
+          });
+          setPetInfo(processedData);
         })
         .catch(err => {
           console.log(err);
         });
-    }, []),
+    }, [weekOffset]),
   );
+
   return (
     <ScrollView>
       {/*  Header  */}
       <View style={styles.header}>
-        <View style={[styles.headerDiv, styles.divPosition]} />
+        <View style={styles.headerDiv} />
         <Text style={styles.headerTitle}>산책의 역사</Text>
         <TouchableOpacity
           onPress={() => {
-            console.log(props.navigation);
-            props.navigation.goBack('PLAYmainwonny');
+            props.navigation.goBack();
           }}>
           <Image
-            style={[styles.arrowIcon, styles.arrowIconLayout]}
+            style={styles.arrowIcon}
             source={require('../assets/arrow2.png')}
           />
         </TouchableOpacity>
       </View>
       {/*  //Header  */}
-      <View>
-        <Text style={styles.chartHeadText}>산책 시간</Text>
+      <View style={styles.containerHead}>
+        <TouchableOpacity
+          onPress={() => {
+            setWeekOffset(prev => prev + 1);
+          }}>
+          <Image
+            style={styles.prevArrowIcon}
+            source={require('../assets/arrow2.png')}
+          />
+        </TouchableOpacity>
+        <Text style={styles.weekText}>
+          {weekOffset === 0
+            ? '이번주'
+            : `${dataVic[0]?.date} ~ ${dataVic[6]?.date}`}
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            setWeekOffset(prev => (prev > 0 ? prev - 1 : prev));
+          }}
+          disabled={weekOffset === 0}>
+          <Image
+            style={styles.nextArrowIcon}
+            source={
+              weekOffset === 0
+                ? require('../assets/disabledArrow.png')
+                : require('../assets/abledArrow.png')
+            }
+          />
+        </TouchableOpacity>
       </View>
       {/*  Victory_native  */}
       <View style={styles.container}>
@@ -127,20 +189,22 @@ function WalkingHistory(props) {
                 //points는 onActivated 이벤트 핸들러에서 제공하는 매개변수
                 //클릭한 데이터의 정보를 가지고 있음
                 if (points.length > 0) {
-                  const data = {
-                    date: points[0].date, //클릭한 데이터 정보의 년도
-                  };
-                  axios
-                    .get('http://10.0.2.2:5000/seletedPetInfo.do', {
-                      params: data,
-                    })
-                    .then(res => {
-                      setSelectedPetInfo(res.data[0]);
-                      console.log(res.data[0]);
-                    })
-                    .catch(err => {
-                      console.error(err);
-                    });
+                  const clickedDate = points[0].date;
+                  const selectedData = petInfo.find(
+                    item => item[0] === clickedDate,
+                  );
+
+                  if (selectedData) {
+                    setSelectedPetInfo(selectedData);
+                  } else {
+                    const clickedDay = new Date(clickedDate);
+                    setSelectedPetInfo([
+                      clickedDate, //날짜
+                      daynames[clickedDay.getDay()], //요일
+                      0, //거리
+                      0, //시간
+                    ]);
+                  }
                 }
               }}
             />
@@ -197,8 +261,8 @@ function WalkingHistory(props) {
           <>
             <View style={styles.contentTop}>
               <Text style={styles.contentTopMMdd}>
-                {selectedPetInfo[3].substring(5, 7)}/
-                {selectedPetInfo[3].substring(8, 10)}
+                {selectedPetInfo[0].substring(5, 7)}/
+                {selectedPetInfo[0].substring(8, 10)}
               </Text>
               {/*  월/일 =>EX) 2/15   */}
               <Text style={styles.contentTopDayOfWeek}>{dayOfWeek}</Text>
@@ -209,7 +273,7 @@ function WalkingHistory(props) {
                 style={styles.petImg}
                 source={require('../assets/profileimage.png')}
               />
-              <Text style={styles.walkTime}>{selectedPetInfo[1]}</Text>
+              <Text style={styles.walkTime}>{selectedPetInfo[3]}</Text>
               {/*  산책 시간  */}
               <Text style={styles.walkTimeText}>분</Text>
             </View>
@@ -226,20 +290,28 @@ function WalkingHistory(props) {
       </View>
       {/*  //Content  */}
       {/* Bottom */}
-      <View style={styles.bottom}>
-        <Image
-          style={styles.leafImg}
-          source={require('../assets/잎사귀.png')}></Image>
-        <Text style={styles.bottomText}>{calConsumption}kcal를 소모하고,</Text>
-        <Text style={styles.bottomText}>
-          {gasReduction} g의 탄소를 절감한 당신 칭찬해요!
-        </Text>
-      </View>
+      {selectedPetInfo && (
+        <View style={styles.bottom}>
+          <Image
+            style={styles.leafImg}
+            source={require('../assets/잎사귀.png')}></Image>
+          <View style={styles.contentBottom}>
+            <Text style={styles.kcal}>{calConsumption}</Text>
+            <Text style={styles.kcalText}> kcal를 소모하고, </Text>
+          </View>
+          <View style={styles.contentBottom}>
+            <Text style={styles.carbon}>{gasReduction}</Text>
+            <Text style={styles.carbonText}>
+              g의 탄소를 절감한 당신 칭찬해요!
+            </Text>
+          </View>
+        </View>
+      )}
     </ScrollView>
   );
 }
 const styles = StyleSheet.create({
-  divPosition: {
+  headerDiv: {
     backgroundColor: Color.colorWhitesmoke_100,
     width: 360,
     left: 0,
@@ -272,6 +344,8 @@ const styles = StyleSheet.create({
   header: {
     height: 50,
     backgroundColor: Color.colorWhitesmoke_100,
+    shadowColor: '#2E2E2E', // 그림자 색상 설정
+    elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
   },
   content: {
     marginLeft: 26,
@@ -281,14 +355,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
   },
-  chartHeadText: {
+  containerHead: {
     marginTop: 20,
-    marginLeft: 26,
-    marginBottom: 20,
-    fontSize: 24,
-    fontFamily: FontFamily.notoSansKR,
-    fontWeight: '800',
-    Color: '#2E2E2E',
+    marginBottom: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  prevArrowIcon: {
+    width: 26,
+    height: 24,
+    marginTop: 3,
+  },
+  nextArrowIcon: {
+    width: 30,
+    height: 26,
+    marginTop: 3,
+  },
+  weekText: {
+    fontSize: 20,
+    fontFamily: FontFamily.notoSansKRMedium,
+    marginLeft: 5,
+    marginRight: 5,
   },
   container: {
     justifyContent: 'center',
@@ -381,8 +468,29 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRMedium,
     fontSize: 18,
   },
+  kcal: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    fontSize: 24,
+  },
+  kcalText: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 18,
+    marginTop: 3,
+  },
+  carbon: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    fontSize: 24,
+  },
+  carbonText: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 18,
+    marginTop: 3,
+  },
 });
 export default WalkingHistory;
-/*              <Text style={styles.distanceTextBefore}>오늘 멍멍이와 </Text>
-              <Text style={styles.distance}>{selectedPetInfo[1]}</Text>
-              <Text style={styles.distanceTextAfter}> km를 걸었어요.</Text> */

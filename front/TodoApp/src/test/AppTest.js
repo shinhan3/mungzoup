@@ -131,14 +131,7 @@ const AppTest = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(false);
   const [latitude, setLatitude] = React.useState(null);
   const [longitude, setLongitude] = React.useState(null);
-  // const [fontsLoaded, error] = useFonts({
-  //   'NotoSansKR-Light': require('../assets/fonts/NotoSansKR-Light.otf'),
-  //   'NotoSansKR-Regular': require('../assets/fonts/NotoSansKR-Regular.otf'),
-  //   'NotoSansKR-Medium': require('../assets/fonts/NotoSansKR-Medium.otf'),
-  //   'NotoSansKR-Bold': require('../assets/fonts/NotoSansKR-Bold.otf'),
-  //   'IBMPlexSansKR-Bold': require('../assets/fonts/IBMPlexSansKR-Bold.ttf'),
-  //   'Inter-Medium': require('../assets/fonts/Inter-Medium.ttf'),
-  // });
+
   React.useEffect(() => {
     const watchId = Geolocation.watchPosition(
       position => {

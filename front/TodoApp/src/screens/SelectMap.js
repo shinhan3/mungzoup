@@ -158,7 +158,7 @@ function SelectMap(props) {
                 title="ANT 빌딩"
                 description="테스트">
                 <Image
-                  source={require('../assets/my.png')}
+                  source={require('../assets/profileimage.png')}
                   style={{width: 30, height: 30}}
                   resizeMethod="auto"></Image>
               </Marker>
