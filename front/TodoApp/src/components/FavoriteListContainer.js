@@ -27,7 +27,9 @@ export function FindWalkSpotByUser(props) {
   var {latitude, longitude} = useContext(LocationContext);
   const deleteWalkSpotfunction = spotId => {
     axios
-      .delete(`http://10.0.2.2:5000/deleteWalkSpot.do/${spotId}`)
+      .delete(
+        `http://petprojectspringboot.azurewebsites.net/deleteWalkSpot.do/${spotId}`,
+      )
       .then(res => {
         setSpotList(prevSpotList =>
           prevSpotList.filter(item => item.spotId !== spotId),
@@ -41,7 +43,9 @@ export function FindWalkSpotByUser(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/selectWalkSpotAll.do/${userId}`)
+        .get(
+          `http://petprojectspringboot.azurewebsites.net/selectWalkSpotAll.do/${userId}`,
+        )
         .then(res => {
           setSpotList(res.data);
         })

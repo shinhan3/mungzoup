@@ -25,7 +25,7 @@ const FormDropdown = () => {
     try {
       console.log('hiiiiii');
       const response = await axios.get(
-        `http://10.0.2.2:5000/areaPicking.do/${value}`,
+        `http://petprojectspringboot.azurewebsites.net/areaPicking.do/${value}`,
       );
       console.log('lol');
       console.log('응답 데이터: ', response.data);
@@ -41,7 +41,7 @@ const FormDropdown = () => {
   //     setDropdownBoxValue(value2);
   //     console.log('hoooo', value2);
   //     axios
-  //       .get('http://10.0.2.2:5000/areaPicking.do', value2)
+  //       .get('http://petprojectspringboot.azurewebsites.net/areaPicking.do', value2)
   //       .then(res => {
   //         console.log('ㅎㅇzzz', res.data);
   //       })
@@ -55,7 +55,7 @@ const FormDropdown = () => {
       setDropdownBoxValue(value2);
       console.log('hoooo', value2);
       axios
-        .get('http://10.0.2.2:5000/areaPicking.do', value2)
+        .get('http://petprojectspringboot.azurewebsites.net/areaPicking.do', value2)
         .then(res => {
           console.log('ㅎㅇzzz', res.data);
         })

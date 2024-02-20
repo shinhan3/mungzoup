@@ -20,7 +20,9 @@ const Frame1 = props => {
     React.useCallback(() => {
       console.log('test2007');
       axios
-        .get(`http://10.0.2.2:5000/getUserNameAndDiscountPrice.do/${userId}`)
+        .get(
+          `http://petprojectspringboot.azurewebsites.net/getUserNameAndDiscountPrice.do/${userId}`,
+        )
         .then(res => {
           console.log(res.data);
           setDiscountPrice({

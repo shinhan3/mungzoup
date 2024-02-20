@@ -20,7 +20,9 @@ const Frame = props => {
     React.useCallback(() => {
       console.log('마운트될 떄 된다.1');
       axios
-        .get(`http://10.0.2.2:5000/getIssuedPageData.do/${userId}`)
+        .get(
+          `http://petprojectspringboot.azurewebsites.net/getIssuedPageData.do/${userId}`,
+        )
         .then(res => {
           console.log(res.data[0][1]);
           if (res.data[0][1] != null) {

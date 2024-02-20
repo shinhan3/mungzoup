@@ -42,11 +42,15 @@ const PLAY6FindMyDog = ({navigation}) => {
           uri: resizedImage.uri,
         });
         console.log(data['_parts'][0][1], 'ccc');
-        return axios.post('http://10.0.2.2:5000/findAnimals', data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+        return axios.post(
+          'http://petprojectspringboot.azurewebsites.net/findAnimals',
+          data,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
           },
-        });
+        );
       })
       .then(response => {
         console.log(response, '이미지 보내기');

@@ -86,7 +86,10 @@ const MyDaenegRegister = props => {
     };
 
     axios
-      .post('http://10.0.2.2:5000/addPetProfile.do', data)
+      .post(
+        'http://petprojectspringboot.azurewebsites.net/addPetProfile.do',
+        data,
+      )
       .then(res => {
         console.log(res.data);
         props.navigation.goBack('MyDaeng');

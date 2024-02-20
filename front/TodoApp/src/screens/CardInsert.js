@@ -34,7 +34,10 @@ function CardInsert(props) {
       setDialogVisible(false);
       const data = inputText;
       axios
-        .post(`http://10.0.2.2:5000/insertCard.do/${userId}`, data)
+        .post(
+          `http://petprojectspringboot.azurewebsites.net/insertCard.do/${userId}`,
+          data,
+        )
         .then(res => {
           props.navigation.navigate('Frame1');
         });

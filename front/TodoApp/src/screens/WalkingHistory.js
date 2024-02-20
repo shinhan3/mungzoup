@@ -83,7 +83,9 @@ function WalkingHistory(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
+        .get(
+          `http://petprojectspringboot.azurewebsites.net/selectPetHistory.do/${userId}`,
+        )
         .then(res => {
           setPetInfo(res.data);
         })
@@ -131,9 +133,12 @@ function WalkingHistory(props) {
                     date: points[0].date, //클릭한 데이터 정보의 년도
                   };
                   axios
-                    .get('http://10.0.2.2:5000/seletedPetInfo.do', {
-                      params: data,
-                    })
+                    .get(
+                      'http://petprojectspringboot.azurewebsites.net/seletedPetInfo.do',
+                      {
+                        params: data,
+                      },
+                    )
                     .then(res => {
                       setSelectedPetInfo(res.data[0]);
                       console.log(res.data[0]);

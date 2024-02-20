@@ -21,7 +21,9 @@ const MyDaenegUpdate = props => {
   const [petProfile, setPetProfile] = React.useState({});
   React.useEffect(() => {
     axios
-      .get(`http://10.0.2.2:5000/petProfile.do?petId=${petId}`)
+      .get(
+        `http://petprojectspringboot.azurewebsites.net/petProfile.do?petId=${petId}`,
+      )
       .then(res => {
         console.log(res.data);
         setPetProfile(res.data);
@@ -108,7 +110,10 @@ const MyDaenegUpdate = props => {
     };
 
     axios
-      .post('http://10.0.2.2:5000/addPetProfile.do', data)
+      .post(
+        'http://petprojectspringboot.azurewebsites.net/addPetProfile.do',
+        data,
+      )
       .then(res => {
         console.log(res.data);
         props.navigation.goBack('MyDaeng');
