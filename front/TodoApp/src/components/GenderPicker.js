@@ -1,38 +1,42 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
+const GenderPicker = ({value, onSexChange}) => {
+  const [sex, setSex] = useState(null);
 
-const GenderPicker = ({onGenderChange}) => {
-  const [gender, setGender] = useState('');
+  useEffect(() => {
+    if (value !== null) {
+      setSex(value ? '수컷' : '암컷');
+    }
+  }, [value]);
 
-  const handleGenderChange = selectedGender => {
-    setGender(selectedGender);
+  useEffect(() => {
+    if (sex !== null) {
+      onSexChange(sex); // '수컷' 또는 '암컷'을 부모 컴포넌트로 전달
+    }
+  }, [sex]);
 
-    // 부모 컴포넌트에게 성별이 변경되었다는 것을 알립니다.
-    onGenderChange(selectedGender);
+  const handleSexChange = selectedSex => {
+    setSex(selectedSex);
+    onSexChange(selectedSex);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.genderContainer}>
+      <View style={styles.sexContainer}>
         <TouchableOpacity
-          style={[
-            styles.genderOption,
-            gender === '암컷' && styles.selectedOption,
-          ]}
-          onPress={() => handleGenderChange('암컷')}>
-          <Text style={styles.genderText}>암컷</Text>
+          style={[styles.sexOption, sex === '암컷' && styles.selectedOption]}
+          onPress={() => handleSexChange('암컷')}>
+          <Text style={styles.sexText}>암컷</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.genderOption,
-            gender === '수컷' && styles.selectedOption,
-          ]}
-          onPress={() => handleGenderChange('수컷')}>
-          <Text style={styles.genderText}>수컷</Text>
+          style={[styles.sexOption, sex === '수컷' && styles.selectedOption]}
+          onPress={() => handleSexChange('수컷')}>
+          <Text style={styles.sexText}>수컷</Text>
         </TouchableOpacity>
       </View>
-      {/* {gender !== '' && (
-        <Text style={styles.selectedGender}>선택한 성별: {gender}</Text>
+      {/* {sex !== null && (
+        <Text style={styles.selectedsex}>선택한 성별: {sex}</Text>
       )} */}
     </View>
   );
@@ -44,27 +48,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+    top: 20,
+    left: 10,
   },
-  genderContainer: {
+  sexContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  genderOption: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginHorizontal: 5,
+  sexOption: {
+    paddingVertical: 8,
+    paddingHorizontal: 50,
+    marginHorizontal: -1,
     borderWidth: 1,
-    borderRadius: 20,
-    borderColor: '#ccc',
+    borderRadius: 13,
+    borderColor: Color.colorGainsboro_100,
   },
   selectedOption: {
-    backgroundColor: '#ccc',
+    backgroundColor: Color.new1,
   },
-  genderText: {
-    fontSize: 18,
+  sexText: {
+    fontFamily: FontFamily.notoSansKRRegular,
+    fontSize: 15,
   },
-  selectedGender: {
-    fontSize: 18,
+  selectedsex: {
+    fontWeight: '700',
+    fontFamily: FontFamily.notoSansKRBold,
+    fontSize: 15,
     marginTop: 20,
   },
 });
