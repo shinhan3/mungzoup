@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     borderRadius: 34,
-    height: 121.5,
+    height: 122.5,
     left: 62,
     top: 0,
     position: 'absolute',

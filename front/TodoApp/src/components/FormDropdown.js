@@ -2,10 +2,11 @@ import React, {useCallback, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import axios from 'axios';
-import {Color, Border} from '../GlobalStyles';
+import {Color, Border, FontFamily, FontSize} from '../GlobalStyles';
 import {useFocusEffect} from '@react-navigation/core';
+import FilteredCardForm1 from './FilteredCardForm1';
 
-const FormDropdown = () => {
+const FormDropdown = ({onDropdownData}) => {
   const [dropdownBoxOpen, setDropdownBoxOpen] = useState(false);
   const [dropdownBoxValue, setDropdownBoxValue] = useState('지역');
 
@@ -17,19 +18,19 @@ const FormDropdown = () => {
   ];
 
   const handleValueChange = async selectedItem => {
-    //console.log('여기까지 옴?', selectedItem());
     const value = selectedItem();
-    //console.log('여까진옴? ', value);
     setDropdownBoxValue(value);
-    //console.log('hi');
     try {
-      //console.log('hiiiiii');
       const response = await axios.get(
         `http://10.0.2.2:5000/areaPicking.do/${value}`,
       );
-      //console.log('lol');
-      console.log('응답 데이터: ', response.data);
-      console.log('응답 데이터의 개수: ', response.data.length);
+
+      const responseData = response.data;
+      onDropdownData(responseData); //data PLAY2로 보내기
+      console.log('응답 데이터의 개수: ', responseData.length);
+      // responseData.map((data, index) => {index
+      //   console.log(`데이터 ${index}: `, data);
+      // });
     } catch (error) {
       console.error(error);
     }
@@ -87,20 +88,27 @@ const FormDropdown = () => {
 
 const styles = StyleSheet.create({
   dropdownBoxdropDownContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Color.colorWhitesmoke_200,
+    borderColor: Color.colorDarkgray_300,
+    borderWidth: 1,
   },
   dropdownpicker: {
     backgroundColor: Color.new1,
+    borderColor: Color.colorDarkgray_300,
+    borderWidth: 1,
   },
   dropdownBox: {
     position: 'absolute',
     top: 37,
     left: 230,
-    borderRadius: Border.br_3xs,
     width: 100,
     height: 235,
     overflow: 'hidden',
-    zIndex: 999,
+    //FormDropdownzIndex: 999,
+  },
+  dropdownItem: {
+    fontSize: FontSize.size_mini,
+    fontFamily: FontFamily.notoSansKRBold,
   },
 });
 

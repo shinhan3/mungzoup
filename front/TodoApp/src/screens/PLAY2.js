@@ -9,17 +9,21 @@ import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import {ScrollView} from 'react-native';
 
 const PLAY2 = ({navigation}) => {
+  const [dropdownData, setDropdownData] = React.useState(null);
+  const handleDropdownData = data => {
+    setDropdownData(data);
+  };
   return (
     <View style={styles.play}>
       <View style={[styles.main, styles.mainPosition]}>
         <View style={[styles.recommendlist, styles.mainPosition]}>
-          {/*
-          <FilteredCardForm2 />
-          <FormContainer4 />
-  */}
+          {dropdownData && <FilteredCardForm data={dropdownData} />}
         </View>
         <View style={styles.upperPart}>
-          <FormDropdown />
+          <View>
+            <FormDropdown onDropdownData={handleDropdownData} />
+            {/* {dropdownData && <FilteredCardForm data={dropdownData} />} */}
+          </View>
           <View style={styles.regiontext}>
             <Text style={[styles.contentTitle, styles.titlePosition]}>
               나들이 지역
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
   recommendlist: {
     top: 95,
     height: 479,
+    marginTop: 10,
   },
   contentTitle: {
     marginLeft: -77,
@@ -166,6 +171,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 892,
     overflow: 'hidden',
+    marginLeft: 27,
   },
 });
 

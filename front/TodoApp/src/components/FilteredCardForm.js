@@ -1,60 +1,101 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Image, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
 import axios from 'axios';
+import {Alert} from 'react-native';
 import FormDropdown from './FormDropdown'; // FormDropdown 컴포넌트 임포트
 
-const FilteredCardForm = () => {
-  const [dropdownBoxValue, setDropdownBoxValue] = useState('지역'); // 드롭다운 박스의 선택된 값 상태
-  const [dropdownBoxOpen, setDropdownBoxOpen] = useState(false); // 드롭다운 박스의 열림 상태
+const FilteredCardForm = ({data}) => {
+  const [isVisible, setIsVisible] = useState(Array(data.length).fill(false)); // 각 항목에 대한 isVisible 상태 배열
 
-  const [data, setData] = React.useState([]);
-  React.useEffect(() => {
-    fetchData(); // 컴포넌트가 마운트될 때 데이터 가져오기
-  }, [dropdownBoxValue]); // dropdownBoxValue가 변경될 때마다 호출되도록
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://10.0.2.2:5000/areaPicking.do', {
-        params: {
-          pickingArea: dropdownBoxValue, // dropdownBoxValue를 사용하여 API 호출
-        },
-      });
-      setData(response.data); // 가져온 데이터를 상태에 설정
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  // 배열에 있는 각 항목의 isVisible 상태를 토글하는 함수
+  const toggleIsVisible = index => {
+    setIsVisible(isVisible.map((item, idx) => (idx === index ? !item : item)));
   };
 
+  const insertWalkSpotfunction = (
+    spot_name,
+    spot_latitude,
+    spot_longitude,
+    spot_address,
+  ) => {
+    const data = {
+      spotName: spot_name,
+      spotLatitude: spot_latitude,
+      spotLongitude: spot_longitude,
+      spotAddress: spot_address,
+      user: {userId: 'user1'},
+    };
+    axios
+      .post('http://10.0.2.2:5000/insertWalkSpot.do', data)
+      .then(res => {
+        const newSpot = res.data;
+        Alert.alert('', '내 장소 추가에 성공했습니다.', [
+          {
+            text: '확인',
+            // onPress: () => {
+            //   navigation.navigate('HiddenPopularStores');
+            // },
+            style: 'destructive',
+          },
+        ]);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
+  //console.log(isVisible);
+  // data.map((data, index) => {
+  //   console.log(`ㅋㅋ데이터 ${index}: `, data);
+  // });
+
   return (
-    <FlatList
-      data={data}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({item}) => {
-        return (
-          <View style={styles.listItems}>
-            <View style={styles.background} />
-            <View style={[styles.insertplaceBtn, styles.txtLayout]}>
-              <View style={styles.div} />
-              <Text style={[styles.txt, styles.txtTypo]}>{`+ 내 장소 `}</Text>
-            </View>
-            <Image
-              style={styles.recommendImgIcon}
-              source={require('../assets/recommendimg.png')}
-            />
-            <Text style={styles.recommendTxt}>
+    <ScrollView style={{flex: 1}}>
+      {data.map((item, index) => (
+        <View key={index} style={styles.listItems}>
+          <View style={styles.background} />
+          <View style={[styles.insertplaceBtn, styles.txtLayout]}>
+            <View style={styles.div} />
+            <Text
+              style={[styles.txt, styles.txtTypo]}
+              onPress={() =>
+                insertWalkSpotfunction(item[1], item[6], item[7], item[2])
+              }>{`+ 내 장소 `}</Text>
+          </View>
+          <Image style={styles.recommendImgIcon} source={{uri: item[5]}} />
+          <Text style={styles.recommendTxt}>
+            <Text style={styles.text}>
+              <Text style={styles.text1}>{item[1]}</Text>
+            </Text>
+            <Text style={styles.text2}>
               <Text style={styles.text}>
-                <Text style={styles.text1}>{item.store_name}</Text>
-              </Text>
-              <Text style={styles.text2}>
-                <Text style={styles.text}>
-                  <Text style={styles.text4}>{item.category_name}</Text>
-                </Text>
-                <Text style={[styles.text5, styles.txtTypo]}>
-                  {item.store_address}
-                </Text>
+                <Text style={styles.text4}>{'  ' + item[0]}</Text>
               </Text>
             </Text>
+          </Text>
+          <View style={styles.recommendTxt1}>
+            <Text style={[styles.text5, styles.txtTypo]}>{item[2]}</Text>
+            <TouchableOpacity onPress={() => toggleIsVisible(index)}>
+              <Image
+                style={styles.toggleUpbtnIcon}
+                source={
+                  isVisible[index]
+                    ? require('../assets/toggle-upbtn.png')
+                    : require('../assets/toggle-downbtn.png')
+                }
+              />
+            </TouchableOpacity>
+          </View>
+
+          {isVisible[index] && (
             <View style={[styles.toggle, styles.toggleLayout]}>
               <View style={[styles.toggleChild, styles.line1Border]} />
               <View style={[styles.opentimeline, styles.opentimelineLayout]}>
@@ -66,7 +107,7 @@ const FilteredCardForm = () => {
                   <Text style={[styles.text6, styles.textTypo]}>운영시간</Text>
                 </View>
                 <Text style={[styles.opentimetext, styles.textTypo]}>
-                  {item.open_time}
+                  {item[3]}
                 </Text>
               </View>
               <View style={[styles.opentimeline1, styles.opentimelineLayout]}>
@@ -78,19 +119,16 @@ const FilteredCardForm = () => {
                   <Text style={[styles.text7, styles.textTypo]}>휴무일</Text>
                 </View>
                 <Text style={[styles.opentimetext, styles.textTypo]}>
-                  {item.closed_days}
+                  {item[4]}
                 </Text>
               </View>
             </View>
-            <Image
-              style={styles.toggleUpbtnIcon}
-              source={require('../assets/toggle-upbtn.png')}
-            />
-            <View style={[styles.line1, styles.line1Border]} />
-          </View>
-        );
-      }}
-    />
+          )}
+
+          <View style={[styles.line1, styles.line1Border]} />
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -98,8 +136,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  listItems: {
+    height: 122,
+  },
   txtLayout: {
-    height: 16,
+    height: 32,
     position: 'absolute',
   },
   txtTypo: {
@@ -107,8 +148,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   toggleLayout: {
-    height: 29,
-    width: 156,
+    height: 46.5,
+    width: 270,
   },
   line1Border: {
     borderColor: Color.colorDarkgray_200,
@@ -117,21 +158,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   opentimelineLayout: {
-    height: 9,
-    width: 101,
-    left: 4,
+    height: 13.5,
+    width: 151.5,
+    left: 10,
     position: 'absolute',
   },
   opentimePosition: {
-    width: 21,
-    height: 9,
+    width: 31.5,
+    height: 13.5,
     left: 0,
     top: 0,
     position: 'absolute',
   },
   textTypo: {
     fontFamily: FontFamily.notoSansKRRegular,
-    top: 1,
     textAlign: 'left',
     position: 'absolute',
   },
@@ -148,39 +188,39 @@ const styles = StyleSheet.create({
     borderColor: Color.new1,
     borderWidth: 0.5,
     borderStyle: 'solid',
-    height: 16,
-    width: 40,
+    height: 32,
+    width: 80,
     backgroundColor: Color.bgWhite,
     left: 0,
     top: 0,
     position: 'absolute',
   },
   txt: {
-    fontSize: FontSize.size_5xs_1,
+    fontSize: FontSize.size_smi_2,
     letterSpacing: 0,
-    lineHeight: 14,
+    lineHeight: 28,
     color: Color.new1,
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 30,
-    left: 5,
-    height: 16,
+    width: 60,
+    left: 10,
+    height: 32,
     position: 'absolute',
     top: 0,
   },
   insertplaceBtn: {
-    top: 69,
-    width: 40,
-    height: 16,
-    left: 145,
+    top: 75,
+    width: 80,
+    height: 32,
+    left: 80,
   },
   recommendImgIcon: {
-    top: 12,
+    top: 28,
     left: 35,
-    width: 100,
-    height: 97,
+    width: 30,
+    height: 30,
     position: 'absolute',
   },
   text1: {
@@ -189,6 +229,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '700',
+    marginRight: 5,
     fontFamily: FontFamily.notoSansKRBold,
   },
   text4: {
@@ -197,22 +238,37 @@ const styles = StyleSheet.create({
   },
   text5: {
     fontSize: FontSize.size_3xs,
+    marginRight: 3,
+    // position: 'relative',
+    // top: 53,
+    // left: 145,
   },
   text2: {
     color: Color.colorDarkgray_200,
+    marginLeft: 3,
   },
   recommendTxt: {
-    top: 27,
-    left: 144,
+    top: 23,
+    left: 80,
     textAlign: 'left',
     position: 'absolute',
   },
+  recommendTxt1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 15,
+    width: 170,
+    top: 48,
+    left: 80,
+    position: 'absolute',
+  },
+
   toggleChild: {
     borderRadius: Border.br_10xs,
     backgroundColor: Color.colorWhitesmoke_200,
     borderWidth: 0.3,
-    height: 29,
-    width: 156,
+    height: 46.5,
+    width: 270,
     top: 0,
   },
   opentimeChild: {
@@ -220,51 +276,52 @@ const styles = StyleSheet.create({
   },
   text6: {
     left: 3,
-    fontSize: FontSize.size_9xs,
+    fontSize: FontSize.size_6xs,
     fontFamily: FontFamily.notoSansKRRegular,
     top: 1,
     color: Color.colorDarkgray_200,
   },
   opentimetext: {
-    left: 24,
-    fontSize: FontSize.size_8xs,
+    left: 36,
+    fontSize: FontSize.size_5xs,
     color: Color.colorDarkslategray_200,
-    width: 77,
-    height: 7,
+    width: 200,
+    height: 15,
     fontFamily: FontFamily.notoSansKRRegular,
-    top: 1,
   },
   opentimeline: {
-    top: 5,
+    top: 7.5,
   },
   text7: {
-    fontSize: FontSize.size_9xs,
+    fontSize: FontSize.size_6xs,
     fontFamily: FontFamily.notoSansKRRegular,
     top: 1,
     color: Color.colorDarkgray_200,
     left: 5,
   },
   opentimeline1: {
-    top: 17,
+    top: 25.5,
   },
   toggle: {
-    top: 66,
-    left: 145,
-    height: 29,
-    width: 156,
+    top: 70,
+    left: 80,
+    height: 46.5,
+    width: 270,
     position: 'absolute',
   },
   toggleUpbtnIcon: {
-    height: '10.08%',
-    width: '3.08%',
-    top: '41.18%',
-    right: '16.36%',
-    bottom: '48.74%',
-    left: '80.56%',
-    maxWidth: '100%',
-    overflow: 'hidden',
-    maxHeight: '100%',
-    position: 'absolute',
+    height: 15,
+    width: 15,
+    position: 'relative',
+    top: 1,
+    // top: '45%',
+    // right: '10.36%',
+    // bottom: '50%',
+    // left: '80%',
+    // maxWidth: '100%',
+    // overflow: 'hidden',
+    // maxHeight: '100%',
+    // position: 'relative',
   },
   line1: {
     top: 119,
