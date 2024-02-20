@@ -58,7 +58,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
             },
           )
           .then(res => {
-            console.log(res);
+            console.log(res.data);
           })
           .catch(err => {
             console.log(err);

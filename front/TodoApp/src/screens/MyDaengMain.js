@@ -23,6 +23,7 @@ import axios from 'axios';
 import {USERID} from '../UserId';
 import Geolocation from '@react-native-community/geolocation';
 import MyCarousel from '../components/aa';
+import HeaderComponent from '../components/HeaderComponent';
 
 const MyDaeng = props => {
   console.log(props);
@@ -129,7 +130,12 @@ const MyDaeng = props => {
       .catch(err => {});
   }, []);
   return (
-    <ScrollView style={{marginLeft: 30}}>
+    <ScrollView style={{}}>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="마이댕"
+        backBool={false}></HeaderComponent>
       <View style={styles.view}>
         <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
         <View style={styles.map}>
@@ -391,12 +397,12 @@ const MyDaeng = props => {
           </View>
           <Text style={[styles.title3, styles.titleTypo]}>이벤트</Text>
         </View>
-        <View style={styles.headerPosition}>
+        {/* <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
           <Text style={[styles.headerTitle, styles.walkTextPosition]}>
             마이댕
           </Text>
-        </View>
+        </View> */}
       </View>
       {/* </View> */}
     </ScrollView>
@@ -1187,6 +1193,7 @@ const styles = StyleSheet.create({
     height: 1535,
     overflow: 'hidden',
     width: '100%',
+    marginLeft: 30,
   },
 });
 
