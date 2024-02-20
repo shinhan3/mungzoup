@@ -48,8 +48,8 @@ function SelectMap() {
           initialRegion={{
             latitude: 37.55929,
             longitude: 126.9227,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
+            latitudeDelta: 0.0025,
+            longitudeDelta: 0.0025,
           }}
           onPress={d => {
             axios

@@ -37,6 +37,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   const [latitude, setLatitude] = useState(0.0);
   const [longitude, setLongitude] = useState(0.0);
   const [petId, setPetId] = useState('1');
+  const [result, setResult] = useState(0);
   useEffect(() => {
     const watchId = Geolocation.watchPosition(
       position => {
@@ -59,6 +60,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
           )
           .then(res => {
             console.log(res.data);
+            setResult(res.data);
           })
           .catch(err => {
             console.log(err);
@@ -76,7 +78,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   return (
     <View>
       <Text>
-        longitude:{longitude} / latitude: {latitude}
+        longitude:{longitude} / latitude: {latitude} / {result}
       </Text>
       <Text>petId: {petId}</Text>
       <TextInput

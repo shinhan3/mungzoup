@@ -50,14 +50,14 @@ function MyPets(porps) {
             ref={mapRef}
             style={{flex: 1}}
             // provider={PROVIDER_GOOGLE}
-            customMapStyle={MapStyle}
+            // customMapStyle={MapStyle}
             initialRegion={{
               // latitude: initPet[0].petLatitude,
               // longitude: initPet[0].petLongitude,
               latitude: latitude,
               longitude: longitude,
-              latitudeDelta: 0.005,
-              longitudeDelta: 0.005,
+              latitudeDelta: 0.0025,
+              longitudeDelta: 0.0025,
             }}>
             {porps.pets.map((pet, index) => (
               <Marker
