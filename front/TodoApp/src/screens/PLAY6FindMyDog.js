@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   similarTxt: {
-    top: 415,
+    top: 413,
     left: 160,
     width: 200,
     height: 50,

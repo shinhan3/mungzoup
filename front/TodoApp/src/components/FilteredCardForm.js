@@ -37,7 +37,7 @@ const FilteredCardForm = ({data}) => {
       .post('http://10.0.2.2:5000/insertWalkSpot.do', data)
       .then(res => {
         const newSpot = res.data;
-        Alert.alert('', '내 장소 추가에 성공했습니다.', [
+        Alert.alert('', '내 장소 추가에 성공했습니다!', [
           {
             text: '확인',
             // onPress: () => {
