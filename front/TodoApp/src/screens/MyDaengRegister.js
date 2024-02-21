@@ -9,22 +9,23 @@ import {
   Alert,
   ScrollView,
   handleConfirm,
+  Pressable,
 } from 'react-native';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import GenderPicker from '../components/GenderPicker';
 import BirthdayPicker from '../components/BirthdayPicker';
-import MyCarousel from '../components/aa';
+import UploadProfileimage from '../components/UploadProfileimage';
 import axios from 'axios';
-// import ImagePicker from 'react-native-imaage-picker';
+import {USERID} from '../UserId';
 
 const MyDaenegRegister = props => {
   // useState를 사용하여 form 데이터와 에러 상태를 관리합니다.
   const [form, setForm] = useState({
-    weight: '',
+    weight: null,
     breed: '',
     name: '',
-    birth: '',
-    sex: '',
+    birth: null,
+    sex: null,
   });
 
   const [error, setError] = useState('');
@@ -38,8 +39,8 @@ const MyDaenegRegister = props => {
     setForm(prevForm => ({...prevForm, [name]: value}));
   };
 
-  const handleGenderChange = gender => {
-    const isMale = gender === '수컷';
+  const handleSexChange = sex => {
+    const isMale = sex === '수컷';
     setForm(prevForm => ({...prevForm, sex: isMale}));
   };
 
@@ -75,21 +76,23 @@ const MyDaenegRegister = props => {
     );
   };
 
+  const userId = USERID;
+
   const submitForm = () => {
-    const user = {
-      id: 'asme12',
-    };
+    // const user = {
+    //   id: 'asme12',
+    // };
 
     const data = {
       ...form,
-      user: {userId: user.id},
+      user: {userId: userId},
     };
 
     axios
       .post('http://10.0.2.2:5000/addPetProfile.do', data)
       .then(res => {
         console.log(res.data);
-        props.navigation.goBack('MyDaeng');
+        props.navigation.navigate('MyDaeng');
       })
       .catch(err => {
         console.error(err.response.data); // 에러 메시지 출력
@@ -99,95 +102,98 @@ const MyDaenegRegister = props => {
 
   return (
     <ScrollView>
-      <MyCarousel />
-      <View style={styles.view}>
-        <View style={[styles.main, styles.mainPosition]}>
-          <View style={[styles.background, styles.headerDivShadowBox]} />
-          <View style={[styles.inputform, styles.iconPosition]}>
-            <View style={styles.weight}>
-              <TextInput
-                style={[styles.background1, styles.textPosition]}
-                placeholder="숫자만 입력해주세요."
-                value={form.weight}
-                onChangeText={value => handleChange('weight', value)}
-              />
-              <Text style={[styles.text, styles.textTypo]}>무게</Text>
-            </View>
-            <View style={[styles.kind, styles.kindPosition]}>
-              <TextInput
-                style={[styles.background1, styles.textPosition]}
-                placeholder="품종을 입력해주세요."
-                value={form.breed}
-                onChangeText={value => handleChange('breed', value)}
-              />
-              <Text style={[styles.text, styles.textTypo]}>품종</Text>
-            </View>
-            <View style={[styles.birth, styles.kindPosition]}>
-              {/* <TextInput
-                style={[styles.background1, styles.textPosition]}
-                placeholder="날짜를 선택해주세요."
-              /> */}
-              <View style={[styles.background1, styles.textPosition]}>
-                <BirthdayPicker onDateChange={handleBirthday} />
-              </View>
-              <Text style={[styles.text, styles.textTypo]}>생일</Text>
-            </View>
-            <Text style={[styles.text3, styles.kindPosition]}>성별</Text>
-            <GenderPicker onGenderChange={handleGenderChange} />
-            <View style={[styles.name, styles.kindPosition]}>
-              <TextInput
-                style={[styles.background1, styles.textPosition]}
-                placeholder="반려동물의 이름을 적어주세요."
-                keyboardType="default"
-                textContentType="givenName"
-                value={form.name}
-                onChangeText={value => handleChange('name', value)}
-              />
-              <Image
-                style={[styles.phcalendarIcon, styles.iconLayout]}
-                resizeMode="cover"
-                source={require('../assets/phcalendar.png')}
-              />
-              <Text style={[styles.text, styles.textTypo]}>이름</Text>
-            </View>
-            <Image
-              style={[styles.profileimageIcon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require('../assets/profileimage.png')}
-            />
-          </View>
-          <Text style={[styles.profileInfo, styles.insertbtnPosition]}>
-            프로필 정보
-          </Text>
-          <TouchableOpacity
-            style={[styles.insertbtn, styles.insertbtnPosition]}
-            insert-btn="등록"
-            onPress={handleConfirm}>
-            <View style={[styles.backgroundbtn, styles.textPosition]} />
-            <Text style={styles.textbtn}>등록</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.header}>
-          <View style={[styles.headerDiv, styles.divPosition]} />
-          <Text style={styles.headerTitle}>{`펫 프로필 `}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.goBack('MyDaeng');
-            }}>
-            <Image
-              style={[styles.arrowIcon, styles.inputPosition]}
-              resizeMode="cover"
-              source={require('../assets/arrow2.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        {error && <Text style={styles.error}>{error}</Text>}
+      <View style={styles.header}>
+        <View style={[styles.headerDiv, styles.divPosition]} />
+        <Text style={styles.headerTitle}>{`펫 프로필 `}</Text>
+        <Pressable
+          onPress={() => {
+            props.navigation.navigate('MyDaeng');
+          }}>
+          <Image
+            style={[styles.arrowIcon, styles.inputPosition]}
+            resizeMode="cover"
+            source={require('../assets/arrow2.png')}
+          />
+        </Pressable>
       </View>
+      <View style={styles.view1}>
+        <View style={[styles.background, styles.headerDivShadowBox]} />
+        <View>
+          <Text style={styles.chartHeadText}>프로필 등록</Text>
+        </View>
+        <View style={styles.view}>
+          <View style={[styles.main, styles.mainPosition]}>
+            <View style={[styles.inputform, styles.iconPosition]}>
+              <View style={styles.weight}>
+                <TextInput
+                  style={[styles.background1, styles.textPosition]}
+                  placeholder="숫자만 입력해주세요."
+                  value={form.weight}
+                  onChangeText={value => handleChange('weight', value)}
+                />
+                <Text style={[styles.text, styles.textTypo]}>무게 (kg)</Text>
+              </View>
+              <View style={[styles.kind, styles.kindPosition]}>
+                <TextInput
+                  style={[styles.background1, styles.textPosition]}
+                  placeholder="품종을 입력해주세요."
+                  value={form.breed}
+                  onChangeText={value => handleChange('breed', value)}
+                />
+                <Text style={[styles.text, styles.textTypo]}>품종</Text>
+              </View>
+              <View style={[styles.birth, styles.kindPosition]}>
+                <Text style={[styles.text, styles.textTypo]}>생일</Text>
+                <BirthdayPicker
+                  value={form.birth}
+                  onDateChange={handleBirthday}
+                />
+              </View>
+              <Text style={[styles.text3, styles.kindPosition]}>성별</Text>
+              <GenderPicker value={form.sex} onSexChange={handleSexChange} />
+              <View style={[styles.name, styles.kindPosition]}>
+                <TextInput
+                  style={[styles.background1, styles.textPosition]}
+                  placeholder="반려동물의 이름을 적어주세요."
+                  keyboardType="default"
+                  textContentType="givenName"
+                  value={form.name}
+                  onChangeText={value => handleChange('name', value)}
+                />
+                <Text style={[styles.text, styles.textTypo]}>이름</Text>
+              </View>
+              <Image
+                style={[styles.profileimageIcon, styles.iconPosition]}
+                resizeMode="cover"
+                source={require('../assets/profileimage.png')}
+              />
+            </View>
+            <Pressable
+              style={[styles.insertbtn, styles.insertbtnPosition]}
+              insert-btn="등록"
+              onPress={handleConfirm}>
+              <View style={[styles.backgroundbtn, styles.textPosition1]} />
+              <Text style={styles.textbtn}>등록</Text>
+            </Pressable>
+          </View>
+          {error && <Text style={styles.error}>{error}</Text>}
+        </View>
+      </View>
+      <UploadProfileimage navigation={props.navigation} />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  chartHeadText: {
+    marginTop: 20,
+    marginLeft: 26,
+    marginBottom: 20,
+    fontSize: 24,
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    Color: '#2E2E2E',
+  },
   mainPosition: {
     height: 750,
     width: 302,
@@ -212,7 +218,14 @@ const styles = StyleSheet.create({
     marginLeft: -131,
     width: 262,
     left: '50%',
-    top: '50%',
+    top: 35,
+    position: 'absolute',
+  },
+  textPosition1: {
+    marginLeft: -131,
+    width: 262,
+    left: '50%',
+    top: '40%',
     position: 'absolute',
   },
   inputPosition: {
@@ -227,7 +240,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     textAlign: 'left',
-    fontSize: FontSize.size_xs,
+    fontSize: 16,
   },
   kindPosition: {
     marginLeft: -132,
@@ -235,6 +248,7 @@ const styles = StyleSheet.create({
     left: '50%',
     top: '50%',
     position: 'absolute',
+    fontSize: 16,
   },
   insertbtnPosition: {
     marginLeft: -128,
@@ -275,20 +289,19 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   background: {
-    marginTop: -375,
+    marginTop: -500,
     borderRadius: Border.br_xs,
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowRadius: 20,
     elevation: 20,
     backgroundColor: Color.colorWhite,
-    height: 750,
-    width: 302,
-    marginLeft: -151,
-    left: '50%',
-    top: '50%',
+    height: 900,
+    width: '100%',
+    top: '40%',
     position: 'absolute',
   },
   background1: {
+    padding: 10,
     marginTop: -11,
     borderRadius: Border.br_9xs,
     borderStyle: 'solid',
@@ -438,24 +451,18 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   header: {
-    marginTop: -475.5,
-    marginLeft: -182,
-    height: 52,
-    width: 360,
-    left: '50%',
-    top: '50%',
-    position: 'absolute',
+    height: 50,
+    backgroundColor: Color.colorWhitesmoke_100,
   },
-  phcalendarIcon: {
-    top: 556,
-    left: 273,
-    width: 26,
-  },
+
   view: {
+    top: -150,
+    height: 900,
+  },
+  view1: {
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
     width: '100%',
-    height: 951,
     overflow: 'hidden',
   },
 });
