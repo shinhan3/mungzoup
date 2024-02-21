@@ -170,6 +170,8 @@ const styles = StyleSheet.create({
   header: {
     height: 50,
     backgroundColor: Color.colorWhitesmoke_100,
+    shadowColor: '#2E2E2E', // 그림자 색상 설정
+    elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
   },
   content: {
     margin: 26,
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
   addressBtns: {
     width: 100,
     padding: 10,
-    backgroundColor: 'pink',
+    backgroundColor: '#62AEA9',
     alignItems: 'center',
     alignSelf: 'flex-end',
     marginRight: 20,

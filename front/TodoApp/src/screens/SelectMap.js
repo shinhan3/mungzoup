@@ -34,7 +34,7 @@ export function getDistanceFormula(lat1, lon1, lat2, lon2) {
   //d -> 대원거리와 지구의 반지름을 곱하여 두 지점 사이의 거리를 나타내는 값
   // 거리 기본 단위가 km이므로, x 1000을 하여 meter로 변환
   var d = R * c;
-  d = d.toFixed(2); //소수점 두자리까지만 나타냄
+  d = d.toFixed(1); //소수점 두자리까지만 나타냄
   return d;
 }
 
@@ -158,7 +158,7 @@ function SelectMap(props) {
                 title="ANT 빌딩"
                 description="테스트">
                 <Image
-                  source={require('../assets/my.png')}
+                  source={require('../assets/profileimage.png')}
                   style={{width: 30, height: 30}}
                   resizeMethod="auto"></Image>
               </Marker>
