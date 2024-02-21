@@ -31,7 +31,7 @@ const ImageTest = ({navigation}) => {
     });
     console.log(data['_parts'][0][1]);
     axios
-      .post('http://petprojectspringboot.azurewebsites.net/imageTest', data, {
+      .post('http://10.0.2.2:5000/imageTest', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

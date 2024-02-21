@@ -15,14 +15,11 @@ const FilteredCardForm = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'http://petprojectspringboot.azurewebsites.net/areaPicking.do',
-        {
-          params: {
-            pickingArea: dropdownBoxValue, // dropdownBoxValue를 사용하여 API 호출
-          },
+      const response = await axios.get('http://10.0.2.2:5000/areaPicking.do', {
+        params: {
+          pickingArea: dropdownBoxValue, // dropdownBoxValue를 사용하여 API 호출
         },
-      );
+      });
       setData(response.data); // 가져온 데이터를 상태에 설정
     } catch (error) {
       console.error('Error fetching data:', error);

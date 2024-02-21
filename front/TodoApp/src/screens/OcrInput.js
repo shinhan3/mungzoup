@@ -36,15 +36,11 @@ const OcrInput = ({navigation, route}) => {
       });
       //console.log(data['_parts'][0][1]);
       axios
-        .post(
-          'http://petprojectspringboot.azurewebsites.net/uploadRecipt.do',
-          data,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+        .post('http://10.0.2.2:5000/uploadRecipt.do', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-        )
+        })
         .then(response => {
           setImageUrl(response.data);
         })

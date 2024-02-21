@@ -63,9 +63,7 @@ const MyDaeng = props => {
   );
   const getPet = () => {
     axios
-      .get(
-        `http://petprojectspringboot.azurewebsites.net/getPetMap.do/${userId}`,
-      )
+      .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -78,9 +76,7 @@ const MyDaeng = props => {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(
-          `http://petprojectspringboot.azurewebsites.net/getPetMap.do/${userId}`,
-        )
+        .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
         .then(res => {
           console.log([...res.data].length, 'asdf');
           setPets([...res.data]);
@@ -126,7 +122,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get('http://petprojectspringboot.azurewebsites.net/petList.do')
+      .get('http://10.0.2.2:5000/petList.do')
       .then(res => {
         console.log('list', res.data);
         setPetList(res.data);

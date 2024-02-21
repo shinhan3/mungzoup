@@ -50,10 +50,7 @@ const ReviewSelect = ({navigation, route}) => {
       ocrPrice: ocrPrice,
     };
     axios
-      .post(
-        'http://petprojectspringboot.azurewebsites.net/insertReview.do',
-        data,
-      )
+      .post('http://10.0.2.2:5000/insertReview.do', data)
       .then(res => {
         Alert.alert('', '리뷰가 등록되었습니다.', [
           {
@@ -138,7 +135,7 @@ const ReviewSelect = ({navigation, route}) => {
 
   React.useEffect(() => {
     axios
-      .get('http://petprojectspringboot.azurewebsites.net/reviewAll.do')
+      .get('http://10.0.2.2:5000/reviewAll.do')
       .then(res => {
         //console.log(res.data);
         setReview(res.data);

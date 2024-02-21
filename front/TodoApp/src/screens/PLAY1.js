@@ -111,10 +111,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post(
-        'http://petprojectspringboot.azurewebsites.net/insertPetHistory.do',
-        data,
-      )
+      .post('http://10.0.2.2:5000/insertPetHistory.do', data)
       .then(res => {
         console.log(res.data);
         props.navigation.navigate('PLAYmainwonny');

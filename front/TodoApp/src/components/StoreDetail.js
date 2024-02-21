@@ -8,7 +8,7 @@ const StoreDetail = ({navigation}) => {
   const [storeList, setStoreList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get('http://petprojectspringboot.azurewebsites.net/storeList.do')
+      .get('http://10.0.2.2:5000/storeList.do')
       .then(res => {
         //console.log(res.data);
         setStoreList(res.data);

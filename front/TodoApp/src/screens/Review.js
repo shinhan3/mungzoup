@@ -22,7 +22,7 @@ const Review = ({navigation, route}) => {
   React.useEffect(() => {
     //console.log(storeId);
     axios
-      .get(`http://petprojectspringboot.azurewebsites.net/review.do/${storeId}`)
+      .get(`http://10.0.2.2:5000/review.do/${storeId}`)
       .then(res => {
         // console.log(res.data.storeInfo);
         // console.log(res.data.reviewInfo);
