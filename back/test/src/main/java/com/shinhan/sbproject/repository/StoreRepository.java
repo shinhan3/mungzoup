@@ -55,3 +55,4 @@ public interface StoreRepository extends CrudRepository<StoreVO, Integer>{
             +"GROUP BY s.STORE_ID ORDER BY POST_COUNT DESC", nativeQuery = true )
     List<Map<String, Object>>  getStoreOrderPostCnt(@Param("userLng") Double userLng,@Param("userLat") Double userLat);
 }
+

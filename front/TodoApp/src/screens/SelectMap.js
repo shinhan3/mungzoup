@@ -77,8 +77,8 @@ function SelectMap(props) {
       mapRef.current.animateToRegion({
         latitude,
         longitude,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0025,
       });
     }
   };

@@ -19,11 +19,10 @@ import MenuPlay1 from '../components/MenuPlay1';
 import MenuPet from '../components/MenuPet';
 import MenuPet1 from '../components/MenuPet1';
 import FemaleBox from '../components/FemaleBox';
-import SexSelectAm from '../components/SexSelectAm';
+
 import FemaleBox1 from '../components/FemaleBox1';
 import BackgroundBtn from '../components/BackgroundBtn';
-import SexSelect from '../components/SexSelect';
-import SexSelectSuText from '../components/SexSelectSuText';
+
 import PLAY6FindMyDog from '../screens/PLAY6FindMyDog';
 import HiddenPopularStores from '../screens/HiddenPopularStores';
 import InsertWalkSpot from '../screens/InsertWalkSpot';

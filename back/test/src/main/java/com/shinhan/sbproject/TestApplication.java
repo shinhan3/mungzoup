@@ -1,25 +1,37 @@
 package com.shinhan.sbproject;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.NumberFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.ObjectUtils;
 
 import com.shinhan.sbproject.VO.BenefitVO;
 import com.shinhan.sbproject.VO.CardVO;
 import com.shinhan.sbproject.VO.CreditVO;
 import com.shinhan.sbproject.VO.PaymentVO;
+import com.shinhan.sbproject.VO.StoreVO;
 import com.shinhan.sbproject.repository.BenefitRepository;
 import com.shinhan.sbproject.repository.CardRepository;
 import com.shinhan.sbproject.repository.CreditRepository;
 import com.shinhan.sbproject.repository.PaymentRepository;
+import com.shinhan.sbproject.repository.StoreRepository;
 import com.shinhan.sbproject.repository.UserRepository;
 
 @EnableScheduling
@@ -40,15 +52,68 @@ public class TestApplication {
 	@Autowired
 	CardRepository cardRep;
 
+	@Autowired
+	StoreRepository storeRep;
+
+	private static String WEB_DRIVER_PATH="C:\\Users\\User\\git\\shinhanProject\\project3\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\chromedriver.exe";
+
 	static Double maxDiscount = 0.0;
 	static Map<Integer, Map<Integer,CreditVO>> creditMap;
 	static Map<Integer,Integer> priceMap;
+	static int cntC = 0;
 	static int[] Level = new int[5];
 	public static void main(String[] args) {
 		SpringApplication.run(TestApplication.class, args);
 	}
+	
+	@Scheduled(cron = "0 0 0 1 * *") 
+	public void crawling() throws IOException {
+		
+		List<StoreVO> storeList = new ArrayList<>();
 
-	// @Scheduled(fixedDelay = 10000000) 
+		storeRep.findAll().forEach((store)->{
+			// System.out.println(store); 
+			storeList.add(store);
+		});
+		for(StoreVO store:storeList){
+			cntC++;
+			Integer PostCountInt =0;
+			long PostCount =0;
+			// String URL = "https://www.google.com/search?q=21세기맑은약국 인천광역시 부평구 길주로 623";
+			String URL = "https://www.google.com/search?q="+store.getStoreName()+" "+store.getStoreAddress();
+			try{
+			Document doc = Jsoup.connect(URL).get();
+			System.out.println(doc.getElementById("result-stats").text().split(" ").length);
+			if(doc.getElementById("result-stats").text().split(" ").length == 4){
+				String data =  doc.getElementById("result-stats").text().split(" ")[2];
+				// System.out.println(data);
+				String valueStr=data.substring(0,data.length()-1);
+				// System.out.println("valueStr: "+valueStr);
+				valueStr =  valueStr.replaceAll(",", "");
+				// System.out.println(valueStr);
+				// System.out.println(valueStr.length());
+				PostCount =  Long.parseLong(valueStr);
+				if(PostCount > Integer.MAX_VALUE){
+					// System.out.println("크다");
+					PostCountInt = Integer.MAX_VALUE;
+				}else{
+					PostCountInt = Integer.parseInt(valueStr);
+				}
+				Thread.sleep(10000);
+				System.out.println("Store: "+store);
+				System.out.println("valueStr: "+valueStr);
+				System.out.println("Postcount: "+PostCountInt);
+				store.setPostCount(PostCountInt);
+				storeRep.save(store); 
+			}}catch(Exception e){
+				System.out.println(e);
+			}
+		}
+
+	}
+
+	
+	@Scheduled(cron = "0 0 0 1 * *") 
 	public void scheduleFixedRateTask() {
 		List<String> users=userRep.getUsers();
 		creditMap = new HashMap<>();
@@ -211,5 +276,7 @@ public class TestApplication {
 		}
 
 	}
+
+	 
 
 }

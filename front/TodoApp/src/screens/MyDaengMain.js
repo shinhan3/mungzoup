@@ -16,21 +16,20 @@ import {
   Pressable,
 } from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
-import MapTest from '../test/MapTest';
 import MyPets from '../components/MyPets';
-import {useFocusEffect} from '@react-navigation/core';
+import {useFocusEffect, useIsFocused} from '@react-navigation/core';
 import axios from 'axios';
 import {USERID} from '../UserId';
 import Geolocation from '@react-native-community/geolocation';
-import MyCarousel from '../components/aa';
-
+import MyCarousel from '../components/PetListCarousel';
+import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
   console.log(props);
   const [showNewContent, setShowNewContent] = useState(false);
 
   const [pets, setPets] = useState([]);
   const userId = USERID;
-  console.log(userId);
+
   // const [latitude, setLatitude] = useState(0.0);
   // const [longitude, setLongitude] = useState(0.0);
 
@@ -118,18 +117,25 @@ const MyDaeng = props => {
       };
     }, [pets]),
   );
+  const isFocused = useIsFocused();
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get('http://10.0.2.2:5000/petList.do')
+      .get(`http://10.0.2.2:5000/petList.do/${userId}`)
       .then(res => {
+        console.log('----------------');
         console.log('list', res.data);
         setPetList(res.data);
       })
       .catch(err => {});
-  }, []);
+  }, [isFocused]);
   return (
-    <ScrollView style={{marginLeft: 30}}>
+    <ScrollView style={{}}>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="마이댕"
+        backBool={false}></HeaderComponent>
       <View style={styles.view}>
         <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
         <View style={styles.map}>
@@ -160,6 +166,16 @@ const MyDaeng = props => {
             </Text>
           </View>
         </View>
+        <View>
+          <View>
+            <Text style={[styles.profileTitle, styles.donationPosition]}>
+              마이댕 프로필
+            </Text>
+          </View>
+          <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
+            <MyCarousel petList={petList} navigation={props.navigation} />
+          </View>
+        </View>
         <View style={[styles.walkingBox, styles.healthboxPosition]}>
           <Image
             style={[styles.backgroundIcon, styles.iconPosition]}
@@ -178,7 +194,6 @@ const MyDaeng = props => {
             onPress={() => {
               props.navigation.navigate('PLAY4');
             }}>
-            <Text style={[styles.text12, styles.textTypo]}>2/1</Text>
             <Image
               style={[styles.mingcuterightLineIcon1, styles.eventText1Position]}
               resizeMode="cover"
@@ -194,7 +209,6 @@ const MyDaeng = props => {
             <Text style={[styles.text11, styles.text11Position]}>분</Text>
             <View style={[styles.timeChild, styles.timeChildLayout]} />
           </View>
-
           <Image
             style={[styles.graphicon1, styles.graphiconPosition]}
             resizeMode="cover"
@@ -218,74 +232,6 @@ const MyDaeng = props => {
             <Text style={styles.text1}>을 시작해보세요!</Text>
           </Text>
         </Pressable>
-
-        {/* <MyCarousel /> */}
-        <View>
-          <Text style={[styles.profileTitle, styles.donationPosition]}>
-            마이댕 프로필
-          </Text>
-        </View>
-        {petList.length > 0 ? (
-          petList.map((pet, seq) => (
-            <View key={pet.petId}>
-              <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
-                <Image
-                  style={[styles.arrowIcon, styles.arrowIconLayout]}
-                  resizeMode="cover"
-                  source={require('../assets/arrow.png')}
-                />
-                <View style={{marginLeft: 10}}>
-                  <Pressable
-                    onPress={() => {
-                      props.navigation.navigate('MyDaenegUpdate', {
-                        petId: pet.petId,
-                      });
-                    }}>
-                    <Image
-                      style={[
-                        styles.profileimageIcon,
-                        styles.petprofileboxLayout,
-                      ]}
-                      resizeMode="cover"
-                      source={require('../assets/profileimage.png')}
-                    />
-                  </Pressable>
-                  <View style={[styles.petinfotext, styles.timeChildLayout]}>
-                    <Text style={[styles.doginfo, styles.textLayout1]}>
-                      {new Date(pet.birth).toISOString().split('T')[0]} -{' '}
-                      {pet.sex ? 'Male' : 'Female'}
-                    </Text>
-                    <View style={[styles.timeChild, styles.timeChildLayout]} />
-                    <Text style={[styles.dogname, styles.text10Position]}>
-                      {pet.name}
-                    </Text>
-                  </View>
-                </View>
-                <Image
-                  style={[styles.arrowIcon1, styles.arrowIconLayout]}
-                  resizeMode="cover"
-                  source={require('../assets/mingcuterightline1.png')}
-                />
-              </View>
-            </View>
-          ))
-        ) : (
-          <Pressable
-            style={[styles.newprofilebtn, styles.newprofilebtnLayout]}
-            onPress={() => {
-              props.navigation.navigate('MyDaenegRegister');
-            }}>
-            <View style={[styles.backgroundbtn, styles.newprofilebtnLayout]} />
-            <Text style={[styles.textbtn, styles.event3Position]}>
-              마이댕 등록하기
-            </Text>
-            <Image
-              style={[styles.vectorIcon1, styles.iconLayout]}
-              resizeMode="cover"
-              source={require('../assets/vector1.png')}
-            />
-          </Pressable>
-        )}
         <View style={[styles.event, styles.eventLayout2]}>
           <Pressable
             onPress={() => {
@@ -391,12 +337,12 @@ const MyDaeng = props => {
           </View>
           <Text style={[styles.title3, styles.titleTypo]}>이벤트</Text>
         </View>
-        <View style={styles.headerPosition}>
+        {/* <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
           <Text style={[styles.headerTitle, styles.walkTextPosition]}>
             마이댕
           </Text>
-        </View>
+        </View> */}
       </View>
       {/* </View> */}
     </ScrollView>
@@ -448,7 +394,6 @@ const styles = StyleSheet.create({
     left: '5.28%',
     right: '10.83%',
     width: '83.89%',
-    position: 'absolute',
   },
   iconPosition: {
     bottom: '0%',
@@ -548,10 +493,7 @@ const styles = StyleSheet.create({
     top: 11,
     position: 'absolute',
   },
-  petprofileboxLayout: {
-    height: 50,
-    position: 'absolute',
-  },
+
   textLayout1: {
     lineHeight: 20,
     textAlign: 'left',
@@ -625,15 +567,7 @@ const styles = StyleSheet.create({
     width: 360,
     position: 'absolute',
   },
-  newprofilebtnLayout: {
-    width: 136,
-    height: 38,
-    position: 'absolute',
-  },
-  event3Position: {
-    left: 31,
-    top: 8,
-  },
+
   textTypo5: {
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
@@ -901,7 +835,7 @@ const styles = StyleSheet.create({
   },
   walkingBox: {
     height: '6.58%',
-    top: '13.81%',
+    top: '9%',
     bottom: '79.61%',
   },
   doginfo: {
@@ -938,15 +872,10 @@ const styles = StyleSheet.create({
     right: '7.89%',
     left: '85.53%',
   },
-  profileimageIcon: {
-    width: 50,
-    left: 27,
-    top: 0,
-  },
+
   petprofilebox: {
     top: 112,
-    right: 28,
-    left: 28,
+    right: 34,
   },
   profileTitle: {
     left: 29,
@@ -980,7 +909,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_3xs,
   },
   walkbtn: {
-    top: 330,
+    top: 450,
     left: 7,
     height: 31,
   },
@@ -1154,39 +1083,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     left: '50%',
   },
-  backgroundbtn: {
-    borderRadius: Border.br_3xs,
-    backgroundColor: '#e9e9e9',
-    left: 0,
-    top: 0,
-  },
-  textbtn: {
-    fontSize: FontSize.size_sm,
-    color: Color.colorDimgray_100,
-    textAlign: 'center',
-    fontFamily: FontFamily.notoSansKRBold,
-    fontWeight: '700',
-    position: 'absolute',
-  },
-  vectorIcon1: {
-    height: '34.21%',
-    width: '9.56%',
-    top: '28.95%',
-    right: '80.88%',
-    bottom: '36.84%',
-    left: '9.56%',
-    position: 'absolute',
-  },
-  newprofilebtn: {
-    top: 120,
-    left: 100,
-  },
   view: {
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
     height: 1535,
     overflow: 'hidden',
     width: '100%',
+    marginLeft: 30,
   },
 });
 
