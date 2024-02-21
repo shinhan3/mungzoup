@@ -143,8 +143,8 @@ function PLAY1(props) {
         region={{
           latitude: spotLatitude,
           longitude: spotLongitude,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
         }}>
         <Marker
           coordinate={{

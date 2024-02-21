@@ -77,8 +77,8 @@ function SelectMap(props) {
       mapRef.current.animateToRegion({
         latitude,
         longitude,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0025,
       });
     }
   };
@@ -111,8 +111,8 @@ function SelectMap(props) {
               initialRegion={{
                 latitude: latitude,
                 longitude: longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
+                latitudeDelta: 0.0025,
+                longitudeDelta: 0.0025,
               }}
               onPress={d => {
                 const clickedLatitude = d.nativeEvent.coordinate.latitude;

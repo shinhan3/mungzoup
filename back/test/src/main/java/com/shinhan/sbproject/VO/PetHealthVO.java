@@ -27,11 +27,11 @@ import lombok.ToString;
 @Table(name = "pet_health")
 
 public class PetHealthVO {
-	@Id
-	private Integer petId;
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "petId")
-	private PetsVO pet;
-	
+   @Id
+   private Integer petId;
+   @OneToOne
+   @MapsId
+   @JoinColumn(name = "petId")
+   private PetsVO pet;
+   private String disease;
 }
