@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1200,
     overflow: 'hidden',
-    marginLeft: 35,
+    marginLeft: 27,
   },
 });
 

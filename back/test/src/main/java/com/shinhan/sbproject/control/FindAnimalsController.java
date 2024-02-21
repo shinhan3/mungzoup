@@ -8,8 +8,13 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -45,7 +50,7 @@ public class FindAnimalsController {
     static int ROW = 0;
 	 static int FEATURE = 0;
     @PostMapping("/findAnimals")
-     public String imageTest(MultipartFile imageFile) throws IOException {
+     public Map<String, Object> imageTest(MultipartFile imageFile) throws IOException {
       //System.out.println("들어옴");
 		 System.out.println("modelPath===================================== "+modelPath);
       if(imageFile != null){
@@ -59,11 +64,11 @@ public class FindAnimalsController {
          System.out.println(photoImg);
          System.out.println(Arrays.toString(imageFile.getInputStream().readAllBytes()));
          System.out.println(imageFile.getInputStream().readAllBytes().length);
-        //  File convFile = new File("D:\\[교육] 신한DS SW 아카데미 자료\\[final project] 멍줍\\inputImg\\도착위치.png");
-        //  convFile.createNewFile();
-        //  FileOutputStream fos = new FileOutputStream(convFile);
-        //  fos.write(imageFile.getBytes());
-        //  fos.close();
+        File convFile = new File("D:\\도착위치.png");
+        convFile.createNewFile();
+         FileOutputStream fos = new FileOutputStream(convFile);
+         fos.write(imageFile.getBytes());
+          fos.close();
 
          //---------------------------
          // protectionId가 n20240213인 AIFaceVO 객체를 가져옵니다.
@@ -79,16 +84,6 @@ public class FindAnimalsController {
 
          int w = imageRgb.getWidth();
 		 int h = imageRgb.getHeight();
-
-		 
-          File convFile = new File("C:\\Users\\User\\Documents\\카카오톡 받은 파일\\도착위치.png");
-         convFile.createNewFile();
-         FileOutputStream fos = new FileOutputStream(convFile);
-        //  fos.write(imageFile.getBytes());
-        //  fos.close();
-		
-		ImageIO.write(imageRgb, "jpg", fos);
-
          int[] dataBuffInt = imageRgb.getRGB(0, 0, 32, 32, null, 0, 32); 
 		System.out.println(dataBuffInt.length);
 
@@ -97,8 +92,6 @@ public class FindAnimalsController {
 		System.out.println(input[0].length);
 		System.out.println(Arrays.deepToString(input));
 		// String filePath = "C:\\Users\\wldnj\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
-		
-		
 		System.out.println(modelPath+"/abcde");
          try(SavedModelBundle b = SavedModelBundle.load(modelPath+"/abcde", "serve")){ 
 				//default가 서브, 도커에 생긴 abcd를 컨트롤러 아래로 복붙
@@ -109,7 +102,6 @@ public class FindAnimalsController {
 				
 				//create an input Tensor
 				Tensor x = Tensor.create(input); //tensor 데이터 타입으로 바꿔줌
-				System.out.println("tttt");
 				//run the model and get the result
 				float[][] y = sess.runner()
 						.feed("conv2d_input", x) //model에 다이렉트로 입력값을 넣어준다
@@ -134,50 +126,69 @@ public class FindAnimalsController {
 					// [[0],[1]]: others, [[1],[0]]: robot
 					// [0][1]=1 => others
 					// [0][0]=1 => robots
+					if(y[0][i] > maxVal) {
+						maxVal = y[0][i];
+						maxIndex = i;
+					}
 				}
+				System.out.println(Arrays.deepToString(y));
+			System.out.println("가장 큰 값의 인덱스: " + maxIndex);
 
-      }else{
+
+			AIFaceVO aiFaceVO = aiRepo.findByIndex(maxIndex);
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("maxVal", maxVal);
+			response.put("aiFaceVO", aiFaceVO);
+
+			return response;  
+
+      }
+	}else{
          System.out.println("data is null");
       }
-      return "entity";
+	  //return "entity";
+	  return new HashMap<>();
    }
 
    public BufferedImage convertBytesToRGBImage(byte[] bytes) throws IOException {
-	// Read the byte array into a BufferedImage
-	ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-	BufferedImage bufferedImage = ImageIO.read(bis);
+		// Read the byte array into a BufferedImage
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		BufferedImage bufferedImage = ImageIO.read(bis);
 
-	// Resize the image to 32x32
-	Image scaledImage = bufferedImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		// Resize the image to 32x32
+		Image scaledImage = bufferedImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 
-	// Convert the scaled image back to a BufferedImage
-	BufferedImage resizedImage = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
-	Graphics2D g2d = resizedImage.createGraphics();
-	g2d.drawImage(scaledImage, 0, 0, null);
-	g2d.dispose();
+		// Convert the scaled image back to a BufferedImage
+		BufferedImage resizedImage = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = resizedImage.createGraphics();
+		g2d.drawImage(scaledImage, 0, 0, null);
+		g2d.dispose();
 
-	return resizedImage;
+		return resizedImage;
 }
 
-    public float[][][][] rgbImageToArray(int w, int h, int[] dataBuffInt){
-		float[][][][] result = new float[1][w][h][3];
-		for(int i=0; i<h;i++){
-			for(int j=0; j<w;j++){
-				// Color color = new Color(dataBuffInt[i*j],false);
-				// result[0][i][j][0]=color.getRed();
-				// result[0][i][j][1]=color.getGreen();
-				// result[0][i][j][2]=color.getBlue();
 
-				int pixel = dataBuffInt[i * w + j];
-				int red = (pixel >> 16) & 0xFF;
-				int green = (pixel >> 8) & 0xFF;
-				int blue = pixel & 0xFF;
-				result[0][i][j][0] = blue;
-				result[0][i][j][1] = green;
-				result[0][i][j][2] = red;
+public float[][][][] rgbImageToArray(int w, int h, int[] dataBuffInt){
+	float[][][][] result = new float[1][w][h][3];
+	for(int i=0; i<h;i++){
+	   for(int j=0; j<w;j++){
+		  // Color color = new Color(dataBuffInt[i*j],false);
+		  // result[0][i][j][0]=color.getRed();
+		  // result[0][i][j][1]=color.getGreen();
+		  // result[0][i][j][2]=color.getBlue();
 
-			}
-		}
-		return result;
+		  int pixel = dataBuffInt[i * w + j];
+		  int red = (pixel >> 16) & 0xFF;
+		  int green = (pixel >> 8) & 0xFF;
+		  int blue = pixel & 0xFF;
+		  result[0][i][j][0] = blue;
+		  result[0][i][j][1] = green;
+		  result[0][i][j][2] = red;
+
+	   }
 	}
+	return result;
+ }
+
 }
