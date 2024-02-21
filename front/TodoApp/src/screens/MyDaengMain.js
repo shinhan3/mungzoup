@@ -1,11 +1,3 @@
-// import * as React from 'react';
-// import {StyleSheet, View, Text, Image} from 'react-native';
-// import WalkingBoxForm from '../components/WalkingBoxForm';
-// import HealthForm from '../components/HealthForm';
-// import EventBannerForm1 from '../components/EventBannerForm1';
-// import EventBannerForm from '../components/EventBannerForm';
-// import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
-
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -34,6 +26,7 @@ const MyDaeng = props => {
   // const [longitude, setLongitude] = useState(0.0);
 
   const [mylocation, setMylocation] = useState({latitude: 0.0, longitude: 0.0});
+  const [countList, setCountList] = useState();
 
   const getGeolocation = () => {
     Geolocation.getCurrentPosition(
@@ -128,6 +121,12 @@ const MyDaeng = props => {
         setPetList(res.data);
       })
       .catch(err => {});
+    axios
+      .get(`http://10.0.2.2:5000/dogCountList.do/${userId}`)
+      .then(res => {
+        setCountList(res.data);
+      })
+      .catch(err => {});
   }, [isFocused]);
   return (
     <ScrollView style={{}}>
@@ -215,6 +214,93 @@ const MyDaeng = props => {
             source={require('../assets/graphicon1.png')}
           />
         </View>
+
+        <View style={[styles.skinDisease, styles.skinDiseasePosition]}>
+          <Image
+            style={[styles.healthboxIcon, styles.skinDiseasePosition]}
+            resizeMode="cover"
+            source={require('../assets/healthbox.png')}
+          />
+          <Pressable
+            style={[styles.inspect, styles.inspectPosition]}
+            onPress={() => {
+              props.navigation.navigate('SkinDiseaseAI');
+            }}>
+            <Image
+              style={[
+                styles.skinMingcuterightLineIcon1,
+                styles.inspectPosition,
+              ]}
+              resizeMode="cover"
+              source={require('../assets/mingcuterightline1.png')}
+            />
+            <Text style={styles.text29}>검사하기</Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.detailBtn, styles.detailBtnLayout]}
+            onPress={() => {
+              props.navigation.navigate('DogHealthDetail');
+            }}>
+            <Text style={[styles.detailText, styles.detailTextFlexBox]}>
+              상세보기
+            </Text>
+            <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
+          </Pressable>
+
+          <Pressable
+            style={[styles.detailBtn2, styles.detailBtnLayout]}
+            onPress={() => {
+              props.navigation.navigate('DogHealthDetail');
+            }}>
+            <Text style={[styles.detailText, styles.detailTextFlexBox]}>
+              상세보기
+            </Text>
+            <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
+          </Pressable>
+
+          <View style={[styles.skinHome, styles.skinHomePosition]}>
+            <Image
+              style={[styles.imgIcon, styles.skinHomePosition]}
+              resizeMode="cover"
+              source={require('../assets/materialsymbolshomehealth.png')}
+            />
+            <Text style={[styles.skinTxt, styles.skinTxtTypo]}>피부 질환</Text>
+          </View>
+          {countList && (
+            <View style={styles.healthResult}>
+              <View style={[styles.unhealthBox, styles.skinIconPosition]}>
+                <View style={[styles.count, styles.countPosition]}>
+                  <Text style={[styles.unit]}>마리</Text>
+                  <Text style={[styles.text30, styles.textPosition2]}>
+                    {countList.unhealth}
+                  </Text>
+                </View>
+                <View style={[styles.timeItem, styles.nameDivPosition]} />
+                <Image
+                  style={[styles.warnIcon, styles.skinIconLayout]}
+                  resizeMode="cover"
+                  source={require('../assets/warn.png')}
+                />
+              </View>
+              <View style={[styles.healthBox, styles.timePosition]}>
+                <View style={[styles.count1, styles.countPosition]}>
+                  <Text style={[styles.unit]}>마리</Text>
+                  <Text style={[styles.text30, styles.textPosition2]}>
+                    {countList.health}
+                  </Text>
+                </View>
+                <View style={[styles.timeItem, styles.nameDivPosition]} />
+                <Image
+                  style={[styles.heartPlusIcon, styles.skinIconPosition]}
+                  resizeMode="cover"
+                  source={require('../assets/heartplus.png')}
+                />
+              </View>
+            </View>
+          )}
+        </View>
+
         <Pressable
           style={[styles.walkbtn, styles.eventLayout2]}
           onPress={() => {
@@ -350,6 +436,46 @@ const MyDaeng = props => {
 };
 
 const styles = StyleSheet.create({
+  detailBtn: {
+    left: 175,
+    top: 70,
+  },
+
+  detailBtn2: {
+    left: 175,
+    top: 125,
+  },
+
+  detailText: {
+    top: 2,
+    left: 5,
+    fontSize: FontSize.size_5xs,
+    fontWeight: '800',
+    fontFamily: FontFamily.notoSansKRBold,
+    color: Color.new1,
+    width: 40,
+    height: 12,
+  },
+  detailTextFlexBox: {
+    alignItems: 'center',
+    display: 'flex',
+    position: 'absolute',
+  },
+  detailBtnLayout: {
+    width: 40,
+    height: 17,
+    position: 'absolute',
+  },
+
+  detailBtnChild: {
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: Color.new1,
+    borderWidth: 0.5,
+    left: 0,
+    top: 0,
+  },
+
   textTypo4: {
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
@@ -909,7 +1035,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_3xs,
   },
   walkbtn: {
-    top: 450,
+    top: 505,
+//     top: 450,
     left: 7,
     height: 31,
   },
@@ -1090,6 +1217,223 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
     marginLeft: 30,
+  },
+  skinDiseasePosition: {
+    height: 171,
+    width: 335,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+  skinDisease: {
+    marginTop: -447,
+    marginLeft: -190,
+  },
+  healthboxIcon: {
+    marginTop: -85.5,
+    marginLeft: -160,
+  },
+  inspect: {
+    marginLeft: 75,
+    width: 68,
+    marginTop: -69.5,
+  },
+  inspectPosition: {
+    height: 23,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+  text29: {
+    marginTop: -6.8,
+    marginLeft: -34,
+    height: 13,
+    width: 49,
+    textAlign: 'right',
+    fontSize: FontSize.size_4xs,
+    color: Color.colorDimgray,
+    lineHeight: 12,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+
+  skinHome: {
+    marginLeft: -134,
+    marginTop: -72.5,
+    width: 85,
+  },
+
+  skinHomePosition: {
+    height: 27,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+  imgIcon: {
+    marginTop: -13.65,
+    marginLeft: -42.55,
+    width: 24,
+    overflow: 'hidden',
+  },
+
+  skinTxt: {
+    marginTop: -8,
+    marginLeft: -14,
+  },
+  skinTxtTypo: {
+    height: 17,
+    width: 55,
+    fontSize: FontSize.size_smi,
+    color: Color.colorBlack,
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontWeight: '500',
+    textAlign: 'left',
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+
+  healthResult: {
+    height: '53.22%',
+    width: '38.91%',
+    top: '35.67%',
+    right: '48.91%',
+    bottom: '11.11%',
+    left: '12.19%',
+    position: 'absolute',
+  },
+
+  unhealthBox: {
+    top: '56.04%',
+    right: '0%',
+    left: '0%',
+  },
+
+  iconPosition: {
+    bottom: '0%',
+    position: 'absolute',
+  },
+  skinIconPosition: {
+    bottom: '0%',
+    position: 'absolute',
+  },
+
+  count: {
+    marginTop: -15,
+  },
+  countPosition: {
+    marginLeft: 12.75,
+    width: 49,
+    height: 18,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+
+  unit: {
+    marginTop: -4,
+    marginLeft: -7.75,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+    textAlign: 'left',
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+  km1Layout: {
+    height: 15,
+    color: Color.colorDimgray,
+    fontSize: FontSize.size_mini,
+  },
+
+  text30: {
+    marginLeft: -24.75,
+    fontSize: FontSize.size_xl,
+    color: Color.colorBlack,
+  },
+
+  textPosition2: {
+    marginTop: -9,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+    textAlign: 'left',
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+
+  timePosition: {
+    marginLeft: -62.25,
+    height: 30,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+
+  timeItem: {
+    marginLeft: -0,
+    width: 1,
+  },
+
+  nameDivPosition: {
+    marginTop: -14.5,
+    height: 29,
+    borderRightWidth: 1,
+    borderColor: Color.colorGainsboro_100,
+    borderStyle: 'solid',
+    backgroundColor: Color.colorGainsboro_200,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
+  skinIconLayout: {
+    maxHeight: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden',
+  },
+
+  warnIcon: {
+    height: '74.75%',
+    width: '27.15%',
+    top: '10%',
+    right: '65.62%',
+    bottom: '15.25%',
+    left: '7.23%',
+    position: 'absolute',
+  },
+
+  healthBox: {
+    marginTop: -45.5,
+    width: 123,
+  },
+  skinMingcuterightLineIcon1: {
+    marginTop: -13.4,
+    marginLeft: 19,
+    width: 20,
+    height: 23,
+    overflow: 'hidden',
+  },
+  count1: {
+    marginTop: -14,
+  },
+
+  time2: {
+    marginTop: -14.7,
+    width: 64,
+  },
+
+  heartPlusIcon: {
+    height: '97.28%',
+    width: '26.75%',
+    top: '2.72%',
+    right: '65.78%',
+    left: '7.47%',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden',
   },
 });
 

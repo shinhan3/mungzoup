@@ -26,6 +26,7 @@ public class MyDaengController {
     @Autowired
     PetsRepository petsRepo;
 
+
     @GetMapping("/petList.do/{userId}")
     public List<PetsVO> getPetList(@PathVariable("userId") String userId) {
         List<PetsVO> petList = petsRepo.getPetsByUserId(userId);

@@ -13,6 +13,7 @@ import StoreInfoContainer from '../components/StoreInfoContainer';
 import HeaderComponent from '../components/HeaderComponent';
 import {FontSize, FontFamily, Color} from '../GlobalStyles';
 import axios from 'axios';
+import FooterComponent from './FooterComponent';
 
 const Review = ({navigation, route}) => {
   const {storeId} = route.params;
@@ -34,39 +35,46 @@ const Review = ({navigation, route}) => {
       .catch();
   }, []);
   return (
-    <ScrollView>
-      <View style={styles.play}>
-        <HeaderComponent
-          dimensionCode={require('../assets/arrow8.png')}
-          benefits="리뷰"
-          navigation={navigation}
-          go="HiddenPopularStores"
-        />
-        <View style={styles.main}>
-          <StoreInfoContainer storeInfo={storeInfo} />
-          <ReviewInfoContainer
-            reviewInfo={reviewInfo}
-            totalCount={totalCount}
+    <>
+      <ScrollView>
+        <View style={styles.play}>
+          <HeaderComponent
+            dimensionCode={require('../assets/arrow8.png')}
+            benefits="리뷰"
+            navigation={navigation}
+            go="HiddenPopularStores"
           />
-          <Pressable
-            onPress={() =>
-              navigation.navigate('OcrInput', {
-                storeId: storeId,
-                storeInfo: storeInfo,
-              })
-            }
-            style={[styles.reviewbtn, styles.reviewbtnLayout]}
-            insert-review="리뷰 등록">
-            <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
-            <Image
-              style={styles.materialSymbolscameraIcon}
-              source={require('../assets/materialsymbolscamera.png')}
+          <View style={styles.main}>
+            <StoreInfoContainer storeInfo={storeInfo} />
+            <ReviewInfoContainer
+              reviewInfo={reviewInfo}
+              totalCount={totalCount}
             />
-            <View style={[styles.reviewbtnChild, styles.reviewbtnLayout]} />
-          </Pressable>
+            <Pressable
+              onPress={() =>
+                navigation.navigate('OcrInput', {
+                  storeId: storeId,
+                  storeInfo: storeInfo,
+                })
+              }
+              style={[styles.reviewbtn, styles.reviewbtnLayout]}
+              insert-review="리뷰 등록">
+              <Text style={[styles.text, styles.textFlexBox]}>리뷰 등록</Text>
+              <Image
+                style={styles.materialSymbolscameraIcon}
+                source={require('../assets/materialsymbolscamera.png')}
+              />
+              <View style={[styles.reviewbtnChild, styles.reviewbtnLayout]} />
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 

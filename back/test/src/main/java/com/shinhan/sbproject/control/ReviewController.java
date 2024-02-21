@@ -47,7 +47,7 @@ public class ReviewController {
 
 @PostMapping("/insertReview.do")
 public void insertReview(@RequestBody Map<String,Object> data) {
-    String userId = "asme12";
+    String userId = (String)data.get("userId");
     int storeId = (Integer)data.get("storeId");
     int reviewId = (Integer)data.get("reviewId");
     String strPrice = (String)data.get("ocrPrice");

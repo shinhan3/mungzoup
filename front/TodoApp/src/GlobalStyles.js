@@ -12,6 +12,7 @@ export const FontSize = {
   size_xl: 20,
   size_5xs: 8,
   size_mid_2: 17,
+  size_5xl: 24,
   size_3xs: 10,
   size_mini: 15,
   size_2xl_5: 22,
@@ -39,9 +40,11 @@ export const FontSize = {
   size_5xs_1: 7,
   size_sm: 14,
   size_21xl: 40,
+  size_2xs: 11,
 };
 /* Colors */
 export const Color = {
+  colorDarkgray: '#a7a7a7',
   colorGhostwhite: '#f4f5f9',
   colorDarkslategray_100: '#323232',
   colorDarkslategray_200: '#2e2e2e',
@@ -59,6 +62,7 @@ export const Color = {
   colorBlack: '#000',
   colorMistyrose: '#ffd8e0',
   colorDimgray_100: '#6a6a6a',
+  colorDimgray: '#6a6a6a',
   colorDimgray_200: '#5c6369',
   colorLavender: '#d9d4fc',
   colorGainsboro_100: '#ddd',

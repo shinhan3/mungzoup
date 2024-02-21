@@ -8,6 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import FooterComponent from './FooterComponent';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
 import LocationContext from '../test/LocationContext ';
@@ -59,7 +60,6 @@ function HiddenPopularStores(props) {
         console.log(err);
       });
   }
-
   return (
     <>
       {/* Header */}
@@ -182,6 +182,12 @@ function HiddenPopularStores(props) {
         {/*  //FlatList  */}
       </View>
       {/*  //main  */}
+
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
     </>
   );
 }

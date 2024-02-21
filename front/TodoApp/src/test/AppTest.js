@@ -43,6 +43,8 @@ import WalkingHistory from '../screens/WalkingHistory';
 import CardInsert from '../screens/CardInsert';
 import FavoriteListContainer from '../components/FavoriteListContainer';
 import FooterComponent from '../screens/FooterComponent';
+import SkinDiseaseAI from '../screens/SkinDiseaseAI';
+import DogHealthDetail from '../screens/DogHealthDetail';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -255,6 +257,16 @@ const AppTest = () => {
               <Stack.Screen
                 name="FooterComponent"
                 component={FooterComponent}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="SkinDiseaseAI"
+                component={SkinDiseaseAI}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="DogHealthDetail"
+                component={DogHealthDetail}
                 options={{headerShown: false}}
               />
             </Stack.Navigator>

@@ -13,13 +13,14 @@ import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
 import HeaderComponent from '../components/HeaderComponent';
 import StoreInfoContainer from '../components/StoreInfoContainer';
 import axios from 'axios';
+import FooterComponent from './FooterComponent';
+import {USERID} from '../UserId';
 
 const ReviewSelect = ({navigation, route}) => {
   const {storeId} = route.params;
   const {storeInfo} = route.params;
   const {imageUrl} = route.params;
-  const [ocrStoreName, setOcrStoreName] = React.useState('');
-  const [ocrStoreAddress, setOcrStoreAddress] = React.useState('');
+  const [ocrList, setOcrList] = React.useState();
   const [ocrPrice, setOcrPrice] = React.useState('');
   const [isEqual, setIsEqual] = React.useState(0);
   const [review, setReview] = React.useState([]);
@@ -48,6 +49,7 @@ const ReviewSelect = ({navigation, route}) => {
       storeId: storeId,
       reviewId: reviewId,
       ocrPrice: ocrPrice,
+      userId: USERID,
     };
     axios
       .post('http://10.0.2.2:5000/insertReview.do', data)
@@ -110,22 +112,12 @@ const ReviewSelect = ({navigation, route}) => {
         const allInferTexts = res.data.images.flatMap(image =>
           image.fields.map(field => field.inferText),
         );
-        console.log(allInferTexts);
-        const ocrStoreNameIndex = allInferTexts.indexOf('명');
-        const preOcrStoreName = allInferTexts[ocrStoreNameIndex + 3];
-        console.log(preOcrStoreName);
-        setOcrStoreName(preOcrStoreName);
-
-        const ocrStoreAddressIndex = allInferTexts.indexOf('소재지:');
-        const preOcrStoreAddress = allInferTexts
-          .slice(ocrStoreAddressIndex + 2, ocrStoreAddressIndex + 5)
-          .join(' ');
-        console.log(preOcrStoreAddress);
-        setOcrStoreAddress(preOcrStoreAddress);
+        //console.log(allInferTexts);
+        setOcrList(allInferTexts);
 
         const ocrPriceIndex = allInferTexts.indexOf('청구금액:');
         const ocrPrice = allInferTexts[ocrPriceIndex + 1]; //string
-        console.log(ocrPrice);
+        //console.log(ocrPrice);
         setOcrPrice(ocrPrice);
       }
     } catch (error) {
@@ -148,47 +140,55 @@ const ReviewSelect = ({navigation, route}) => {
   }, []);
 
   React.useEffect(() => {
-    if (ocrStoreName && ocrStoreAddress) {
+    if (ocrList) {
+      const storeAddressList = storeInfo.storeAddress.split(' ');
+      const ocrListIndex = ocrList.indexOf(storeAddressList[1]);
+      const storeAddressPart = ocrList
+        .slice(ocrListIndex, ocrListIndex + 2)
+        .join(' ');
       if (
-        storeInfo.storeName === ocrStoreName &&
-        storeInfo.storeAddress.includes(ocrStoreAddress)
+        ocrList.includes(storeInfo.storeName) &&
+        storeInfo.storeAddress.includes(storeAddressPart)
       ) {
-        //console.log(storeInfo.storeName, ocrStoreName);
-        //console.log(storeInfo.storeAddress, ocrStoreAddress);
         setIsEqual(2);
       } else {
-        //console.log(storeInfo.storeName, '222', ocrStoreName);
-        //console.log(storeInfo.storeAddress, '222', ocrStoreAddress);
         setIsEqual(1);
       }
     }
-  }, [ocrStoreName, ocrStoreAddress]);
+  }, [ocrList]);
 
   return (
-    <ScrollView>
-      <View style={styles.wonny}>
-        <HeaderComponent
-          dimensionCode={require('../assets/arrow8.png')}
-          benefits="리뷰 등록"
-          navigation={navigation}
-          go="HiddenPopularStores"
-        />
-        <View style={styles.main}>
-          <StoreInfoContainer storeInfo={storeInfo} />
-          {isEqual === 2 ? (
-            <ReviewList
-              review={review}
-              onPressReview={onPressReview}
-              selectedReview={selectedReview}
-              onSubmitReview={onSubmitReview}></ReviewList>
-          ) : isEqual === 1 ? (
-            alertFail()
-          ) : (
-            <></>
-          )}
+    <>
+      <ScrollView>
+        <View style={styles.wonny}>
+          <HeaderComponent
+            dimensionCode={require('../assets/arrow8.png')}
+            benefits="리뷰 등록"
+            navigation={navigation}
+            go="HiddenPopularStores"
+          />
+          <View style={styles.main}>
+            <StoreInfoContainer storeInfo={storeInfo} />
+            {isEqual === 2 ? (
+              <ReviewList
+                review={review}
+                onPressReview={onPressReview}
+                selectedReview={selectedReview}
+                onSubmitReview={onSubmitReview}></ReviewList>
+            ) : isEqual === 1 ? (
+              alertFail()
+            ) : (
+              <></>
+            )}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 
