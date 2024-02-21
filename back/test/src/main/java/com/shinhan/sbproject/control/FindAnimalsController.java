@@ -84,45 +84,44 @@ public class FindAnimalsController {
 
          int w = imageRgb.getWidth();
 		 int h = imageRgb.getHeight();
-		 System.out.println("Image width: " + w);
-		 System.out.println("Image height: " + h);
-         
-
          int[] dataBuffInt = imageRgb.getRGB(0, 0, 32, 32, null, 0, 32); 
 		System.out.println(dataBuffInt.length);
 
          //[개수][32][32][rgb] 형태로 넣어줌
 		float[][][][] input= rgbImageToArray(32,32,dataBuffInt);
 		System.out.println(input[0].length);
+		System.out.println(Arrays.deepToString(input));
 		// String filePath = "C:\\Users\\wldnj\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
-			
-
+		System.out.println(modelPath+"/abcde");
          try(SavedModelBundle b = SavedModelBundle.load(modelPath+"/abcde", "serve")){ 
-			//default가 서브, 도커에 생긴 abcd를 컨트롤러 아래로 복붙
-			
-			System.out.println("tttt");
-			//create a session from the Bundle
-			Session sess = b.session();
-			
-			//create an input Tensor
-			Tensor x = Tensor.create(input); //tensor 데이터 타입으로 바꿔줌
-			System.out.println("tttt");
-			//run the model and get the result
-			float[][] y = sess.runner()
-					.feed("conv2d_input", x) //model에 다이렉트로 입력값을 넣어준다
-					.fetch("dense_2/Softmax") //output name //dense_2/Softmax로 변경
-					.run()
-					.get(0) //몇 번째 요소 받아올지, 어차피 데이터 하나라 0
-					.copyTo(new float[1][16]); //class 16개, 입력 1개라 다음과 같이 선언함. [[],[]]
-												//기타, 미분류 추가?? 
+				//default가 서브, 도커에 생긴 abcd를 컨트롤러 아래로 복붙
 				
-												   
-			//print out the result
-			int maxIndex = 0;
-			float maxVal = y[0][0];
+				System.out.println("tttt");
+				//create a session from the Bundle
+				Session sess = b.session();
+				
+				//create an input Tensor
+				Tensor x = Tensor.create(input); //tensor 데이터 타입으로 바꿔줌
+				//run the model and get the result
+				float[][] y = sess.runner()
+						.feed("conv2d_input", x) //model에 다이렉트로 입력값을 넣어준다
+						.fetch("dense_2/Softmax") //output name //dense_2/Softmax로 변경
+						.run()
+						.get(0) //몇 번째 요소 받아올지, 어차피 데이터 하나라 0
+						.copyTo(new float[1][16]); //class 2개, 입력 1개라 다음과 같이 선언함. [[],[]]
+				
+				//print out the result
+				float max = 0;
+				int argmax = 0;
             for(int i=0; i<16; i++){
                   System.out.println("결과: " + y[0][i]); //16classification : 출력
-				// for(int i=0; i<y.length;i++)
+				if(max< y[0][i]){
+					max =  y[0][i];
+					argmax = i;
+				}
+			}
+			System.out.println(argmax+1);
+				  // for(int i=0; i<y.length;i++)
 				// 	System.out.println(y[i][1]+"결과: "+y[i][0]); //2classification : [0][1] or [1][0]으로 출력
 					// [[0],[1]]: others, [[1],[0]]: robot
 					// [0][1]=1 => others

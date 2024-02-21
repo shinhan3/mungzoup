@@ -83,8 +83,9 @@ function PLAY1(props) {
     //문자열의 길이를 최소 2로 만들고, 길이가 2보다 작을 경우 문자열의 시작 부분에 '0'을 추가
     //5 -> 05 로 변환
     const minutes = String(Math.floor(timeInSeconds / 60)).padStart(2, '0');
+    const seconds = String(Math.floor(timeInSeconds % 60)).padStart(2, '0');
     const hours = String(Math.floor(minutes / 60)).padStart(2, '0');
-    return `${hours}:${minutes}`;
+    return `${hours}:${minutes}:${seconds}`;
   };
 
   //DB에 저장용 Int형으로 시간 분으로 저장할 함수
@@ -127,7 +128,7 @@ function PLAY1(props) {
       <View style={styles.head}>
         <TouchableOpacity
           onPress={() => {
-            props.navigation.goBack('PLAYmainwonny');
+            props.navigation.goBack();
           }}>
           <Image
             style={styles.arrowIcon}
@@ -143,8 +144,8 @@ function PLAY1(props) {
         region={{
           latitude: spotLatitude,
           longitude: spotLongitude,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
         }}>
         <Marker
           coordinate={{
@@ -153,7 +154,7 @@ function PLAY1(props) {
           }}
           title={spotName}>
           <Image
-            source={require('../assets/도착위치.png')}
+            source={require('../assets/my.png')}
             style={{width: 30, height: 30}}
             resizeMethod="auto"></Image>
         </Marker>
@@ -164,7 +165,7 @@ function PLAY1(props) {
           }}
           title="내 위치">
           <Image
-            source={require('../assets/my.png')}
+            source={require('../assets/profileimage.png')}
             style={{width: 30, height: 30}}
             resizeMethod="auto"></Image>
         </Marker>
@@ -222,9 +223,26 @@ function PLAY1(props) {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.notModal}>
           <View style={styles.modal}>
+            <Image
+              style={styles.leafImg}
+              source={require('../assets/잎사귀.png')}></Image>
             <Text style={styles.modalText}>
-              당신은 {totalDistance}km만큼 이동하여 약 {gasReduction}g의
-              온실가스를 감소시키고 {calConsumption}kcal를 소모하였습니다.
+              <View style={styles.contentBottom}>
+                <Text style={styles.distanceTextBefore}>오늘 멍멍이와 </Text>
+                <Text style={styles.distance}>{totalDistance}</Text>
+                {/*  거리  */}
+                <Text style={styles.distanceTextAfter}> km를 걸었어요.</Text>
+              </View>
+              <View style={styles.contentBottom2}>
+                <Text style={styles.kcal}>{calConsumption}</Text>
+                <Text style={styles.kcalText}> kcal를 소모하고, </Text>
+              </View>
+              <View style={styles.contentBottom3}>
+                <Text style={styles.carbon}>{gasReduction}</Text>
+                <Text style={styles.carbonText}>
+                  g의 탄소를 절감한 당신 칭찬해요!
+                </Text>
+              </View>
             </Text>
             <TouchableHighlight
               style={styles.modalBtn}
@@ -245,6 +263,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     backgroundColor: Color.colorWhitesmoke_100,
+    shadowColor: '#2E2E2E', // 그림자 색상 설정
+    elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
+    marginBottom: 2,
   },
   arrowIcon: {
     top: 13,
@@ -289,7 +310,7 @@ const styles = StyleSheet.create({
     marginLeft: 56,
   },
   contentHeadBig3: {
-    marginLeft: 40,
+    marginLeft: 20,
   },
   contentSmall1: {
     marginLeft: 50,
@@ -298,7 +319,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   contentSmall3: {
-    marginLeft: 42,
+    marginLeft: 40,
   },
   walkBtn: {
     padding: 10,
@@ -317,7 +338,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex: 0.5,
-    width: 300,
+    width: 320,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -337,12 +358,74 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: FontFamily.notoSansKR,
   },
-  modalBtn: {backgroundColor: '#62AEA9', padding: 15, borderRadius: 10},
+  modalBtn: {
+    backgroundColor: '#62AEA9',
+    width: 130,
+    height: 50,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   modalBtnText: {
     color: 'white',
     fontSize: 20,
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+  },
+  contentBottom: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  contentBottom2: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  contentBottom3: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  distanceTextBefore: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 18,
+    marginTop: 20,
+  },
+  distance: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    fontSize: 24,
+    marginTop: 16,
+  },
+  distanceTextAfter: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 18,
+    marginTop: 20,
+  },
+  kcal: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    fontSize: 24,
+  },
+  kcalText: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 18,
+    marginTop: 2,
+  },
+  carbon: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    fontSize: 24,
+  },
+  carbonText: {
+    color: '#2E2E2E',
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 18,
+    marginTop: 2,
   },
 });
 

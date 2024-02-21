@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
+import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 Date.prototype.format = function (f) {
   if (!this.valueOf()) return ' ';
 
@@ -59,11 +59,11 @@ Number.prototype.zf = function (len) {
   return this.toString().zf(len);
 };
 
-export default function BirthdayPicker({onDateChange}) {
-  const placeholder = '날짜를 입력해주세요';
+export default function BirthdayPicker({value, onDateChange}) {
+  const placeholder = value || '날짜를 선택해주세요.';
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [text, onChangeText] = useState('');
+  const [text, onChangeText] = useState(value !== null ? value : '');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -74,12 +74,13 @@ export default function BirthdayPicker({onDateChange}) {
   };
 
   const handleConfirm = date => {
-    console.warn('dateFormat: ', date.format('yyyy/MM/dd'));
+    const dateString = date.format('yyyy-MM-dd');
+    console.warn('dateFormat: ', dateString);
     hideDatePicker();
-    onChangeText(date.format('yyyy/MM/dd'));
+    onChangeText(dateString);
 
     // 부모 컴포넌트에게 날짜가 변경되었다는 것을 알립니다.
-    onDateChange(date);
+    onDateChange(dateString); // 문자열 형태의 날짜를 전달합니다.
   };
 
   return (
@@ -88,11 +89,10 @@ export default function BirthdayPicker({onDateChange}) {
         <TextInput
           pointerEvents="none"
           style={styles.textInput}
-          placeholder={placeholder}
           placeholderTextColor="#000000"
+          placeholder={placeholder}
           underlineColorAndroid="transparent"
           editable={false}
-          value={text}
         />
         <DateTimePickerModal
           headerTextIOS={placeholder}
@@ -108,18 +108,20 @@ export default function BirthdayPicker({onDateChange}) {
 
 const styles = StyleSheet.create({
   container: {
+    top: 20,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   textInput: {
-    fontSize: 16,
-    color: '#000000',
+    fontSize: 14,
     height: 40,
-    width: 250,
-    borderColor: '#000000',
+    width: 260,
+    borderColor: Color.colorGainsboro_100,
+    borderRadius: Border.br_9xs,
+    borderStyle: 'solid',
     borderWidth: 1,
-    borderRadius: 5,
     padding: 10,
+    marginTop: -11,
   },
 });

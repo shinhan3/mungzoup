@@ -65,17 +65,19 @@ export function FindWalkSpotByUser(props) {
         return (
           <View style={styles.spotList}>
             <View style={styles.spotListFirst}>
-              <TouchableOpacity
-                onPress={() => {
-                  props.navigation.navigate('PLAY1', {
-                    spotId: item.spotId,
-                    spotName: item.spotName,
-                    spotLongitude: item.spotLongitude,
-                    spotLatitude: item.spotLatitude,
-                  });
-                }}>
-                <Text style={styles.spotName}>{item.spotName}</Text>
-              </TouchableOpacity>
+              <View style={styles.nameFlex}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('PLAY1', {
+                      spotId: item.spotId,
+                      spotName: item.spotName,
+                      spotLongitude: item.spotLongitude,
+                      spotLatitude: item.spotLatitude,
+                    });
+                  }}>
+                  <Text style={styles.spotName}>{item.spotName}</Text>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 onPress={() => {
                   deleteWalkSpotfunction(item.spotId);
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
     color: '#2E2E2E',
     marginLeft: 20,
     marginBottom: 10,
+    flexBasis: 150,
   },
   spotAddress: {
     marginLeft: 20,
@@ -133,9 +136,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     width: 20,
     height: 20,
-    marginLeft: 10,
   },
   spotListFirst: {
+    flexDirection: 'row',
+  },
+  nameFlex: {
+    flex: 0.95,
     flexDirection: 'row',
   },
 });

@@ -10,6 +10,7 @@ import LocationContext from '../test/LocationContext ';
 
 function MyPets(porps) {
   const userId = USERID;
+  console.log('pet Map');
   console.log(userId);
   console.log('porps', porps);
   // const initMy = porps.mylocation;
@@ -32,8 +33,8 @@ function MyPets(porps) {
       mapRef.current.animateToRegion({
         latitude: newCoordinate.latitude,
         longitude: newCoordinate.longitude,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
+        // latitudeDelta: 0.005,
+        // longitudeDelta: 0.005,
       });
     }
   };
@@ -49,14 +50,14 @@ function MyPets(porps) {
             ref={mapRef}
             style={{flex: 1}}
             // provider={PROVIDER_GOOGLE}
-            customMapStyle={MapStyle}
+            // customMapStyle={MapStyle}
             initialRegion={{
               // latitude: initPet[0].petLatitude,
               // longitude: initPet[0].petLongitude,
               latitude: latitude,
               longitude: longitude,
-              latitudeDelta: 0.005,
-              longitudeDelta: 0.005,
+              latitudeDelta: 0.0025,
+              longitudeDelta: 0.0025,
             }}>
             {porps.pets.map((pet, index) => (
               <Marker
@@ -92,218 +93,79 @@ function MyPets(porps) {
   );
 }
 const MapStyle = [
+  {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+  {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+  {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
   {
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#ebe3cd',
-      },
-    ],
-  },
-  {
+    featureType: 'administrative.locality',
     elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#523735',
-      },
-    ],
-  },
-  {
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: '#f5f1e6',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#c9b2a6',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative.land_parcel',
-    elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#dcd2be',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative.land_parcel',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#ae9e90',
-      },
-    ],
-  },
-  {
-    featureType: 'landscape.natural',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#dfd2ae',
-      },
-    ],
-  },
-  {
-    featureType: 'poi',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#dfd2ae',
-      },
-    ],
+    stylers: [{color: '#d59563'}],
   },
   {
     featureType: 'poi',
     elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#93817c',
-      },
-    ],
+    stylers: [{color: '#d59563'}],
   },
   {
     featureType: 'poi.park',
-    elementType: 'geometry.fill',
-    stylers: [
-      {
-        color: '#a5b076',
-      },
-    ],
+    elementType: 'geometry',
+    stylers: [{color: '#263c3f'}],
   },
   {
     featureType: 'poi.park',
     elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#447530',
-      },
-    ],
+    stylers: [{color: '#6b9a76'}],
+  },
+  {featureType: 'road', elementType: 'geometry', stylers: [{color: '#38414e'}]},
+  {
+    featureType: 'road',
+    elementType: 'geometry.stroke',
+    stylers: [{color: '#212a37'}],
   },
   {
     featureType: 'road',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#f5f1e6',
-      },
-    ],
-  },
-  {
-    featureType: 'road.arterial',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#fdfcf8',
-      },
-    ],
+    elementType: 'labels.text.fill',
+    stylers: [{color: '#9ca5b3'}],
   },
   {
     featureType: 'road.highway',
     elementType: 'geometry',
-    stylers: [
-      {
-        color: '#f8c967',
-      },
-    ],
+    stylers: [{color: '#746855'}],
   },
   {
     featureType: 'road.highway',
     elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#e9bc62',
-      },
-    ],
+    stylers: [{color: '#1f2835'}],
   },
   {
-    featureType: 'road.highway.controlled_access',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#e98d58',
-      },
-    ],
-  },
-  {
-    featureType: 'road.highway.controlled_access',
-    elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#db8555',
-      },
-    ],
-  },
-  {
-    featureType: 'road.local',
+    featureType: 'road.highway',
     elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#806b63',
-      },
-    ],
+    stylers: [{color: '#f3d19c'}],
   },
   {
-    featureType: 'transit.line',
+    featureType: 'transit',
     elementType: 'geometry',
-    stylers: [
-      {
-        color: '#dfd2ae',
-      },
-    ],
-  },
-  {
-    featureType: 'transit.line',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#8f7d77',
-      },
-    ],
-  },
-  {
-    featureType: 'transit.line',
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: '#ebe3cd',
-      },
-    ],
+    stylers: [{color: '#2f3948'}],
   },
   {
     featureType: 'transit.station',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#dfd2ae',
-      },
-    ],
+    elementType: 'labels.text.fill',
+    stylers: [{color: '#d59563'}],
   },
   {
     featureType: 'water',
-    elementType: 'geometry.fill',
-    stylers: [
-      {
-        color: '#b9d3c2',
-      },
-    ],
+    elementType: 'geometry',
+    stylers: [{color: '#17263c'}],
   },
   {
     featureType: 'water',
     elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#92998d',
-      },
-    ],
+    stylers: [{color: '#515c6d'}],
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.stroke',
+    stylers: [{color: '#17263c'}],
   },
 ];
 export default MyPets;

@@ -19,11 +19,10 @@ import MenuPlay1 from '../components/MenuPlay1';
 import MenuPet from '../components/MenuPet';
 import MenuPet1 from '../components/MenuPet1';
 import FemaleBox from '../components/FemaleBox';
-import SexSelectAm from '../components/SexSelectAm';
+
 import FemaleBox1 from '../components/FemaleBox1';
 import BackgroundBtn from '../components/BackgroundBtn';
-import SexSelect from '../components/SexSelect';
-import SexSelectSuText from '../components/SexSelectSuText';
+
 import PLAY6FindMyDog from '../screens/PLAY6FindMyDog';
 import HiddenPopularStores from '../screens/HiddenPopularStores';
 import InsertWalkSpot from '../screens/InsertWalkSpot';
@@ -131,14 +130,7 @@ const AppTest = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(false);
   const [latitude, setLatitude] = React.useState(null);
   const [longitude, setLongitude] = React.useState(null);
-  // const [fontsLoaded, error] = useFonts({
-  //   'NotoSansKR-Light': require('../assets/fonts/NotoSansKR-Light.otf'),
-  //   'NotoSansKR-Regular': require('../assets/fonts/NotoSansKR-Regular.otf'),
-  //   'NotoSansKR-Medium': require('../assets/fonts/NotoSansKR-Medium.otf'),
-  //   'NotoSansKR-Bold': require('../assets/fonts/NotoSansKR-Bold.otf'),
-  //   'IBMPlexSansKR-Bold': require('../assets/fonts/IBMPlexSansKR-Bold.ttf'),
-  //   'Inter-Medium': require('../assets/fonts/Inter-Medium.ttf'),
-  // });
+
   React.useEffect(() => {
     const watchId = Geolocation.watchPosition(
       position => {
