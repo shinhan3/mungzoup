@@ -87,9 +87,8 @@ const OcrInput = ({navigation, route}) => {
           source={
             response
               ? {uri: response.assets[0].uri}
-              : require('../assets/inputImg.png')
+              : require('../assets/inputImg3.png')
           }></Image>
-        <Text style={[styles.receiptInfo]}>영수증을 등록해주세요.</Text>
         <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
           <Text style={{color: 'white', fontSize: 18}}>앨범 찾기</Text>
         </Pressable>

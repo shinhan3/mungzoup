@@ -33,5 +33,5 @@ public class PetHealthVO {
 	@MapsId
 	@JoinColumn(name = "petId")
 	private PetsVO pet;
-	
+	private String disease;
 }

@@ -26,7 +26,7 @@ public class MyDaengController {
     @Autowired
     PetsRepository petsRepo;
 
-    String userId = "user2"; 
+    String userId = "asme12"; 
 
     @GetMapping("/petList.do")
     public List<PetsVO> getPetList() {
