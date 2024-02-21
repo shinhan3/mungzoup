@@ -187,7 +187,7 @@ function HiddenPopularStores(props) {
         petBoolean={false}
         playBoolean={true}
         cardBoolean={false}
-        navigation={navigation}></FooterComponent>
+        navigation={props.navigation}></FooterComponent>
     </>
   );
 }

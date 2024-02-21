@@ -54,21 +54,8 @@ public class FindAnimalsController {
       //System.out.println("들어옴");
 		 System.out.println("modelPath===================================== "+modelPath);
       if(imageFile != null){
-         //System.out.println("들어옴2");
-         Base64.Encoder encoder = Base64.getEncoder();
-         byte[] photoEnode = encoder.encode(imageFile.getBytes());
-         System.out.println(Arrays.toString(photoEnode));
-         String photoImg = new String(photoEnode, "UTF8");
-         System.out.println(photoEnode.length);
-         System.out.println(imageFile.getBytes().length);
-         System.out.println(photoImg);
-         System.out.println(Arrays.toString(imageFile.getInputStream().readAllBytes()));
-         System.out.println(imageFile.getInputStream().readAllBytes().length);
-        File convFile = new File("D:\\도착위치.png");
-        convFile.createNewFile();
-         FileOutputStream fos = new FileOutputStream(convFile);
-         fos.write(imageFile.getBytes());
-          fos.close();
+        
+         
 
          //---------------------------
          // protectionId가 n20240213인 AIFaceVO 객체를 가져옵니다.
@@ -111,27 +98,15 @@ public class FindAnimalsController {
 						.copyTo(new float[1][16]); //class 2개, 입력 1개라 다음과 같이 선언함. [[],[]]
 				
 				//print out the result
-				float max = 0;
-				int argmax = 0;
-            for(int i=0; i<16; i++){
-                  System.out.println("결과: " + y[0][i]); //16classification : 출력
-				if(max< y[0][i]){
-					max =  y[0][i];
-					argmax = i;
+				float maxVal = 0;
+				int maxIndex = 0;
+			for(int i=0; i<y[0].length;i++){
+				if(y[0][i] > maxVal) {
+					maxVal = y[0][i];
+					maxIndex = i;
 				}
 			}
-			System.out.println(argmax+1);
-				  // for(int i=0; i<y.length;i++)
-				// 	System.out.println(y[i][1]+"결과: "+y[i][0]); //2classification : [0][1] or [1][0]으로 출력
-					// [[0],[1]]: others, [[1],[0]]: robot
-					// [0][1]=1 => others
-					// [0][0]=1 => robots
-					if(y[0][i] > maxVal) {
-						maxVal = y[0][i];
-						maxIndex = i;
-					}
-				}
-				System.out.println(Arrays.deepToString(y));
+			System.out.println(Arrays.deepToString(y));
 			System.out.println("가장 큰 값의 인덱스: " + maxIndex);
 
 
@@ -142,14 +117,10 @@ public class FindAnimalsController {
 			response.put("aiFaceVO", aiFaceVO);
 
 			return response;  
-
-      }
-	}else{
-         System.out.println("data is null");
-      }
-	  //return "entity";
+   		}
+	  }
 	  return new HashMap<>();
-   }
+	}
 
    public BufferedImage convertBytesToRGBImage(byte[] bytes) throws IOException {
 		// Read the byte array into a BufferedImage

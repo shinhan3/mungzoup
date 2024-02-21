@@ -1036,7 +1036,7 @@ const styles = StyleSheet.create({
   },
   walkbtn: {
     top: 505,
-//     top: 450,
+    //     top: 450,
     left: 7,
     height: 31,
   },
@@ -1226,7 +1226,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   skinDisease: {
-    marginTop: -447,
+    // marginTop: -447,
+    marginTop: -747,
     marginLeft: -190,
   },
   healthboxIcon: {
