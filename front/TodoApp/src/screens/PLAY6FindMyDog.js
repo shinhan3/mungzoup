@@ -20,6 +20,7 @@ const PLAY6FindMyDog = ({navigation}) => {
   const [imageFile, setImageFile] = React.useState({});
   const [previewImage, setPreviewImage] = React.useState(null);
   const [animalData, setAnimalData] = React.useState(null);
+  const [percent, setPercent] = React.useState(null);
 
   // 이미지 보내기
   const onSubmitImage = () => {
@@ -31,10 +32,10 @@ const PLAY6FindMyDog = ({navigation}) => {
       100,
     )
       .then(resizedImage => {
-        Image.getSize(resizedImage.uri, (width, height) => {
-          console.log('width', width); // Check the width of the resized image
-          console.log('height', height); // Check the height of the resized image
-        });
+        // Image.getSize(resizedImage.uri, (width, height) => {
+        //   console.log('width', width); // Check the width of the resized image
+        //   console.log('height', height); // Check the height of the resized image
+        // });
         const data = new FormData();
         data.append('imageFile', {
           name: response['assets'][0].fileName,
@@ -50,12 +51,16 @@ const PLAY6FindMyDog = ({navigation}) => {
       })
       .then(response => {
         console.log(response, '이미지 보내기');
-        setAnimalData(response.data);
+        const maxVal = response.data.maxVal; // Read maxVal from data
+        setPercent(maxVal);
+        const aiFaceVO = response.data.aiFaceVO; // Read aiFaceVO from data
+        setAnimalData(aiFaceVO);
       })
       .catch(error => {
-        console.log(error);
+        console.log('Error in resizing or sending image: ', error);
       });
   };
+
   // 이미지 가져오기
   const onSelectImage = () => {
     launchImageLibrary(
@@ -126,7 +131,6 @@ const PLAY6FindMyDog = ({navigation}) => {
                   resizeMode="cover"
                   source={{uri: animalData.img}}
                 />
-                <Text style={[styles.text2, styles.textTypo]}>100%</Text>
               </View>
             )}
             {animalData && (
@@ -166,9 +170,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     borderRadius: Border.br_8xs,
     padding: 10,
-    marginTop: 20, // 필요한 만큼의 마진을 추가
+    marginTop: 15,
     position: 'absolute',
-    top: 240,
+    top: 285,
     left: 225,
   },
   textTypo1: {
@@ -197,11 +201,11 @@ const styles = StyleSheet.create({
     top: 25,
   },
   text1: {
-    top: 313,
+    top: 355,
   },
   inputimgIcon: {
     top: 70,
-    height: 171,
+    height: 210,
     width: 302,
     left: 29,
     position: 'absolute',
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
     color: Color.new,
   },
   similarImg: {
-    top: 359,
+    top: 399,
     left: 29,
     height: 88,
     position: 'absolute',
@@ -248,9 +252,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'left',
     fontSize: FontSize.size_3xs,
+    lineHeight: 20,
   },
   similarTxt: {
-    top: 380,
+    top: 413,
     left: 160,
     width: 200,
     height: 50,
@@ -399,6 +404,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 892,
     overflow: 'hidden',
+    marginLeft: 27,
   },
 });
 

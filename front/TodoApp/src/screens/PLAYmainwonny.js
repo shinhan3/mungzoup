@@ -5,12 +5,18 @@ import ContainerCardFormFilter from '../components/ContainerCardFormFilter';
 import StoreRecommendContainer from '../components/StoreRecommendContainer';
 import FormContainer1 from '../components/FormContainer1';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import HeaderComponent from '../components/HeaderComponent';
 
 const PLAYmainwonny = props => {
   console.log(props, 'ssss');
 
   return (
     <ScrollView>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="PLAY"
+        backBool={false}></HeaderComponent>
       <View style={styles.playmainwonny}>
         <View style={styles.main}>
           <FormContainer2
@@ -27,12 +33,12 @@ const PLAYmainwonny = props => {
           />
           <FormContainer1 navigation={props.navigation} />
         </View>
-        <View style={styles.headerPosition}>
+        {/* <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
           <Text style={[styles.headerTitle, styles.headerTitleFlexBox]}>
             PLAY
           </Text>
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );
@@ -102,6 +108,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1200,
     overflow: 'hidden',
+    marginLeft: 27,
   },
 });
 

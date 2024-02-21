@@ -8,6 +8,7 @@ import {useFocusEffect} from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SyncStorage from 'react-native-sync-storage';
 import {USERID} from '../UserId';
+import HeaderComponent from '../components/HeaderComponent';
 
 const Frame = props => {
   const [data, setData] = React.useState([]);
@@ -52,15 +53,22 @@ const Frame = props => {
   );
   return (
     <ScrollView>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="멍줍 카드"
+        backBool={false}></HeaderComponent>
       {data.length > 0 && (
         <View style={styles.view}>
           <View style={styles.main}>
             <FormContainer props={props} />
-            <Text style={styles.bannerTitle}>
-              <Text style={styles.text}>{`멍줍 서비스 `}</Text>
-              <Text style={styles.text1}>{data[0]}개월</Text>
-              <Text style={styles.text}> 째 이용 중</Text>
-            </Text>
+            <View style={{marginLeft: -10}}>
+              <Text style={styles.bannerTitle}>
+                <Text style={styles.text}>{`멍줍 서비스 `}</Text>
+                <Text style={styles.text1}>{data[0]}개월</Text>
+                <Text style={styles.text}> 째 이용 중</Text>
+              </Text>
+            </View>
             <View style={[styles.eventBanner1, styles.eventLayout]}>
               <View style={[styles.eventDiv, styles.eventLayout]} />
               <View style={styles.eventText}>
@@ -76,14 +84,16 @@ const Frame = props => {
                 source={require('../assets/phone-benefit.png')}
               />
             </View>
-            <CardContainer data={data} />
+            <View style={{marginLeft: 2}}>
+              <CardContainer data={data} />
+            </View>
           </View>
-          <View style={styles.headerPosition}>
+          {/* <View style={styles.headerPosition}>
             <View style={[styles.headerDiv, styles.headerPosition]} />
             <Text style={[styles.headerTitle, styles.headerTitleFlexBox]}>
               멍줍 카드
             </Text>
-          </View>
+          </View> */}
         </View>
       )}
     </ScrollView>
@@ -176,6 +186,7 @@ const styles = StyleSheet.create({
     top: 682,
     left: 13,
     height: 136,
+    marginLeft: 10,
   },
   main: {
     top: 52,
@@ -216,6 +227,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 981,
     overflow: 'hidden',
+    marginLeft: 27,
   },
 });
 

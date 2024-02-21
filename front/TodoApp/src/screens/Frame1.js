@@ -20,7 +20,9 @@ const Frame1 = props => {
     React.useCallback(() => {
       console.log('test2007');
       axios
-        .get(`http://10.0.2.2:5000/getUserNameAndDiscountPrice.do/${userId}`)
+        .get(
+          `http://10.0.2.2:5000/getUserNameAndDiscountPrice.do/${userId}`,
+        )
         .then(res => {
           console.log(res.data);
           setDiscountPrice({
@@ -37,46 +39,52 @@ const Frame1 = props => {
     <>
       <ScrollView>
         <View style={styles.view}>
-          <FormContainer3 discount={discountPrice.discount} />
           <HeaderComponent
-            dimensionCode={require('../assets/arrow2.png')}
-            benefits="미라클 혜택"
-            go={'Frame'}
             navigation={props.navigation}
+            dimensionCode={require('../assets/arrow8.png')}
+            benefits="미라클 혜택"
+            go="PLAYmainwonny"
+            backBool={true}
           />
-          <Text style={styles.ment1}>
-            <Text>
-              <Text
-                style={[
-                  styles.text,
-                  styles.textTypo2,
-                ]}>{`멍줍 카드를 사용한 똑똑한 소비자를 위한 추천!
+          <View
+            style={{
+              marginLeft: 27,
+            }}>
+            <FormContainer3 discount={discountPrice.discount} />
+            <Text style={styles.ment1}>
+              <Text>
+                <Text
+                  style={[
+                    styles.text,
+                    styles.textTypo2,
+                  ]}>{`멍줍 카드를 사용한 똑똑한 소비자를 위한 추천!
 `}</Text>
-              <Text style={[styles.text1, styles.textTypo]}>{`멍줍 카드만의 
+                <Text style={[styles.text1, styles.textTypo]}>{`멍줍 카드만의 
 미라클 조합으로, 최대 혜택을!
  
 `}</Text>
+              </Text>
             </Text>
-          </Text>
-          <Text style={styles.ment2}>
-            <Text style={[styles.text2, styles.textTypo]}>
-              {discountPrice.userName}
+            <Text style={styles.ment2}>
+              <Text style={[styles.text2, styles.textTypo]}>
+                {discountPrice.userName}
+              </Text>
+              <Text style={[styles.text3, styles.textTypo2]}>
+                님의 이번달 혜택은?
+              </Text>
             </Text>
-            <Text style={[styles.text3, styles.textTypo2]}>
-              님의 이번달 혜택은?
-            </Text>
-          </Text>
-          <Text style={styles.manual}>
-            <Text style={styles.manualTxt}>
-              <Text style={styles.textTypo}> </Text>
-              <Text
-                style={
-                  styles.text4
-                }>{`·자세한 카드별 서비스 내용 및 서비스 적용 기준은 카테고리 어쩌고 저쩌고 아아아아아아가나다라마바사아자차카타파하아야어여오요우유으이나동물병원미용위탁관리식당카페
-· 자세한 문의는 멍줍 고객센터(1588-3333)로 문의 부탁드립니다. 
+            <Text style={styles.manual}>
+              <Text style={styles.manualTxt}>
+                <Text style={styles.textTypo}> </Text>
+                <Text
+                  style={
+                    styles.text4
+                  }>{`-자세한 카드별 서비스 내용 및 서비스 적용 기준은 이전달 결제 내역으로 적용됩니다.
+ -자세한 문의는 멍줍 고객센터(1588-3333)로 문의 부탁드립니다. 
 `}</Text>
+              </Text>
             </Text>
-          </Text>
+          </View>
         </View>
       </ScrollView>
       <FooterComponent
@@ -157,7 +165,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   manual: {
-    marginLeft: -136,
+    marginLeft: -163,
     top: 746,
     left: '50%',
     fontSize: FontSize.size_3xs,

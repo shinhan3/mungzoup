@@ -49,7 +49,8 @@ function CardInsert(props) {
           navigation={props.navigation}
           dimensionCode={require('../assets/arrow8.png')}
           benefits="카드 발급"
-          go="PLAYmainwonny"></HeaderComponent>
+          go="PLAYmainwonny"
+          backBool={true}></HeaderComponent>
       </View>
       <View style={styles.contents}>
         <View style={[styles.content, hidden && {height: 200}]}>

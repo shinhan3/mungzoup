@@ -26,52 +26,49 @@ public class MyDaengController {
     @Autowired
     PetsRepository petsRepo;
 
-    String userId = "asme12"; 
 
-    @GetMapping("/petList.do")
-    public List<PetsVO> getPetList() {
+    @GetMapping("/petList.do/{userId}")
+    public List<PetsVO> getPetList(@PathVariable("userId") String userId) {
         List<PetsVO> petList = petsRepo.getPetsByUserId(userId);
         return petList;
     }
     
 
     @PostMapping("/addPetProfile.do")
-    public ResponseEntity<String> addPetProfile(@RequestBody PetsVO pet) {
-        System.out.println("여기는왔나요.." + pet);
-        if (pet.getUser() != null && pet.getUser().getUserId() != null) {
-            petsRepo.save(pet);
+    public ResponseEntity<String> addPetProfile(@RequestBody PetsVO newPet) {
+        System.out.println("여기는왔나요.." + newPet);
+        if (newPet.getUser() != null && newPet.getUser().getUserId() != null) {
+            petsRepo.save(newPet);
             return ResponseEntity.ok("Pet information updated successfully");
         }
+        System.out.println(newPet.toString());
         return ResponseEntity.badRequest().body("User information not found");
     }
 
-    @GetMapping("/petProfile.do")
-    public PetsVO getPetProfile(Integer petId) {
+    @GetMapping("/petProfile.do/{petId}")
+    public PetsVO getPetProfile(@PathVariable("petId") Integer petId) {
         PetsVO petProfile = petsRepo.getPetsByPetId(petId);
         return petProfile;
     }
-    // @PostMapping("/updatePetProfile.do")
-    // public ResponseEntity<String> updatePetProfile(@RequestBody PetsVO pet) {
-    //     System.out.println("여기는왔나요.." + pet);
-    //     if (pet.getUser() != null && pet.getUser().getUserId() != null) {
-    //         petsRepo.save(pet);
-    //         return ResponseEntity.ok("Pet information updated successfully");
-    //     }
-    //     return ResponseEntity.badRequest().body("User information not found");
-    // }
 
-    //    @PutMapping("/updateTest.do")
-    // public List<testVO> f3(@RequestBody testVO test) {
-    //     System.out.println(test.toString());
-    //     petsRepo.save(test);
-    //     return (List<testVO>) testRep.findAll();
-    // }
-    // @DeleteMapping("/delete.do/{seq}")
-    // public List<testVO> f4(@PathVariable Integer seq){
-    //     petsRepo.deleteById(seq);
-    //     return (List<testVO>) petsRepo.findAll();
-    // }
+    @PutMapping("/updatePetProfile.do")
+    public ResponseEntity<String> updatePetProfile(@RequestBody PetsVO updatedPet) {
+        if (updatedPet.getPetId() == null) {
+            return ResponseEntity.badRequest().body("Pet ID must not be null");
+        }
     
+        if (updatedPet.getUser() == null || updatedPet.getUser().getUserId() == null) {
+            return ResponseEntity.badRequest().body("User information not found");
+        }
+    
+        petsRepo.save(updatedPet);
+        return ResponseEntity.ok("Pet information updated successfully");
+    }
+
+    @DeleteMapping("/deletePetProfile.do/{petId}")
+    public void deletePetProfile(@PathVariable("petId") Integer petId){
+        petsRepo.findById(petId).ifPresent(pet->{petsRepo.delete(pet);});
+    }
     
     
 }
