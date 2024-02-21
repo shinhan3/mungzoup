@@ -127,7 +127,7 @@ const MyDaeng = props => {
         setCountList(res.data);
       })
       .catch(err => {});
-  }, [isFocused]);
+  }, [isFocused, userId]);
   return (
     <ScrollView style={{}}>
       <HeaderComponent
@@ -423,14 +423,7 @@ const MyDaeng = props => {
           </View>
           <Text style={[styles.title3, styles.titleTypo]}>이벤트</Text>
         </View>
-        {/* <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.walkTextPosition]}>
-            마이댕
-          </Text>
-        </View> */}
       </View>
-      {/* </View> */}
     </ScrollView>
   );
 };
@@ -1226,8 +1219,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   skinDisease: {
-    // marginTop: -447,
-    marginTop: -747,
+    marginTop: -447,
     marginLeft: -190,
   },
   healthboxIcon: {

@@ -41,6 +41,7 @@ const DogHealthDetail = ({navigation}) => {
             benefits="펫 건강 분석"
             navigation={navigation}
             go="MyDaeng"
+            backBool="true"
           />
           <View style={styles.contenthead}>
             <Text

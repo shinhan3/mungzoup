@@ -10,7 +10,8 @@ import org.springframework.data.repository.query.Param;
 import com.shinhan.sbproject.VO.StoreVO;
 
 public interface StoreRepository extends CrudRepository<StoreVO, Integer>{
-   @Query("select s from StoreVO s where s.storeId between 0 and 8")
+   @Query("select s from StoreVO s where s.storeName = '웰케어동물병원'")
+   //@Query("select s from StoreVO s where s.storeId between 0 and 8")
     List<StoreVO> selectAll5();
 
     @Query("select s.storeName, s.storeAddress, c.categoryId, c.image " + 

@@ -15,6 +15,7 @@ import StoreInfoContainer from '../components/StoreInfoContainer';
 import axios from 'axios';
 import FooterComponent from './FooterComponent';
 import {USERID} from '../UserId';
+import {OCRSECRETKEY, OCRURL} from '../OcrSecretKey';
 
 const ReviewSelect = ({navigation, route}) => {
   const {storeId} = route.params;
@@ -85,7 +86,7 @@ const ReviewSelect = ({navigation, route}) => {
       // base64String은 base64로 인코딩된 이미지 데이터입니다.
       // 이제 이 문자열을 API 요청에 사용할 수 있습니다.
       const res = await axios.post(
-        'https://126gsgqg8r.apigw.ntruss.com/custom/v1/28287/088ec5206fb1259c78c14dadc3037c29edc153a902324804fbf03bead877038f/general',
+        OCRURL,
         {
           images: [
             {
@@ -100,7 +101,7 @@ const ReviewSelect = ({navigation, route}) => {
         },
         {
           headers: {
-            'X-OCR-SECRET': 'WGt5SVdRcUJtV1JPcVhlb0tMWFBkaGhhQXJXYlhwRkM=', // Secret Key
+            'X-OCR-SECRET': OCRSECRETKEY, // Secret Key
           },
         },
       );

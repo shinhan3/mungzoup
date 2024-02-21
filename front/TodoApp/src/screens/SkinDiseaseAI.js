@@ -19,6 +19,7 @@ import axios from 'axios';
 import {USERID} from '../UserId';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
+import SkinDiseaseResult from '../components/SkinDiseaseResult';
 
 const SkinDiseaseAI = ({navigation}) => {
   const [dname, setDname] = useState();
@@ -26,6 +27,7 @@ const SkinDiseaseAI = ({navigation}) => {
   const [response, setResponse] = useState();
   const [previewImage, setPreviewImage] = useState();
   const [imageFile, setImageFile] = useState();
+  const [disease, setDisease] = useState();
 
   const onSubmitImage = () => {
     const data = new FormData();
@@ -44,7 +46,7 @@ const SkinDiseaseAI = ({navigation}) => {
           },
         })
         .then(res => {
-          console.log(res.data);
+          setDisease(res.data);
         })
         .catch();
     }
@@ -120,6 +122,7 @@ const SkinDiseaseAI = ({navigation}) => {
             benefits="펫 건강 분석"
             navigation={navigation}
             go="MyDaeng"
+            backBool="true"
           />
           <Input
             placeholder="강아지 이름"
@@ -159,15 +162,7 @@ const SkinDiseaseAI = ({navigation}) => {
                 있습니다.
               </Text>
             </View>
-            <View style={[styles.content, styles.contentLayout]}>
-              <View style={[styles.background, styles.backgroundBg]} />
-              <Text style={[styles.contenttext, styles.ai1Typo]}>
-                내 강아지 피부질환이 의심된다면?
-              </Text>
-              <Text style={[styles.contenttext2, styles.ai1Typo]}>
-                병원 갈 필요 없이 1분이면 검사 끝!
-              </Text>
-            </View>
+            <SkinDiseaseResult disease={disease}></SkinDiseaseResult>
             <Pressable onPress={onSelectImage}>
               <Image
                 style={[
@@ -183,11 +178,7 @@ const SkinDiseaseAI = ({navigation}) => {
               />
             </Pressable>
           </View>
-          <Image
-            style={styles.imageIcon}
-            resizeMode="cover"
-            source={require('../assets/aiPlus.png')}
-          />
+
           <View style={styles.contenthead}>
             <Text
               style={[styles.contentheadtext, styles.icroundPlusIconPosition]}>
@@ -239,15 +230,6 @@ const styles = StyleSheet.create({
     width: 334,
     left: 10,
     position: 'absolute',
-  },
-  contentLayout: {
-    height: 512,
-    position: 'absolute',
-  },
-  backgroundBg: {
-    backgroundColor: Color.colorWhitesmoke_200,
-    borderRadius: Border.br_3xs,
-    left: 0,
   },
   inputimgLayout: {
     height: 171,
@@ -354,38 +336,6 @@ const styles = StyleSheet.create({
     top: 0,
     overflow: 'hidden',
   },
-  background: {
-    top: 116,
-    borderStyle: 'solid',
-    borderColor: Color.colorDimgray,
-    borderWidth: 0.5,
-    width: 340,
-    height: 169,
-    position: 'absolute',
-  },
-  contenttext: {
-    top: 205,
-    left: 60,
-    color: Color.colorBlack,
-    textAlign: 'center',
-    fontSize: FontSize.size_mini,
-    fontWeight: '700',
-    position: 'absolute',
-  },
-  contenttext2: {
-    top: 229,
-    left: 57,
-    color: Color.colorBlack,
-    textAlign: 'center',
-    fontSize: FontSize.size_mini,
-    fontWeight: '700',
-    position: 'absolute',
-  },
-  content: {
-    top: 159,
-    left: 20,
-    width: 704,
-  },
   similarDiv: {
     shadowRadius: 4,
     elevation: 4,
@@ -478,13 +428,6 @@ const styles = StyleSheet.create({
     height: 62,
     left: '50%',
     width: 360,
-    position: 'absolute',
-  },
-  imageIcon: {
-    top: 577,
-    left: 184,
-    width: 55,
-    height: 40,
     position: 'absolute',
   },
   text4: {
