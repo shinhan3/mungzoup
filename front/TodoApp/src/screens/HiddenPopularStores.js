@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   contentHead: {
     position: 'absolute',
-    top: 274,
+    top: 350,
     width: '100%',
     height: 70,
     backgroundColor: 'white',
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     height: 51,
     borderBottomWidth: 1,
     borderTopColor: '#A7A7A7',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   chFirstText: {
     fontSize: 18,
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginLeft: 25,
     color: '#6A6A6A',
+    marginBottom: 5,
   },
   chLine: {
     width: 50,
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     marginLeft: 50,
   },
   menuImg: {
-    marginTop: 3,
+    marginTop: 0,
     marginRight: 6,
   },
   contentList: {
