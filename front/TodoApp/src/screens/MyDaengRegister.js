@@ -187,7 +187,7 @@ const MyDaenegRegister = props => {
 const styles = StyleSheet.create({
   chartHeadText: {
     marginTop: 20,
-    marginLeft: 26,
+    marginLeft: 70,
     marginBottom: 20,
     fontSize: 24,
     fontFamily: FontFamily.notoSansKR,

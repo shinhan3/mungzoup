@@ -89,7 +89,7 @@ export default function BirthdayPicker({value, onDateChange}) {
         <TextInput
           pointerEvents="none"
           style={styles.textInput}
-          placeholderTextColor="#000000"
+          placeholderTextColor="#2f4f4f"
           placeholder={placeholder}
           underlineColorAndroid="transparent"
           editable={false}

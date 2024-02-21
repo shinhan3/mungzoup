@@ -1227,7 +1227,7 @@ const styles = StyleSheet.create({
   },
   skinDisease: {
     // marginTop: -447,
-    marginTop: -747,
+    marginTop: -310,
     marginLeft: -190,
   },
   healthboxIcon: {
