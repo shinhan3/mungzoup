@@ -147,7 +147,8 @@ const MyDaeng = props => {
               resizeMode="cover"
               source={require('../assets/myDogMap.png')}></Image>
           ) : (
-            <MyPets pets={pets} mylocation={mylocation} />
+            <></>
+            // <MyPets pets={pets} mylocation={mylocation} />
           )}
 
           <View>

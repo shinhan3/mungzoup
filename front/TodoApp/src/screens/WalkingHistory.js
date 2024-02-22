@@ -94,31 +94,45 @@ function WalkingHistory(props) {
         .then(res => {
           const rawData = res.data;
 
-          const lastSevenDays = Array.from({length: 7}, (value, index) => {
-            //7일치 데이터 생성
+          // 이번 주의 일요일을 구하는 함수
+          const getSunday = () => {
             const d = new Date();
-            d.setDate(d.getDate() - (6 - index + weekOffset * 7)); //오름차순
+            d.setDate(d.getDate() - 7 * weekOffset); // 이전 주를 계산
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 0);
+            return new Date(d.setDate(diff));
+          };
+
+          const sunday = getSunday();
+
+          // 일요일부터 7일간의 날짜를 생성
+          const lastSevenDays = Array.from({length: 7}, (value, index) => {
+            const d = new Date(sunday);
+            d.setDate(d.getDate() + index);
             d.setHours(0, 0, 0, 0);
-            // 시간 부분을 제거
             return d;
           });
+
           const processedData = lastSevenDays.map(day => {
-            // DB에서 가져온 날짜 데이터를 YYYY-MM-DD 형식의 문자열로 변환
             const found = rawData.find(item => {
               const itemDate = new Date(item[0]);
               itemDate.setHours(0, 0, 0, 0);
               return (
                 itemDate.toISOString().substring(0, 10) ===
                 day.toISOString().substring(0, 10)
-              ); // 문자열로 변환하여 날짜 비교
+              );
             });
-            const dayname = daynames[day.getDay()];
             if (found) {
-              const date = found[0];
-              return [date, dayname, found[2], found[3]];
+              return [found[0], daynames[day.getDay()], found[2], found[3]];
             }
-            return [day.toISOString().substring(0, 10), dayname, 0, 0]; // 데이터가 없으면 0으로 처리
+            return [
+              day.toISOString().substring(0, 10),
+              daynames[day.getDay()],
+              0,
+              0,
+            ];
           });
+
           setPetInfo(processedData);
         })
         .catch(err => {
@@ -210,7 +224,8 @@ function WalkingHistory(props) {
             />
           }>
           <VictoryAxis
-            tickValues={dataVic.map(item => item.x)}
+            tickValues={dataVic.map(item => new Date(item.date).getDay())}
+            tickFormat={['일', '월', '화', '수', '목', '금', '토']}
             style={{
               axis: {stroke: 'transparent'},
               ticks: {stroke: 'transparent'},
@@ -296,11 +311,11 @@ function WalkingHistory(props) {
             style={styles.leafImg}
             source={require('../assets/잎사귀.png')}></Image>
           <View style={styles.contentBottom}>
-            <Text style={styles.kcal}>{calConsumption}</Text>
+            <Text style={styles.kcal}>{calConsumption.toLocaleString()}</Text>
             <Text style={styles.kcalText}> kcal를 소모하고, </Text>
           </View>
           <View style={styles.contentBottom}>
-            <Text style={styles.carbon}>{gasReduction}</Text>
+            <Text style={styles.carbon}>{gasReduction.toLocaleString()}</Text>
             <Text style={styles.carbonText}>
               g의 탄소를 절감한 당신 칭찬해요!
             </Text>
