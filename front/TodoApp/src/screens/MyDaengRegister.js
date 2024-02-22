@@ -188,6 +188,8 @@ const styles = StyleSheet.create({
   chartHeadText: {
     marginTop: 80,
     marginLeft: 26,
+    // marginTop: 20,
+    // marginLeft: 70,
     marginBottom: 20,
     fontSize: 24,
     fontFamily: FontFamily.notoSansKR,

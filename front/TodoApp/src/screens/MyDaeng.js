@@ -151,7 +151,13 @@ const MyDaeng = props => {
           </Modal>
         </View>
       ) : (
-        <ScrollView style={{}}>
+        <ScrollView
+          style={{flex: 1}}
+          contentContainerStyle={{
+            flexGrow: 1,
+            //justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <HeaderComponent
             navigation={props.navigation}
             dimensionCode={require('../assets/arrow8.png')}
@@ -543,9 +549,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   healthboxPosition: {
-    left: '5.28%',
+    // 산책요약
+    //left: '5.28%',
+    left: 30,
     right: '10.83%',
-    width: '83.89%',
+    //width: '83.89%',
+    width: 350,
   },
   iconPosition: {
     bottom: '0%',
@@ -666,11 +675,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventLayout2: {
-    left: 11,
+    left: 40,
     width: 300,
     position: 'absolute',
   },
   walkTextPosition: {
+    // 산책시작 텍스트
+    // 룰루
     top: 9,
     position: 'absolute',
   },
@@ -1246,15 +1257,17 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   skinDiseasePosition: {
+    // 피부질환 박스
     height: 171,
-    width: 335,
-    left: '50%',
-    top: '50%',
+    width: 360,
+    left: '47.5%',
+    top: '51%',
     position: 'absolute',
   },
   skinDisease: {
-    marginTop: -300,
-    marginLeft: -200,
+    // marginTop: -447,
+    marginTop: -310,
+    marginLeft: -190,
   },
   healthboxIcon: {
     marginTop: -85.5,
