@@ -35,7 +35,7 @@ const MyDaenegRegister = props => {
     data.append('imageFile', file);
 
     axios
-      .post('http://192.168.0.90:5000/uploadProfileFile.do', data, {
+      .post('http://192.168.0.10:5000/uploadProfileFile.do', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -49,7 +49,7 @@ const MyDaenegRegister = props => {
         };
 
         axios
-          .post('http://192.168.0.90:5000/addPetProfile.do', formData)
+          .post('http://192.168.0.10:5000/addPetProfile.do', formData)
           .then(res => {
             console.log(res.data);
             props.navigation.navigate('MyDaeng');
@@ -118,7 +118,7 @@ const MyDaenegRegister = props => {
         dimensionCode={require('../assets/arrow8.png')}
         benefits="펫 프로필"
         navigation={props.navigation}
-        go="MyDaengRegister"
+        go="MyDaeng"
         backBool={true}
       />
       <View style={styles.view1}>
@@ -461,6 +461,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     overflow: 'hidden',
+  },
+  error: {
+    top: 650,
+    left: 120,
   },
 });
 

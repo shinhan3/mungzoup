@@ -47,6 +47,7 @@ function SelectMap(props) {
   // const [latitude, setLatitude] = useState(null);
   // const [longitude, setLongitude] = useState(null);
   const {latitude, longitude} = useContext(LocationContext);
+
   const mapRef = useRef(); // MapView 참조를 저장할 ref 생성
 
   /*  useEffect(() => {

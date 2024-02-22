@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {
   StyleSheet,
@@ -14,12 +14,44 @@ import {getDistanceFormula} from './SelectMap';
 import LocationContext from '../test/LocationContext ';
 import FooterComponent from './FooterComponent';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
+import Geolocation from '@react-native-community/geolocation';
 
 function PLAY1(props) {
-  var {latitude, longitude} = useContext(LocationContext);
+  // var {latitude, longitude} = useContext(LocationContext);
+
+  const [latitude, setLatitude] = useState(37.55518333333333);
+  const [longitude, setLongitude] = useState(126.92099333333333);
+
+  const getGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(
+          'aaaagccccccccccaaaaaaaaaaac',
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        setLatitude(position.coords.latitude);
+        position.coords.longitude * -1 > 0.0
+          ? setLongitude(position.coords.longitude * -1)
+          : setLongitude(position.coords.longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+    );
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getGeolocation();
+    }, []),
+  );
+
   const [modalVisible, setModalVisible] = useState(false);
-  const dslatitude = 37.559245;
-  const dslongtitude = 126.92273666666667;
+  // const dslatitude = 37.559245;
+  // const dslongtitude = 126.92273666666667;
+  const dslatitude = latitude;
+  const dslongtitude = longitude;
   const spotLongitude = props.route.params.spotLongitude;
   const spotLatitude = props.route.params.spotLatitude;
   const spotName = props.route.params.spotName;
@@ -113,7 +145,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post('http://192.168.0.90:5000/insertPetHistory.do', data)
+      .post('http://192.168.0.10:5000/insertPetHistory.do', data)
       .then(res => {
         console.log(res.data);
         props.navigation.navigate('PLAYmainwonny');
@@ -122,7 +154,8 @@ function PLAY1(props) {
         console.log(err);
       });
   };
-
+  console.log(latitude, 'latitudelatitudelatitudelatitudelatitudelatitude');
+  console.log(longitude, 'latitudelatitudelatitudelatitudelatitudelatitude');
   return (
     <>
       {/* Header */}
@@ -282,8 +315,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 20,
-    top: 9,
-    marginLeft: 160,
+    top: 13,
+    marginLeft: 140,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
   },

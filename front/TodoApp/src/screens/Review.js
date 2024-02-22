@@ -23,7 +23,7 @@ const Review = ({navigation, route}) => {
   React.useEffect(() => {
     //console.log(storeId);
     axios
-      .get(`http://192.168.0.90:5000/review.do/${storeId}`)
+      .get(`http://192.168.0.10:5000/review.do/${storeId}`)
       .then(res => {
         // console.log(res.data.storeInfo);
         // console.log(res.data.reviewInfo);

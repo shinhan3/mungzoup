@@ -22,7 +22,7 @@ const FormDropdown = ({onDropdownData}) => {
     setDropdownBoxValue(value);
     try {
       const response = await axios.get(
-        `http://192.168.0.90:5000/areaPicking.do/${value}`,
+        `http://192.168.0.10:5000/areaPicking.do/${value}`,
       );
 
       const responseData = response.data;
@@ -43,7 +43,7 @@ const FormDropdown = ({onDropdownData}) => {
   //     setDropdownBoxValue(value2);
   //     console.log('hoooo', value2);
   //     axios
-  //       .get('http://192.168.0.90:5000/areaPicking.do', value2)
+  //       .get('http://192.168.0.10:5000/areaPicking.do', value2)
   //       .then(res => {
   //         console.log('ㅎㅇzzz', res.data);
   //       })
@@ -57,7 +57,7 @@ const FormDropdown = ({onDropdownData}) => {
       setDropdownBoxValue(value2);
       console.log('hoooo', value2);
       axios
-        .get('http://192.168.0.90:5000/areaPicking.do', value2)
+        .get('http://192.168.0.10:5000/areaPicking.do', value2)
         .then(res => {
           console.log('ㅎㅇzzz', res.data);
         })

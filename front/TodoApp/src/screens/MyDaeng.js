@@ -18,7 +18,7 @@ import MyCarousel from '../components/PetListCarousel';
 import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
   const [pets, setPets] = useState([]);
-  const [modelVisible, setModelVisible] = useState(true);
+  const [modelVisible, setModelVisible] = useState(false);
 
   const userId = USERID;
 
@@ -62,7 +62,7 @@ const MyDaeng = props => {
   );
   const getPet = () => {
     axios
-      .get(`http://192.168.0.90:5000/getPetMap.do/${userId}`)
+      .get(`http://192.168.0.10:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -74,7 +74,7 @@ const MyDaeng = props => {
 
   useFocusEffect(
     useCallback(() => {
-      setModelVisible(true);
+      setModelVisible(false);
       setTimeout(() => {
         setModelVisible(false);
       }, 5000);
@@ -107,7 +107,7 @@ const MyDaeng = props => {
   );
   useFocusEffect(
     useCallback(() => {
-      const timer = setTimeout(getPet, 10000); // 1초 뒤에 now를 수행하라
+      const timer = setTimeout(getPet, 60000); // 1초 뒤에 now를 수행하라
       console.log(timer, 'asdsadas');
       return () => {
         clearTimeout(timer);
@@ -120,7 +120,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.90:5000/petList.do/${userId}`)
+      .get(`http://192.168.0.10:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -128,7 +128,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://192.168.0.90:5000/dogCountList.do/${userId}`)
+      .get(`http://192.168.0.10:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })
@@ -158,11 +158,13 @@ const MyDaeng = props => {
             //justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <HeaderComponent
-            navigation={props.navigation}
-            dimensionCode={require('../assets/arrow8.png')}
-            benefits="마이댕"
-            backBool={false}></HeaderComponent>
+          <View style={{left: -180}}>
+            <HeaderComponent
+              navigation={props.navigation}
+              dimensionCode={require('../assets/arrow8.png')}
+              benefits="마이댕"
+              backBool={false}></HeaderComponent>
+          </View>
           <View style={styles.view}>
             <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
             <View style={styles.map}>
@@ -170,7 +172,8 @@ const MyDaeng = props => {
               {pets.length == 0 ? (
                 <Image
                   style={{
-                    left: -8,
+                    left: 0,
+                    width: 314,
                   }}
                   resizeMode="cover"
                   source={require('../assets/myDogMap.png')}></Image>
@@ -231,6 +234,7 @@ const MyDaeng = props => {
                   resizeMode="cover"
                   source={require('../assets/mingcuterightline1.png')}
                 />
+                <Text style={styles.textD}>상세보기</Text>
               </Pressable>
               <View style={[styles.km, styles.kmPosition]}>
                 <Text style={[styles.km1, styles.km1Typo]}>km</Text>
@@ -406,7 +410,11 @@ const MyDaeng = props => {
                       source={require('../assets/event-image2.png')}
                     />
                     <View
-                      style={[styles.eventText2, styles.eventText2Position]}>
+                      style={[
+                        styles.eventText2,
+                        styles.eventText2Position,
+                        {marginTop: 13},
+                      ]}>
                       <Text style={[styles.text21, styles.textPosition]}>
                         <Text style={[styles.text17, styles.mydogTypo]}>
                           멍줍 PLAY
@@ -469,18 +477,18 @@ const MyDaeng = props => {
 const styles = StyleSheet.create({
   detailBtn: {
     left: 175,
-    top: 70,
+    top: 64,
   },
 
   detailBtn2: {
     left: 175,
-    top: 125,
+    top: 119,
   },
 
   detailText: {
     top: 2,
     left: 5,
-    fontSize: FontSize.size_5xs,
+    fontSize: FontSize.size_2xs,
     fontWeight: '800',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,
@@ -549,8 +557,8 @@ const styles = StyleSheet.create({
   },
   healthboxPosition: {
     // 산책요약
-    //left: '5.28%',
-    left: 30,
+    left: '3.0%',
+    // left: 30,
     right: '10.83%',
     //width: '83.89%',
     width: 350,
@@ -636,7 +644,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   text10Position: {
-    top: 5,
+    top: 8,
     lineHeight: 20,
     textAlign: 'left',
     position: 'absolute',
@@ -650,7 +658,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventText1Position: {
-    top: 11,
+    top: 20,
     position: 'absolute',
   },
 
@@ -660,7 +668,7 @@ const styles = StyleSheet.create({
   },
   arrowIconLayout: {
     bottom: '24%',
-    top: '36%',
+    top: '30%',
     width: '6.58%',
     height: '40%',
     maxHeight: '100%',
@@ -688,7 +696,7 @@ const styles = StyleSheet.create({
   eventLayout1: {
     height: 120,
     width: 316,
-    left: 0,
+    left: 10,
     position: 'absolute',
   },
   eventPosition: {
@@ -757,7 +765,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   map1: {
-    backgroundColor: Color.colorGainsboro_200,
+    // backgroundColor: Color.colorGainsboro_200,
     height: 314,
     left: 0,
     top: 0,
@@ -775,11 +783,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   map: {
-    marginLeft: -200,
+    // marginLeft: -200,
     top: 1350,
     height: 455,
-    width: 360,
-    left: '50%',
+    width: 314,
+    left: '6%',
     position: 'absolute',
   },
   title: {
@@ -921,10 +929,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   title2: {
-    left: 10,
+    left: 25,
     width: 86,
     height: 22,
-    top: 12,
+    top: 20,
     position: 'absolute',
   },
   km1: {
@@ -938,7 +946,7 @@ const styles = StyleSheet.create({
     height: 20,
     lineHeight: 20,
     textAlign: 'left',
-    top: 0,
+    top: 3,
     position: 'absolute',
   },
   km: {
@@ -983,7 +991,7 @@ const styles = StyleSheet.create({
   },
   mingcuterightLineIcon1: {
     height: 20,
-    left: 273,
+    left: 295,
     width: 20,
     overflow: 'hidden',
   },
@@ -1040,7 +1048,7 @@ const styles = StyleSheet.create({
 
   petprofilebox: {
     top: 112,
-    right: 34,
+    right: 0,
   },
   profileTitle: {
     left: 29,
@@ -1215,7 +1223,7 @@ const styles = StyleSheet.create({
     top: 31,
   },
   title3: {
-    left: 4,
+    left: 17,
     top: 0,
     position: 'absolute',
   },
@@ -1265,7 +1273,7 @@ const styles = StyleSheet.create({
     // 피부질환 박스
     height: 171,
     width: 360,
-    left: '47.5%',
+    left: '48.5%',
     top: '45%',
     position: 'absolute',
   },
@@ -1279,9 +1287,9 @@ const styles = StyleSheet.create({
     marginLeft: -160,
   },
   inspect: {
-    marginLeft: 75,
+    marginLeft: 90,
     width: 68,
-    marginTop: -69.5,
+    marginTop: -80,
   },
   inspectPosition: {
     height: 23,
@@ -1290,14 +1298,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   text29: {
-    marginTop: -6.8,
+    marginTop: -9,
     marginLeft: -34,
     height: 13,
     width: 49,
     textAlign: 'right',
-    fontSize: FontSize.size_4xs,
+    fontSize: FontSize.size_4xs + 3,
     color: Color.colorDimgray,
-    lineHeight: 12,
+    // lineHeight: 12,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     left: '50%',
@@ -1306,8 +1314,8 @@ const styles = StyleSheet.create({
   },
 
   skinHome: {
-    marginLeft: -134,
-    marginTop: -72.5,
+    marginLeft: -130,
+    marginTop: -85,
     width: 85,
   },
 
@@ -1446,7 +1454,7 @@ const styles = StyleSheet.create({
     top: '10%',
     right: '65.62%',
     bottom: '15.25%',
-    left: '7.23%',
+    left: '11%',
     position: 'absolute',
   },
 
@@ -1479,6 +1487,20 @@ const styles = StyleSheet.create({
     maxHeight: '100%',
     maxWidth: '100%',
     overflow: 'hidden',
+  },
+  textD: {
+    marginTop: 24,
+    marginLeft: -34,
+    height: 13,
+    width: 49,
+    textAlign: 'right',
+    fontSize: FontSize.size_4xs + 3,
+    color: Color.colorDimgray,
+    // lineHeight: 12,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+    left: '80%',
+    position: 'absolute',
   },
 });
 

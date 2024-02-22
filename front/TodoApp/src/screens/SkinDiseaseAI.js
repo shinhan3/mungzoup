@@ -40,7 +40,7 @@ const SkinDiseaseAI = ({navigation}) => {
       data.append('dname', dname);
       data.append('userId', USERID);
       axios
-        .post('http://192.168.0.90:5000/inspectSkin.do', data, {
+        .post('http://192.168.0.10:5000/inspectSkin.do', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -75,7 +75,7 @@ const SkinDiseaseAI = ({navigation}) => {
   const dogCheck = () => {
     if (dname) {
       axios
-        .get('http://192.168.0.90:5000/dogConfirm.do', {
+        .get('http://192.168.0.10:5000/dogConfirm.do', {
           params: {
             userId: USERID,
             dname: dname,
@@ -134,8 +134,11 @@ const SkinDiseaseAI = ({navigation}) => {
             }}
           />
           <Pressable style={styles.dogInsertbtn} onPress={() => dogCheck()}>
-            <View style={styles.dogBackgroundbtn} />
-            <Text style={[styles.dogTextbtn, styles.ai1Typo]}>등록</Text>
+            <View style={[styles.dogBackgroundbtn, {left: -30}]} />
+            <Text
+              style={[styles.dogTextbtn, styles.ai1Typo, {left: -10, top: 10}]}>
+              등록
+            </Text>
           </Pressable>
           <Pressable
             onPress={onSubmitImage}
@@ -167,7 +170,7 @@ const SkinDiseaseAI = ({navigation}) => {
               <Image
                 style={[
                   styles.phimageThinIcon,
-                  previewImage ? {borderRadius: 10} : {},
+                  previewImage ? {borderRadius: 10, ㅣ} : {},
                 ]}
                 resizeMode="cover"
                 source={
@@ -265,7 +268,7 @@ const styles = StyleSheet.create({
   backgroundbtn: {
     backgroundColor: Color.new1,
     borderRadius: Border.br_2xs,
-    left: 0,
+    left: -30,
     top: 0,
     height: 40,
     width: 121,
@@ -281,8 +284,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textbtn: {
-    top: 8,
-    left: 22,
+    top: 10,
+    left: 3,
     color: '#fff',
     textAlign: 'center',
     fontSize: FontSize.size_mini,
@@ -349,7 +352,7 @@ const styles = StyleSheet.create({
   },
   phimageThinIcon: {
     top: 0,
-    left: 40,
+    left: 13,
     width: 302,
     height: 171,
     position: 'absolute',
@@ -373,7 +376,7 @@ const styles = StyleSheet.create({
 
   main: {
     top: 273,
-    left: 16,
+    left: 13,
     width: 708,
     height: 711,
     position: 'absolute',
@@ -484,7 +487,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 104,
     height: 40,
-    marginLeft: 60,
+    marginLeft: 31,
     marginTop: 220,
   },
   dogInputContainer: {

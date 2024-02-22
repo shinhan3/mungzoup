@@ -34,10 +34,16 @@ const PLAY2 = ({navigation}) => {
   //     }, 5000);
   //   }
   // };
-
+  console.log(navigation, 'navigationnavigationnavigationnavigationnavigation');
   return (
     <>
-      <HeaderComponent benefits="장소추천" navigation={navigation} go="PLAY2" />
+      <HeaderComponent
+        benefits="장소추천"
+        navigation={navigation}
+        go="PLAYmainwonny"
+        backBool={true}
+        dimensionCode={require('../assets/arrow8.png')}
+      />
       <View style={styles.play}>
         <View style={[styles.main, styles.mainPosition]}>
           <View style={[styles.recommendlist, styles.mainPosition]}>
@@ -70,12 +76,12 @@ const PLAY2 = ({navigation}) => {
             </Modal>
           </View>*/}
         </View>
-        <View style={styles.headerPosition}>
+        {/* <View style={styles.headerPosition}>
           <View style={[styles.headerDiv, styles.headerPosition]} />
           <Text style={[styles.headerTitle, styles.titlePosition]}>
             줍줍 장소
           </Text>
-        </View>
+        </View> */}
       </View>
       <FooterComponent
         petBoolean={false}

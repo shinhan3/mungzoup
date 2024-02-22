@@ -90,7 +90,7 @@ function WalkingHistory(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.10:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           const rawData = res.data;
 
@@ -254,7 +254,7 @@ function WalkingHistory(props) {
                 padding: 5,
               },
             }}
-            offsetX={390}
+            offsetX={380}
             tickValues={[0, 30, 60]}
             tickFormat={t => `${t}분`}
           />
@@ -280,7 +280,9 @@ function WalkingHistory(props) {
                 {selectedPetInfo[0].substring(8, 10)}
               </Text>
               {/*  월/일 =>EX) 2/15   */}
-              <Text style={styles.contentTopDayOfWeek}>{dayOfWeek}</Text>
+              <Text style={[styles.contentTopDayOfWeek, {top: 4}]}>
+                {dayOfWeek}
+              </Text>
               {/*  요일  */}
             </View>
             <View style={styles.contentMiddle}>
@@ -292,7 +294,7 @@ function WalkingHistory(props) {
               {/*  산책 시간  */}
               <Text style={styles.walkTimeText}>분</Text>
             </View>
-            <View style={styles.contentBottom}>
+            <View style={[styles.contentBottom, {top: 10}]}>
               <Text style={styles.distanceTextBefore}>오늘 멍멍이와 </Text>
               <Text style={styles.distance}>{selectedPetInfo[2]}</Text>
               {/*  거리  */}
@@ -363,9 +365,9 @@ const styles = StyleSheet.create({
     elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
   },
   content: {
-    marginLeft: 26,
+    marginLeft: 15,
     marginRight: 26,
-    width: 360,
+    width: 330,
     height: 208,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -391,14 +393,16 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRMedium,
     marginLeft: 5,
     marginRight: 5,
+    top: 4,
   },
   container: {
     justifyContent: 'center',
+    left: -23,
   },
   beforeSelect: {
     fontSize: 30,
-    marginLeft: 44,
-    marginTop: 70,
+    marginLeft: 60,
+    marginTop: 80,
     fontFamily: FontFamily.notoSansKRBold,
   },
   contentTop: {

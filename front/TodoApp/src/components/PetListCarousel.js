@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   event3Position: {
     left: 31,
-    top: 8,
+    top: 10,
   },
   backgroundbtn: {
     borderRadius: Border.br_3xs,
