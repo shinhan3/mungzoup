@@ -10,7 +10,8 @@ import {
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
 import axios from 'axios';
 import {Alert} from 'react-native';
-import FormDropdown from './FormDropdown'; // FormDropdown 컴포넌트 임포트
+import FormDropdown from './FormDropdown';
+import {USERID} from '../UserId';
 
 const FilteredCardForm = ({data}) => {
   const [isVisible, setIsVisible] = useState(Array(data.length).fill(false)); // 각 항목에 대한 isVisible 상태 배열
@@ -31,7 +32,7 @@ const FilteredCardForm = ({data}) => {
       spotLatitude: spot_latitude,
       spotLongitude: spot_longitude,
       spotAddress: spot_address,
-      user: {userId: 'user1'},
+      user: {userId: USERID},
     };
     axios
       .post('http://10.0.2.2:5000/insertWalkSpot.do', data)

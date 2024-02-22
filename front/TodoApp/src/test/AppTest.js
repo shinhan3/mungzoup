@@ -23,7 +23,7 @@ import FemaleBox from '../components/FemaleBox';
 import FemaleBox1 from '../components/FemaleBox1';
 import BackgroundBtn from '../components/BackgroundBtn';
 
-import PLAY6FindMyDog from '../screens/PLAY6FindMyDog';
+import FindMyDogAI from '../screens/FindMyDogAI';
 import HiddenPopularStores from '../screens/HiddenPopularStores';
 import InsertWalkSpot from '../screens/InsertWalkSpot';
 
@@ -254,11 +254,11 @@ const AppTest = () => {
                   component={CardInsert}
                   options={{headerShown: false}}
                 />
-                <Stack.Screen
-                  name="PLAY6FindMyDog"
-                  component={PLAY6FindMyDog}
-                  options={{headerShown: false}}
-                />
+               <Stack.Screen
+                name="FindMyDogAI"
+                component={FindMyDogAI}
+                options={{headerShown: false}}
+              />
                 <Stack.Screen
                   name="FooterComponent"
                   component={FooterComponent}

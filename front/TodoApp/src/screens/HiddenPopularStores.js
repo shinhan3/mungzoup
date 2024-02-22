@@ -1,19 +1,15 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import * as React from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
   TouchableOpacity,
-  FlatList,
+  ScrollView,
 } from 'react-native';
+import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+
 import FooterComponent from './FooterComponent';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
@@ -249,7 +245,7 @@ function HiddenPopularStores(props) {
         navigation={props.navigation}></FooterComponent>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   head: {
@@ -327,55 +323,86 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginTop: 10,
   },
-  storeAddress: {
-    marginLeft: 25,
-    color: '#A7A7A7',
-    fontSize: 15,
+  play1Typo: {
+    top: 26,
+    textAlign: 'center',
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+    fontSize: FontSize.size_5xs,
+    position: 'absolute',
+  },
+  mapPosition: {
+    height: 280,
+    left: 0,
+    top: 0,
+    position: 'absolute',
+    width: 360,
+  },
+  titleTypo: {
     fontFamily: FontFamily.notoSansKRMedium,
-    marginBottom: 5,
+    fontWeight: '500',
+    textAlign: 'center',
+    position: 'absolute',
   },
-  storeThird: {
-    flexDirection: 'row',
-    marginLeft: 25,
+  headerPosition: {
+    height: 52,
+    left: 0,
+    top: 0,
+    position: 'absolute',
+    width: 360,
   },
-  storeText: {
-    color: '#2E2E2E',
-    fontSize: 15,
-    fontFamily: FontFamily.notoSansKRMedium,
-    marginTop: 2,
+  map1: {
+    backgroundColor: Color.colorGainsboro_200,
   },
-  storeThird1: {
-    flexDirection: 'row',
+  title: {
+    top: 62,
+    left: 73,
+    fontSize: FontSize.size_31xl,
+    color: Color.colorBlack,
+    width: 224,
+    height: 117,
   },
-  storeText2: {
-    marginLeft: 20,
-    flexDirection: 'row',
+  main: {
+    top: 52,
+    height: 716,
   },
-  storeText3: {
-    marginLeft: 20,
-    flexDirection: 'row',
-    marginBottom: 10,
+  headerDiv: {
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    shadowOffset: {
+      width: 0,
+      height: 0.5,
+    },
+    shadowRadius: 3,
+    elevation: 3,
+    shadowOpacity: 1,
+    backgroundColor: Color.colorWhitesmoke_100,
   },
-  storeTextPoint: {
-    color: '#2E2E2E',
-    fontSize: 18,
-    fontFamily: FontFamily.notoSansKR,
-    fontWeight: '800',
-  },
-  detailBtn: {
-    width: 90,
-    height: 46,
-    backgroundColor: '#62AEA9',
+  headerTitle: {
+    marginLeft: -102,
+    top: 9,
+    left: '50%',
+    fontSize: FontSize.size_xl,
+    color: Color.colorDarkslategray_200,
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 290,
-    borderRadius: 10,
+    width: 204,
+    height: 35,
   },
-  btnText: {
-    fontSize: 18,
-    color: 'white',
-    fontFamily: FontFamily.notoSansKR,
-    fontWeight: '800',
+  arrowIcon: {
+    top: 13,
+    left: 14,
+    width: 26,
+    height: 24,
+    position: 'absolute',
+    overflow: 'hidden',
+  },
+  play: {
+    backgroundColor: Color.colorGhostwhite,
+    flex: 1,
+    width: '100%',
+    height: 892,
+    overflow: 'hidden',
   },
 });
 

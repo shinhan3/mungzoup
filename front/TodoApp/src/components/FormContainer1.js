@@ -28,7 +28,7 @@ const FormContainer1 = () => {
 해당 기능을 활용해 보세요.`}</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('PLAY6FindMyDog');
+              navigation.navigate('FindMyDogAI');
             }}
             style={[styles.findsimilarbtn, styles.findsimilarbtnLayout]}>
             <View
