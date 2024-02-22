@@ -13,19 +13,20 @@ import {
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import GenderPicker from '../components/GenderPicker';
 import BirthdayPicker from '../components/BirthdayPicker';
+import UploadProfileimage from '../components/UploadProfileimage';
 import axios from 'axios';
 import {USERID} from '../UserId';
-
-// import ImagePicker from 'react-native-imaage-picker';
+import HeaderComponent from '../components/HeaderComponent';
 
 const MyDaenegUpdate = props => {
+  const userId = USERID;
   const petId = props.route.params.petId;
   const [petProfile, setPetProfile] = React.useState({});
   React.useEffect(() => {
     axios
       .get(`http://10.0.2.2:5000/petProfile.do/${petId}`)
       .then(res => {
-        console.log(res.data);
+        console.log(res.data, 'aaaaaaa');
         setPetProfile(res.data);
       })
       .catch(err => {
@@ -39,10 +40,49 @@ const MyDaenegUpdate = props => {
     name: '',
     birth: null,
     sex: null,
+    image: null,
   });
+
+  const handleFileSelect = file => {
+    setForm(prevForm => ({...prevForm, image: file}));
+  };
+  const submitForm = () => {
+    const data = new FormData();
+    data.append('imageFile', form.image);
+
+    axios
+      .post('http://10.0.2.2:5000/uploadProfileFile.do', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log('^^^^^^^^', response);
+        const formData = {
+          ...form,
+          image: response.data,
+          user: {userId: userId},
+        };
+
+        axios
+          .put('http://10.0.2.2:5000/updatePetProfile.do', formData)
+          .then(res => {
+            console.log(res.data);
+            props.navigation.navigate('MyDaeng');
+          })
+          .catch(err => {
+            console.error(err.response.data); // 에러 메시지 출력
+            setError('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   // useEffect 훅을 사용하여 petProfile이 업데이트될 때마다 form을 업데이트합니다.
   React.useEffect(() => {
+    console.log(petProfile, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     setForm({
       ...form,
       // petProfile 객체가 비어 있지 않은 경우에만 설정합니다.
@@ -53,6 +93,7 @@ const MyDaenegUpdate = props => {
         name: petProfile.name,
         breed: petProfile.breed,
         weight: petProfile.weight,
+        image: petProfile.image,
       }),
     });
   }, [petProfile]);
@@ -108,25 +149,6 @@ const MyDaenegUpdate = props => {
     );
   };
 
-  const submitForm = () => {
-    const userId = USERID;
-    const data = {
-      ...form,
-      user: {userId: userId},
-    };
-
-    axios
-      .put('http://10.0.2.2:5000/updatePetProfile.do', data)
-      .then(res => {
-        console.log(res.data);
-        props.navigation.navigate('MyDaeng');
-      })
-      .catch(err => {
-        console.error(err.response.data);
-        setError('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      });
-  };
-
   const deletePetProfile = () => {
     axios
       .delete(`http://10.0.2.2:5000/deletePetProfile.do/${petId}`)
@@ -143,104 +165,90 @@ const MyDaenegUpdate = props => {
 
   return (
     <ScrollView>
-      <View style={styles.header}>
-        <View style={[styles.headerDiv, styles.divPosition]} />
-        <Text style={styles.headerTitle}>{`펫 프로필 `}</Text>
-        <Pressable
-          onPress={() => {
-            props.navigation.navigate('MyDaeng');
-          }}>
-          <Image
-            style={[styles.arrowIcon, styles.inputPosition]}
-            resizeMode="cover"
-            source={require('../assets/arrow2.png')}
-          />
-        </Pressable>
-      </View>
+      <HeaderComponent
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="펫 프로필"
+        navigation={props.navigation}
+        go="MyDaengUpdate"
+        backBool={true}
+      />
       <View style={styles.view1}>
+        <View style={[styles.background, styles.headerDivShadowBox]} />
         <View>
-          <View style={[styles.background, styles.headerDivShadowBox]} />
-          <View>
-            <Text style={styles.chartHeadText}>프로필 편집</Text>
-          </View>
-          <View>
-            <Pressable
-              style={styles.deleteBtn}
-              onPress={() => {
-                deletePetProfile();
-              }}>
-              <Image
-                source={require('../assets/trash_can.png')}
-                style={styles.deleteImg}></Image>
-            </Pressable>
-          </View>
-          {form && (
-            <View style={styles.view}>
-              <View style={[styles.main, styles.mainPosition]}>
-                <View style={[styles.inputform, styles.iconPosition]}>
-                  <View style={styles.weight}>
-                    <TextInput
-                      style={[styles.background1, styles.textPosition]}
-                      value={
-                        form.weight
-                          ? form.weight.toString()
-                          : '무게를 입력해주세요'
-                      }
-                      onChangeText={value => handleChange('weight', value)}
-                    />
-                    <Text style={[styles.text, styles.textTypo]}>
-                      무게 (kg)
-                    </Text>
-                  </View>
-                  <View style={[styles.kind, styles.kindPosition]}>
-                    <TextInput
-                      style={[styles.background1, styles.textPosition]}
-                      value={form.breed}
-                      onChangeText={value => handleChange('breed', value)}
-                    />
-                    <Text style={[styles.text, styles.textTypo]}>품종</Text>
-                  </View>
-
-                  <View style={[styles.birth, styles.kindPosition]}>
-                    <Text style={[styles.text, styles.textTypo]}>생일</Text>
-                    <BirthdayPicker
-                      value={form.birth}
-                      onDateChange={handleBirthday}
-                    />
-                  </View>
-                  <Text style={[styles.text3, styles.kindPosition]}>성별</Text>
-                  <GenderPicker
-                    value={form.sex}
-                    onSexChange={handleSexChange}
+          <Text style={styles.chartHeadText}>프로필 편집</Text>
+        </View>
+        <View>
+          <Pressable
+            style={styles.deleteBtn}
+            onPress={() => {
+              deletePetProfile();
+            }}>
+            <Image
+              source={require('../assets/trash_can.png')}
+              style={styles.deleteImg}></Image>
+          </Pressable>
+        </View>
+        <UploadProfileimage
+          onFileSelect={handleFileSelect}
+          navigation={props.navigation}
+          image={form.image}
+        />
+        {form && (
+          <View style={styles.view}>
+            <View style={[styles.main, styles.mainPosition]}>
+              <View style={[styles.inputform, styles.iconPosition]}>
+                <View style={styles.weight}>
+                  <TextInput
+                    style={[styles.background1, styles.textPosition]}
+                    value={
+                      form.weight
+                        ? form.weight.toString()
+                        : '무게를 입력해주세요'
+                    }
+                    onChangeText={value => handleChange('weight', value)}
                   />
-                  <View style={[styles.name, styles.kindPosition]}>
-                    <TextInput
-                      style={[styles.background1, styles.textPosition]}
-                      keyboardType="default"
-                      textContentType="givenName"
-                      value={form.name}
-                      onChangeText={value => handleChange('name', value)}
-                    />
-                    <Text style={[styles.text, styles.textTypo]}>이름</Text>
-                  </View>
-                  <Image
-                    style={[styles.profileimageIcon, styles.iconPosition]}
-                    resizeMode="cover"
-                    source={require('../assets/profileimage.png')}
+                  <Text style={[styles.text, styles.textTypo]}>무게 (kg)</Text>
+                </View>
+                <View style={[styles.kind, styles.kindPosition]}>
+                  <TextInput
+                    style={[styles.background1, styles.textPosition]}
+                    value={form.breed}
+                    onChangeText={value => handleChange('breed', value)}
+                  />
+                  <Text style={[styles.text, styles.textTypo]}>품종</Text>
+                </View>
+
+                <View style={[styles.birth, styles.kindPosition]}>
+                  <Text style={[styles.text, styles.textTypo]}>생일</Text>
+                  <BirthdayPicker
+                    value={form.birth}
+                    onDateChange={handleBirthday}
                   />
                 </View>
-                <Pressable
-                  style={[styles.insertbtn, styles.insertbtnPosition]}
-                  insert-btn="수정"
-                  onPress={handleConfirm}>
-                  <View style={[styles.backgroundbtn, styles.textPosition1]} />
-                  <Text style={styles.textbtn}>수정</Text>
-                </Pressable>
+                <Text style={[styles.text3, styles.kindPosition]}>성별</Text>
+                <GenderPicker value={form.sex} onSexChange={handleSexChange} />
+                <View style={[styles.name, styles.kindPosition]}>
+                  <TextInput
+                    style={[styles.background1, styles.textPosition]}
+                    keyboardType="default"
+                    textContentType="givenName"
+                    value={form.name}
+                    onChangeText={value => handleChange('name', value)}
+                  />
+                  <Text style={[styles.text, styles.textTypo]}>이름</Text>
+                </View>
               </View>
-              {error && <Text style={styles.error}>{error}</Text>}
+              <Pressable
+                style={[styles.insertbtn, styles.insertbtnPosition]}
+                insert-btn="수정"
+                onPress={handleConfirm}>
+                <View style={[styles.backgroundbtn, styles.textPosition1]} />
+                <Text style={styles.textbtn}>수정</Text>
+              </Pressable>
             </View>
-          )}
-        </View>
+            {error && <Text style={styles.error}>{error}</Text>}
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -248,7 +256,7 @@ const MyDaenegUpdate = props => {
 
 const styles = StyleSheet.create({
   chartHeadText: {
-    marginTop: 20,
+    marginTop: 80,
     marginLeft: 26,
     marginBottom: 20,
     fontSize: 24,
@@ -432,30 +440,14 @@ const styles = StyleSheet.create({
     marginTop: -107.5,
     height: 58,
   },
-  profileimageIcon: {
-    marginTop: -278.5,
-    marginLeft: -66,
-    height: 131,
-    width: 131,
-  },
+
   inputform: {
     marginTop: -284,
     marginLeft: -135,
     width: 264,
     height: 557,
   },
-  // profileInfo: {
-  //   marginTop: -400,
-  //   fontSize: 30,
-  //   color: Color.colorBlack,
-  //   height: 50,
-  //   fontFamily: FontFamily.notoSansKRBold,
-  //   fontWeight: '700',
-  //   marginLeft: -128,
-  //   alignItems: 'center',
-  //   display: 'flex',
-  //   textAlign: 'left',
-  // },
+
   backgroundbtn: {
     marginTop: -20,
     borderRadius: Border.br_3xs,
@@ -527,7 +519,7 @@ const styles = StyleSheet.create({
   },
   view: {
     top: -150,
-    height: 900,
+    height: 600,
   },
   view1: {
     backgroundColor: Color.colorGhostwhite,

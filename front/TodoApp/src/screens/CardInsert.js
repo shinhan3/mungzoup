@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {Border, Color, FontFamily, FontSize} from '../GlobalStyles';
-import FooterComponent from './FooterComponent';
+
 import HeaderComponent from '../components/HeaderComponent';
 import DialogInput from 'react-native-dialog-input';
 import axios from 'axios';
@@ -49,7 +49,7 @@ function CardInsert(props) {
           navigation={props.navigation}
           dimensionCode={require('../assets/arrow8.png')}
           benefits="카드 발급"
-          go="PLAYmainwonny"
+          go="MyDaeng"
           backBool={true}></HeaderComponent>
       </View>
       <View style={styles.contents}>
@@ -114,11 +114,6 @@ function CardInsert(props) {
           <Text style={styles.ButtonFont}>카드 발급하기</Text>
         </TouchableOpacity>
       </View>
-      {/* <FooterComponent
-        petBoolean={false}
-        playBoolean={false}
-        cardBoolean={true}
-        navigation={props.navigation}></FooterComponent> */}
       <DialogInput
         isDialogVisible={dialogVisible}
         title={'비밀번호 설정'}

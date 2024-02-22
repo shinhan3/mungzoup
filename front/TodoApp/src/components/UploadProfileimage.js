@@ -1,55 +1,11 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {FontFamily, FontSize, Color} from '../GlobalStyles';
-import axios from 'axios';
-import RNFS from 'react-native-fs';
-import FormData from 'form-data';
-import HeaderComponent from '../components/HeaderComponent';
+import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
+import {FontFamily, Color} from '../GlobalStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {inlineStyles} from 'react-native-svg';
 
-const UploadProfileimage = props => {
-  // const {storeId} = route.params;
-  // const {storeInfo} = route.params;
-  //console.log(storeInfo);
+const UploadProfileimage = ({onFileSelect, image}) => {
   const [response, setResponse] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState('');
 
-  // 이미지 보내기
-  const onSubmitImage = () => {
-    const data = new FormData();
-    //console.log(response['assets'][0], 'aaa');
-    if (response['assets']) {
-      data.append('imageFile', {
-        name: response['assets'][0].fileName,
-        type: response['assets'][0].type,
-        uri: response['assets'][0].uri,
-      });
-      //console.log(data['_parts'][0][1]);
-      axios
-        .post('http://10.0.2.2:5000/uploadRecipt.do', data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then(response => {
-          setImageUrl(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  };
-
-  // 이미지 가져오기
   const onSelectImage = () => {
     launchImageLibrary(
       {
@@ -62,50 +18,42 @@ const UploadProfileimage = props => {
         if (response.didCancel) {
           return;
         } else if (response.errorCode) {
+          // handle error
         }
         setResponse(response);
       },
     );
   };
+
   React.useEffect(() => {
-    onSubmitImage();
+    if (response['assets']) {
+      onFileSelect({
+        name: response['assets'][0].fileName,
+        type: response['assets'][0].type,
+        uri: response['assets'][0].uri,
+      });
+    }
   }, [response]);
 
   return (
-    <View>
-      <View>
-        <Pressable onPress={() => onSelectImage()}>
-          <Image
-            style={[styles.inputimgIcon, response ? {borderRadius: 100} : {}]}
-            source={
-              response
-                ? {uri: response.assets[0].uri}
-                : require('../assets/profileimage.png')
-            }></Image>
-        </Pressable>
-        <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
-          <Text style={{color: 'white', fontSize: 18}}>앨범 찾기</Text>
-        </Pressable>
-        <Pressable
+    <View style={[styles.updloadImage]}>
+      <View style={[styles.updloadImage1]}>
+        <Image
           style={[
-            styles.receiptBtn,
-            {backgroundColor: response ? Color.new1 : '#DDDDDD'},
+            styles.inputimgIcon,
+            response || image ? {borderRadius: 100} : {},
           ]}
-          onPress={() =>
-            props.navigation.navigate('MyDaeng', {
-              // storeId: storeId,
-              // storeInfo: storeInfo,
-              imageUrl: imageUrl,
-            })
-          }
-          disabled={!response}>
-          <Text
-            style={{
-              color: Color.bgWhite,
-              fontSize: 18,
-            }}>
-            사진 등록
-          </Text>
+          source={
+            response
+              ? {uri: response.assets[0].uri}
+              : image
+              ? {uri: image}
+              : require('../assets/profileimage.png')
+          }></Image>
+      </View>
+      <View style={[styles.updloadImage2]}>
+        <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
+          <Text style={[styles.btnText]}>앨범 찾기</Text>
         </Pressable>
       </View>
     </View>
@@ -113,23 +61,35 @@ const UploadProfileimage = props => {
 };
 
 const styles = StyleSheet.create({
-  receiptInfo: {
-    top: 300,
-    left: 140,
-    color: '#62AEA9',
-    opacity: 0.6,
+  btnText: {
+    fontSize: 10,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
   },
+  updloadImage1: {
+    flex: 1,
+  },
+  updloadImage2: {
+    marginRight: 40,
+    flex: 1,
+  },
+  updloadImage: {
+    flexDirection: 'row', // 가로 방향으로 요소들을 나란히 정렬
+    alignItems: 'center',
+  },
+
   albumBtn: {
     backgroundColor: Color.new1,
     padding: 12,
     borderRadius: 8,
-    marginTop: 450,
+    marginTop: 20,
     marginLeft: 60,
     marginRight: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
   receiptBtn: {
+    marginBottom: 50,
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
@@ -139,18 +99,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputimgIcon: {
-    top: 150,
-    height: 200,
-    width: 200,
-    left: 100,
-    position: 'absolute',
-  },
-  img: {
-    height: 120,
-    width: 120,
-    marginTop: 20,
-    marginBottom: 20,
-    alignSelf: 'center',
+    // top: 150,
+    height: 131,
+    width: 131,
+    left: 80,
+    // position: 'absolute',
   },
 });
 

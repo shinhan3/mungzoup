@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import FavoriteListContainer from '../components/FavoriteListContainer';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
+import FooterComponent from './FooterComponent';
 
 const PLAY = props => {
   return (

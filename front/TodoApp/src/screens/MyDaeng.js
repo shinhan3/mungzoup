@@ -17,9 +17,6 @@ import Geolocation from '@react-native-community/geolocation';
 import MyCarousel from '../components/PetListCarousel';
 import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
-  // console.log(props);
-  const [showNewContent, setShowNewContent] = useState(false);
-
   const [pets, setPets] = useState([]);
   const [modelVisible, setModelVisible] = useState(true);
 
@@ -195,7 +192,7 @@ const MyDaeng = props => {
             <View>
               <View>
                 <Text style={[styles.profileTitle, styles.donationPosition]}>
-                  마이댕 프로필
+                  펫 프로필
                 </Text>
               </View>
               <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
@@ -372,7 +369,7 @@ const MyDaeng = props => {
                           style={[
                             styles.text16,
                             styles.textTypo3,
-                          ]}>{`카드 발급 받고 슬기롭게 소비하자!`}</Text>
+                          ]}>{`카드 발급 받고, 슬기롭게 소비하자!`}</Text>
                       </Text>
                     </View>
                     <View style={[styles.eventImage3, styles.iconPosition]}>
@@ -408,18 +405,11 @@ const MyDaeng = props => {
                         <Text style={[styles.text17, styles.mydogTypo]}>
                           멍줍 PLAY
                         </Text>
-                        <Text>
-                          <Text style={[styles.text19, styles.textTypo4]}>
-                            <Text
-                              style={styles.text20}>{`장소 추천 받고,  `}</Text>
-                          </Text>
-                        </Text>
-                        <Text>
-                          <Text style={[styles.text19, styles.textTypo4]}>
-                            <Text style={styles.text20}>
-                              멍포인트도 줍줍하자!
-                            </Text>
-                          </Text>
+                        <Text style={[styles.text19, styles.textTypo4]}>
+                          <Text
+                            style={styles.text20}>{`장소 추천 받고, `}</Text>
+                          <Text style={styles.text20}>{`
+멍포인트도 줍줍하자!`}</Text>
                         </Text>
                       </Text>
                       <Text style={[styles.text110, styles.textTypo6]}>
@@ -652,6 +642,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventText1Position: {
+    // left: 20,
     top: 11,
     position: 'absolute',
   },
@@ -715,7 +706,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo6: {
-    fontSize: FontSize.size_3xs,
+    fontSize: 9,
     color: Color.colorBlack,
   },
   eventLayout: {
@@ -1262,9 +1253,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   skinDisease: {
-    // marginTop: -447,
-    marginTop: -747,
-    marginLeft: -190,
+    marginTop: -300,
+    marginLeft: -200,
   },
   healthboxIcon: {
     marginTop: -85.5,

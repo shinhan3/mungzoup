@@ -5,21 +5,20 @@ import {
   TextInput,
   Text,
   Image,
-  TouchableOpacity,
   Alert,
   ScrollView,
-  handleConfirm,
   Pressable,
 } from 'react-native';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import GenderPicker from '../components/GenderPicker';
 import BirthdayPicker from '../components/BirthdayPicker';
 import UploadProfileimage from '../components/UploadProfileimage';
+import HeaderComponent from '../components/HeaderComponent';
 import axios from 'axios';
 import {USERID} from '../UserId';
 
 const MyDaenegRegister = props => {
-  // useState를 사용하여 form 데이터와 에러 상태를 관리합니다.
+  const userId = USERID;
   const [form, setForm] = useState({
     weight: null,
     breed: '',
@@ -27,6 +26,43 @@ const MyDaenegRegister = props => {
     birth: null,
     sex: null,
   });
+  const [file, setFile] = useState(null);
+  const handleFileSelect = file => {
+    setFile(file);
+  };
+  const submitForm = () => {
+    const data = new FormData();
+    data.append('imageFile', file);
+
+    axios
+      .post('http://10.0.2.2:5000/uploadProfileFile.do', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log('^^^^^^^^', response);
+        const formData = {
+          ...form,
+          image: response.data,
+          user: {userId: userId},
+        };
+
+        axios
+          .post('http://10.0.2.2:5000/addPetProfile.do', formData)
+          .then(res => {
+            console.log(res.data);
+            props.navigation.navigate('MyDaeng');
+          })
+          .catch(err => {
+            console.error(err.response.data); // 에러 메시지 출력
+            setError('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   const [error, setError] = useState('');
 
@@ -76,51 +112,21 @@ const MyDaenegRegister = props => {
     );
   };
 
-  const userId = USERID;
-
-  const submitForm = () => {
-    // const user = {
-    //   id: 'asme12',
-    // };
-
-    const data = {
-      ...form,
-      user: {userId: userId},
-    };
-
-    axios
-      .post('http://10.0.2.2:5000/addPetProfile.do', data)
-      .then(res => {
-        console.log(res.data);
-        props.navigation.navigate('MyDaeng');
-      })
-      .catch(err => {
-        console.error(err.response.data); // 에러 메시지 출력
-        setError('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      });
-  };
-
   return (
     <ScrollView>
-      <View style={styles.header}>
-        <View style={[styles.headerDiv, styles.divPosition]} />
-        <Text style={styles.headerTitle}>{`펫 프로필 `}</Text>
-        <Pressable
-          onPress={() => {
-            props.navigation.navigate('MyDaeng');
-          }}>
-          <Image
-            style={[styles.arrowIcon, styles.inputPosition]}
-            resizeMode="cover"
-            source={require('../assets/arrow2.png')}
-          />
-        </Pressable>
-      </View>
+      <HeaderComponent
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="펫 프로필"
+        navigation={props.navigation}
+        go="MyDaengRegister"
+        backBool={true}
+      />
       <View style={styles.view1}>
         <View style={[styles.background, styles.headerDivShadowBox]} />
         <View>
           <Text style={styles.chartHeadText}>프로필 등록</Text>
         </View>
+        <UploadProfileimage onFileSelect={handleFileSelect} />
         <View style={styles.view}>
           <View style={[styles.main, styles.mainPosition]}>
             <View style={[styles.inputform, styles.iconPosition]}>
@@ -162,11 +168,6 @@ const MyDaenegRegister = props => {
                 />
                 <Text style={[styles.text, styles.textTypo]}>이름</Text>
               </View>
-              <Image
-                style={[styles.profileimageIcon, styles.iconPosition]}
-                resizeMode="cover"
-                source={require('../assets/profileimage.png')}
-              />
             </View>
             <Pressable
               style={[styles.insertbtn, styles.insertbtnPosition]}
@@ -179,14 +180,13 @@ const MyDaenegRegister = props => {
           {error && <Text style={styles.error}>{error}</Text>}
         </View>
       </View>
-      <UploadProfileimage navigation={props.navigation} />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   chartHeadText: {
-    marginTop: 20,
+    marginTop: 80,
     marginLeft: 26,
     marginBottom: 20,
     fontSize: 24,
@@ -361,12 +361,7 @@ const styles = StyleSheet.create({
     marginTop: -107.5,
     height: 58,
   },
-  profileimageIcon: {
-    marginTop: -278.5,
-    marginLeft: -66,
-    height: 131,
-    width: 131,
-  },
+
   inputform: {
     marginTop: -284,
     marginLeft: -135,
@@ -457,7 +452,7 @@ const styles = StyleSheet.create({
 
   view: {
     top: -150,
-    height: 900,
+    height: 600,
   },
   view1: {
     backgroundColor: Color.colorGhostwhite,

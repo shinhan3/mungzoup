@@ -13,6 +13,8 @@ import {
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
+import HeaderComponent from '../components/HeaderComponent';
+import FooterComponent from './FooterComponent';
 import axios from 'axios';
 
 const FindMyDogAI = ({navigation}) => {
@@ -87,7 +89,11 @@ const FindMyDogAI = ({navigation}) => {
     );
   };
   return (
-    <ScrollView>
+    <>
+      <HeaderComponent
+        navigation={navigation}
+        benefits="보호 중인 동물 알아보기 "
+        go="PLAY6FingMyDog"></HeaderComponent>
       <View style={styles.play}>
         <View style={[styles.main, styles.mainPosition]}>
           <View style={styles.play1}>
@@ -144,23 +150,13 @@ const FindMyDogAI = ({navigation}) => {
             )}
           </View>
         </View>
-        <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.titleTypo]}>
-            보호 중인 동물 찾기
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('PLAYmainwonny');
-            }}>
-            <Image
-              style={styles.arrowIcon}
-              source={require('../assets/arrow4.png')}
-            />
-          </TouchableOpacity>
-        </View>
       </View>
-    </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 

@@ -65,6 +65,7 @@ class MyCarousel extends React.Component {
         </View>
       );
     } else {
+      console.log('item^^^^^^', item); // 이 코드를 추가하세요.
       return (
         <View key={item.petId} style={styles.petProfileContainer}>
           <Pressable
@@ -74,9 +75,13 @@ class MyCarousel extends React.Component {
               });
             }}>
             <Image
-              style={styles.petProfileImage}
+              style={[styles.petProfileImage, item ? {borderRadius: 100} : {}]}
               resizeMode="cover"
-              source={require('../assets/profileimage.png')}
+              source={
+                item && item.image
+                  ? {uri: item.image}
+                  : require('../assets/profileimage.png')
+              }
             />
           </Pressable>
           <View style={styles.petProfileTextWrap}>
@@ -130,13 +135,11 @@ class MyCarousel extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  // 인디케이터 관련 스타일 추가
   indicatorWrap: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    left: 20,
   },
   indicator: {
     width: 10,
@@ -148,7 +151,6 @@ const styles = StyleSheet.create({
   activeIndicator: {
     backgroundColor: Color.new1,
   },
-  //
   petProfileContainer: {
     height: 170,
     backgroundColor: '#fff',

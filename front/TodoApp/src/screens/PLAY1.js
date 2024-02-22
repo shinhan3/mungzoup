@@ -12,6 +12,7 @@ import {
 import {Color, FontFamily, FontSize} from '../GlobalStyles';
 import {getDistanceFormula} from './SelectMap';
 import LocationContext from '../test/LocationContext ';
+import FooterComponent from './FooterComponent';
 import axios from 'axios';
 
 function PLAY1(props) {
@@ -254,6 +255,11 @@ function PLAY1(props) {
         </View>
       </Modal>
       {/*  //Modal  */}
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={props.navigation}></FooterComponent>
     </>
   );
 }

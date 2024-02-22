@@ -88,15 +88,6 @@ function HiddenPopularStores(props) {
     <>
       {/* Header */}
       <View style={styles.head}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.goBack();
-          }}>
-          <Image
-            style={styles.arrowIcon}
-            source={require('../assets/arrow2.png')}
-          />
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>숨은 인기 가맹점</Text>
       </View>
       {/* //Header */}
