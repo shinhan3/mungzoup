@@ -1,18 +1,38 @@
-import * as React from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import FilteredCardForm2 from '../components/FilteredCardForm2';
-import FormContainer4 from '../components/FormContainer4';
-import FilteredCardForm1 from '../components/FilteredCardForm1';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Button,
+  // Modal,
+} from 'react-native';
 import FilteredCardForm from '../components/FilteredCardForm';
 import FormDropdown from '../components/FormDropdown';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import {ScrollView} from 'react-native';
+import Modal from 'react-native-modal';
 
 const PLAY2 = ({navigation}) => {
   const [dropdownData, setDropdownData] = React.useState(null);
   const handleDropdownData = data => {
     setDropdownData(data);
   };
+
+  // 전단지 보기
+  // const [isMissingModalVisible, setMissingModalVisible] = useState(false);
+
+  // const toggleMissingModal = () => {
+  //   console.log(isMissingModalVisible);
+  //   setMissingModalVisible(!isMissingModalVisible);
+  //   if (!isMissingModalVisible) {
+  //     setTimeout(() => {
+  //       setMissingModalVisible(false);
+  //     }, 5000);
+  //   }
+  // };
+
   return (
     <View style={styles.play}>
       <View style={[styles.main, styles.mainPosition]}>
@@ -31,6 +51,19 @@ const PLAY2 = ({navigation}) => {
             <Text style={styles.contentDetail}>{`사랑스러운 나의 멍멍이와
 방문하고 싶은 지역을 골라보세요.`}</Text>
           </View>
+          {/* 전단지 버튼 */}
+          {/*<View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Button title="전단지 보기" onPress={toggleMissingModal} />
+            <Modal
+              isVisible={isMissingModalVisible}
+              style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Image
+                source={require('../assets/전단지.png')}
+                style={{width: 412, height: 584}}
+              />
+            </Modal>
+          </View>*/}
         </View>
       </View>
       <View style={styles.headerPosition}>
@@ -89,7 +122,7 @@ const styles = StyleSheet.create({
   },
   recommendlist: {
     top: 95,
-    height: 479,
+    height: 650,
     marginTop: 10,
   },
   contentTitle: {

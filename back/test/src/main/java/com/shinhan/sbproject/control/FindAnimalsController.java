@@ -51,23 +51,9 @@ public class FindAnimalsController {
 	 static int FEATURE = 0;
     @PostMapping("/findAnimals")
      public Map<String, Object> imageTest(MultipartFile imageFile) throws IOException {
-      //System.out.println("들어옴");
-		 System.out.println("modelPath===================================== "+modelPath);
       if(imageFile != null){
-        
-         
-
-         //---------------------------
-         // protectionId가 n20240213인 AIFaceVO 객체를 가져옵니다.
-         // //AIFaceVO aiFaceVO = aiRepo.findByProtectionId("n2024021403");
-         // //System.out.println(aiFaceVO);
-         // AIFaceVO 객체를 JSON 형태로 반환합니다.
-         // //return ResponseEntity.ok(aiFaceVO);
-         //---------------------------
-
          //실제로 받아오는 코드
 		 BufferedImage imageRgb=convertBytesToRGBImage(imageFile.getBytes());
-		 System.out.println(imageRgb.toString()+"aaaaa");
 
          int w = imageRgb.getWidth();
 		 int h = imageRgb.getHeight();
@@ -76,14 +62,9 @@ public class FindAnimalsController {
 
          //[개수][32][32][rgb] 형태로 넣어줌
 		float[][][][] input= rgbImageToArray(32,32,dataBuffInt);
-		System.out.println(input[0].length);
-		System.out.println(Arrays.deepToString(input));
-		// String filePath = "C:\\Users\\wldnj\\git\\project3-1\\back\\test\\src\\main\\java\\com\\shinhan\\sbproject\\control\\data\\test.csv";
-		System.out.println(modelPath+"/abcde");
          try(SavedModelBundle b = SavedModelBundle.load(modelPath+"/abcde", "serve")){ 
 				//default가 서브, 도커에 생긴 abcd를 컨트롤러 아래로 복붙
 				
-				System.out.println("tttt");
 				//create a session from the Bundle
 				Session sess = b.session();
 				
@@ -106,8 +87,7 @@ public class FindAnimalsController {
 					maxIndex = i;
 				}
 			}
-			System.out.println(Arrays.deepToString(y));
-			System.out.println("가장 큰 값의 인덱스: " + maxIndex);
+			// System.out.println("가장 큰 값의 인덱스: " + maxIndex);
 
 
 			AIFaceVO aiFaceVO = aiRepo.findByIndex(maxIndex);
@@ -144,11 +124,6 @@ public float[][][][] rgbImageToArray(int w, int h, int[] dataBuffInt){
 	float[][][][] result = new float[1][w][h][3];
 	for(int i=0; i<h;i++){
 	   for(int j=0; j<w;j++){
-		  // Color color = new Color(dataBuffInt[i*j],false);
-		  // result[0][i][j][0]=color.getRed();
-		  // result[0][i][j][1]=color.getGreen();
-		  // result[0][i][j][2]=color.getBlue();
-
 		  int pixel = dataBuffInt[i * w + j];
 		  int red = (pixel >> 16) & 0xFF;
 		  int green = (pixel >> 8) & 0xFF;
@@ -156,7 +131,6 @@ public float[][][][] rgbImageToArray(int w, int h, int[] dataBuffInt){
 		  result[0][i][j][0] = blue;
 		  result[0][i][j][1] = green;
 		  result[0][i][j][2] = red;
-
 	   }
 	}
 	return result;
