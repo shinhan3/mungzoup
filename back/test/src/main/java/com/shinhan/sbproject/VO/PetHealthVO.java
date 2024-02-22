@@ -29,12 +29,12 @@ import lombok.ToString;
 @Table(name = "pet_health")
 
 public class PetHealthVO {
-   @Id 
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Integer pethealthId;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer pethealthId;
 
-   @OneToOne
-   @JoinColumn(name = "petId")
-   private PetsVO pet;
-   private String disease;
+	@OneToOne
+	@JoinColumn(name = "petId")
+	private PetsVO pet;
+	private String disease;
 }

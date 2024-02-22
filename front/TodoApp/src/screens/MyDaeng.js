@@ -133,7 +133,7 @@ const MyDaeng = props => {
         setCountList(res.data);
       })
       .catch(err => {});
-  }, [isFocused]);
+  }, [isFocused, userId]);
   return (
     <>
       {modelVisible ? (

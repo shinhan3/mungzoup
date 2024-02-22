@@ -19,6 +19,7 @@ package-lock.json
 application.properties
 awsAuth.properties
 *.vscode
+OcrSecretKey.js
 # mvnw
 # mvnw.cmd
 # .mvn/*

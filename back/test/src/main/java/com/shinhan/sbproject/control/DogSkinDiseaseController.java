@@ -10,8 +10,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+import com.shinhan.sbproject.VO.PetHealthVO;
+import com.shinhan.sbproject.VO.PetsVO;
 import com.shinhan.sbproject.repository.PetHealthRepository;
+import com.shinhan.sbproject.repository.PetsRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
@@ -41,6 +45,9 @@ public class DogSkinDiseaseController {
 
     @Autowired
     PetHealthRepository petHealthRepo;
+
+    @Autowired
+    PetsRepository petsRepo;
 
     @Value("${model.path}")
     String modelPath;
@@ -77,6 +84,7 @@ public class DogSkinDiseaseController {
         return petHealthRepo.dogConfirm(userId, dname);
     }
 
+    @Transactional
     @PostMapping(value="/inspectSkin.do")
     public String inspectSkinDisease(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("dname") String dname, @RequestParam("userId") String userId) throws IOException {
 
@@ -131,13 +139,29 @@ public class DogSkinDiseaseController {
             //log.info(diseaseList.get(maxIndex));
 
             //검사내역이 있으면 update 없으면 insert 
-            List<Object[]> dogInfo = petHealthRepo.checkPetHealth(userId, dname);
-            for (Object[] dog:dogInfo){
-                log.info("1: " + dog[0]);
-                log.info("2: " + dog[1]);
+            List<Integer[]> dogInfo = petHealthRepo.checkPetHealth(userId, dname);
+            int dogId = 0;
+            int isSkinDisease = 0;
+            String disease = diseaseList.get(maxIndex);
+
+            for (Integer[] dog: dogInfo){
+                dogId = dog[0];
+                isSkinDisease = dog[1];
             }
 
-            return diseaseList.get(maxIndex);
+            if(isSkinDisease>0){
+                petHealthRepo.updatePetHealth(dogId, disease);
+            }else{
+                PetsVO pet = new PetsVO();
+                pet.setPetId(dogId);
+                PetHealthVO petHealth = PetHealthVO.builder()
+                                        .pet(pet)
+                                        .disease(disease)
+                                        .build();
+                petHealthRepo.save(petHealth);
+            }
+
+            return disease;
         
          }catch(Exception e){log.info("data is null");};
         
