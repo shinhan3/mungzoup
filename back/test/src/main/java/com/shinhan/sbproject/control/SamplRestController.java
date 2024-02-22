@@ -52,7 +52,6 @@ public class SamplRestController {
 	
 	static int ROW = 0;
 	static int FEATURE = 0;
-	
 
 	@GetMapping(value =  "/sample1" )
 	public List<testVO> f1() {

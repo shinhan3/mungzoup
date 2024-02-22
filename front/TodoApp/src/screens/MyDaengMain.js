@@ -137,7 +137,6 @@ const MyDaeng = props => {
       })
       .catch(err => {});
   }, [isFocused]);
-
   return (
     <>
       {modelVisible ? (

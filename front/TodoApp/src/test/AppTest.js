@@ -45,6 +45,7 @@ import FavoriteListContainer from '../components/FavoriteListContainer';
 import FooterComponent from '../screens/FooterComponent';
 import SkinDiseaseAI from '../screens/SkinDiseaseAI';
 import DogHealthDetail from '../screens/DogHealthDetail';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MyCarousel from '../components/PetListCarousel';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
@@ -159,128 +160,127 @@ const AppTest = () => {
 
   return (
     <>
-      <LocationContext.Provider value={{latitude, longitude}}>
-        <NavigationContainer>
-          {hideSplashScreen ? (
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="BottomTabsRoot" component={BottomTabsRoot} />
-              <Stack.Screen
-                name="Screen1"
-                component={Screen1}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PLAY"
-                component={PLAY}
-                options={{headerShown: false}}
-              />
-              {/* <Stack.Screen
+      <GestureHandlerRootView style={{flex: 1}}>
+        <LocationContext.Provider value={{latitude, longitude}}>
+          <NavigationContainer>
+            {hideSplashScreen ? (
+              <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen
+                  name="BottomTabsRoot"
+                  component={BottomTabsRoot}
+                />
+                <Stack.Screen
+                  name="Screen1"
+                  component={Screen1}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="PLAY"
+                  component={PLAY}
+                  options={{headerShown: false}}
+                />
+                {/* <Stack.Screen
                 name="MyDaeng"
                 component={MyDaeng}
                 options={{headerShown: false}}
               /> */}
-              <Stack.Screen
-                name="Frame1"
-                component={Frame1}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="InsertWalkSpot"
-                component={InsertWalkSpot}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="SelectMap"
-                component={SelectMap}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PLAY1"
-                component={PLAY1}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PLAY2"
-                component={PLAY2}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="MyDaenegRegister"
-                component={MyDaenegRegister}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PLAY4"
-                component={WalkingHistory}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="MyDaengUpdate"
-                component={MyDaengUpdate}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PLAYmainwonny1"
-                component={PLAYmainwonny1}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="HiddenPopularStores"
-                component={HiddenPopularStores}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="Review"
-                component={Review}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="ReviewSelect"
-                component={ReviewSelect}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="OcrInput"
-                component={OcrInput}
-                options={{headerShown: false}}
-              />
-
-              <Stack.Screen
-                name="CardInsert"
-                component={CardInsert}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PLAY6FindMyDog"
-                component={PLAY6FindMyDog}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="FooterComponent"
-                component={FooterComponent}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="SkinDiseaseAI"
-                component={SkinDiseaseAI}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="DogHealthDetail"
-                component={DogHealthDetail}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="MyCarousel"
-                component={MyCarousel}
-                options={{headerShown: false}}
-              />
-            </Stack.Navigator>
-          ) : (
-            <Screen1 />
-          )}
-        </NavigationContainer>
-      </LocationContext.Provider>
+                <Stack.Screen
+                  name="Frame1"
+                  component={Frame1}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="InsertWalkSpot"
+                  component={InsertWalkSpot}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="SelectMap"
+                  component={SelectMap}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="PLAY1"
+                  component={PLAY1}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="PLAY2"
+                  component={PLAY2}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyDaenegRegister"
+                  component={MyDaenegRegister}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="PLAY4"
+                  component={WalkingHistory}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="MyDaengUpdate"
+                  component={MyDaengUpdate}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="PLAYmainwonny1"
+                  component={PLAYmainwonny1}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="HiddenPopularStores"
+                  component={HiddenPopularStores}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="Review"
+                  component={Review}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="ReviewSelect"
+                  component={ReviewSelect}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="OcrInput"
+                  component={OcrInput}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="CardInsert"
+                  component={CardInsert}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="PLAY6FindMyDog"
+                  component={PLAY6FindMyDog}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="FooterComponent"
+                  component={FooterComponent}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="SkinDiseaseAI"
+                  component={SkinDiseaseAI}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="DogHealthDetail"
+                  component={DogHealthDetail}
+                  options={{headerShown: false}}
+                />
+              </Stack.Navigator>
+            ) : (
+              <Screen1 />
+            )}
+          </NavigationContainer>
+        </LocationContext.Provider>
+      </GestureHandlerRootView>
     </>
   );
 };

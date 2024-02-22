@@ -1,4 +1,10 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -14,7 +20,8 @@ import {useFocusEffect} from '@react-navigation/core';
 import LocationContext from '../test/LocationContext ';
 import MapView, {Marker} from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import BottomSheet from '@gorhom/bottom-sheet';
+import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 function Tofixed(x) {
   return x.toFixed(1);
 }
@@ -22,7 +29,9 @@ function Tofixed(x) {
 function HiddenPopularStores(props) {
   var {latitude, longitude} = useContext(LocationContext);
   const [storeList, setStoreList] = useState([]);
+  const mapRef = useRef();
   const [open, setOpen] = useState(false);
+  const bottomSheetRef = useRef(null);
   const [value, setValue] = useState('결제순');
   const [items, setItems] = useState([
     {label: '결제순', value: '결제순'},
@@ -30,6 +39,9 @@ function HiddenPopularStores(props) {
     {label: '게시글순', value: '게시글순'},
     {label: '거리순', value: '거리순'},
   ]);
+
+  //화면 비율
+  const snapPoints = ['15%', '45%', '100%'];
 
   useEffect(() => {
     handleSortChange(value);
@@ -48,6 +60,8 @@ function HiddenPopularStores(props) {
     }, []),
   );
 
+  const handleSheetChanges = useCallback(index => {}, []);
+
   function handleSortChange(value) {
     axios
       .get(
@@ -60,6 +74,20 @@ function HiddenPopularStores(props) {
         console.log(err);
       });
   }
+
+  // 현재 위치로 이동하는 함수
+  const moveToCurrentLocation = () => {
+    if (mapRef.current) {
+      // mapRef.current가 존재하는지 확인
+      mapRef.current.animateToRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0025,
+      });
+    }
+  };
+
   return (
     <>
       {/* Header */}
@@ -79,108 +107,139 @@ function HiddenPopularStores(props) {
       {/*  main  */}
       <View style={{flex: 1}}>
         {/*  지도  */}
-        <View style={{height: '45%'}}>
-          <MapView
-            style={{flex: 1}}
-            region={{
+        <MapView
+          ref={mapRef}
+          style={{flex: 1}}
+          region={{
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.0025,
+            longitudeDelta: 0.0025,
+          }}>
+          <Marker
+            coordinate={{
               latitude: latitude,
               longitude: longitude,
-              latitudeDelta: 0.0025,
-              longitudeDelta: 0.0025,
-            }}>
-            <Marker
-              coordinate={{
-                latitude: latitude,
-                longitude: longitude,
-              }}
-              title="내 위치">
-              <Image
-                source={require('../assets/profileimage.png')}
-                style={{width: 30, height: 30}}
-                resizeMethod="auto"></Image>
-            </Marker>
-          </MapView>
-        </View>
-        {/*  //지도  */}
-        {/*  ContentHead  */}
-        <View style={styles.contentHead}>
-          <View>
-            <Text style={styles.chFirstText}>지도 중심</Text>
-          </View>
-          <View style={styles.chLine}></View>
-          <View style={styles.chSecond}>
+            }}
+            title="내 위치">
             <Image
-              style={styles.menuImg}
-              source={require('../assets/menuimg.png')}></Image>
-          </View>
-        </View>
-        {/*  //ContentHead  */}
-        {/*  DropDownPicker  */}
-        <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          style={styles.pickerStyle}
-          labelStyle={{
-            fontSize: 18,
-            fontWeight: 'bold',
-            fontFamily: FontFamily.notoSansKR,
-            color: '#6A6A6A',
-          }}
-          onChangeItem={item => {
-            setValue(item.value); // 선택된 항목의 value를 상태로 저장
-          }}
-        />
-        {/*  //DropDownPicker  */}
-        {/*  FlatList  */}
-        <FlatList
-          contentContainerStyle={{flexGrow: 1}} // FlatList가 늘어날 때 스크롤 가능
-          data={storeList}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => {
-            return (
-              <View style={styles.contentList}>
-                <View style={styles.storeFirst}>
-                  <Text style={styles.storeName}>{item.STORE_NAME}</Text>
-                  <Text style={styles.storeCategory}>{item.CATEGORY_NAME}</Text>
-                </View>
-                <View>
-                  <Text style={styles.storeAddress}>{item.STORE_ADDRESS}</Text>
-                </View>
-                <View style={styles.storeThird}>
-                  <View style={styles.storeThird1}>
-                    <Text style={styles.storeTextPoint}>
-                      {Tofixed(item.distance)}
-                    </Text>
-                    <Text style={styles.storeText}> km</Text>
-                  </View>
-                  <View style={styles.storeText2}>
-                    <Text style={styles.storeText}> 게시글 수 </Text>
-                    <Text style={styles.storeTextPoint}>{item.POST_COUNT}</Text>
-                  </View>
-                  <View style={styles.storeText3}>
-                    <Text style={styles.storeText}> 결제건수 </Text>
-                    <Text style={styles.storeTextPoint}>{item.cnt_pay}</Text>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  style={styles.detailBtn}
-                  onPress={() =>
-                    props.navigation.navigate('Review', {
-                      storeId: item.storeId,
-                    })
-                  }>
-                  <Text style={styles.btnText}>{`자세히`}</Text>
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
-        {/*  //FlatList  */}
+              source={require('../assets/profileimage.png')}
+              style={{width: 30, height: 30}}
+              resizeMethod="auto"></Image>
+          </Marker>
+          {storeList.map((store, index) => (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: store.STORE_LATITUDE,
+                longitude: store.STORE_LONGITUDE,
+              }}
+              title={store.STORE_NAME}>
+              <Image
+                source={{uri: store.IMAGE}}
+                style={{width: 30, height: 30}}
+                resizeMethod="auto"
+              />
+            </Marker>
+          ))}
+        </MapView>
       </View>
+      {/*  //지도  */}
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}>
+        <View style={{flex: 1}}>
+          {/*  ContentHead  */}
+          <View style={styles.contentHead}>
+            <View>
+              <TouchableOpacity onPress={moveToCurrentLocation}>
+                <Text style={styles.chFirstText}>내 위치</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.chSecond}>
+              <Image
+                style={styles.menuImg}
+                source={require('../assets/menuimg.png')}></Image>
+            </View>
+            {/*  DropDownPicker  */}
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={styles.pickerStyle}
+              labelStyle={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                fontFamily: FontFamily.notoSansKR,
+                color: '#6A6A6A',
+              }}
+              onChangeItem={item => {
+                setValue(item.value); // 선택된 항목의 value를 상태로 저장
+              }}
+            />
+            {/*  //DropDownPicker  */}
+          </View>
+          {/*  //ContentHead  */}
+          {/*  BottomSheetFlatList  */}
+          <BottomSheetFlatList
+            contentContainerStyle={{flexGrow: 1}} // FlatList가 늘어날 때 스크롤 가능
+            data={storeList}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item}) => {
+              return (
+                <View style={styles.contentList}>
+                  <View style={styles.storeFirst}>
+                    <Text style={styles.storeName}>{item.STORE_NAME}</Text>
+                    <Text style={styles.storeCategory}>
+                      {item.CATEGORY_NAME}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text style={styles.storeAddress}>
+                      {item.STORE_ADDRESS}
+                    </Text>
+                  </View>
+                  <View style={styles.storeThird}>
+                    <View style={styles.storeThird1}>
+                      <Text style={styles.storeTextPoint}>
+                        {Tofixed(item.distance)}
+                      </Text>
+                      <Text style={styles.storeText}> km</Text>
+                    </View>
+                    <View style={styles.storeText2}>
+                      <Text style={styles.storeText}> 게시글 수 </Text>
+                      <Text style={styles.storeTextPoint}>
+                        {item.POST_COUNT.toLocaleString()}
+                      </Text>
+                    </View>
+                    <View style={styles.storeText3}>
+                      <Text style={styles.storeText}> 결제건수 </Text>
+                      <Text style={styles.storeTextPoint}>
+                        {item.cnt_pay.toLocaleString()}
+                      </Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.detailBtn}
+                    onPress={() =>
+                      props.navigation.navigate('Review', {
+                        storeId: item.storeId,
+                      })
+                    }>
+                    <Text style={styles.btnText}>{`자세히`}</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          />
+          {/*  //BottomSheetFlatList  */}
+        </View>
+      </BottomSheet>
       {/*  //main  */}
 
       <FooterComponent
@@ -216,18 +275,16 @@ const styles = StyleSheet.create({
     color: Color.colorDarkslategray_200,
   },
   contentHead: {
-    position: 'absolute',
-    top: 350,
-    width: '100%',
-    height: 70,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    alignItems: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  chSecond: {
+    marginLeft: 190,
+  },
+  menuImg: {
+    marginBottom: 7,
   },
   pickerStyle: {
-    left: 300,
     borderColor: 'transparent',
     zIndex: 999,
     width: 150,
@@ -240,24 +297,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
-    marginLeft: 25,
+    marginLeft: 30,
     color: '#6A6A6A',
     marginBottom: 5,
-  },
-  chLine: {
-    width: 50,
-    borderTopColor: '#D9D9D9',
-    borderTopWidth: 3,
-    marginLeft: 80,
-    marginBottom: 25,
-  },
-  chSecond: {
-    flexDirection: 'row',
-    marginLeft: 50,
-  },
-  menuImg: {
-    marginTop: 0,
-    marginRight: 6,
   },
   contentList: {
     paddingTop: 20,
