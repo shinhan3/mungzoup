@@ -23,13 +23,13 @@ function Tofixed(x) {
 }
 
 function HiddenPopularStores(props) {
-  var {latitude, longitude} = useContext(LocationContext);
-  const [storeList, setStoreList] = useState([]);
-  const mapRef = useRef();
-  const [open, setOpen] = useState(false);
-  const bottomSheetRef = useRef(null);
-  const [value, setValue] = useState('결제순');
-  const [items, setItems] = useState([
+  var {latitude, longitude} = React.useContext(LocationContext);
+  const [storeList, setStoreList] = React.useState([]);
+  const mapRef = React.useRef();
+  const [open, setOpen] = React.useState(false);
+  const bottomSheetRef = React.useRef(null);
+  const [value, setValue] = React.useState('결제순');
+  const [items, setItems] = React.useState([
     {label: '결제순', value: '결제순'},
     {label: '리뷰 개수순', value: '리뷰 개수순'},
     {label: '게시글순', value: '게시글순'},
@@ -39,12 +39,12 @@ function HiddenPopularStores(props) {
   //화면 비율
   const snapPoints = ['15%', '45%', '100%'];
 
-  useEffect(() => {
+  React.useEffect(() => {
     handleSortChange(value);
   }, [value]);
 
   useFocusEffect(
-    useCallback(() => {
+    React.useCallback(() => {
       axios
         .get(`http://10.0.2.2:5000/storeListPay.do/${latitude}/${longitude}`)
         .then(res => {
@@ -56,7 +56,7 @@ function HiddenPopularStores(props) {
     }, []),
   );
 
-  const handleSheetChanges = useCallback(index => {}, []);
+  const handleSheetChanges = React.useCallback(index => {}, []);
 
   function handleSortChange(value) {
     axios
@@ -213,11 +213,12 @@ function HiddenPopularStores(props) {
                   </View>
                   <TouchableOpacity
                     style={styles.detailBtn}
-                    onPress={() =>
+                    onPress={() => {
+                      console.log(item, 'aaaaaaaaaaafddas');
                       props.navigation.navigate('Review', {
-                        storeId: item.storeId,
-                      })
-                    }>
+                        storeId: item.STORE_ID,
+                      });
+                    }}>
                     <Text style={styles.btnText}>{`자세히`}</Text>
                   </TouchableOpacity>
                 </View>
@@ -236,7 +237,7 @@ function HiddenPopularStores(props) {
         navigation={props.navigation}></FooterComponent>
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   head: {
@@ -314,87 +315,215 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginTop: 10,
   },
-  play1Typo: {
-    top: 26,
-    textAlign: 'center',
-    fontFamily: FontFamily.notoSansKRBold,
-    fontWeight: '700',
-    fontSize: FontSize.size_5xs,
-    position: 'absolute',
-  },
-  mapPosition: {
-    height: 280,
-    left: 0,
-    top: 0,
-    position: 'absolute',
-    width: 360,
-  },
-  titleTypo: {
+  storeAddress: {
+    marginLeft: 25,
+    color: '#A7A7A7',
+    fontSize: 15,
     fontFamily: FontFamily.notoSansKRMedium,
-    fontWeight: '500',
-    textAlign: 'center',
-    position: 'absolute',
+    marginBottom: 5,
   },
-  headerPosition: {
-    height: 52,
-    left: 0,
-    top: 0,
-    position: 'absolute',
-    width: 360,
+  storeThird: {
+    flexDirection: 'row',
+    marginLeft: 25,
   },
-  map1: {
-    backgroundColor: Color.colorGainsboro_200,
+  storeText: {
+    color: '#2E2E2E',
+    fontSize: 15,
+    fontFamily: FontFamily.notoSansKRMedium,
+    marginTop: 2,
   },
-  title: {
-    top: 62,
-    left: 73,
-    fontSize: FontSize.size_31xl,
-    color: Color.colorBlack,
-    width: 224,
-    height: 117,
+  storeThird1: {
+    flexDirection: 'row',
   },
-  main: {
-    top: 52,
-    height: 716,
+  storeText2: {
+    marginLeft: 20,
+    flexDirection: 'row',
   },
-  headerDiv: {
-    shadowColor: 'rgba(0, 0, 0, 0.25)',
-    shadowOffset: {
-      width: 0,
-      height: 0.5,
-    },
-    shadowRadius: 3,
-    elevation: 3,
-    shadowOpacity: 1,
-    backgroundColor: Color.colorWhitesmoke_100,
+  storeText3: {
+    marginLeft: 20,
+    flexDirection: 'row',
+    marginBottom: 10,
   },
-  headerTitle: {
-    marginLeft: -102,
-    top: 9,
-    left: '50%',
-    fontSize: FontSize.size_xl,
-    color: Color.colorDarkslategray_200,
-    display: 'flex',
+  storeTextPoint: {
+    color: '#2E2E2E',
+    fontSize: 18,
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+  },
+  detailBtn: {
+    width: 90,
+    height: 46,
+    backgroundColor: '#62AEA9',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 204,
-    height: 35,
+    marginLeft: 290,
+    borderRadius: 10,
   },
-  arrowIcon: {
-    top: 13,
-    left: 14,
-    width: 26,
-    height: 24,
-    position: 'absolute',
-    overflow: 'hidden',
-  },
-  play: {
-    backgroundColor: Color.colorGhostwhite,
-    flex: 1,
-    width: '100%',
-    height: 892,
-    overflow: 'hidden',
+  btnText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
   },
 });
+
+// const styles = StyleSheet.create({
+//   head: {
+//     flexDirection: 'row',
+//     height: 50,
+//     backgroundColor: Color.colorWhitesmoke_100,
+//     shadowColor: '#2E2E2E', // 그림자 색상 설정
+//     elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
+//     marginBottom: 2,
+//   },
+//   arrowIcon: {
+//     top: 13,
+//     left: 14,
+//     width: 26,
+//     height: 24,
+//     overflow: 'hidden',
+//   },
+//   headerTitle: {
+//     fontSize: 20,
+//     top: 9,
+//     marginLeft: 110,
+//     fontSize: FontSize.size_xl,
+//     color: Color.colorDarkslategray_200,
+//   },
+//   contentHead: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//   },
+//   chSecond: {
+//     marginLeft: 190,
+//   },
+//   menuImg: {
+//     marginBottom: 7,
+//   },
+//   pickerStyle: {
+//     borderColor: 'transparent',
+//     zIndex: 999,
+//     width: 150,
+//     height: 51,
+//     borderBottomWidth: 1,
+//     borderTopColor: '#A7A7A7',
+//     marginBottom: 5,
+//   },
+//   chFirstText: {
+//     fontSize: 18,
+//     fontFamily: FontFamily.notoSansKR,
+//     fontWeight: '800',
+//     marginLeft: 30,
+//     color: '#6A6A6A',
+//     marginBottom: 5,
+//   },
+//   contentList: {
+//     paddingTop: 20,
+//     paddingBottom: 20,
+//     backgroundColor: 'white',
+//     fontFamily: FontFamily.notoSansKRMedium,
+//     borderTopWidth: 1,
+//     borderTopColor: '#A7A7A7',
+//   },
+//   storeFirst: {
+//     flexDirection: 'row',
+//     marginBottom: 5,
+//   },
+//   storeName: {
+//     color: '#2E2E2E',
+//     fontSize: 22,
+//     marginLeft: 25,
+//     fontFamily: FontFamily.notoSansKR,
+//     fontWeight: '800',
+//   },
+//   storeCategory: {
+//     fontSize: 15,
+//     color: '#A7A7A7',
+//     fontFamily: FontFamily.notoSansKRMedium,
+//     marginLeft: 15,
+//     marginTop: 10,
+//   },
+//   play1Typo: {
+//     top: 26,
+//     textAlign: 'center',
+//     fontFamily: FontFamily.notoSansKRBold,
+//     fontWeight: '700',
+//     fontSize: FontSize.size_5xs,
+//     position: 'absolute',
+//   },
+//   mapPosition: {
+//     height: 280,
+//     left: 0,
+//     top: 0,
+//     position: 'absolute',
+//     width: 360,
+//   },
+//   titleTypo: {
+//     fontFamily: FontFamily.notoSansKRMedium,
+//     fontWeight: '500',
+//     textAlign: 'center',
+//     position: 'absolute',
+//   },
+//   headerPosition: {
+//     height: 52,
+//     left: 0,
+//     top: 0,
+//     position: 'absolute',
+//     width: 360,
+//   },
+//   map1: {
+//     backgroundColor: Color.colorGainsboro_200,
+//   },
+//   title: {
+//     top: 62,
+//     left: 73,
+//     fontSize: FontSize.size_31xl,
+//     color: Color.colorBlack,
+//     width: 224,
+//     height: 117,
+//   },
+//   main: {
+//     top: 52,
+//     height: 716,
+//   },
+//   headerDiv: {
+//     shadowColor: 'rgba(0, 0, 0, 0.25)',
+//     shadowOffset: {
+//       width: 0,
+//       height: 0.5,
+//     },
+//     shadowRadius: 3,
+//     elevation: 3,
+//     shadowOpacity: 1,
+//     backgroundColor: Color.colorWhitesmoke_100,
+//   },
+//   headerTitle: {
+//     marginLeft: -102,
+//     top: 9,
+//     left: '50%',
+//     fontSize: FontSize.size_xl,
+//     color: Color.colorDarkslategray_200,
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     width: 204,
+//     height: 35,
+//   },
+//   arrowIcon: {
+//     top: 13,
+//     left: 14,
+//     width: 26,
+//     height: 24,
+//     position: 'absolute',
+//     overflow: 'hidden',
+//   },
+//   play: {
+//     backgroundColor: Color.colorGhostwhite,
+//     flex: 1,
+//     width: '100%',
+//     height: 892,
+//     overflow: 'hidden',
+//   },
+// });
 
 export default HiddenPopularStores;

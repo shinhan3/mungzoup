@@ -27,7 +27,6 @@ const ReviewSelect = ({navigation, route}) => {
   const [review, setReview] = React.useState([]);
   const [reviewId, setReviewId] = React.useState();
   const [selectedReview, setSelectedReview] = React.useState();
-
   const alertFail = () => {
     Alert.alert('', '영수증이 가게정보와 일치하지 않습니다.', [
       {

@@ -169,7 +169,7 @@ const MyDaenegUpdate = props => {
         dimensionCode={require('../assets/arrow8.png')}
         benefits="펫 프로필"
         navigation={props.navigation}
-        go="MyDaengUpdate"
+        go="MyDaeng"
         backBool={true}
       />
       <View style={styles.view1}>
