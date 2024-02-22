@@ -5,16 +5,15 @@ import {
   TextInput,
   Text,
   Image,
-  TouchableOpacity,
   Alert,
   ScrollView,
-  handleConfirm,
   Pressable,
 } from 'react-native';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import GenderPicker from '../components/GenderPicker';
 import BirthdayPicker from '../components/BirthdayPicker';
 import UploadProfileimage from '../components/UploadProfileimage';
+import HeaderComponent from '../components/HeaderComponent';
 import axios from 'axios';
 import {USERID} from '../UserId';
 
@@ -115,20 +114,13 @@ const MyDaenegRegister = props => {
 
   return (
     <ScrollView>
-      <View style={styles.header}>
-        <View style={[styles.headerDiv, styles.divPosition]} />
-        <Text style={styles.headerTitle}>{`펫 프로필 `}</Text>
-        <Pressable
-          onPress={() => {
-            props.navigation.navigate('MyDaeng');
-          }}>
-          <Image
-            style={[styles.arrowIcon, styles.inputPosition]}
-            resizeMode="cover"
-            source={require('../assets/arrow2.png')}
-          />
-        </Pressable>
-      </View>
+      <HeaderComponent
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="펫 프로필"
+        navigation={props.navigation}
+        go="MyDaengRegister"
+        backBool={true}
+      />
       <View style={styles.view1}>
         <View style={[styles.background, styles.headerDivShadowBox]} />
         <View>
@@ -194,7 +186,7 @@ const MyDaenegRegister = props => {
 
 const styles = StyleSheet.create({
   chartHeadText: {
-    marginTop: 20,
+    marginTop: 80,
     marginLeft: 26,
     marginBottom: 20,
     fontSize: 24,

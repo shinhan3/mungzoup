@@ -168,7 +168,7 @@ const MyDaeng = props => {
         <View>
           <View>
             <Text style={[styles.profileTitle, styles.donationPosition]}>
-              마이댕 프로필
+              펫 프로필
             </Text>
           </View>
           <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
@@ -335,7 +335,7 @@ const MyDaeng = props => {
                       style={[
                         styles.text16,
                         styles.textTypo3,
-                      ]}>{`카드 발급 받고 슬기롭게 소비하자!`}</Text>
+                      ]}>{`카드 발급 받고, 슬기롭게 소비하자!`}</Text>
                   </Text>
                 </View>
                 <View style={[styles.eventImage3, styles.iconPosition]}>
@@ -370,15 +370,10 @@ const MyDaeng = props => {
                     <Text style={[styles.text17, styles.mydogTypo]}>
                       멍줍 PLAY
                     </Text>
-                    <Text>
-                      <Text style={[styles.text19, styles.textTypo4]}>
-                        <Text style={styles.text20}>{`장소 추천 받고,  `}</Text>
-                      </Text>
-                    </Text>
-                    <Text>
-                      <Text style={[styles.text19, styles.textTypo4]}>
-                        <Text style={styles.text20}>멍포인트도 줍줍하자!</Text>
-                      </Text>
+                    <Text style={[styles.text19, styles.textTypo4]}>
+                      <Text style={styles.text20}>{`장소 추천 받고, `}</Text>
+                      <Text style={styles.text20}>{`
+멍포인트도 줍줍하자!`}</Text>
                     </Text>
                   </Text>
                   <Text style={[styles.text110, styles.textTypo6]}>
@@ -423,12 +418,6 @@ const MyDaeng = props => {
           </View>
           <Text style={[styles.title3, styles.titleTypo]}>이벤트</Text>
         </View>
-        {/* <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.walkTextPosition]}>
-            마이댕
-          </Text>
-        </View> */}
       </View>
       {/* </View> */}
     </ScrollView>
@@ -616,6 +605,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventText1Position: {
+    // left: 20,
     top: 11,
     position: 'absolute',
   },
@@ -679,7 +669,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo6: {
-    fontSize: FontSize.size_3xs,
+    fontSize: 9,
     color: Color.colorBlack,
   },
   eventLayout: {

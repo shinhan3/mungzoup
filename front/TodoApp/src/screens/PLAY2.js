@@ -7,6 +7,8 @@ import FilteredCardForm from '../components/FilteredCardForm';
 import FormDropdown from '../components/FormDropdown';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
 import {ScrollView} from 'react-native';
+import HeaderComponent from '../components/HeaderComponent';
+import FooterComponent from './FooterComponent';
 
 const PLAY2 = ({navigation}) => {
   const [dropdownData, setDropdownData] = React.useState(null);
@@ -14,41 +16,40 @@ const PLAY2 = ({navigation}) => {
     setDropdownData(data);
   };
   return (
-    <View style={styles.play}>
-      <View style={[styles.main, styles.mainPosition]}>
-        <View style={[styles.recommendlist, styles.mainPosition]}>
-          {dropdownData && <FilteredCardForm data={dropdownData} />}
-        </View>
-        <View style={styles.upperPart}>
-          <View>
-            <FormDropdown onDropdownData={handleDropdownData} />
-            {/* {dropdownData && <FilteredCardForm data={dropdownData} />} */}
+    <>
+      <HeaderComponent benefits="장소추천" navigation={navigation} go="PLAY2" />
+      <View style={styles.play}>
+        <View style={[styles.main, styles.mainPosition]}>
+          <View style={[styles.recommendlist, styles.mainPosition]}>
+            {dropdownData && <FilteredCardForm data={dropdownData} />}
           </View>
-          <View style={styles.regiontext}>
-            <Text style={[styles.contentTitle, styles.titlePosition]}>
-              나들이 지역
-            </Text>
-            <Text style={styles.contentDetail}>{`사랑스러운 나의 멍멍이와
+          <View style={styles.upperPart}>
+            <View>
+              <FormDropdown onDropdownData={handleDropdownData} />
+              {/* {dropdownData && <FilteredCardForm data={dropdownData} />} */}
+            </View>
+            <View style={styles.regiontext}>
+              <Text style={[styles.contentTitle, styles.titlePosition]}>
+                나들이 지역
+              </Text>
+              <Text style={styles.contentDetail}>{`사랑스러운 나의 멍멍이와
 방문하고 싶은 지역을 골라보세요.`}</Text>
+            </View>
           </View>
         </View>
+        <View style={styles.headerPosition}>
+          <View style={[styles.headerDiv, styles.headerPosition]} />
+          <Text style={[styles.headerTitle, styles.titlePosition]}>
+            줍줍 장소
+          </Text>
+        </View>
       </View>
-      <View style={styles.headerPosition}>
-        <View style={[styles.headerDiv, styles.headerPosition]} />
-        <Text style={[styles.headerTitle, styles.titlePosition]}>
-          줍줍 장소
-        </Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack('PLAYmainwonny');
-          }}>
-          <Image
-            style={styles.arrowIcon}
-            source={require('../assets/arrow4.png')}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 

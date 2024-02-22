@@ -13,14 +13,13 @@ import FooterComponent from './FooterComponent';
 
 const PLAY = props => {
   return (
-    <>
-      <View style={styles.play}>
-        <View style={[styles.header, styles.divPosition1]}>
-          <View style={[styles.haederDiv, styles.divPosition]} />
-          <Text style={[styles.headerTitle, styles.txtFlexBox]}>
-            나의 산책 목록
-          </Text>
-          {/* <TouchableOpacity
+    <View style={styles.play}>
+      <View style={[styles.header, styles.divPosition1]}>
+        <View style={[styles.haederDiv, styles.divPosition]} />
+        <Text style={[styles.headerTitle, styles.txtFlexBox]}>
+          나의 산책 목록
+        </Text>
+        <TouchableOpacity
           onPress={() => {
             props.navigation.goBack('PLAYmainwonny');
           }}>
@@ -28,24 +27,18 @@ const PLAY = props => {
             style={styles.arrowIcon}
             source={require('../assets/arrow2.png')}
           />
-        </TouchableOpacity> */}
-        </View>
-        <FavoriteListContainer navigation={props.navigation} />
-        <TouchableOpacity
-          style={[styles.insertplaceBtn, styles.txtLayout]}
-          onPress={() => {
-            props.navigation.navigate('InsertWalkSpot');
-          }}>
-          <View style={[styles.div, styles.divPosition1]} />
-          <Text style={[styles.txt, styles.txtLayout]}>+ 내 장소</Text>
         </TouchableOpacity>
       </View>
-      <FooterComponent
-        petBoolean={false}
-        playBoolean={true}
-        cardBoolean={false}
-        navigation={props.navigation}></FooterComponent>
-    </>
+      <FavoriteListContainer navigation={props.navigation} />
+      <TouchableOpacity
+        style={[styles.insertplaceBtn, styles.txtLayout]}
+        onPress={() => {
+          props.navigation.navigate('InsertWalkSpot');
+        }}>
+        <View style={[styles.div, styles.divPosition1]} />
+        <Text style={[styles.txt, styles.txtLayout]}>+ 내 장소</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

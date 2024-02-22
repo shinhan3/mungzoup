@@ -39,7 +39,7 @@ const Frame = props => {
                 text: '취소',
                 onPress: () => {
                   console.log('alert');
-                  props.navigation.navigate('PLAYmainwonny');
+                  props.navigation.navigate('MyDaeng');
                 },
                 style: 'destructive',
               },

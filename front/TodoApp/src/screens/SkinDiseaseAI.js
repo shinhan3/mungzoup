@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
 import HeaderComponent from '../components/HeaderComponent';
-import MyDaeng from './MyDaengMain';
+import MyDaeng from './MyDaeng';
 import FooterComponent from './FooterComponent';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Input} from 'react-native-elements';

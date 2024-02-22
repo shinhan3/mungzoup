@@ -1,22 +1,9 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {FontFamily, FontSize, Color} from '../GlobalStyles';
-import axios from 'axios';
-import RNFS from 'react-native-fs';
-import FormData from 'form-data';
-import HeaderComponent from '../components/HeaderComponent';
+import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
+import {FontFamily, Color} from '../GlobalStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {inlineStyles} from 'react-native-svg';
 
-const UploadProfileimage = ({onFileSelect}) => {
+const UploadProfileimage = ({onFileSelect, image}) => {
   const [response, setResponse] = React.useState('');
 
   const onSelectImage = () => {
@@ -52,46 +39,33 @@ const UploadProfileimage = ({onFileSelect}) => {
     <View style={[styles.updloadImage]}>
       <View style={[styles.updloadImage1]}>
         <Image
-          style={[styles.inputimgIcon, response ? {borderRadius: 100} : {}]}
+          style={[
+            styles.inputimgIcon,
+            response || image ? {borderRadius: 100} : {},
+          ]}
           source={
             response
               ? {uri: response.assets[0].uri}
+              : image
+              ? {uri: image}
               : require('../assets/profileimage.png')
           }></Image>
       </View>
       <View style={[styles.updloadImage2]}>
         <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
-          <Text style={{color: 'white', fontSize: 10}}>앨범 찾기</Text>
+          <Text style={[styles.btnText]}>앨범 찾기</Text>
         </Pressable>
-        {/* <Pressable
-          style={[
-            styles.receiptBtn,
-            { backgroundColor: response ? Color.new1 : '#DDDDDD' },
-          ]}
-          onPress={() =>
-            props.navigation.navigate('MyDaeng', {
-              // storeId: storeId,
-              // storeInfo: storeInfo,
-              imageUrl: imageUrl,
-            })
-          }
-          disabled={!response}
-        >
-          <Text
-            style={{
-              color: Color.bgWhite,
-              fontSize: 10,
-            }}
-          >
-            사진 등록
-          </Text>
-        </Pressable> */}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  btnText: {
+    fontSize: 10,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+  },
   updloadImage1: {
     flex: 1,
   },
@@ -108,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.new1,
     padding: 12,
     borderRadius: 8,
-    marginTop: 50,
+    marginTop: 20,
     marginLeft: 60,
     marginRight: 60,
     alignItems: 'center',

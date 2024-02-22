@@ -31,7 +31,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MyDaeng from '../screens/MyDaengMain';
+import MyDaeng from '../screens/MyDaeng';
 import MyDaenegRegister from '../screens/MyDaengRegister';
 import MyDaengDetail from '../screens/MyDaengUpdate';
 import MyDaengUpdate from '../screens/MyDaengUpdate';
