@@ -654,6 +654,7 @@ const styles = StyleSheet.create({
   },
   walkTextPosition: {
     // 산책시작 텍스트
+    // 룰루
     top: 9,
     position: 'absolute',
   },
