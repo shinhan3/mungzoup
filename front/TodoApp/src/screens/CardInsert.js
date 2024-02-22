@@ -114,11 +114,11 @@ function CardInsert(props) {
           <Text style={styles.ButtonFont}>카드 발급하기</Text>
         </TouchableOpacity>
       </View>
-      <FooterComponent
+      {/* <FooterComponent
         petBoolean={false}
         playBoolean={false}
         cardBoolean={true}
-        navigation={props.navigation}></FooterComponent>
+        navigation={props.navigation}></FooterComponent> */}
       <DialogInput
         isDialogVisible={dialogVisible}
         title={'비밀번호 설정'}

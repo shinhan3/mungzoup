@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Pressable,
+  Modal,
 } from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
 import MyPets from '../components/MyPets';
@@ -16,30 +17,40 @@ import Geolocation from '@react-native-community/geolocation';
 import MyCarousel from '../components/PetListCarousel';
 import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
-  console.log(props);
+  // console.log(props);
   const [showNewContent, setShowNewContent] = useState(false);
 
   const [pets, setPets] = useState([]);
+  const [modelVisible, setModelVisible] = useState(true);
+
   const userId = USERID;
 
   // const [latitude, setLatitude] = useState(0.0);
   // const [longitude, setLongitude] = useState(0.0);
 
-  const [mylocation, setMylocation] = useState({latitude: 0.0, longitude: 0.0});
+  const [mylocation, setMylocation] = useState({
+    latitude: 37.55518333333333,
+    longitude: 126.92099333333333,
+  });
   const [countList, setCountList] = useState();
 
   const getGeolocation = () => {
     Geolocation.getCurrentPosition(
       position => {
         console.log(
-          'aaaagccccccccccc',
+          'aaaagccccccccccaaaaaaaaaaac',
           position.coords.latitude,
           position.coords.longitude,
         );
-        setMylocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
+        position.coords.longitude * -1 > 0.0
+          ? setMylocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude * -1,
+            })
+          : setMylocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
       },
       error => {
         console.log(error.code, error.message);
@@ -66,15 +77,11 @@ const MyDaeng = props => {
 
   useFocusEffect(
     useCallback(() => {
-      axios
-        .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
-        .then(res => {
-          console.log([...res.data].length, 'asdf');
-          setPets([...res.data]);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      setModelVisible(true);
+      setTimeout(() => {
+        setModelVisible(false);
+      }, 5000);
+      getPet();
     }, []),
   );
 
@@ -103,13 +110,15 @@ const MyDaeng = props => {
   );
   useFocusEffect(
     useCallback(() => {
-      const timer = setTimeout(getPet, 60000); // 1초 뒤에 now를 수행하라
+      const timer = setTimeout(getPet, 10000); // 1초 뒤에 now를 수행하라
       console.log(timer, 'asdsadas');
       return () => {
         clearTimeout(timer);
       };
     }, [pets]),
   );
+
+  // setInterval(getPet, 60000);
   const isFocused = useIsFocused();
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
@@ -128,310 +137,338 @@ const MyDaeng = props => {
       })
       .catch(err => {});
   }, [isFocused]);
-  return (
-    <ScrollView style={{}}>
-      <HeaderComponent
-        navigation={props.navigation}
-        dimensionCode={require('../assets/arrow8.png')}
-        benefits="마이댕"
-        backBool={false}></HeaderComponent>
-      <View style={styles.view}>
-        <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
-        <View style={styles.map}>
-          <View style={pets.length != 0 && styles.map1} />
-          {pets.length == 0 ? (
-            <Image
-              style={{
-                left: -8,
-              }}
-              resizeMode="cover"
-              source={require('../assets/myDogMap.png')}></Image>
-          ) : (
-            <MyPets pets={pets} mylocation={mylocation} />
-          )}
 
-          <View>
-            <Text style={styles.manual}>
-              <Text style={styles.manualTxt}>
-                <Text style={styles.textTypo5}>
-                  {`*** 마이댕  지도는 이렇게 사용해보세요!`}
-                </Text>
-                <Text style={styles.text1}>
-                  {`·실시간 위치 확인 : 강아지의 실시간 위치를 확인하여 언제든지 강아지가 어디에 있는지 알 수 있습니다. 
+  return (
+    <>
+      {modelVisible ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Modal
+            visible={modelVisible}
+            animationType="slide"
+            onRequestClose={() => {
+              setModelVisible(false);
+            }}>
+            <Image
+              style={{left: 20, width: '90%', height: '90%'}}
+              resizeMode="contain"
+              source={require('../assets/leaflet.png')}></Image>
+          </Modal>
+        </View>
+      ) : (
+        <ScrollView style={{}}>
+          <HeaderComponent
+            navigation={props.navigation}
+            dimensionCode={require('../assets/arrow8.png')}
+            benefits="마이댕"
+            backBool={false}></HeaderComponent>
+          <View style={styles.view}>
+            <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
+            <View style={styles.map}>
+              <View style={pets.length != 0 && styles.map1} />
+              {pets.length == 0 ? (
+                <Image
+                  style={{
+                    left: -8,
+                  }}
+                  resizeMode="cover"
+                  source={require('../assets/myDogMap.png')}></Image>
+              ) : mylocation.longitude > 0 ? (
+                <MyPets pets={pets} mylocation={mylocation} />
+              ) : (
+                <></>
+              )}
+
+              <View>
+                <Text style={styles.manual}>
+                  <Text style={styles.manualTxt}>
+                    <Text style={styles.textTypo5}>
+                      {`*** 마이댕  지도는 이렇게 사용해보세요!`}
+                    </Text>
+                    <Text style={styles.text1}>
+                      {`·실시간 위치 확인 : 강아지의 실시간 위치를 확인하여 언제든지 강아지가 어디에 있는지 알 수 있습니다. 
                 ·긴급 상황 대비: 강아지가 긴급 상황에 처한 경우, 빠르게 위치를 확인하여 긴급 대응이 가능합니다. 긴급 상황 대비를 위해 가족이나 돌봄자에게도 위치 공유 기능을 활용할 수 있습니다.
                 `}
+                    </Text>
+                  </Text>
                 </Text>
+              </View>
+            </View>
+            <View>
+              <View>
+                <Text style={[styles.profileTitle, styles.donationPosition]}>
+                  마이댕 프로필
+                </Text>
+              </View>
+              <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
+                <MyCarousel petList={petList} navigation={props.navigation} />
+              </View>
+            </View>
+            <View style={[styles.walkingBox, styles.healthboxPosition]}>
+              <Image
+                style={[styles.backgroundIcon, styles.iconPosition]}
+                resizeMode="cover"
+                source={require('../assets/background33.png')}
+              />
+              <View style={styles.title2}>
+                <Text style={[styles.text8, styles.textLayout]}>산책 요약</Text>
+                <Image
+                  style={[styles.vectorIcon, styles.iconPosition]}
+                  resizeMode="cover"
+                  source={require('../assets/vector.png')}
+                />
+              </View>
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('PLAY4');
+                }}>
+                <Image
+                  style={[
+                    styles.mingcuterightLineIcon1,
+                    styles.eventText1Position,
+                  ]}
+                  resizeMode="cover"
+                  source={require('../assets/mingcuterightline1.png')}
+                />
+              </Pressable>
+              <View style={[styles.km, styles.kmPosition]}>
+                <Text style={[styles.km1, styles.km1Typo]}>km</Text>
+                <Text style={[styles.text9, styles.textTypo1]}>12</Text>
+              </View>
+              <View style={styles.time}>
+                <Text style={[styles.text10, styles.text10Position]}>100</Text>
+                <Text style={[styles.text11, styles.text11Position]}>분</Text>
+                <View style={[styles.timeChild, styles.timeChildLayout]} />
+              </View>
+              <Image
+                style={[styles.graphicon1, styles.graphiconPosition]}
+                resizeMode="cover"
+                source={require('../assets/graphicon1.png')}
+              />
+            </View>
+
+            <View style={[styles.skinDisease, styles.skinDiseasePosition]}>
+              <Image
+                style={[styles.healthboxIcon, styles.skinDiseasePosition]}
+                resizeMode="cover"
+                source={require('../assets/healthbox.png')}
+              />
+              <Pressable
+                style={[styles.inspect, styles.inspectPosition]}
+                onPress={() => {
+                  props.navigation.navigate('SkinDiseaseAI');
+                }}>
+                <Image
+                  style={[
+                    styles.skinMingcuterightLineIcon1,
+                    styles.inspectPosition,
+                  ]}
+                  resizeMode="cover"
+                  source={require('../assets/mingcuterightline1.png')}
+                />
+                <Text style={styles.text29}>검사하기</Text>
+              </Pressable>
+
+              <Pressable
+                style={[styles.detailBtn, styles.detailBtnLayout]}
+                onPress={() => {
+                  props.navigation.navigate('DogHealthDetail');
+                }}>
+                <Text style={[styles.detailText, styles.detailTextFlexBox]}>
+                  상세보기
+                </Text>
+                <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
+              </Pressable>
+
+              <Pressable
+                style={[styles.detailBtn2, styles.detailBtnLayout]}
+                onPress={() => {
+                  props.navigation.navigate('DogHealthDetail');
+                }}>
+                <Text style={[styles.detailText, styles.detailTextFlexBox]}>
+                  상세보기
+                </Text>
+                <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
+              </Pressable>
+
+              <View style={[styles.skinHome, styles.skinHomePosition]}>
+                <Image
+                  style={[styles.imgIcon, styles.skinHomePosition]}
+                  resizeMode="cover"
+                  source={require('../assets/materialsymbolshomehealth.png')}
+                />
+                <Text style={[styles.skinTxt, styles.skinTxtTypo]}>
+                  피부 질환
+                </Text>
+              </View>
+              {countList && (
+                <View style={styles.healthResult}>
+                  <View style={[styles.unhealthBox, styles.skinIconPosition]}>
+                    <View style={[styles.count, styles.countPosition]}>
+                      <Text style={[styles.unit]}>마리</Text>
+                      <Text style={[styles.text30, styles.textPosition2]}>
+                        {countList.unhealth}
+                      </Text>
+                    </View>
+                    <View style={[styles.timeItem, styles.nameDivPosition]} />
+                    <Image
+                      style={[styles.warnIcon, styles.skinIconLayout]}
+                      resizeMode="cover"
+                      source={require('../assets/warn.png')}
+                    />
+                  </View>
+                  <View style={[styles.healthBox, styles.timePosition]}>
+                    <View style={[styles.count1, styles.countPosition]}>
+                      <Text style={[styles.unit]}>마리</Text>
+                      <Text style={[styles.text30, styles.textPosition2]}>
+                        {countList.health}
+                      </Text>
+                    </View>
+                    <View style={[styles.timeItem, styles.nameDivPosition]} />
+                    <Image
+                      style={[styles.heartPlusIcon, styles.skinIconPosition]}
+                      resizeMode="cover"
+                      source={require('../assets/heartplus.png')}
+                    />
+                  </View>
+                </View>
+              )}
+            </View>
+
+            <Pressable
+              style={[styles.walkbtn, styles.eventLayout2]}
+              onPress={() => {
+                props.navigation.navigate('PLAY');
+              }}>
+              <View style={[styles.walkDiv, styles.eventLayout2]} />
+              <Image
+                style={[styles.arrowIcon2, styles.arrowIconLayout]}
+                resizeMode="cover"
+                source={require('../assets/mingcuterightline1.png')}
+              />
+              <Text style={[styles.walkText, styles.walkTextPosition]}>
+                <Text style={styles.text1}>{`내 멍멍이와 지금 `}</Text>
+                <Text style={styles.textTypo5}>산책</Text>
+                <Text style={styles.text1}>을 시작해보세요!</Text>
               </Text>
-            </Text>
-          </View>
-        </View>
-        <View>
-          <View>
-            <Text style={[styles.profileTitle, styles.donationPosition]}>
-              마이댕 프로필
-            </Text>
-          </View>
-          <View style={[styles.petprofilebox, styles.petprofileboxLayout]}>
-            <MyCarousel petList={petList} navigation={props.navigation} />
-          </View>
-        </View>
-        <View style={[styles.walkingBox, styles.healthboxPosition]}>
-          <Image
-            style={[styles.backgroundIcon, styles.iconPosition]}
-            resizeMode="cover"
-            source={require('../assets/background33.png')}
-          />
-          <View style={styles.title2}>
-            <Text style={[styles.text8, styles.textLayout]}>산책 요약</Text>
-            <Image
-              style={[styles.vectorIcon, styles.iconPosition]}
-              resizeMode="cover"
-              source={require('../assets/vector.png')}
-            />
-          </View>
-          <Pressable
-            onPress={() => {
-              props.navigation.navigate('PLAY4');
-            }}>
-            <Image
-              style={[styles.mingcuterightLineIcon1, styles.eventText1Position]}
-              resizeMode="cover"
-              source={require('../assets/mingcuterightline1.png')}
-            />
-          </Pressable>
-          <View style={[styles.km, styles.kmPosition]}>
-            <Text style={[styles.km1, styles.km1Typo]}>km</Text>
-            <Text style={[styles.text9, styles.textTypo1]}>12</Text>
-          </View>
-          <View style={styles.time}>
-            <Text style={[styles.text10, styles.text10Position]}>100</Text>
-            <Text style={[styles.text11, styles.text11Position]}>분</Text>
-            <View style={[styles.timeChild, styles.timeChildLayout]} />
-          </View>
-          <Image
-            style={[styles.graphicon1, styles.graphiconPosition]}
-            resizeMode="cover"
-            source={require('../assets/graphicon1.png')}
-          />
-        </View>
-
-        <View style={[styles.skinDisease, styles.skinDiseasePosition]}>
-          <Image
-            style={[styles.healthboxIcon, styles.skinDiseasePosition]}
-            resizeMode="cover"
-            source={require('../assets/healthbox.png')}
-          />
-          <Pressable
-            style={[styles.inspect, styles.inspectPosition]}
-            onPress={() => {
-              props.navigation.navigate('SkinDiseaseAI');
-            }}>
-            <Image
-              style={[
-                styles.skinMingcuterightLineIcon1,
-                styles.inspectPosition,
-              ]}
-              resizeMode="cover"
-              source={require('../assets/mingcuterightline1.png')}
-            />
-            <Text style={styles.text29}>검사하기</Text>
-          </Pressable>
-
-          <Pressable
-            style={[styles.detailBtn, styles.detailBtnLayout]}
-            onPress={() => {
-              props.navigation.navigate('DogHealthDetail');
-            }}>
-            <Text style={[styles.detailText, styles.detailTextFlexBox]}>
-              상세보기
-            </Text>
-            <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
-          </Pressable>
-
-          <Pressable
-            style={[styles.detailBtn2, styles.detailBtnLayout]}
-            onPress={() => {
-              props.navigation.navigate('DogHealthDetail');
-            }}>
-            <Text style={[styles.detailText, styles.detailTextFlexBox]}>
-              상세보기
-            </Text>
-            <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
-          </Pressable>
-
-          <View style={[styles.skinHome, styles.skinHomePosition]}>
-            <Image
-              style={[styles.imgIcon, styles.skinHomePosition]}
-              resizeMode="cover"
-              source={require('../assets/materialsymbolshomehealth.png')}
-            />
-            <Text style={[styles.skinTxt, styles.skinTxtTypo]}>피부 질환</Text>
-          </View>
-          {countList && (
-            <View style={styles.healthResult}>
-              <View style={[styles.unhealthBox, styles.skinIconPosition]}>
-                <View style={[styles.count, styles.countPosition]}>
-                  <Text style={[styles.unit]}>마리</Text>
-                  <Text style={[styles.text30, styles.textPosition2]}>
-                    {countList.unhealth}
-                  </Text>
+            </Pressable>
+            <View style={[styles.event, styles.eventLayout2]}>
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('Frame');
+                }}>
+                <View style={[styles.eventBanner3, styles.eventLayout1]}>
+                  <View style={[styles.eventDiv, styles.eventPosition]} />
+                  <View style={[styles.event3, styles.event3Layout]}>
+                    <View style={styles.eventText3}>
+                      <Text style={styles.headerMenu}>
+                        <Text
+                          style={[
+                            styles.text16,
+                            styles.textTypo3,
+                          ]}>{`제휴 `}</Text>
+                        <Text style={[styles.text17, styles.mydogTypo]}>
+                          멍줍
+                        </Text>
+                        <Text
+                          style={[
+                            styles.text16,
+                            styles.textTypo3,
+                          ]}>{`카드 발급 받고 슬기롭게 소비하자!`}</Text>
+                      </Text>
+                    </View>
+                    <View style={[styles.eventImage3, styles.iconPosition]}>
+                      <Image
+                        style={[styles.saly45Icon, styles.iconLayout]}
+                        resizeMode="cover"
+                        source={require('../assets/saly45.png')}
+                      />
+                      <Image
+                        style={[styles.coinsIcon, styles.event3Layout]}
+                        resizeMode="cover"
+                        source={require('../assets/coins.png')}
+                      />
+                    </View>
+                  </View>
                 </View>
-                <View style={[styles.timeItem, styles.nameDivPosition]} />
-                <Image
-                  style={[styles.warnIcon, styles.skinIconLayout]}
-                  resizeMode="cover"
-                  source={require('../assets/warn.png')}
-                />
-              </View>
-              <View style={[styles.healthBox, styles.timePosition]}>
-                <View style={[styles.count1, styles.countPosition]}>
-                  <Text style={[styles.unit]}>마리</Text>
-                  <Text style={[styles.text30, styles.textPosition2]}>
-                    {countList.health}
-                  </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  props.navigation.navigate('PLAYmainwonny');
+                }}>
+                <View style={[styles.eventBanner2, styles.eventLayout1]}>
+                  <View style={[styles.eventDiv1, styles.eventPosition]} />
+                  <View style={styles.event2}>
+                    <Image
+                      style={[styles.eventImage2Icon, styles.iconPosition]}
+                      resizeMode="cover"
+                      source={require('../assets/event-image2.png')}
+                    />
+                    <View
+                      style={[styles.eventText2, styles.eventText2Position]}>
+                      <Text style={[styles.text21, styles.textPosition]}>
+                        <Text style={[styles.text17, styles.mydogTypo]}>
+                          멍줍 PLAY
+                        </Text>
+                        <Text>
+                          <Text style={[styles.text19, styles.textTypo4]}>
+                            <Text
+                              style={styles.text20}>{`장소 추천 받고,  `}</Text>
+                          </Text>
+                        </Text>
+                        <Text>
+                          <Text style={[styles.text19, styles.textTypo4]}>
+                            <Text style={styles.text20}>
+                              멍포인트도 줍줍하자!
+                            </Text>
+                          </Text>
+                        </Text>
+                      </Text>
+                      <Text style={[styles.text110, styles.textTypo6]}>
+                        멍줍AI가 알려주는 정보가 궁금하다면?
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-                <View style={[styles.timeItem, styles.nameDivPosition]} />
-                <Image
-                  style={[styles.heartPlusIcon, styles.skinIconPosition]}
-                  resizeMode="cover"
-                  source={require('../assets/heartplus.png')}
-                />
-              </View>
-            </View>
-          )}
-        </View>
-
-        <Pressable
-          style={[styles.walkbtn, styles.eventLayout2]}
-          onPress={() => {
-            props.navigation.navigate('PLAY');
-          }}>
-          <View style={[styles.walkDiv, styles.eventLayout2]} />
-          <Image
-            style={[styles.arrowIcon2, styles.arrowIconLayout]}
-            resizeMode="cover"
-            source={require('../assets/mingcuterightline1.png')}
-          />
-          <Text style={[styles.walkText, styles.walkTextPosition]}>
-            <Text style={styles.text1}>{`내 멍멍이와 지금 `}</Text>
-            <Text style={styles.textTypo5}>산책</Text>
-            <Text style={styles.text1}>을 시작해보세요!</Text>
-          </Text>
-        </Pressable>
-        <View style={[styles.event, styles.eventLayout2]}>
-          <Pressable
-            onPress={() => {
-              props.navigation.navigate('Frame');
-            }}>
-            <View style={[styles.eventBanner3, styles.eventLayout1]}>
-              <View style={[styles.eventDiv, styles.eventPosition]} />
-              <View style={[styles.event3, styles.event3Layout]}>
-                <View style={styles.eventText3}>
-                  <Text style={styles.headerMenu}>
-                    <Text
-                      style={[styles.text16, styles.textTypo3]}>{`제휴 `}</Text>
-                    <Text style={[styles.text17, styles.mydogTypo]}>멍줍</Text>
-                    <Text
-                      style={[
-                        styles.text16,
-                        styles.textTypo3,
-                      ]}>{`카드 발급 받고 슬기롭게 소비하자!`}</Text>
-                  </Text>
-                </View>
-                <View style={[styles.eventImage3, styles.iconPosition]}>
-                  <Image
-                    style={[styles.saly45Icon, styles.iconLayout]}
-                    resizeMode="cover"
-                    source={require('../assets/saly45.png')}
-                  />
-                  <Image
-                    style={[styles.coinsIcon, styles.event3Layout]}
-                    resizeMode="cover"
-                    source={require('../assets/coins.png')}
-                  />
-                </View>
-              </View>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              props.navigation.navigate('PLAYmainwonny');
-            }}>
-            <View style={[styles.eventBanner2, styles.eventLayout1]}>
-              <View style={[styles.eventDiv1, styles.eventPosition]} />
-              <View style={styles.event2}>
-                <Image
-                  style={[styles.eventImage2Icon, styles.iconPosition]}
-                  resizeMode="cover"
-                  source={require('../assets/event-image2.png')}
-                />
-                <View style={[styles.eventText2, styles.eventText2Position]}>
-                  <Text style={[styles.text21, styles.textPosition]}>
-                    <Text style={[styles.text17, styles.mydogTypo]}>
-                      멍줍 PLAY
-                    </Text>
-                    <Text>
-                      <Text style={[styles.text19, styles.textTypo4]}>
-                        <Text style={styles.text20}>{`장소 추천 받고,  `}</Text>
+              </Pressable>
+              <View style={[styles.eventBanner1, styles.eventLayout1]}>
+                <View style={[styles.eventDiv11, styles.eventPosition]} />
+                <View style={[styles.event1, styles.eventLayout]}>
+                  <View style={[styles.eventText1, styles.eventText1Position]}>
+                    <Text style={styles.textPosition}>
+                      <Text style={[styles.text17, styles.mydogTypo]}>멍</Text>
+                      <Text style={styles.textTypo3}>
+                        <Text
+                          style={
+                            styles.textTypo4
+                          }>{`포인트가 모이면 기부가 `}</Text>
+                        <Text style={styles.textTypo5}>커</Text>
+                        <Text style={styles.textTypo4}>!진다</Text>
                       </Text>
                     </Text>
-                    <Text>
-                      <Text style={[styles.text19, styles.textTypo4]}>
-                        <Text style={styles.text20}>멍포인트도 줍줍하자!</Text>
-                      </Text>
+                    <Text style={[styles.text110, styles.textTypo6]}>
+                      멍줍과 함께하는 기부 동참 캠페인
                     </Text>
-                  </Text>
-                  <Text style={[styles.text110, styles.textTypo6]}>
-                    멍줍AI가 알려주는 정보가 궁금하다면?
-                  </Text>
+                  </View>
+                  <View style={[styles.eventImage1, styles.eventLayout]}>
+                    <Text style={[styles.donation, styles.donationPosition]}>
+                      <Text style={styles.text1}>*멍줍은</Text>
+                      <Text style={styles.textTypo5}> 포인핸드 정기후원</Text>
+                      <Text style={styles.text1}>과 함께합니다.</Text>
+                    </Text>
+                    <Image
+                      style={styles.pawinhand}
+                      resizeMode="cover"
+                      source={require('../assets/logo1.png')}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-          </Pressable>
-          <View style={[styles.eventBanner1, styles.eventLayout1]}>
-            <View style={[styles.eventDiv11, styles.eventPosition]} />
-            <View style={[styles.event1, styles.eventLayout]}>
-              <View style={[styles.eventText1, styles.eventText1Position]}>
-                <Text style={styles.textPosition}>
-                  <Text style={[styles.text17, styles.mydogTypo]}>멍</Text>
-                  <Text style={styles.textTypo3}>
-                    <Text
-                      style={
-                        styles.textTypo4
-                      }>{`포인트가 모이면 기부가 `}</Text>
-                    <Text style={styles.textTypo5}>커</Text>
-                    <Text style={styles.textTypo4}>!진다</Text>
-                  </Text>
-                </Text>
-                <Text style={[styles.text110, styles.textTypo6]}>
-                  멍줍과 함께하는 기부 동참 캠페인
-                </Text>
-              </View>
-              <View style={[styles.eventImage1, styles.eventLayout]}>
-                <Text style={[styles.donation, styles.donationPosition]}>
-                  <Text style={styles.text1}>*멍줍은</Text>
-                  <Text style={styles.textTypo5}> 포인핸드 정기후원</Text>
-                  <Text style={styles.text1}>과 함께합니다.</Text>
-                </Text>
-                <Image
-                  style={styles.pawinhand}
-                  resizeMode="cover"
-                  source={require('../assets/logo1.png')}
-                />
-              </View>
+              <Text style={[styles.title3, styles.titleTypo]}>이벤트</Text>
             </View>
           </View>
-          <Text style={[styles.title3, styles.titleTypo]}>이벤트</Text>
-        </View>
-        {/* <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.walkTextPosition]}>
-            마이댕
-          </Text>
-        </View> */}
-      </View>
-      {/* </View> */}
-    </ScrollView>
+        </ScrollView>
+      )}
+    </>
   );
 };
 

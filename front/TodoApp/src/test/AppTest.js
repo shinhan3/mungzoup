@@ -45,6 +45,7 @@ import FavoriteListContainer from '../components/FavoriteListContainer';
 import FooterComponent from '../screens/FooterComponent';
 import SkinDiseaseAI from '../screens/SkinDiseaseAI';
 import DogHealthDetail from '../screens/DogHealthDetail';
+import MyCarousel from '../components/PetListCarousel';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -267,6 +268,11 @@ const AppTest = () => {
               <Stack.Screen
                 name="DogHealthDetail"
                 component={DogHealthDetail}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyCarousel"
+                component={MyCarousel}
                 options={{headerShown: false}}
               />
             </Stack.Navigator>

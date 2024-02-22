@@ -3,6 +3,8 @@ package com.shinhan.sbproject.VO;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
@@ -27,11 +29,12 @@ import lombok.ToString;
 @Table(name = "pet_health")
 
 public class PetHealthVO {
-	@Id
-	private Integer petId;
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "petId")
-	private PetsVO pet;
-	private String disease;
+   @Id 
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Integer pethealthId;
+
+   @OneToOne
+   @JoinColumn(name = "petId")
+   private PetsVO pet;
+   private String disease;
 }

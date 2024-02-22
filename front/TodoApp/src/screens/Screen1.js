@@ -2,19 +2,22 @@ import * as React from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
+import {enableLatestRenderer} from 'react-native-maps';
 
 const Screen1 = () => {
+  enableLatestRenderer();
   return (
     <LinearGradient
       style={styles.lineargradient}
       // locations={[0, 0.65]}
       colors={['rgba(163, 174, 98, 0.2)', '#62aea9']}>
       <Text style={styles.text}>
-        <Text style={styles.text1}>멍멍이</Text>
-        <Text style={styles.text2}>를 위한 모든 혜택을</Text>
+        <Text style={styles.text1}>All about 댕댕이, </Text>
+        <Text style={styles.text2}>멍줍</Text>
+        {/* <Text style={styles.text2}>를 위한 모든 혜택을</Text>
         <Text style={styles.text3}>{` `}</Text>
         <Text style={styles.text1}>줍줍</Text>
-        <Text style={styles.text3}>!</Text>
+        <Text style={styles.text3}>!</Text> */}
       </Text>
       <Image
         style={styles.kakaotalk202401312359531820Icon}
@@ -30,7 +33,13 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRBold,
   },
   text2: {
-    fontFamily: FontFamily.notoSansKRRegular,
+    fontFamily: 'CustomFont-Bold',
+    fontSize: 30,
+    fontWeight: '900',
+    // fontWeight: '700',
+    // fontFamily: FontFamily.notoSansKRRegular,
+    // fontFamily: FontFamily.notoSansKRBold,
+    // fontFamily: FontFamily.notoSansKRRegular,
   },
   text3: {
     fontWeight: '500',
