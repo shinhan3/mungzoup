@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: 'absolute',
-    top: 73,
-    left: 90,
+    top: 80,
+    left: 95,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 18,
-    left: 26,
+    left: 55,
     textAlign: 'left',
   },
   ai: {
     fontSize: FontSize.size_3xs,
-    left: 0,
+    left: 35,
     top: 10,
     textAlign: 'left',
   },
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   text4: {
-    top: 4,
-    left: 45,
+    top: 6,
+    left: 60,
     color: Color.bgWhite,
     textAlign: 'left',
     fontSize: FontSize.size_xs,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   text5: {
     top: 165,
-    left: 70,
+    left: 85,
     textAlign: 'center',
   },
   icon: {
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   },
   petBanner4: {
     top: 656,
-    left: 1,
+    left: 10,
     height: 211,
     width: 299,
     position: 'absolute',

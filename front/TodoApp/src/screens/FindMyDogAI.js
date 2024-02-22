@@ -45,7 +45,7 @@ const FindMyDogAI = ({navigation}) => {
           uri: resizedImage.uri,
         });
         console.log(data['_parts'][0][1], 'ccc');
-        return axios.post('http://10.0.2.2:5000/findAnimals', data, {
+        return axios.post('http://192.168.0.90:5000/findAnimals', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

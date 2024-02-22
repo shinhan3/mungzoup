@@ -20,7 +20,7 @@ const Frame = props => {
     React.useCallback(() => {
       console.log('마운트될 떄 된다.1');
       axios
-        .get(`http://10.0.2.2:5000/getIssuedPageData.do/${userId}`)
+        .get(`http://192.168.0.90:5000/getIssuedPageData.do/${userId}`)
         .then(res => {
           console.log(res.data[0][1]);
           if (res.data[0][1] != null) {
@@ -62,7 +62,7 @@ const Frame = props => {
         <View style={styles.view}>
           <View style={styles.main}>
             <FormContainer props={props} />
-            <View style={{marginLeft: -10}}>
+            <View style={{marginLeft: 15}}>
               <Text style={styles.bannerTitle}>
                 <Text style={styles.text}>{`멍줍 서비스 `}</Text>
                 <Text style={styles.text1}>{data[0]}개월</Text>
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 981,
     overflow: 'hidden',
-    marginLeft: 27,
+    // marginLeft: 27,
   },
 });
 

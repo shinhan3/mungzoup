@@ -46,7 +46,9 @@ function HiddenPopularStores(props) {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/storeListPay.do/${latitude}/${longitude}`)
+        .get(
+          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
+        )
         .then(res => {
           setStoreList(res.data);
         })
@@ -61,7 +63,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://10.0.2.2:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         setStoreList(res.data);
@@ -356,7 +358,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#62AEA9',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 290,
+    marginLeft: 250,
     borderRadius: 10,
   },
   btnText: {

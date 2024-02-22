@@ -35,7 +35,7 @@ const FilteredCardForm = ({data}) => {
       user: {userId: USERID},
     };
     axios
-      .post('http://10.0.2.2:5000/insertWalkSpot.do', data)
+      .post('http://192.168.0.90:5000/insertWalkSpot.do', data)
       .then(res => {
         const newSpot = res.data;
         Alert.alert('', '내 장소 추가에 성공했습니다!', [
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     left: 10,
     height: 32,
     position: 'absolute',
-    top: 0,
+    top: 4,
   },
   insertplaceBtn: {
     top: 75,
@@ -266,8 +266,9 @@ const styles = StyleSheet.create({
 
   toggleChild: {
     borderRadius: Border.br_10xs,
-    backgroundColor: Color.colorWhitesmoke_200,
-    borderWidth: 0.3,
+    // backgroundColor: Color.colorWhitesmoke_200,
+    backgroundColor: Color.bgWhite,
+    // borderWidth: 0.3,
     height: 46.5,
     width: 270,
     top: 0,
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
   },
   toggle: {
     top: 70,
-    left: 80,
+    left: 70,
     height: 46.5,
     width: 270,
     position: 'absolute',

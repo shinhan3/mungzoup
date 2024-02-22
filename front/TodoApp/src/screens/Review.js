@@ -23,7 +23,7 @@ const Review = ({navigation, route}) => {
   React.useEffect(() => {
     //console.log(storeId);
     axios
-      .get(`http://10.0.2.2:5000/review.do/${storeId}`)
+      .get(`http://192.168.0.90:5000/review.do/${storeId}`)
       .then(res => {
         // console.log(res.data.storeInfo);
         // console.log(res.data.reviewInfo);
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   text: {
     top: 5,
     left: 22,
-    fontSize: FontSize.size_5xs,
+    fontSize: FontSize.size_5xs + 3,
     fontWeight: '800',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     top: 60,
     height: 570,
     width: 360,
-    left: 24,
+    left: 0,
     position: 'absolute',
   },
 

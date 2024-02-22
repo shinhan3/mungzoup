@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
+import {useNavigation} from '@react-navigation/native';
 
-const FormContainer2 = ({dimensions, productDimensions, navigation}) => {
-  console.log(navigation, 'aaa');
+const FormContainer2 = ({dimensions, productDimensions}) => {
+  const navigation = useNavigation();
+  console.log(navigation, 'aaa ');
   return (
-    <View style={[styles.petBanner1, styles.divPosition]}>
+    <View style={[styles.petBanner1, styles.divPosition, {left: 10}]}>
       <Text style={[styles.petBannerTitle, styles.textTypo]}>
         내 펫과 산책을 했다면?
       </Text>
@@ -31,16 +33,16 @@ const FormContainer2 = ({dimensions, productDimensions, navigation}) => {
           </Text>
         </Text>
         <TouchableOpacity
+          style={[styles.petwalkbtn, styles.petwalkbtnLayout]}
           onPress={() => {
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
             navigation.navigate('PLAY');
           }}>
-          <View style={[styles.petwalkbtn, styles.petwalkbtnLayout]}>
-            <View style={[styles.petwalkdiv, styles.petwalkbtnLayout]} />
-            <View style={[styles.petwalklink, styles.titlePosition]}>
-              <Text style={[styles.eventText, styles.textTypo]}>
-                산책하러 가기
-              </Text>
-            </View>
+          <View style={[styles.petwalkdiv, styles.petwalkbtnLayout]} />
+          <View style={[styles.petwalklink, styles.titlePosition]}>
+            <Text style={[styles.eventText, styles.textTypo]}>
+              산책하러 가기
+            </Text>
           </View>
           <Image
             style={[styles.arrowIcon, styles.iconPosition]}
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     color: Color.colorWhitesmoke_100,
     textAlign: 'center',
     left: 0,
-    top: 0,
+    top: 2,
     position: 'absolute',
   },
   petwalklink: {
@@ -162,10 +164,14 @@ const styles = StyleSheet.create({
     left: 24,
   },
   arrowIcon: {
-    top: 86,
-    left: 121,
-    width: 20,
+    // top: 86,
+    // left: 121,
+    // width: 20,
+    // height: 20,
+    left: 105,
+    width: 22,
     height: 20,
+    top: 3,
   },
   cardDiv: {
     borderRadius: Border.br_11xs,

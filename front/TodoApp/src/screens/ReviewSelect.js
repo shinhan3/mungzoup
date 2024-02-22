@@ -52,7 +52,7 @@ const ReviewSelect = ({navigation, route}) => {
       userId: USERID,
     };
     axios
-      .post('http://10.0.2.2:5000/insertReview.do', data)
+      .post('http://192.168.0.90:5000/insertReview.do', data)
       .then(res => {
         Alert.alert('', '리뷰가 등록되었습니다.', [
           {
@@ -127,7 +127,7 @@ const ReviewSelect = ({navigation, route}) => {
 
   React.useEffect(() => {
     axios
-      .get('http://10.0.2.2:5000/reviewAll.do')
+      .get('http://192.168.0.90:5000/reviewAll.do')
       .then(res => {
         //console.log(res.data);
         setReview(res.data);

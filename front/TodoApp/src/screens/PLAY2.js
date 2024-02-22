@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 892,
     overflow: 'hidden',
-    marginLeft: 27,
+    // marginLeft: 27,
   },
 });
 

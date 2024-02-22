@@ -62,7 +62,7 @@ const MyDaeng = props => {
   );
   const getPet = () => {
     axios
-      .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
+      .get(`http://192.168.0.90:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -120,7 +120,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://10.0.2.2:5000/petList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -128,7 +128,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://10.0.2.2:5000/dogCountList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })
@@ -466,7 +466,6 @@ const MyDaeng = props => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   detailBtn: {
     left: 175,
@@ -651,7 +650,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventText1Position: {
-    // left: 20,
     top: 11,
     position: 'absolute',
   },
@@ -675,8 +673,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventLayout2: {
-    left: 40,
+    // 이벤트 + 산책 시작 버튼
+    left: 10,
     width: 300,
+    // 가로 변경 금지.. 그림 깨짐
     position: 'absolute',
   },
   walkTextPosition: {
@@ -717,7 +717,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo6: {
-    fontSize: 9,
+    fontSize: FontSize.size_3xs,
     color: Color.colorBlack,
   },
   eventLayout: {
@@ -776,15 +776,16 @@ const styles = StyleSheet.create({
   },
   map: {
     marginLeft: -200,
-    top: 1030,
+    top: 1350,
     height: 455,
     width: 360,
     left: '50%',
     position: 'absolute',
   },
   title: {
-    top: 1002,
-    left: 23,
+    // 마이댕 지도 글자
+    top: 1300,
+    left: 30,
     position: 'absolute',
   },
   backgroundIcon: {
@@ -1053,6 +1054,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   walkDiv: {
+    // 산책 시작 회색 박스
     borderRadius: 8,
     backgroundColor: Color.colorGainsboro_100,
     height: 31,
@@ -1073,9 +1075,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_3xs,
   },
   walkbtn: {
-    top: 505,
-    //     top: 450,
-    left: 7,
+    // 산책 시작 버튼 박스
+    top: 750,
+    //left: 7,
     height: 31,
   },
   eventDiv: {
@@ -1218,8 +1220,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   event: {
-    top: 557,
-    left: 19,
+    // 이벤트 배너 전체
+    //top: 557,
+    top: 800,
+    left: 30,
     height: 410,
   },
   headerDiv: {
@@ -1249,19 +1253,20 @@ const styles = StyleSheet.create({
     left: '50%',
   },
   view: {
+    // backgroundColor: '#fff',
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
-    height: 1535,
+    height: 1900,
     overflow: 'hidden',
     width: '100%',
-    marginLeft: 30,
+    //marginLeft: 30,
   },
   skinDiseasePosition: {
     // 피부질환 박스
     height: 171,
     width: 360,
     left: '47.5%',
-    top: '51%',
+    top: '45%',
     position: 'absolute',
   },
   skinDisease: {

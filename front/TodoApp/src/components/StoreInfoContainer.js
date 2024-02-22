@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
   },
   payTitle: {
     top: 15,
-    fontSize: FontSize.size_xs,
+    fontSize: FontSize.size_xs + 3,
     color: Color.colorDarkslategray_200,
     position: 'absolute',
   },
   payDate: {
     top: 33,
-    fontSize: FontSize.size_5xs,
+    fontSize: FontSize.size_5xs + 3,
     color: Color.colorDarkgray_200,
     width: 152,
     height: 11,

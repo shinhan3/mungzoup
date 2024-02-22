@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   headerTitle: {
-    marginLeft: -102,
+    marginLeft: -130,
     zIndex: 101,
-    top: 9,
+    top: 15,
     left: '50%',
     fontSize: FontSize.size_xl,
     fontWeight: '500',

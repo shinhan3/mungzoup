@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
     left: 0,
   },
   text2: {
-    top: 2,
+    top: 4,
     left: 5,
-    fontSize: FontSize.size_6xs,
+    fontSize: FontSize.size_6xs + 2,
     lineHeight: 10,
     fontWeight: '500',
     fontFamily: FontFamily.notoSansKRMedium,

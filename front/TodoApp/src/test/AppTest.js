@@ -47,6 +47,7 @@ import SkinDiseaseAI from '../screens/SkinDiseaseAI';
 import DogHealthDetail from '../screens/DogHealthDetail';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MyCarousel from '../components/PetListCarousel';
+import FormContainer2 from '../components/FormContainer2';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -254,11 +255,11 @@ const AppTest = () => {
                   component={CardInsert}
                   options={{headerShown: false}}
                 />
-               <Stack.Screen
-                name="FindMyDogAI"
-                component={FindMyDogAI}
-                options={{headerShown: false}}
-              />
+                <Stack.Screen
+                  name="FindMyDogAI"
+                  component={FindMyDogAI}
+                  options={{headerShown: false}}
+                />
                 <Stack.Screen
                   name="FooterComponent"
                   component={FooterComponent}

@@ -13,7 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 const StoreRecommendContainer = ({dimensionCode}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.petBanner3}>
+    <View style={[styles.petBanner3, , {left: 29}]}>
       <Text style={[styles.petBannerTitle, styles.text2Typo]}>
         다른 반려인들이 방문한 장소는?
       </Text>
@@ -36,7 +36,8 @@ const StoreRecommendContainer = ({dimensionCode}) => {
           }}
           style={[styles.petplacebtn, styles.petplacebtnLayout]}>
           <View style={[styles.petplacediv, styles.petplacebtnLayout]} />
-          <Text style={[styles.petplacelink, styles.arrowIconPosition]}>
+          <Text
+            style={[styles.petplacelink, styles.arrowIconPosition, {top: 5}]}>
             추천받으러 가기
           </Text>
           <Image
@@ -157,6 +158,7 @@ const styles = StyleSheet.create({
     height: 188,
     width: 302,
     position: 'absolute',
+    marginLeft: -20,
   },
 });
 

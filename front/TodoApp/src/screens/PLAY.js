@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     height: 52,
   },
   headerTitle: {
-    top: 9,
-    marginLeft: 100,
+    top: 15,
+    marginLeft: 80,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
     width: 204,
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     marginLeft: 27,
   },
   insertplaceBtn: {
-    top: 92,
-    left: 252,
+    top: 90,
+    left: 220,
     width: 100,
   },
   play: {

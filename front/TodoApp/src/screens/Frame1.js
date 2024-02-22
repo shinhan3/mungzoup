@@ -20,7 +20,9 @@ const Frame1 = props => {
     React.useCallback(() => {
       console.log('test2007');
       axios
-        .get(`http://10.0.2.2:5000/getUserNameAndDiscountPrice.do/${userId}`)
+        .get(
+          `http://192.168.0.90:5000/getUserNameAndDiscountPrice.do/${userId}`,
+        )
         .then(res => {
           console.log(res.data);
           setDiscountPrice({
@@ -45,9 +47,11 @@ const Frame1 = props => {
             backBool={true}
           />
           <View
-            style={{
-              marginLeft: 27,
-            }}>
+            style={
+              {
+                // marginLeft: 27,
+              }
+            }>
             <FormContainer3 discount={discountPrice.discount} />
             <Text style={styles.ment1}>
               <Text>
