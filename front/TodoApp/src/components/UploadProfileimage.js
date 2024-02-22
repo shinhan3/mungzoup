@@ -16,40 +16,9 @@ import HeaderComponent from '../components/HeaderComponent';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {inlineStyles} from 'react-native-svg';
 
-const UploadProfileimage = props => {
-  // const {storeId} = route.params;
-  // const {storeInfo} = route.params;
-  //console.log(storeInfo);
+const UploadProfileimage = ({onFileSelect}) => {
   const [response, setResponse] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState('');
 
-  // 이미지 보내기
-  const onSubmitImage = () => {
-    const data = new FormData();
-    //console.log(response['assets'][0], 'aaa');
-    if (response['assets']) {
-      data.append('imageFile', {
-        name: response['assets'][0].fileName,
-        type: response['assets'][0].type,
-        uri: response['assets'][0].uri,
-      });
-      //console.log(data['_parts'][0][1]);
-      axios
-        .post('http://10.0.2.2:5000/uploadRecipt.do', data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then(response => {
-          setImageUrl(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  };
-
-  // 이미지 가져오기
   const onSelectImage = () => {
     launchImageLibrary(
       {
@@ -62,34 +31,42 @@ const UploadProfileimage = props => {
         if (response.didCancel) {
           return;
         } else if (response.errorCode) {
+          // handle error
         }
         setResponse(response);
       },
     );
   };
+
   React.useEffect(() => {
-    onSubmitImage();
+    if (response['assets']) {
+      onFileSelect({
+        name: response['assets'][0].fileName,
+        type: response['assets'][0].type,
+        uri: response['assets'][0].uri,
+      });
+    }
   }, [response]);
 
   return (
-    <View>
-      <View>
-        <Pressable onPress={() => onSelectImage()}>
-          <Image
-            style={[styles.inputimgIcon, response ? {borderRadius: 100} : {}]}
-            source={
-              response
-                ? {uri: response.assets[0].uri}
-                : require('../assets/profileimage.png')
-            }></Image>
-        </Pressable>
+    <View style={[styles.updloadImage]}>
+      <View style={[styles.updloadImage1]}>
+        <Image
+          style={[styles.inputimgIcon, response ? {borderRadius: 100} : {}]}
+          source={
+            response
+              ? {uri: response.assets[0].uri}
+              : require('../assets/profileimage.png')
+          }></Image>
+      </View>
+      <View style={[styles.updloadImage2]}>
         <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
-          <Text style={{color: 'white', fontSize: 18}}>앨범 찾기</Text>
+          <Text style={{color: 'white', fontSize: 10}}>앨범 찾기</Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           style={[
             styles.receiptBtn,
-            {backgroundColor: response ? Color.new1 : '#DDDDDD'},
+            { backgroundColor: response ? Color.new1 : '#DDDDDD' },
           ]}
           onPress={() =>
             props.navigation.navigate('MyDaeng', {
@@ -98,38 +75,47 @@ const UploadProfileimage = props => {
               imageUrl: imageUrl,
             })
           }
-          disabled={!response}>
+          disabled={!response}
+        >
           <Text
             style={{
               color: Color.bgWhite,
-              fontSize: 18,
-            }}>
+              fontSize: 10,
+            }}
+          >
             사진 등록
           </Text>
-        </Pressable>
+        </Pressable> */}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  receiptInfo: {
-    top: 300,
-    left: 140,
-    color: '#62AEA9',
-    opacity: 0.6,
+  updloadImage1: {
+    flex: 1,
   },
+  updloadImage2: {
+    marginRight: 40,
+    flex: 1,
+  },
+  updloadImage: {
+    flexDirection: 'row', // 가로 방향으로 요소들을 나란히 정렬
+    alignItems: 'center',
+  },
+
   albumBtn: {
     backgroundColor: Color.new1,
     padding: 12,
     borderRadius: 8,
-    marginTop: 450,
+    marginTop: 50,
     marginLeft: 60,
     marginRight: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
   receiptBtn: {
+    marginBottom: 50,
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
@@ -139,18 +125,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputimgIcon: {
-    top: 150,
-    height: 200,
-    width: 200,
-    left: 100,
-    position: 'absolute',
-  },
-  img: {
-    height: 120,
-    width: 120,
-    marginTop: 20,
-    marginBottom: 20,
-    alignSelf: 'center',
+    // top: 150,
+    height: 131,
+    width: 131,
+    left: 80,
+    // position: 'absolute',
   },
 });
 

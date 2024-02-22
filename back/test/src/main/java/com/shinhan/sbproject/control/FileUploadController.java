@@ -29,4 +29,14 @@ public class FileUploadController {
         }
         return S3Service.upload(imageFile);
     }
+
+    @PostMapping("/uploadProfileFile.do")
+    public String uploadProfileFileToS3(MultipartFile imageFile) throws IOException{
+        if(imageFile==null){
+            return null; 
+        }
+        return S3Service.uploadProfileImage(imageFile);
+    }
+    
+
 }

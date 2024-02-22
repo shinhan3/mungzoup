@@ -34,10 +34,12 @@ public class MyDaengController {
     }
     
 
+ 
     @PostMapping("/addPetProfile.do")
     public ResponseEntity<String> addPetProfile(@RequestBody PetsVO newPet) {
-        System.out.println("여기는왔나요.." + newPet);
-        if (newPet.getUser() != null && newPet.getUser().getUserId() != null) {
+        System.out.println(newPet.getImage());
+        System.out.println("Request received.." + newPet);
+        if (newPet.getUser() != null && newPet.getUser().getUserId() != null ) {
             petsRepo.save(newPet);
             return ResponseEntity.ok("Pet information updated successfully");
         }

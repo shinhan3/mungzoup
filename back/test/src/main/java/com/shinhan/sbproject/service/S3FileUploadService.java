@@ -49,4 +49,22 @@ public class S3FileUploadService {
         
     }
 
+    public String uploadProfileImage(MultipartFile file){
+        //파일이름 지정
+        String fileName = "image/profile" + System.currentTimeMillis();
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
+
+        try (InputStream inputStream = file.getInputStream()) {
+            //Amazon S3에 객체 업로드
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, metadata)
+            .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (IOException e) {
+        }
+    //업로드된 객체의 URL반환
+    return amazonS3.getUrl(bucket, fileName).toString();
+        
+    }
+
 }

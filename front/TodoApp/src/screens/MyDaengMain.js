@@ -17,7 +17,7 @@ import MyCarousel from '../components/PetListCarousel';
 import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
   console.log(props);
-  const [showNewContent, setShowNewContent] = useState(false);
+  // const [showNewContent, setShowNewContent] = useState(false);
 
   const [pets, setPets] = useState([]);
   const userId = USERID;
@@ -1226,9 +1226,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   skinDisease: {
-    // marginTop: -447,
-    marginTop: -747,
-    marginLeft: -190,
+    marginTop: -300,
+    marginLeft: -200,
   },
   healthboxIcon: {
     marginTop: -85.5,

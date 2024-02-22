@@ -13,12 +13,12 @@ import {
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import GenderPicker from '../components/GenderPicker';
 import BirthdayPicker from '../components/BirthdayPicker';
+import UploadProfileimage from '../components/UploadProfileimage';
 import axios from 'axios';
 import {USERID} from '../UserId';
 
-// import ImagePicker from 'react-native-imaage-picker';
-
 const MyDaenegUpdate = props => {
+  const userId = USERID;
   const petId = props.route.params.petId;
   const [petProfile, setPetProfile] = React.useState({});
   React.useEffect(() => {
@@ -40,6 +40,43 @@ const MyDaenegUpdate = props => {
     birth: null,
     sex: null,
   });
+  const [file, setFile] = React.useState(null);
+  const handleFileSelect = file => {
+    setFile(file);
+  };
+  const submitForm = () => {
+    const data = new FormData();
+    data.append('imageFile', file);
+
+    axios
+      .post('http://10.0.2.2:5000/uploadProfileFile.do', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log('^^^^^^^^', response);
+        const formData = {
+          ...form,
+          image: response.data,
+          user: {userId: userId},
+        };
+
+        axios
+          .post('http://10.0.2.2:5000/updatePetProfile.do', formData)
+          .then(res => {
+            console.log(res.data);
+            props.navigation.navigate('MyDaeng');
+          })
+          .catch(err => {
+            console.error(err.response.data); // 에러 메시지 출력
+            setError('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   // useEffect 훅을 사용하여 petProfile이 업데이트될 때마다 form을 업데이트합니다.
   React.useEffect(() => {
@@ -108,25 +145,6 @@ const MyDaenegUpdate = props => {
     );
   };
 
-  const submitForm = () => {
-    const userId = USERID;
-    const data = {
-      ...form,
-      user: {userId: userId},
-    };
-
-    axios
-      .put('http://10.0.2.2:5000/updatePetProfile.do', data)
-      .then(res => {
-        console.log(res.data);
-        props.navigation.navigate('MyDaeng');
-      })
-      .catch(err => {
-        console.error(err.response.data);
-        setError('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      });
-  };
-
   const deletePetProfile = () => {
     axios
       .delete(`http://10.0.2.2:5000/deletePetProfile.do/${petId}`)
@@ -174,6 +192,7 @@ const MyDaenegUpdate = props => {
                 style={styles.deleteImg}></Image>
             </Pressable>
           </View>
+          <UploadProfileimage navigation={props.navigation} />
           {form && (
             <View style={styles.view}>
               <View style={[styles.main, styles.mainPosition]}>
@@ -223,11 +242,6 @@ const MyDaenegUpdate = props => {
                     />
                     <Text style={[styles.text, styles.textTypo]}>이름</Text>
                   </View>
-                  <Image
-                    style={[styles.profileimageIcon, styles.iconPosition]}
-                    resizeMode="cover"
-                    source={require('../assets/profileimage.png')}
-                  />
                 </View>
                 <Pressable
                   style={[styles.insertbtn, styles.insertbtnPosition]}
@@ -432,30 +446,14 @@ const styles = StyleSheet.create({
     marginTop: -107.5,
     height: 58,
   },
-  profileimageIcon: {
-    marginTop: -278.5,
-    marginLeft: -66,
-    height: 131,
-    width: 131,
-  },
+
   inputform: {
     marginTop: -284,
     marginLeft: -135,
     width: 264,
     height: 557,
   },
-  // profileInfo: {
-  //   marginTop: -400,
-  //   fontSize: 30,
-  //   color: Color.colorBlack,
-  //   height: 50,
-  //   fontFamily: FontFamily.notoSansKRBold,
-  //   fontWeight: '700',
-  //   marginLeft: -128,
-  //   alignItems: 'center',
-  //   display: 'flex',
-  //   textAlign: 'left',
-  // },
+
   backgroundbtn: {
     marginTop: -20,
     borderRadius: Border.br_3xs,
@@ -527,7 +525,7 @@ const styles = StyleSheet.create({
   },
   view: {
     top: -150,
-    height: 900,
+    height: 600,
   },
   view1: {
     backgroundColor: Color.colorGhostwhite,

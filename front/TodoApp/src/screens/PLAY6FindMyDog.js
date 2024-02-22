@@ -13,6 +13,7 @@ import {
 import {FontFamily, FontSize, Color, Border} from '../GlobalStyles';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
+import FooterComponent from './FooterComponent';
 import axios from 'axios';
 
 const PLAY6FindMyDog = ({navigation}) => {
@@ -87,7 +88,7 @@ const PLAY6FindMyDog = ({navigation}) => {
     );
   };
   return (
-    <ScrollView>
+    <>
       <View style={styles.play}>
         <View style={[styles.main, styles.mainPosition]}>
           <View style={styles.play1}>
@@ -149,7 +150,7 @@ const PLAY6FindMyDog = ({navigation}) => {
           <Text style={[styles.headerTitle, styles.titleTypo]}>
             보호 중인 동물 찾기
           </Text>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               navigation.navigate('PLAYmainwonny');
             }}>
@@ -157,10 +158,15 @@ const PLAY6FindMyDog = ({navigation}) => {
               style={styles.arrowIcon}
               source={require('../assets/arrow4.png')}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
-    </ScrollView>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={navigation}></FooterComponent>
+    </>
   );
 };
 
