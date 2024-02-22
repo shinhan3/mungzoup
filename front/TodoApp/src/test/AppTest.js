@@ -46,6 +46,8 @@ import FooterComponent from '../screens/FooterComponent';
 import SkinDiseaseAI from '../screens/SkinDiseaseAI';
 import DogHealthDetail from '../screens/DogHealthDetail';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import MyCarousel from '../components/PetListCarousel';
+
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 const Stack = createNativeStackNavigator();
@@ -247,7 +249,6 @@ const AppTest = () => {
                   component={OcrInput}
                   options={{headerShown: false}}
                 />
-
                 <Stack.Screen
                   name="CardInsert"
                   component={CardInsert}

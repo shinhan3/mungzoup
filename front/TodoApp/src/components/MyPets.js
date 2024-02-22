@@ -8,20 +8,22 @@ import {useFocusEffect} from '@react-navigation/core';
 import {USERID} from '../UserId';
 import LocationContext from '../test/LocationContext ';
 
-function MyPets(porps) {
+function MyPets(props) {
   const userId = USERID;
   console.log('pet Map');
   console.log(userId);
-  console.log('porps', porps);
+  console.log('porps', props);
   // const initMy = porps.mylocation;
   // console.log(initMy);
-  const {latitude, longitude} = useContext(LocationContext);
-  console.log('porps123', latitude, longitude);
+  // const {latitude, longitude} = useContext(LocationContext);
   const mapRef = useRef();
-  const mylocation =
-    porps.mylocation.longitude < 0
-      ? {latitude: latitude, longitude: longitude}
-      : porps.mylocation;
+  // const mylocation =
+  //   porps.mylocation.longitude < 0
+  //     ? {latitude: latitude, longitude: longitude}
+  //     : porps.mylocation;
+  const mylocation = props.mylocation;
+  console.log('porps123', mylocation.latitude, mylocation.longitude);
+  console.log('porps', mylocation);
   console.log('porps', mylocation);
 
   const moveMapToLocation = () => {
@@ -38,58 +40,57 @@ function MyPets(porps) {
       });
     }
   };
-  moveMapToLocation();
-  console.log('current', mapRef.current);
-  console.log(latitude, longitude, 'aaa');
+  // moveMapToLocation();
+  console.log(mylocation.latitude, mylocation.longitude, 'aaa');
+  console.log(mylocation, 'aaa');
+  const mylat = mylocation.latitude;
+  const mylon = mylocation.longitude;
 
   return (
-    <>
-      <View style={{flex: 1}}>
-        {latitude && (
-          <MapView
-            ref={mapRef}
-            style={{flex: 1}}
-            // provider={PROVIDER_GOOGLE}
-            // customMapStyle={MapStyle}
-            initialRegion={{
-              // latitude: initPet[0].petLatitude,
-              // longitude: initPet[0].petLongitude,
-              latitude: latitude,
-              longitude: longitude,
-              latitudeDelta: 0.0025,
-              longitudeDelta: 0.0025,
-            }}>
-            {porps.pets.map((pet, index) => (
-              <Marker
-                key={index}
-                coordinate={{
-                  latitude: pet.petLatitude,
-                  longitude: pet.petLongitude,
-                }}
-                title={pet.name}
-                // description="테스트"
-              >
-                <Image
-                  source={hi}
-                  style={{width: 35, height: 35}}
-                  resizeMethod="auto"></Image>
-              </Marker>
-            ))}
-            <Marker
-              coordinate={{
-                latitude: latitude,
-                longitude: longitude,
-              }}
-              title="내 위치">
-              <Image
-                source={my}
-                style={{width: 35, height: 35}}
-                resizeMethod="auto"></Image>
-            </Marker>
-          </MapView>
-        )}
-      </View>
-    </>
+    // <View style={{flex: 1}}>
+    <MapView
+      // ref={mapRef}
+      style={{flex: 1}}
+      // provider={PROVIDER_GOOGLE}
+      // customMapStyle={MapStyle}
+      initialRegion={{
+        // latitude: initPet[0].petLatitude,
+        // longitude: initPet[0].petLongitude,
+        latitude: props.pets[0].petLatitude,
+        longitude: props.pets[0].petLongitude,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0025,
+      }}>
+      {props.pets.map((pet, index) => (
+        <Marker
+          key={index}
+          coordinate={{
+            latitude: pet.petLatitude,
+            longitude: pet.petLongitude,
+          }}
+          title={pet.name}
+          // description="테스트"
+        >
+          <Image
+            source={hi}
+            style={{width: 35, height: 35}}
+            resizeMethod="auto"></Image>
+        </Marker>
+      ))}
+      <Marker
+        coordinate={
+          mylocation
+          // latitude: mylat,
+          // longitude: mylon,
+        }
+        title="내 위치">
+        <Image
+          source={my}
+          style={{width: 35, height: 35}}
+          resizeMethod="auto"></Image>
+      </Marker>
+    </MapView>
+    // </View>
   );
 }
 const MapStyle = [
