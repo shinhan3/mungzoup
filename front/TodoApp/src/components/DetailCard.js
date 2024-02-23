@@ -8,7 +8,7 @@ const DetailCard = ({navigation}) => {
   const [storeList, setStoreList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get('http://192.168.0.10:5000/storeList.do')
+      .get('http://192.168.0.90:5000/storeList.do')
       .then(res => {
         //console.log(res.data);
         setStoreList(res.data);

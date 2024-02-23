@@ -67,7 +67,7 @@ function HiddenPopularStores(props) {
   ]);
 
   //화면 비율
-  const snapPoints = ['15%', '45%', '100%'];
+  const snapPoints = ['15%', '45%', '90%'];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -89,7 +89,7 @@ function HiddenPopularStores(props) {
     React.useCallback(() => {
       axios
         .get(
-          `http://192.168.0.10:5000/storeListPay.do/${latitude}/${longitude}`,
+          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
         )
         .then(res => {
           setStoreList(res.data);
@@ -105,7 +105,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://192.168.0.10:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         console.log(res.data.length);
@@ -139,7 +139,7 @@ function HiddenPopularStores(props) {
         dimensionCode={require('../assets/arrow8.png')}
         benefits="숨은 인기 가맹점"
         go="PLAYmainwonny"
-        backBool={true}></HeaderComponent>
+        backBool={false}></HeaderComponent>
       {/* //Header */}
       {/*  main  */}
       <View style={{flex: 1}}>
@@ -154,6 +154,7 @@ function HiddenPopularStores(props) {
             longitudeDelta: 0.0025,
           }}>
           <Marker
+            key={-2}
             coordinate={{
               latitude: latitude,
               longitude: longitude,

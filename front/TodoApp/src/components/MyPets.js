@@ -78,6 +78,7 @@ function MyPets(props) {
         </Marker>
       ))}
       <Marker
+        key={-1}
         coordinate={
           mylocation
           // latitude: mylat,

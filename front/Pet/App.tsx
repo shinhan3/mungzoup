@@ -47,7 +47,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
         console.log(
-          `http://192.168.0.10:5000/UpdatePatLocation.do/${petId}/${latitudeValue}/${longitudeValue}`,
+          `http://192.168.0.90:5000/UpdatePatLocation.do/${petId}/${latitudeValue}/${longitudeValue}`,
         );
         axios
           .put(

@@ -23,13 +23,13 @@ function UnHealthResult({disease}) {
     <>
       <View style={[styles.content, styles.contentLayout]}>
         <View style={[styles.background, styles.backgroundBg]} />
-        <View style={{marginTop: 205, marginLeft: -475}}>
+        <View style={{marginTop: 205, marginRight: 425}}>
           <Text style={[styles.contenttext3, styles.ai1Typo]}>
             <Text style={{color: Color.new1}}>{disease}</Text>
             <Text>(이/가) 의심되니</Text>
           </Text>
         </View>
-        <Text style={[styles.contenttext2, styles.ai1Typo]}>
+        <Text style={[styles.contenttext2, styles.ai1Typo, {left: 70}]}>
           병원에 가보는 건 어떠하신가요?
         </Text>
       </View>

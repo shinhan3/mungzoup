@@ -90,7 +90,7 @@ function WalkingHistory(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.10:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           const rawData = res.data;
 
@@ -190,9 +190,9 @@ function WalkingHistory(props) {
         </TouchableOpacity>
       </View>
       {/*  Victory_native  */}
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <VictoryChart
-          width={380}
+          width={380} //
           height={200}
           theme={VictoryTheme.material}
           padding={{top: 20, bottom: 80, left: 40, right: 60}}
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
   },
   content: {
     marginLeft: 15,
-    marginRight: 26,
+    // marginRight: 26,
     width: 330,
     height: 208,
     backgroundColor: 'white',

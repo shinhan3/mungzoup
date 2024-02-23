@@ -24,7 +24,7 @@ const MyDaenegUpdate = props => {
   const [petProfile, setPetProfile] = React.useState({});
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.10:5000/petProfile.do/${petId}`)
+      .get(`http://192.168.0.90:5000/petProfile.do/${petId}`)
       .then(res => {
         console.log(res.data, 'aaaaaaa');
         setPetProfile(res.data);
@@ -51,7 +51,7 @@ const MyDaenegUpdate = props => {
     data.append('imageFile', form.image);
 
     axios
-      .post('http://192.168.0.10:5000/uploadProfileFile.do', data, {
+      .post('http://192.168.0.90:5000/uploadProfileFile.do', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -65,7 +65,7 @@ const MyDaenegUpdate = props => {
         };
 
         axios
-          .put('http://192.168.0.10:5000/updatePetProfile.do', formData)
+          .put('http://192.168.0.90:5000/updatePetProfile.do', formData)
           .then(res => {
             console.log(res.data);
             props.navigation.navigate('MyDaeng');
@@ -151,7 +151,7 @@ const MyDaenegUpdate = props => {
 
   const deletePetProfile = () => {
     axios
-      .delete(`http://192.168.0.10:5000/deletePetProfile.do/${petId}`)
+      .delete(`http://192.168.0.90:5000/deletePetProfile.do/${petId}`)
       .then(res => {
         alert('삭제에 성공했습니다.');
         console.log(res.data);
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo: {
-    color: Color.colorDarkslategray,
+    // color: Color.colorDarkslategray,
     lineHeight: 20,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   insertbtnPosition: {
-    marginLeft: -140,
+    marginLeft: -135,
     width: 262,
     left: '50%',
     top: '50%',
@@ -457,13 +457,13 @@ const styles = StyleSheet.create({
   },
   textbtn: {
     marginLeft: -24.6,
-    fontSize: FontSize.size_mini,
-    color: Color.colorWhite,
+    fontSize: FontSize.size_mini + 5,
+    color: Color.bgWhite,
     width: 46,
     height: 37,
     justifyContent: 'center',
     textAlign: 'center',
-    marginTop: -17,
+    marginTop: -16,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     alignItems: 'center',
@@ -527,6 +527,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     overflow: 'hidden',
+  },
+  error: {
+    top: 650,
+    left: 120,
+    color: 'red',
   },
 });
 

@@ -24,7 +24,7 @@ const DogHealthDetail = ({navigation}) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.10:5000/dogSkinDiseaseList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/dogSkinDiseaseList.do/${userId}`)
       .then(res => {
         console.log(res.data.healthList);
         setHealthList(res.data.healthList);
@@ -67,7 +67,7 @@ const DogHealthDetail = ({navigation}) => {
           <View style={styles.main}>
             <View style={styles.content}>
               <View style={styles.healthList}>
-                <View style={{marginTop: 50}}>
+                <View style={{marginTop: 50, marginLeft: -30}}>
                   {healthList &&
                     healthList.map((dog, seq) => (
                       <Text key={seq} style={styles.contenttext}>
@@ -81,11 +81,13 @@ const DogHealthDetail = ({navigation}) => {
                     resizeMode="cover"
                     source={require('../assets/heartplus.png')}
                   />
-                  <Text style={[styles.txt, styles.textTypo]}>건강해요!</Text>
+                  <Text style={[styles.txt, styles.textTypo, {top: 3}]}>
+                    건강해요!
+                  </Text>
                 </View>
               </View>
               <View style={styles.unhealthList}>
-                <View style={{marginTop: 50, marginLeft: -380}}>
+                <View style={{marginTop: 50, marginLeft: -450}}>
                   {unhealthList &&
                     unhealthList.map((dog, seq) => (
                       <Text key={seq} style={styles.contenttext1}>
@@ -99,7 +101,9 @@ const DogHealthDetail = ({navigation}) => {
                     resizeMode="cover"
                     source={require('../assets/warn.png')}
                   />
-                  <Text style={[styles.text8, styles.textTypo]}>의심돼요</Text>
+                  <Text style={[styles.text8, styles.textTypo, {top: 3}]}>
+                    의심돼요
+                  </Text>
                 </View>
               </View>
             </View>
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
   },
   healthList: {
     marginTop: 50,
-    marginLeft: 80,
+    marginLeft: 70,
     width: 251,
     height: '100%',
   },
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
     width: '93.92%',
     right: '6.08%',
     bottom: '61.96%',
-    left: '0%',
+    left: '-2%',
     top: '0%',
     position: 'absolute',
   },
@@ -204,7 +208,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: Color.colorDimgray,
     borderWidth: 0.5,
-    width: 357,
+    width: 300,
     height: 400,
     top: 15,
     left: 10,

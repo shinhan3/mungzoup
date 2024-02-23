@@ -145,7 +145,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post('http://192.168.0.10:5000/insertPetHistory.do', data)
+      .post('http://192.168.0.90:5000/insertPetHistory.do', data)
       .then(res => {
         console.log(res.data);
         props.navigation.navigate('PLAYmainwonny');
@@ -182,6 +182,7 @@ function PLAY1(props) {
           longitudeDelta: 0.0025,
         }}>
         <Marker
+          key={-4}
           coordinate={{
             latitude: spotLatitude,
             longitude: spotLongitude,
@@ -193,6 +194,7 @@ function PLAY1(props) {
             resizeMethod="auto"></Image>
         </Marker>
         <Marker
+          key={-3}
           coordinate={{
             latitude: latitude,
             longitude: longitude,
@@ -288,11 +290,11 @@ function PLAY1(props) {
         </View>
       </Modal>
       {/*  //Modal  */}
-      <FooterComponent
+      {/* <FooterComponent
         petBoolean={false}
         playBoolean={true}
         cardBoolean={false}
-        navigation={props.navigation}></FooterComponent>
+        navigation={props.navigation}></FooterComponent> */}
     </>
   );
 }
@@ -374,6 +376,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+    top: 5,
   },
   modal: {
     flex: 0.5,

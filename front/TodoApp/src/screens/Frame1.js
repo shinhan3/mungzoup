@@ -21,7 +21,7 @@ const Frame1 = props => {
       console.log('test2007');
       axios
         .get(
-          `http://192.168.0.10:5000/getUserNameAndDiscountPrice.do/${userId}`,
+          `http://192.168.0.90:5000/getUserNameAndDiscountPrice.do/${userId}`,
         )
         .then(res => {
           console.log(res.data);
@@ -89,11 +89,11 @@ const Frame1 = props => {
           </View>
         </View>
       </ScrollView>
-      <FooterComponent
+      {/* <FooterComponent
         petBoolean={false}
         playBoolean={false}
         cardBoolean={true}
-        navigation={props.navigation}></FooterComponent>
+        navigation={props.navigation}></FooterComponent> */}
     </>
   );
 };

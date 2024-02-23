@@ -30,7 +30,7 @@ function InsertWalkSpot(props) {
         user: {userId: 'user1'},
       };
       axios
-        .post('http://192.168.0.10:5000/insertWalkSpot.do', data)
+        .post('http://192.168.0.90:5000/insertWalkSpot.do', data)
         .then(res => {
           const newSpot = res.data;
           setSpotList(prevSpotList => [...prevSpotList, newSpot]);
@@ -72,7 +72,7 @@ function InsertWalkSpot(props) {
                 borderWidth: 1,
                 borderColor: '#DDDDDD',
                 borderRadius: 10,
-                width: 320,
+                width: 260,
                 height: 50,
                 marginLeft: 20,
                 marginBottom: 40,
@@ -96,7 +96,7 @@ function InsertWalkSpot(props) {
                 borderWidth: 1,
                 borderColor: '#DDDDDD',
                 borderRadius: 10,
-                width: 320,
+                width: 260,
                 height: 50,
                 marginLeft: 20,
                 marginBottom: 20,
@@ -128,7 +128,7 @@ function InsertWalkSpot(props) {
             onPress={() => {
               insertWalkSpotfunction();
             }}>
-            <Text style={styles.btnText}>등록</Text>
+            <Text style={[styles.btnText, {fontSize: 20}]}>등록</Text>
           </TouchableOpacity>
         </View>
         {/*  //Content  */}
@@ -145,9 +145,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   headerTitle: {
-    marginLeft: -102,
-    top: 9,
-    left: '50%',
+    top: 15,
+    marginLeft: 80,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
     width: 204,
@@ -175,7 +174,7 @@ const styles = StyleSheet.create({
   },
   content: {
     margin: 26,
-    width: 360,
+    width: 300,
     height: 560,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -218,7 +217,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    width: 300,
+    width: 200,
     borderRadius: 10,
     marginTop: 120,
   },
@@ -227,7 +226,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    width: 300,
+    width: 200,
     borderRadius: 10,
     marginTop: 120,
   },

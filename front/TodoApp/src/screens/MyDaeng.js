@@ -55,14 +55,9 @@ const MyDaeng = props => {
     );
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      getGeolocation();
-    }, []),
-  );
   const getPet = () => {
     axios
-      .get(`http://192.168.0.10:5000/getPetMap.do/${userId}`)
+      .get(`http://192.168.0.90:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -79,6 +74,7 @@ const MyDaeng = props => {
         setModelVisible(false);
       }, 5000);
       getPet();
+      getGeolocation();
     }, []),
   );
 
@@ -120,7 +116,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.10:5000/petList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -128,7 +124,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://192.168.0.10:5000/dogCountList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })
@@ -223,6 +219,7 @@ const MyDaeng = props => {
                 />
               </View>
               <Pressable
+                style={{padding: 1}}
                 onPress={() => {
                   props.navigation.navigate('PLAY4');
                 }}>
@@ -524,7 +521,7 @@ const styles = StyleSheet.create({
     width: 150,
     color: Color.colorDarkslategray,
     lineHeight: 20,
-    fontSize: FontSize.size_base,
+    fontSize: FontSize.size_base + 2.5,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     textAlign: 'left',
@@ -1230,7 +1227,7 @@ const styles = StyleSheet.create({
   event: {
     // 이벤트 배너 전체
     //top: 557,
-    top: 800,
+    top: 830,
     left: 30,
     height: 410,
   },

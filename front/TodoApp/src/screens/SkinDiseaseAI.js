@@ -53,6 +53,7 @@ const SkinDiseaseAI = ({navigation}) => {
   };
 
   const onSelectImage = () => {
+    console.log('onSelectImageonSelectImageonSelectImageonSelectImage');
     launchImageLibrary(
       {
         madiaType: 'photo',
@@ -122,7 +123,7 @@ const SkinDiseaseAI = ({navigation}) => {
             benefits="펫 건강 분석"
             navigation={navigation}
             go="MyDaeng"
-            backBool="true"
+            backBool={false}
           />
           <Input
             placeholder="강아지 이름"
@@ -166,11 +167,23 @@ const SkinDiseaseAI = ({navigation}) => {
               </Text>
             </View>
             <SkinDiseaseResult disease={disease}></SkinDiseaseResult>
-            <Pressable onPress={onSelectImage}>
+            <Pressable
+              style={[
+                styles.phimageThinIcon,
+                {
+                  borderStyle: 'solid',
+                  borderWidth: 0.5,
+                  borderRadius: Border.br_3xs,
+                },
+                previewImage ? {borderRadius: 10} : {},
+              ]}
+              onPress={onSelectImage}>
               <Image
                 style={[
                   styles.phimageThinIcon,
-                  previewImage ? {borderRadius: 10, ㅣ} : {},
+                  previewImage
+                    ? {borderRadius: 10, left: -0}
+                    : {width: '104%', height: '103%', left: -3},
                 ]}
                 resizeMode="cover"
                 source={

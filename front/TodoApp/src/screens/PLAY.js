@@ -29,7 +29,9 @@ const PLAY = props => {
           />
         </TouchableOpacity>
       </View>
-      <FavoriteListContainer navigation={props.navigation} />
+      <View style={{height: '90%'}}>
+        <FavoriteListContainer navigation={props.navigation} />
+      </View>
       <TouchableOpacity
         style={[styles.insertplaceBtn, styles.txtLayout]}
         onPress={() => {
@@ -38,6 +40,11 @@ const PLAY = props => {
         <View style={[styles.div, styles.divPosition1]} />
         <Text style={[styles.txt, styles.txtLayout]}>+ 내 장소</Text>
       </TouchableOpacity>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={props.navigation}></FooterComponent>
     </View>
   );
 };

@@ -41,7 +41,7 @@ const PLAY2 = ({navigation}) => {
         benefits="장소추천"
         navigation={navigation}
         go="PLAYmainwonny"
-        backBool={true}
+        backBool={false}
         dimensionCode={require('../assets/arrow8.png')}
       />
       <View style={styles.play}>
@@ -82,12 +82,12 @@ const PLAY2 = ({navigation}) => {
             줍줍 장소
           </Text>
         </View> */}
+        <FooterComponent
+          petBoolean={false}
+          playBoolean={true}
+          cardBoolean={false}
+          navigation={navigation}></FooterComponent>
       </View>
-      <FooterComponent
-        petBoolean={false}
-        playBoolean={true}
-        cardBoolean={false}
-        navigation={navigation}></FooterComponent>
     </>
   );
 };
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   recommendlist: {
     top: 95,
-    height: 650,
+    height: 480,
     marginTop: 10,
   },
   contentTitle: {

@@ -52,7 +52,9 @@ const UploadProfileimage = ({onFileSelect, image}) => {
           }></Image>
       </View>
       <View style={[styles.updloadImage2]}>
-        <Pressable style={[styles.albumBtn]} onPress={() => onSelectImage()}>
+        <Pressable
+          style={[styles.albumBtn, {width: 70}]}
+          onPress={() => onSelectImage()}>
           <Text style={[styles.btnText]}>앨범 찾기</Text>
         </Pressable>
       </View>
@@ -62,9 +64,10 @@ const UploadProfileimage = ({onFileSelect, image}) => {
 
 const styles = StyleSheet.create({
   btnText: {
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
+    color: Color.bgWhite,
   },
   updloadImage1: {
     flex: 1,
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.new1,
     padding: 12,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 3,
     marginLeft: 60,
     marginRight: 60,
     alignItems: 'center',

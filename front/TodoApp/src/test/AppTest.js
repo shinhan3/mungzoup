@@ -48,6 +48,7 @@ import DogHealthDetail from '../screens/DogHealthDetail';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MyCarousel from '../components/PetListCarousel';
 import FormContainer2 from '../components/FormContainer2';
+import ModelComponent from '../screens/ModelComponent';
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -273,6 +274,11 @@ const AppTest = () => {
                 <Stack.Screen
                   name="DogHealthDetail"
                   component={DogHealthDetail}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="ModelComponent"
+                  component={ModelComponent}
                   options={{headerShown: false}}
                 />
               </Stack.Navigator>
