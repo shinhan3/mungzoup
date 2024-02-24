@@ -17,6 +17,7 @@ import {
   VictoryTheme,
   VictoryVoronoiContainer,
 } from 'victory-native';
+import MyDaeng from './MyDaeng';
 
 function WalkingHistory(props) {
   const [petInfo, setPetInfo] = useState([]); //petInfo (List)
@@ -132,6 +133,16 @@ function WalkingHistory(props) {
               0,
             ];
           });
+
+          // 주간 산책 거리와 산책 시간 계산
+          const totalDistance = processedData.reduce(
+            (sum, item) => sum + item[2],
+            0,
+          );
+          const totalWalkTime = processedData.reduce(
+            (sum, item) => sum + item[3],
+            0,
+          );
 
           setPetInfo(processedData);
         })

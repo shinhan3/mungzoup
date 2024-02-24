@@ -19,8 +19,11 @@ import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
   const [pets, setPets] = useState([]);
   const [modelVisible, setModelVisible] = useState(true);
-
-  const userId = USERID;
+  const [petInfo, setPetInfo] = useState([]); //petInfo (List)
+  const [totalDistance, setTotalDistance] = useState(0);
+  const [totalWalkTime, setTotalWalkTime] = useState(0);
+  const userId = 'user1';
+  //const userId = USERID;
 
   // const [latitude, setLatitude] = useState(0.0);
   // const [longitude, setLongitude] = useState(0.0);
@@ -113,6 +116,53 @@ const MyDaeng = props => {
         clearTimeout(timer);
       };
     }, [pets]),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
+        .then(res => {
+          console.log('다녀왔습니다.');
+          const rawData = res.data;
+
+          // 이번 주의 일요일을 구하는 함수
+          const getSunday = () => {
+            const d = new Date();
+            d.setDate(d.getDate()); // 이전 주를 계산
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 0);
+            return new Date(d.setDate(diff));
+          };
+
+          const sunday = getSunday();
+          const nextSunday = new Date(
+            sunday.getTime() + 7 * 24 * 60 * 60 * 1000,
+          );
+
+          const thisWeekData = rawData.filter(item => {
+            const itemDate = new Date(item[0]);
+            itemDate.setHours(0, 0, 0, 0);
+            return itemDate >= sunday && itemDate < nextSunday;
+          });
+
+          // 주간 산책 거리와 산책 시간 계산
+          const totalDistance = thisWeekData.reduce(
+            (sum, item) => sum + item[2],
+            0,
+          );
+          const totalWalkTime = thisWeekData.reduce(
+            (sum, item) => sum + item[3],
+            0,
+          );
+
+          setTotalDistance(totalDistance);
+          setTotalWalkTime(totalWalkTime);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, []),
   );
 
   // setInterval(getPet, 60000);
@@ -212,7 +262,9 @@ const MyDaeng = props => {
                 source={require('../assets/background33.png')}
               />
               <View style={styles.title2}>
-                <Text style={[styles.text8, styles.textLayout]}>산책 요약</Text>
+                <Text style={[styles.text8, styles.textLayout]}>
+                  주간 산책 요약
+                </Text>
                 <Image
                   style={[styles.vectorIcon, styles.iconPosition]}
                   resizeMode="cover"
@@ -234,10 +286,14 @@ const MyDaeng = props => {
               </Pressable>
               <View style={[styles.km, styles.kmPosition]}>
                 <Text style={[styles.km1, styles.km1Typo]}>km</Text>
-                <Text style={[styles.text9, styles.textTypo1]}>12</Text>
+                <Text style={[styles.text9, styles.textTypo1]}>
+                  {totalDistance}
+                </Text>
               </View>
               <View style={styles.time}>
-                <Text style={[styles.text10, styles.text10Position]}>100</Text>
+                <Text style={[styles.text10, styles.text10Position]}>
+                  {totalWalkTime}
+                </Text>
                 <Text style={[styles.text11, styles.text11Position]}>분</Text>
                 <View style={[styles.timeChild, styles.timeChildLayout]} />
               </View>
@@ -904,7 +960,7 @@ const styles = StyleSheet.create({
     top: 3,
     left: 30,
     fontSize: FontSize.size_smi,
-    width: 56,
+    width: 100,
     color: Color.colorBlack,
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
