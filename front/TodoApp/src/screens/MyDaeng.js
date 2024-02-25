@@ -970,7 +970,7 @@ const styles = StyleSheet.create({
     top: 3,
     left: 30,
     fontSize: FontSize.size_xs + 3,
-    width: 56,
+    width: 70,
     color: Color.colorBlack,
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',

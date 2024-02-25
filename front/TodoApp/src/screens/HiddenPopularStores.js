@@ -261,11 +261,36 @@ function HiddenPopularStores(props) {
                   </View>
                   <View style={styles.contentBottom}>
                     {item.cnt_pay * 100 > item.POST_COUNT * 0.9 && (
-                      <View>
-                        <Text style={styles.hiddenText}>숨은 명소</Text>
+                      <View
+                        style={{
+                          backgroundColor: '#EAE03A',
+                          borderRadius: 10,
+                          height: 25,
+                          width: 70,
+                          flexDirection: 'row',
+                          left: 20,
+                        }}>
+                        <Text style={{color: 'black', fontSize: 20, left: 5}}>
+                          숨은 명소
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            width: 300,
+                            left: -55,
+                            top: 30,
+                          }}>
+                          게시글 수에 비해 실 결제 건수가 월등히 높아요
+                        </Text>
                       </View>
                     )}
-                    <View style={styles.detail}>
+                    <View
+                      style={[
+                        styles.detail,
+                        item.cnt_pay * 100 > item.POST_COUNT * 0.9 && {
+                          left: -70,
+                        },
+                      ]}>
                       <TouchableOpacity
                         style={styles.detailBtn}
                         onPress={() => {
@@ -273,7 +298,7 @@ function HiddenPopularStores(props) {
                             storeId: item.STORE_ID,
                           });
                         }}>
-                        <Text style={styles.btnText}>{`자세히`}</Text>
+                        <Text style={[styles.btnText]}>{`자세히`}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
