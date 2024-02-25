@@ -228,12 +228,20 @@ function HiddenPopularStores(props) {
             renderItem={({item}) => {
               return (
                 <View style={styles.contentList}>
-                  <View style={styles.storeFirst}>
+                  <TouchableOpacity
+                    style={styles.storeFirst}
+                    onPress={() => {
+                      props.navigation.navigate('Review', {
+                        storeId: item.STORE_ID,
+                      });
+                    }}>
+                    {/* <View style={styles.storeFirst}> */}
                     <Text style={styles.storeName}>{item.STORE_NAME}</Text>
                     <Text style={styles.storeCategory}>
                       {item.CATEGORY_NAME}
                     </Text>
-                  </View>
+                    {/* </View> */}
+                  </TouchableOpacity>
                   <View>
                     <Text style={styles.storeAddress}>
                       {item.STORE_ADDRESS}
@@ -269,6 +277,7 @@ function HiddenPopularStores(props) {
                           width: 70,
                           flexDirection: 'row',
                           left: 20,
+                          top: -115,
                         }}>
                         <Text style={{color: 'black', fontSize: 20, left: 5}}>
                           숨은 명소
@@ -277,8 +286,8 @@ function HiddenPopularStores(props) {
                           style={{
                             fontSize: 15,
                             width: 300,
-                            left: -55,
-                            top: 30,
+                            left: 20,
+                            top: 3,
                           }}>
                           게시글 수에 비해 실 결제 건수가 월등히 높아요
                         </Text>
@@ -291,7 +300,7 @@ function HiddenPopularStores(props) {
                           left: -70,
                         },
                       ]}>
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                         style={styles.detailBtn}
                         onPress={() => {
                           props.navigation.navigate('Review', {
@@ -299,7 +308,7 @@ function HiddenPopularStores(props) {
                           });
                         }}>
                         <Text style={[styles.btnText]}>{`자세히`}</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                     </View>
                   </View>
                 </View>
@@ -378,6 +387,7 @@ const styles = StyleSheet.create({
   storeFirst: {
     flexDirection: 'row',
     marginBottom: 5,
+    marginTop: 20,
   },
   storeName: {
     color: '#2E2E2E',
