@@ -207,19 +207,28 @@ function HiddenPopularStores(props) {
                     <View style={styles.storeText3}>
                       <Text style={styles.storeText}> 결제건수 </Text>
                       <Text style={styles.storeTextPoint}>
-                        {item.cnt_pay.toLocaleString()}
+                        {(item.cnt_pay * 100).toLocaleString()}
                       </Text>
                     </View>
                   </View>
-                  <TouchableOpacity
-                    style={styles.detailBtn}
-                    onPress={() => {
-                      props.navigation.navigate('Review', {
-                        storeId: item.STORE_ID,
-                      });
-                    }}>
-                    <Text style={styles.btnText}>{`자세히`}</Text>
-                  </TouchableOpacity>
+                  <View style={styles.contentBottom}>
+                    {item.cnt_pay * 100 > item.POST_COUNT / 2 && (
+                      <View>
+                        <Text style={styles.hiddenText}>숨은 명소</Text>
+                      </View>
+                    )}
+                    <View style={styles.detail}>
+                      <TouchableOpacity
+                        style={styles.detailBtn}
+                        onPress={() => {
+                          props.navigation.navigate('Review', {
+                            storeId: item.STORE_ID,
+                          });
+                        }}>
+                        <Text style={styles.btnText}>{`자세히`}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               );
             }}
@@ -341,6 +350,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+  },
+  contentBottom: {
+    flexDirection: 'row',
   },
   detailBtn: {
     width: 90,

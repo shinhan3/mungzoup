@@ -98,9 +98,9 @@ function WalkingHistory(props) {
           // 이번 주의 일요일을 구하는 함수
           const getSunday = () => {
             const d = new Date();
-            d.setDate(d.getDate() - 7 * weekOffset); // 이전 주를 계산
+            d.setDate(d.getDate() - 7 * weekOffset);
             const day = d.getDay();
-            const diff = d.getDate() - day + (day === 0 ? -6 : 0);
+            const diff = d.getDate() - day + (day === 0 ? 0 : 1); // 주의 시작은 일요일
             return new Date(d.setDate(diff));
           };
 
