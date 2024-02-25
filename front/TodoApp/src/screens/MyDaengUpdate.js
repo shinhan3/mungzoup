@@ -24,7 +24,7 @@ const MyDaenegUpdate = props => {
   const [petProfile, setPetProfile] = React.useState({});
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.90:5000/petProfile.do/${petId}`)
+      .get(`http://10.0.2.2:5000/petProfile.do/${petId}`)
       .then(res => {
         console.log(res.data, 'aaaaaaa');
         setPetProfile(res.data);
@@ -51,7 +51,7 @@ const MyDaenegUpdate = props => {
     data.append('imageFile', form.image);
 
     axios
-      .post('http://192.168.0.90:5000/uploadProfileFile.do', data, {
+      .post('http://10.0.2.2:5000/uploadProfileFile.do', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -65,7 +65,7 @@ const MyDaenegUpdate = props => {
         };
 
         axios
-          .put('http://192.168.0.90:5000/updatePetProfile.do', formData)
+          .put('http://10.0.2.2:5000/updatePetProfile.do', formData)
           .then(res => {
             console.log(res.data);
             props.navigation.navigate('MyDaeng');
@@ -151,7 +151,7 @@ const MyDaenegUpdate = props => {
 
   const deletePetProfile = () => {
     axios
-      .delete(`http://192.168.0.90:5000/deletePetProfile.do/${petId}`)
+      .delete(`http://10.0.2.2:5000/deletePetProfile.do/${petId}`)
       .then(res => {
         alert('삭제에 성공했습니다.');
         console.log(res.data);
@@ -178,15 +178,16 @@ const MyDaenegUpdate = props => {
           <Text style={styles.chartHeadText}>프로필 편집</Text>
         </View>
         <View>
-          <Pressable
+          <TouchableOpacity
             style={styles.deleteBtn}
             onPress={() => {
+              console.log('delete');
               deletePetProfile();
             }}>
             <Image
               source={require('../assets/trash_can.png')}
-              style={styles.deleteImg}></Image>
-          </Pressable>
+              style={[styles.deleteBtn, styles.deleteImg]}></Image>
+          </TouchableOpacity>
         </View>
         <UploadProfileimage
           onFileSelect={handleFileSelect}
@@ -265,14 +266,14 @@ const styles = StyleSheet.create({
     Color: '#2E2E2E',
   },
   deleteImg: {
-    marginTop: 5,
+    // marginTop: 5,
     width: 20,
     height: 20,
-    marginLeft: -220,
-    top: -47,
+    // marginLeft: -220,
   },
   deleteBtn: {
-    left: 340,
+    left: 60,
+    top: -22,
   },
   mainPosition: {
     height: 750,

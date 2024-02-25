@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   petwalkbtnLayout: {
     height: 25,
-    width: 133,
+    width: 110,
     position: 'absolute',
   },
   titlePosition: {
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_smi,
     color: Color.colorWhitesmoke_100,
     textAlign: 'center',
-    left: 0,
+    left: -10,
     top: 2,
     position: 'absolute',
   },
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     // left: 121,
     // width: 20,
     // height: 20,
-    left: 105,
+    left: 80,
     width: 22,
     height: 20,
     top: 3,

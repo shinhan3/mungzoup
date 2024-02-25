@@ -8,7 +8,7 @@ import FilteredCardForm1 from './FilteredCardForm1';
 
 const FormDropdown = ({onDropdownData}) => {
   const [dropdownBoxOpen, setDropdownBoxOpen] = useState(false);
-  const [dropdownBoxValue, setDropdownBoxValue] = useState('지역');
+  const [dropdownBoxValue, setDropdownBoxValue] = useState('강남구');
 
   const items = [
     {label: '강남구', value: '강남구'},
@@ -22,48 +22,16 @@ const FormDropdown = ({onDropdownData}) => {
     setDropdownBoxValue(value);
     try {
       const response = await axios.get(
-        `http://192.168.0.90:5000/areaPicking.do/${value}`,
+        `http://10.0.2.2:5000/areaPicking.do/${value}`,
       );
 
       const responseData = response.data;
       onDropdownData(responseData); //data PLAY2로 보내기
       console.log('응답 데이터의 개수: ', responseData.length);
-      // responseData.map((data, index) => {index
-      //   console.log(`데이터 ${index}: `, data);
-      // });
     } catch (error) {
       console.error(error);
     }
   };
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('여기까지 옴?', selectedItem);
-  //     const value2 = selectedItem.value;
-  //     setDropdownBoxValue(value2);
-  //     console.log('hoooo', value2);
-  //     axios
-  //       .get('http://192.168.0.90:5000/areaPicking.do', value2)
-  //       .then(res => {
-  //         console.log('ㅎㅇzzz', res.data);
-  //       })
-  //       .catch(err => console.log(err));
-  //   }, []),
-  // );
-
-  /* useFocusEffect(
-    useCallback(() => {
-      const value2 = selectedItem.value;
-      setDropdownBoxValue(value2);
-      console.log('hoooo', value2);
-      axios
-        .get('http://192.168.0.90:5000/areaPicking.do', value2)
-        .then(res => {
-          console.log('ㅎㅇzzz', res.data);
-        })
-        .catch(err => console.log(err));
-    }, []),
-  );*/
 
   return (
     <View style={{flex: 1}}>
@@ -73,7 +41,7 @@ const FormDropdown = ({onDropdownData}) => {
         value={dropdownBoxValue}
         setValue={handleValueChange}
         items={items}
-        placeholder="지역"
+        placeholder="강남구"
         containerStyle={styles.dropdownBox}
         style={styles.dropdownpicker}
         dropDownContainerStyle={styles.dropdownBoxdropDownContainer}

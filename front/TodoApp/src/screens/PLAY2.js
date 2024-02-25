@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,26 +15,23 @@ import {ScrollView} from 'react-native';
 import Modal from 'react-native-modal';
 import HeaderComponent from '../components/HeaderComponent';
 import FooterComponent from './FooterComponent';
+import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
 
 const PLAY2 = ({navigation}) => {
   const [dropdownData, setDropdownData] = React.useState(null);
   const handleDropdownData = data => {
     setDropdownData(data);
   };
-
-  // 전단지 보기
-  // const [isMissingModalVisible, setMissingModalVisible] = useState(false);
-
-  // const toggleMissingModal = () => {
-  //   console.log(isMissingModalVisible);
-  //   setMissingModalVisible(!isMissingModalVisible);
-  //   if (!isMissingModalVisible) {
-  //     setTimeout(() => {
-  //       setMissingModalVisible(false);
-  //     }, 5000);
-  //   }
-  // };
   console.log(navigation, 'navigationnavigationnavigationnavigationnavigation');
+  useFocusEffect(
+    useCallback(() => {
+      axios.get(`http://10.0.2.2:5000/areaPicking.do/강남구`).then(res => {
+        setDropdownData(res.data);
+      });
+    }, []),
+  );
+
   return (
     <>
       <HeaderComponent
@@ -52,7 +49,6 @@ const PLAY2 = ({navigation}) => {
           <View style={styles.upperPart}>
             <View>
               <FormDropdown onDropdownData={handleDropdownData} />
-              {/* {dropdownData && <FilteredCardForm data={dropdownData} />} */}
             </View>
             <View style={styles.regiontext}>
               <Text style={[styles.contentTitle, styles.titlePosition]}>
@@ -62,26 +58,7 @@ const PLAY2 = ({navigation}) => {
 방문하고 싶은 지역을 골라보세요.`}</Text>
             </View>
           </View>
-          {/* 전단지 버튼 */}
-          {/*<View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Button title="전단지 보기" onPress={toggleMissingModal} />
-            <Modal
-              isVisible={isMissingModalVisible}
-              style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/전단지.png')}
-                style={{width: 412, height: 584}}
-              />
-            </Modal>
-          </View>*/}
         </View>
-        {/* <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.titlePosition]}>
-            줍줍 장소
-          </Text>
-        </View> */}
         <FooterComponent
           petBoolean={false}
           playBoolean={true}
@@ -145,7 +122,7 @@ const styles = StyleSheet.create({
   },
   contentDetail: {
     top: 43,
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 4,
     fontFamily: FontFamily.notoSansKRRegular,
     color: Color.colorDimgray_100,
     alignItems: 'center',

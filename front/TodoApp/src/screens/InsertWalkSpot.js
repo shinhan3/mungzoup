@@ -11,6 +11,7 @@ import {
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import {Input} from 'react-native-elements';
 import axios from 'axios';
+import HeaderComponent from '../components/HeaderComponent';
 function InsertWalkSpot(props) {
   var address = props.route.params ? props.route.params.address : '';
   var latitude = props.route.params ? props.route.params.latitude : '';
@@ -18,6 +19,7 @@ function InsertWalkSpot(props) {
   var distance = props.route.params ? props.route.params.distance : '';
   const [name, setName] = useState('');
   const [spotList, setSpotList] = useState([]);
+  console.log('aaaaaa');
 
   const insertWalkSpotfunction = () => {
     if (props.route.params) {
@@ -30,7 +32,7 @@ function InsertWalkSpot(props) {
         user: {userId: 'user1'},
       };
       axios
-        .post('http://192.168.0.90:5000/insertWalkSpot.do', data)
+        .post('http://10.0.2.2:5000/insertWalkSpot.do', data)
         .then(res => {
           const newSpot = res.data;
           setSpotList(prevSpotList => [...prevSpotList, newSpot]);
@@ -46,20 +48,13 @@ function InsertWalkSpot(props) {
     <ScrollView>
       <View style={styles.play}>
         {/*  Header  */}
-        <View style={styles.header}>
-          <View style={[styles.headerDiv, styles.divPosition]} />
-          <Text style={styles.headerTitle}>내 장소 등록</Text>
-          <TouchableOpacity
-            onPress={() => {
-              console.log(props.navigation);
-              props.navigation.goBack('PLAY');
-            }}>
-            <Image
-              style={[styles.arrowIcon, styles.arrowIconLayout]}
-              source={require('../assets/arrow2.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <HeaderComponent
+          navigation={props.navigation}
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="내 장소 등록"
+          go="PLAY"
+          backBool={true}
+        />
         {/*  //Header  */}
         {/*  Content  */}
         <View style={styles.content}>

@@ -65,7 +65,7 @@ class MyCarousel extends React.Component {
         </View>
       );
     } else {
-      console.log('item^^^^^^', item); // 이 코드를 추가하세요.
+      // console.log('item^^^^^^', item); // 이 코드를 추가하세요.
       return (
         <View key={item.petId} style={styles.petProfileContainer}>
           <Pressable

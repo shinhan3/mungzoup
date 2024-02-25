@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Modal,
+  TouchableOpacity,
 } from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
 import MyPets from '../components/MyPets';
@@ -57,7 +58,7 @@ const MyDaeng = props => {
 
   const getPet = () => {
     axios
-      .get(`http://192.168.0.90:5000/getPetMap.do/${userId}`)
+      .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -69,14 +70,17 @@ const MyDaeng = props => {
 
   useFocusEffect(
     useCallback(() => {
-      setModelVisible(false);
-      setTimeout(() => {
-        setModelVisible(false);
-      }, 5000);
-      getPet();
       getGeolocation();
     }, []),
   );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // getPet();
+  //   }, []),
+  // );
+  useEffect(() => {
+    getPet();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -116,7 +120,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.90:5000/petList.do/${userId}`)
+      .get(`http://10.0.2.2:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -124,7 +128,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://192.168.0.90:5000/dogCountList.do/${userId}`)
+      .get(`http://10.0.2.2:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })
@@ -218,7 +222,7 @@ const MyDaeng = props => {
                   source={require('../assets/vector.png')}
                 />
               </View>
-              <Pressable
+              <TouchableOpacity
                 style={{padding: 1}}
                 onPress={() => {
                   props.navigation.navigate('PLAY4');
@@ -232,7 +236,7 @@ const MyDaeng = props => {
                   source={require('../assets/mingcuterightline1.png')}
                 />
                 <Text style={styles.textD}>상세보기</Text>
-              </Pressable>
+              </TouchableOpacity>
               <View style={[styles.km, styles.kmPosition]}>
                 <Text style={[styles.km1, styles.km1Typo]}>km</Text>
                 <Text style={[styles.text9, styles.textTypo1]}>12</Text>
@@ -255,7 +259,7 @@ const MyDaeng = props => {
                 resizeMode="cover"
                 source={require('../assets/healthbox.png')}
               />
-              <Pressable
+              <TouchableOpacity
                 style={[styles.inspect, styles.inspectPosition]}
                 onPress={() => {
                   props.navigation.navigate('SkinDiseaseAI');
@@ -269,9 +273,9 @@ const MyDaeng = props => {
                   source={require('../assets/mingcuterightline1.png')}
                 />
                 <Text style={styles.text29}>검사하기</Text>
-              </Pressable>
+              </TouchableOpacity>
 
-              <Pressable
+              <TouchableOpacity
                 style={[styles.detailBtn, styles.detailBtnLayout]}
                 onPress={() => {
                   props.navigation.navigate('DogHealthDetail');
@@ -280,9 +284,9 @@ const MyDaeng = props => {
                   상세보기
                 </Text>
                 <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
-              </Pressable>
+              </TouchableOpacity>
 
-              <Pressable
+              <TouchableOpacity
                 style={[styles.detailBtn2, styles.detailBtnLayout]}
                 onPress={() => {
                   props.navigation.navigate('DogHealthDetail');
@@ -291,7 +295,7 @@ const MyDaeng = props => {
                   상세보기
                 </Text>
                 <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
-              </Pressable>
+              </TouchableOpacity>
 
               <View style={[styles.skinHome, styles.skinHomePosition]}>
                 <Image
@@ -337,7 +341,7 @@ const MyDaeng = props => {
               )}
             </View>
 
-            <Pressable
+            <TouchableOpacity
               style={[styles.walkbtn, styles.eventLayout2]}
               onPress={() => {
                 props.navigation.navigate('PLAY');
@@ -353,7 +357,7 @@ const MyDaeng = props => {
                 <Text style={styles.textTypo5}>산책</Text>
                 <Text style={styles.text1}>을 시작해보세요!</Text>
               </Text>
-            </Pressable>
+            </TouchableOpacity>
             <View style={[styles.event, styles.eventLayout2]}>
               <Pressable
                 onPress={() => {
@@ -446,7 +450,7 @@ const MyDaeng = props => {
                       </Text>
                     </Text>
                     <Text style={[styles.text110, styles.textTypo6]}>
-                      멍줍과 함께하는 기부 동참 캠페인
+                      멍줍과 함께하는 기부 캠페인
                     </Text>
                   </View>
                   <View style={[styles.eventImage1, styles.eventLayout]}>
@@ -687,7 +691,7 @@ const styles = StyleSheet.create({
   walkTextPosition: {
     // 산책시작 텍스트
     // 룰루
-    top: 9,
+    top: 8,
     position: 'absolute',
   },
   eventLayout1: {
@@ -722,7 +726,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo6: {
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 5,
     color: Color.colorBlack,
   },
   eventLayout: {
@@ -909,7 +913,7 @@ const styles = StyleSheet.create({
   text8: {
     top: 3,
     left: 30,
-    fontSize: FontSize.size_smi,
+    fontSize: FontSize.size_xs + 3,
     width: 56,
     color: Color.colorBlack,
     fontFamily: FontFamily.notoSansKRMedium,
@@ -1077,7 +1081,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
     color: Color.colorBlack,
     textAlign: 'left',
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_xs + 3,
   },
   walkbtn: {
     // 산책 시작 버튼 박스
@@ -1194,10 +1198,10 @@ const styles = StyleSheet.create({
     left: 0,
   },
   donation: {
-    fontSize: FontSize.size_7xs,
+    fontSize: FontSize.size_7xs + 4,
     color: Color.colorDimgray_100,
     textAlign: 'center',
-    left: 0,
+    left: -20,
   },
   pawinhand: {
     width: 80,
@@ -1208,7 +1212,7 @@ const styles = StyleSheet.create({
   },
   eventImage1: {
     left: 159,
-    width: 103,
+    width: 200,
     top: 0,
   },
   event1: {
@@ -1336,7 +1340,7 @@ const styles = StyleSheet.create({
   skinTxtTypo: {
     height: 17,
     width: 55,
-    fontSize: FontSize.size_smi,
+    fontSize: FontSize.size_xs + 3,
     color: Color.colorBlack,
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',

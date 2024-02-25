@@ -90,7 +90,7 @@ function WalkingHistory(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
+        .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           const rawData = res.data;
 
@@ -140,7 +140,6 @@ function WalkingHistory(props) {
         });
     }, [weekOffset]),
   );
-
   return (
     <ScrollView>
       {/*  Header  */}
@@ -192,7 +191,7 @@ function WalkingHistory(props) {
       {/*  Victory_native  */}
       <View style={[styles.container]}>
         <VictoryChart
-          width={380} //
+          width={380}
           height={200}
           theme={VictoryTheme.material}
           padding={{top: 20, bottom: 80, left: 40, right: 60}}
@@ -202,6 +201,7 @@ function WalkingHistory(props) {
               onActivated={points => {
                 //points는 onActivated 이벤트 핸들러에서 제공하는 매개변수
                 //클릭한 데이터의 정보를 가지고 있음
+                console.log(points);
                 if (points.length > 0) {
                   const clickedDate = points[0].date;
                   const selectedData = petInfo.find(
@@ -226,6 +226,7 @@ function WalkingHistory(props) {
           <VictoryAxis
             tickValues={dataVic.map(item => new Date(item.date).getDay())}
             tickFormat={['일', '월', '화', '수', '목', '금', '토']}
+            // width={100}
             style={{
               axis: {stroke: 'transparent'},
               ticks: {stroke: 'transparent'},
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     marginLeft: -102,
-    top: 9,
+    top: 13,
     left: '50%',
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,

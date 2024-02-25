@@ -10,25 +10,18 @@ import {
 import FavoriteListContainer from '../components/FavoriteListContainer';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import FooterComponent from './FooterComponent';
+import HeaderComponent from '../components/HeaderComponent';
 
 const PLAY = props => {
   return (
     <View style={styles.play}>
-      <View style={[styles.header, styles.divPosition1]}>
-        <View style={[styles.haederDiv, styles.divPosition]} />
-        <Text style={[styles.headerTitle, styles.txtFlexBox]}>
-          나의 산책 목록
-        </Text>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.goBack('PLAYmainwonny');
-          }}>
-          <Image
-            style={styles.arrowIcon}
-            source={require('../assets/arrow2.png')}
-          />
-        </TouchableOpacity>
-      </View>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="나의 산책 목록"
+        go={'PLAYmainwonny'}
+        backBool={true}></HeaderComponent>
+
       <View style={{height: '90%'}}>
         <FavoriteListContainer navigation={props.navigation} />
       </View>

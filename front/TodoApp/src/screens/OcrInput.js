@@ -37,7 +37,7 @@ const OcrInput = ({navigation, route}) => {
       });
       //console.log(data['_parts'][0][1]);
       axios
-        .post('http://192.168.0.90:5000/uploadRecipt.do', data, {
+        .post('http://10.0.2.2:5000/uploadRecipt.do', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

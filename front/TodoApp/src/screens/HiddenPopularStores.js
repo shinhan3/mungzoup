@@ -88,9 +88,7 @@ function HiddenPopularStores(props) {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(
-          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
-        )
+        .get(`http://10.0.2.2:5000/storeListPay.do/${latitude}/${longitude}`)
         .then(res => {
           setStoreList(res.data);
         })
@@ -105,7 +103,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://10.0.2.2:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         console.log(res.data.length);
@@ -278,9 +276,13 @@ function HiddenPopularStores(props) {
           />
           {/*  //BottomSheetFlatList  */}
         </View>
+        <View
+          style={{
+            height: 62,
+          }}></View>
       </BottomSheet>
-      {/*  //main  */}
 
+      {/*  //main  */}
       <FooterComponent
         petBoolean={false}
         playBoolean={true}

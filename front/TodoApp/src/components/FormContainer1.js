@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRMedium,
   },
   textTypo1: {
-    fontSize: FontSize.size_smi_2,
+    fontSize: FontSize.size_smi_2 + 5,
     textAlign: 'left',
     position: 'absolute',
     top: 20,
@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 18,
-    left: 55,
+    left: 20,
     textAlign: 'left',
   },
   ai: {
-    fontSize: FontSize.size_3xs,
-    left: 35,
+    fontSize: FontSize.size_3xs + 3,
+    left: 5,
     top: 10,
     textAlign: 'left',
   },
@@ -203,15 +203,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   text6: {
-    fontSize: FontSize.size_4xs,
+    fontSize: FontSize.size_4xs + 3,
   },
   text7: {
     width: 100,
-    fontSize: FontSize.size_6xs,
+    fontSize: FontSize.size_6xs + 3,
   },
   text5: {
     top: 165,
-    left: 85,
+    left: 70,
     textAlign: 'center',
   },
   icon: {

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   contentTypo: {
     top: 14,
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 3,
     left: 0,
     textAlign: 'left',
     fontFamily: FontFamily.iBMPlexSansKRBold,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   title1: {
     color: Color.colorDarkgray_100,
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 5,
     left: 0,
     textAlign: 'left',
     fontFamily: FontFamily.iBMPlexSansKRBold,

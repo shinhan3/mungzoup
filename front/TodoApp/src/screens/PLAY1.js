@@ -16,6 +16,7 @@ import FooterComponent from './FooterComponent';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
 import Geolocation from '@react-native-community/geolocation';
+import HeaderComponent from '../components/HeaderComponent';
 
 function PLAY1(props) {
   // var {latitude, longitude} = useContext(LocationContext);
@@ -145,7 +146,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post('http://192.168.0.90:5000/insertPetHistory.do', data)
+      .post('http://10.0.2.2:5000/insertPetHistory.do', data)
       .then(res => {
         console.log(res.data);
         props.navigation.navigate('PLAYmainwonny');
@@ -159,18 +160,12 @@ function PLAY1(props) {
   return (
     <>
       {/* Header */}
-      <View style={styles.head}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.goBack();
-          }}>
-          <Image
-            style={styles.arrowIcon}
-            source={require('../assets/arrow2.png')}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>산책</Text>
-      </View>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="산책"
+        go={'PLAY'}
+        backBool={true}></HeaderComponent>
       {/* //Header */}
       {/* 지도 */}
       <MapView

@@ -8,6 +8,7 @@ import {
   ScrollView,
   VirtualizedList,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
 import HeaderComponent from '../components/HeaderComponent';
@@ -30,6 +31,7 @@ const SkinDiseaseAI = ({navigation}) => {
   const [disease, setDisease] = useState();
 
   const onSubmitImage = () => {
+    console.log('0000');
     const data = new FormData();
     if (response['assets']) {
       data.append('imageFile', {
@@ -40,7 +42,7 @@ const SkinDiseaseAI = ({navigation}) => {
       data.append('dname', dname);
       data.append('userId', USERID);
       axios
-        .post('http://192.168.0.10:5000/inspectSkin.do', data, {
+        .post('http://10.0.2.2:5000/inspectSkin.do', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -76,7 +78,7 @@ const SkinDiseaseAI = ({navigation}) => {
   const dogCheck = () => {
     if (dname) {
       axios
-        .get('http://192.168.0.10:5000/dogConfirm.do', {
+        .get('http://10.0.2.2:5000/dogConfirm.do', {
           params: {
             userId: USERID,
             dname: dname,
@@ -141,9 +143,17 @@ const SkinDiseaseAI = ({navigation}) => {
               등록
             </Text>
           </Pressable>
-          <Pressable
-            onPress={onSubmitImage}
-            style={styles.insertbtn}
+          <TouchableOpacity
+            onPress={() => {
+              onSubmitImage();
+            }}
+            style={[
+              styles.insertbtn,
+              {
+                height: 40,
+                width: 121,
+              },
+            ]}
             disabled={isDog != 1 && !previewImage}>
             <View
               style={[
@@ -155,7 +165,7 @@ const SkinDiseaseAI = ({navigation}) => {
               ]}
             />
             <Text style={[styles.textbtn, styles.ai1Typo]}>이미지 등록</Text>
-          </Pressable>
+          </TouchableOpacity>
           <View style={styles.main}>
             <View style={[styles.serviceDetail, styles.textPosition]}>
               <Text style={[styles.text, styles.textPosition]}>

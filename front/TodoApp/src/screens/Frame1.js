@@ -20,9 +20,7 @@ const Frame1 = props => {
     React.useCallback(() => {
       console.log('test2007');
       axios
-        .get(
-          `http://192.168.0.90:5000/getUserNameAndDiscountPrice.do/${userId}`,
-        )
+        .get(`http://10.0.2.2:5000/getUserNameAndDiscountPrice.do/${userId}`)
         .then(res => {
           console.log(res.data);
           setDiscountPrice({
@@ -89,11 +87,6 @@ const Frame1 = props => {
           </View>
         </View>
       </ScrollView>
-      {/* <FooterComponent
-        petBoolean={false}
-        playBoolean={false}
-        cardBoolean={true}
-        navigation={props.navigation}></FooterComponent> */}
     </>
   );
 };
@@ -123,7 +116,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   text: {
-    fontSize: FontSize.size_xs,
+    fontSize: FontSize.size_xs + 3,
     color: Color.colorDimgray_100,
   },
   text1: {

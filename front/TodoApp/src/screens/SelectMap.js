@@ -1,4 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,6 +19,7 @@ import Geolocation from '@react-native-community/geolocation';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import axios from 'axios';
 import LocationContext from '../test/LocationContext ';
+import {useFocusEffect} from '@react-navigation/core';
 
 export function getDistanceFormula(lat1, lon1, lat2, lon2) {
   //하버시안 공식
@@ -46,7 +53,33 @@ function deg2rad(x) {
 function SelectMap(props) {
   // const [latitude, setLatitude] = useState(null);
   // const [longitude, setLongitude] = useState(null);
-  const {latitude, longitude} = useContext(LocationContext);
+
+  const [latitude, setLatitude] = useState(37.55518333333333);
+  const [longitude, setLongitude] = useState(126.92099333333333);
+
+  const getGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(
+          'aaaagccccccccccaaaaaaaaaaac',
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        setLatitude(position.coords.latitude);
+        position.coords.longitude * -1 > 0.0
+          ? setLongitude(position.coords.longitude * -1)
+          : setLongitude(position.coords.longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+    );
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getGeolocation();
+    }, []),
+  );
 
   const mapRef = useRef(); // MapView 참조를 저장할 ref 생성
 
@@ -106,7 +139,7 @@ function SelectMap(props) {
           <View style={{flex: 1}}>
             <MapView
               ref={mapRef}
-              style={{flex: 0.74}}
+              style={{flex: 0.81}}
               provider={PROVIDER_GOOGLE}
               customMapStyle={MapStyle}
               initialRegion={{

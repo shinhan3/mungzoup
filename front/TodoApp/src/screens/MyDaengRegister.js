@@ -35,7 +35,7 @@ const MyDaenegRegister = props => {
     data.append('imageFile', file);
 
     axios
-      .post('http://192.168.0.90:5000/uploadProfileFile.do', data, {
+      .post('http://10.0.2.2:5000/uploadProfileFile.do', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -49,7 +49,7 @@ const MyDaenegRegister = props => {
         };
 
         axios
-          .post('http://192.168.0.90:5000/addPetProfile.do', formData)
+          .post('http://10.0.2.2:5000/addPetProfile.do', formData)
           .then(res => {
             console.log(res.data);
             props.navigation.navigate('MyDaeng');
@@ -390,13 +390,13 @@ const styles = StyleSheet.create({
   },
   textbtn: {
     marginLeft: -24.6,
-    fontSize: FontSize.size_mini,
-    color: Color.colorWhite,
+    fontSize: FontSize.size_mini + 8,
+    color: Color.bgWhite,
     width: 46,
     height: 37,
     justifyContent: 'center',
     textAlign: 'center',
-    marginTop: -17,
+    marginTop: -18,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     alignItems: 'center',
