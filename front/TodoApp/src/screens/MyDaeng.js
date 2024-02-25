@@ -19,7 +19,7 @@ import MyCarousel from '../components/PetListCarousel';
 import HeaderComponent from '../components/HeaderComponent';
 const MyDaeng = props => {
   const [pets, setPets] = useState([]);
-  const [modelVisible, setModelVisible] = useState(true);
+  const [modelVisible, setModelVisible] = useState(false);
   const [petInfo, setPetInfo] = useState([]); //petInfo (List)
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalWalkTime, setTotalWalkTime] = useState(0);

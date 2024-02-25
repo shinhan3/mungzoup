@@ -260,7 +260,7 @@ function HiddenPopularStores(props) {
                     </View>
                   </View>
                   <View style={styles.contentBottom}>
-                    {item.cnt_pay * 100 > item.POST_COUNT / 2 && (
+                    {item.cnt_pay * 100 > item.POST_COUNT * 0.9 && (
                       <View>
                         <Text style={styles.hiddenText}>숨은 명소</Text>
                       </View>

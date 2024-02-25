@@ -94,7 +94,7 @@ function WalkingHistory(props) {
         .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           const rawData = res.data;
-
+          console.log(res.data, 'res.datares.data');
           // 이번 주의 일요일을 구하는 함수
           const getSunday = () => {
             const d = new Date();
@@ -105,15 +105,15 @@ function WalkingHistory(props) {
           };
 
           const sunday = getSunday();
-
+          console.log(sunday, 'sundaysunday');
           // 일요일부터 7일간의 날짜를 생성
-          const lastSevenDays = Array.from({length: 7}, (value, index) => {
-            const d = new Date(sunday);
-            d.setDate(d.getDate() + index);
+          const lastSevenDays = Array.from({length: 7}, (_, index) => {
+            const d = new Date(sunday.getTime()); // 주의 일요일부터 시작
+            d.setDate(sunday.getDate() + index); // 일요일부터 하루씩 증가
             d.setHours(0, 0, 0, 0);
             return d;
           });
-
+          console.log(lastSevenDays, 'lastSevenDayslastSevenDays');
           const processedData = lastSevenDays.map(day => {
             const found = rawData.find(item => {
               const itemDate = new Date(item[0]);
@@ -126,14 +126,17 @@ function WalkingHistory(props) {
             if (found) {
               return [found[0], daynames[day.getDay()], found[2], found[3]];
             }
+            day.setDate(day.getDate() + 1);
             return [
               day.toISOString().substring(0, 10),
+              // daynames[day.getDay()],
               daynames[day.getDay()],
               0,
               0,
             ];
           });
 
+          console.log(processedData, 'processedDataprocessedData');
           // 주간 산책 거리와 산책 시간 계산
           const totalDistance = processedData.reduce(
             (sum, item) => sum + item[2],
@@ -251,6 +254,22 @@ function WalkingHistory(props) {
               },
             }}
           />
+          {/* <VictoryAxis
+            tickValues={Array.from({length: 7}, (_, i) => i)} // 항상 0부터 6까지의 값을 가지도록 설정
+            tickFormat={['일', '월', '화', '수', '목', '금', '토']}
+            style={{
+              axis: {stroke: 'transparent'},
+              ticks: {stroke: 'transparent'},
+              grid: {stroke: 'none'},
+              tickLabels: {
+                fontSize: 15,
+                fontFamily: FontFamily.notoSansKR,
+                fontWeight: '600',
+                fill: '#6A6A6A',
+                padding: 5,
+              },
+            }}
+          /> */}
           <VictoryAxis
             dependentAxis
             style={{

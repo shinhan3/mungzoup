@@ -1,4 +1,10 @@
-import React, {useCallback, useContext, useEffect, useState,useRef} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {
   StyleSheet,
