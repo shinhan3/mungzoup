@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   event3Position: {
     left: 31,
-    top: 10,
+    top: 8,
   },
   backgroundbtn: {
     borderRadius: Border.br_3xs,
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   textbtn: {
-    fontSize: FontSize.size_sm,
+    fontSize: FontSize.size_sm + 4,
     color: Color.colorDimgray_100,
     textAlign: 'center',
     fontFamily: FontFamily.notoSansKRBold,
