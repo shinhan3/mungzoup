@@ -17,6 +17,7 @@ import {
   VictoryTheme,
   VictoryVoronoiContainer,
 } from 'victory-native';
+import MyDaeng from './MyDaeng';
 
 function WalkingHistory(props) {
   const [petInfo, setPetInfo] = useState([]); //petInfo (List)
@@ -97,9 +98,9 @@ function WalkingHistory(props) {
           // 이번 주의 일요일을 구하는 함수
           const getSunday = () => {
             const d = new Date();
-            d.setDate(d.getDate() - 7 * weekOffset); // 이전 주를 계산
+            d.setDate(d.getDate() - 7 * weekOffset);
             const day = d.getDay();
-            const diff = d.getDate() - day + (day === 0 ? -6 : 0);
+            const diff = d.getDate() - day + (day === 0 ? 0 : 1); // 주의 시작은 일요일
             return new Date(d.setDate(diff));
           };
 
@@ -132,6 +133,16 @@ function WalkingHistory(props) {
               0,
             ];
           });
+
+          // 주간 산책 거리와 산책 시간 계산
+          const totalDistance = processedData.reduce(
+            (sum, item) => sum + item[2],
+            0,
+          );
+          const totalWalkTime = processedData.reduce(
+            (sum, item) => sum + item[3],
+            0,
+          );
 
           setPetInfo(processedData);
         })

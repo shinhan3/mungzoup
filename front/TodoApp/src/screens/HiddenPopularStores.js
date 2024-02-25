@@ -90,7 +90,7 @@ function HiddenPopularStores(props) {
       axios
         .get(`http://10.0.2.2:5000/storeListPay.do/${latitude}/${longitude}`)
         .then(res => {
-          setStoreList(res.data);
+          setStoreList(res.data.slice(0, 10));
         })
         .catch(err => {
           console.log(err);
@@ -106,8 +106,7 @@ function HiddenPopularStores(props) {
         `http://10.0.2.2:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
-        console.log(res.data.length);
-        setStoreList(res.data);
+        setStoreList(res.data.slice(0, 10));
       })
       .catch(err => {
         console.log(err);
@@ -256,20 +255,28 @@ function HiddenPopularStores(props) {
                     <View style={styles.storeText3}>
                       <Text style={styles.storeText}> 결제건수 </Text>
                       <Text style={styles.storeTextPoint}>
-                        {item.cnt_pay.toLocaleString()}
+                        {(item.cnt_pay * 100).toLocaleString()}
                       </Text>
                     </View>
                   </View>
-                  <TouchableOpacity
-                    style={styles.detailBtn}
-                    onPress={() => {
-                      console.log(item, 'aaaaaaaaaaafddas');
-                      props.navigation.navigate('Review', {
-                        storeId: item.STORE_ID,
-                      });
-                    }}>
-                    <Text style={styles.btnText}>{`자세히`}</Text>
-                  </TouchableOpacity>
+                  <View style={styles.contentBottom}>
+                    {item.cnt_pay * 100 > item.POST_COUNT / 2 && (
+                      <View>
+                        <Text style={styles.hiddenText}>숨은 명소</Text>
+                      </View>
+                    )}
+                    <View style={styles.detail}>
+                      <TouchableOpacity
+                        style={styles.detailBtn}
+                        onPress={() => {
+                          props.navigation.navigate('Review', {
+                            storeId: item.STORE_ID,
+                          });
+                        }}>
+                        <Text style={styles.btnText}>{`자세히`}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               );
             }}
@@ -300,18 +307,11 @@ const styles = StyleSheet.create({
     shadowColor: '#2E2E2E', // 그림자 색상 설정
     elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
     marginBottom: 2,
-  },
-  arrowIcon: {
-    top: 13,
-    left: 14,
-    width: 26,
-    height: 24,
-    overflow: 'hidden',
+    justifyContent: 'center',
   },
   headerTitle: {
     fontSize: 20,
     top: 9,
-    marginLeft: 110,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
   },
@@ -402,6 +402,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+  },
+  contentBottom: {
+    flexDirection: 'row',
   },
   detailBtn: {
     width: 90,

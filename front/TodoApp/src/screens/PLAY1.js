@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState,useRef} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {
   StyleSheet,
@@ -75,6 +75,7 @@ function PLAY1(props) {
   //도착 상태 여부 Check
   const [hasArrived, setHasArrived] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const mapRef = useRef();
   const [buttonText, setButtonText] = useState('산책 스팟 출발');
   const [gasReduction, setGasReduction] = React.useState(0);
   const [calConsumption, setCalConsumption] = React.useState(0);
@@ -148,15 +149,25 @@ function PLAY1(props) {
     axios
       .post('http://10.0.2.2:5000/insertPetHistory.do', data)
       .then(res => {
-        console.log(res.data);
         props.navigation.navigate('PLAYmainwonny');
       })
       .catch(err => {
         console.log(err);
       });
   };
-  console.log(latitude, 'latitudelatitudelatitudelatitudelatitudelatitude');
-  console.log(longitude, 'latitudelatitudelatitudelatitudelatitudelatitude');
+
+  // 현재 위치로 이동하는 함수
+  const moveToCurrentLocation = () => {
+    if (mapRef.current) {
+      // mapRef.current가 존재하는지 확인
+      mapRef.current.animateToRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0025,
+      });
+    }
+  };
   return (
     <>
       {/* Header */}
@@ -169,6 +180,7 @@ function PLAY1(props) {
       {/* //Header */}
       {/* 지도 */}
       <MapView
+        ref={mapRef}
         style={{flex: 0.6}}
         region={{
           latitude: spotLatitude,
@@ -214,26 +226,27 @@ function PLAY1(props) {
               총 거리(km)
             </Text>
           </View>
+          <View>
+            <TouchableOpacity onPress={moveToCurrentLocation}>
+              <Text style={styles.contentHeadBig2}>내 위치</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.contentHeadSecond}>
-            <Text style={[styles.contentHeadBigText, styles.contentHeadBig2]}>
+            <Text style={[styles.contentHeadBigText, styles.contentHeadBig3]}>
               {remainDistance}
             </Text>
             <Text style={[styles.contentHeadSmallText, styles.contentSmall2]}>
               남은 거리(km)
             </Text>
           </View>
-          <View style={styles.contentHeadThird}>
-            <Text style={[styles.contentHeadBigText, styles.contentHeadBig3]}>
-              {formatTime(seconds)}
-            </Text>
-            <Text style={[styles.contentHeadSmallText, styles.contentSmall3]}>
-              산책 시간
-            </Text>
-          </View>
         </View>
         {/*  //ContentHead  */}
         {/*  Contentmain  */}
         <View>
+          <View style={styles.contentMainFirst}>
+            <Text style={styles.contentMainSmallText}>산책 시간</Text>
+            <Text style={styles.contentMainBigText}>{formatTime(seconds)}</Text>
+          </View>
           <TouchableOpacity
             style={[
               styles.walkBtn,
@@ -340,22 +353,42 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   contentHeadBig1: {
-    marginLeft: 56,
+    marginLeft: 65,
   },
   contentHeadBig2: {
-    marginLeft: 56,
+    marginLeft: 45,
+    fontSize: 25,
+    marginTop: 24,
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
   },
   contentHeadBig3: {
-    marginLeft: 20,
+    marginLeft: 65,
   },
   contentSmall1: {
-    marginLeft: 50,
+    marginLeft: 45,
   },
   contentSmall2: {
     marginLeft: 40,
   },
   contentSmall3: {
     marginLeft: 40,
+  },
+  contentMainFirst: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  contentMainSmallText: {
+    fontFamily: FontFamily.notoSansKRMedium,
+    fontSize: 15,
+    marginRight: 20,
+  },
+  contentMainBigText: {
+    fontSize: 25,
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
   },
   walkBtn: {
     padding: 10,
@@ -364,7 +397,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 52,
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: 20,
   },
   btnText: {
     color: 'white',
@@ -382,7 +415,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
   },
-
   notModal: {
     flex: 1,
     justifyContent: 'center',
