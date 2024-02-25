@@ -178,15 +178,16 @@ const MyDaenegUpdate = props => {
           <Text style={styles.chartHeadText}>프로필 편집</Text>
         </View>
         <View>
-          <Pressable
+          <TouchableOpacity
             style={styles.deleteBtn}
             onPress={() => {
+              console.log('delete');
               deletePetProfile();
             }}>
             <Image
               source={require('../assets/trash_can.png')}
-              style={styles.deleteImg}></Image>
-          </Pressable>
+              style={[styles.deleteBtn, styles.deleteImg]}></Image>
+          </TouchableOpacity>
         </View>
         <UploadProfileimage
           onFileSelect={handleFileSelect}
@@ -265,13 +266,14 @@ const styles = StyleSheet.create({
     Color: '#2E2E2E',
   },
   deleteImg: {
-    marginTop: 5,
+    // marginTop: 5,
     width: 20,
     height: 20,
-    marginLeft: 10,
+    // marginLeft: -220,
   },
   deleteBtn: {
-    left: 340,
+    left: 60,
+    top: -22,
   },
   mainPosition: {
     height: 750,
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo: {
-    color: Color.colorDarkslategray,
+    // color: Color.colorDarkslategray,
     lineHeight: 20,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
@@ -330,7 +332,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   insertbtnPosition: {
-    marginLeft: -140,
+    marginLeft: -135,
     width: 262,
     left: '50%',
     top: '50%',
@@ -456,13 +458,13 @@ const styles = StyleSheet.create({
   },
   textbtn: {
     marginLeft: -24.6,
-    fontSize: FontSize.size_mini,
-    color: Color.colorWhite,
+    fontSize: FontSize.size_mini + 5,
+    color: Color.bgWhite,
     width: 46,
     height: 37,
     justifyContent: 'center',
     textAlign: 'center',
-    marginTop: -17,
+    marginTop: -16,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     alignItems: 'center',
@@ -526,6 +528,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     overflow: 'hidden',
+  },
+  error: {
+    top: 650,
+    left: 120,
+    color: 'red',
   },
 });
 

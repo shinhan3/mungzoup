@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Modal,
+  TouchableOpacity,
 } from 'react-native';
 import {FontFamily, Color, FontSize, Border} from '../GlobalStyles';
 import MyPets from '../components/MyPets';
@@ -22,8 +23,8 @@ const MyDaeng = props => {
   const [petInfo, setPetInfo] = useState([]); //petInfo (List)
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalWalkTime, setTotalWalkTime] = useState(0);
-  const userId = 'user1';
-  //const userId = USERID;
+
+  const userId = USERID;
 
   // const [latitude, setLatitude] = useState(0.0);
   // const [longitude, setLongitude] = useState(0.0);
@@ -58,11 +59,6 @@ const MyDaeng = props => {
     );
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      getGeolocation();
-    }, []),
-  );
   const getPet = () => {
     axios
       .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
@@ -77,13 +73,17 @@ const MyDaeng = props => {
 
   useFocusEffect(
     useCallback(() => {
-      setModelVisible(true);
-      setTimeout(() => {
-        setModelVisible(false);
-      }, 5000);
-      getPet();
+      getGeolocation();
     }, []),
   );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // getPet();
+  //   }, []),
+  // );
+  useEffect(() => {
+    getPet();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -110,7 +110,7 @@ const MyDaeng = props => {
   );
   useFocusEffect(
     useCallback(() => {
-      const timer = setTimeout(getPet, 10000); // 1초 뒤에 now를 수행하라
+      const timer = setTimeout(getPet, 60000); // 1초 뒤에 now를 수행하라
       console.log(timer, 'asdsadas');
       return () => {
         clearTimeout(timer);
@@ -208,11 +208,13 @@ const MyDaeng = props => {
             //justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <HeaderComponent
-            navigation={props.navigation}
-            dimensionCode={require('../assets/arrow8.png')}
-            benefits="마이댕"
-            backBool={false}></HeaderComponent>
+          <View style={{left: -180}}>
+            <HeaderComponent
+              navigation={props.navigation}
+              dimensionCode={require('../assets/arrow8.png')}
+              benefits="마이댕"
+              backBool={false}></HeaderComponent>
+          </View>
           <View style={styles.view}>
             <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
             <View style={styles.map}>
@@ -220,7 +222,8 @@ const MyDaeng = props => {
               {pets.length == 0 ? (
                 <Image
                   style={{
-                    left: -8,
+                    left: 0,
+                    width: 314,
                   }}
                   resizeMode="cover"
                   source={require('../assets/myDogMap.png')}></Image>
@@ -271,7 +274,8 @@ const MyDaeng = props => {
                   source={require('../assets/vector.png')}
                 />
               </View>
-              <Pressable
+              <TouchableOpacity
+                style={{padding: 1}}
                 onPress={() => {
                   props.navigation.navigate('PLAY4');
                 }}>
@@ -283,7 +287,8 @@ const MyDaeng = props => {
                   resizeMode="cover"
                   source={require('../assets/mingcuterightline1.png')}
                 />
-              </Pressable>
+                <Text style={styles.textD}>상세보기</Text>
+              </TouchableOpacity>
               <View style={[styles.km, styles.kmPosition]}>
                 <Text style={[styles.km1, styles.km1Typo]}>km</Text>
                 <Text style={[styles.text9, styles.textTypo1]}>
@@ -310,7 +315,7 @@ const MyDaeng = props => {
                 resizeMode="cover"
                 source={require('../assets/healthbox.png')}
               />
-              <Pressable
+              <TouchableOpacity
                 style={[styles.inspect, styles.inspectPosition]}
                 onPress={() => {
                   props.navigation.navigate('SkinDiseaseAI');
@@ -324,9 +329,9 @@ const MyDaeng = props => {
                   source={require('../assets/mingcuterightline1.png')}
                 />
                 <Text style={styles.text29}>검사하기</Text>
-              </Pressable>
+              </TouchableOpacity>
 
-              <Pressable
+              <TouchableOpacity
                 style={[styles.detailBtn, styles.detailBtnLayout]}
                 onPress={() => {
                   props.navigation.navigate('DogHealthDetail');
@@ -335,9 +340,9 @@ const MyDaeng = props => {
                   상세보기
                 </Text>
                 <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
-              </Pressable>
+              </TouchableOpacity>
 
-              <Pressable
+              <TouchableOpacity
                 style={[styles.detailBtn2, styles.detailBtnLayout]}
                 onPress={() => {
                   props.navigation.navigate('DogHealthDetail');
@@ -346,7 +351,7 @@ const MyDaeng = props => {
                   상세보기
                 </Text>
                 <View style={[styles.detailBtnChild, styles.detailBtnLayout]} />
-              </Pressable>
+              </TouchableOpacity>
 
               <View style={[styles.skinHome, styles.skinHomePosition]}>
                 <Image
@@ -392,7 +397,7 @@ const MyDaeng = props => {
               )}
             </View>
 
-            <Pressable
+            <TouchableOpacity
               style={[styles.walkbtn, styles.eventLayout2]}
               onPress={() => {
                 props.navigation.navigate('PLAY');
@@ -408,7 +413,7 @@ const MyDaeng = props => {
                 <Text style={styles.textTypo5}>산책</Text>
                 <Text style={styles.text1}>을 시작해보세요!</Text>
               </Text>
-            </Pressable>
+            </TouchableOpacity>
             <View style={[styles.event, styles.eventLayout2]}>
               <Pressable
                 onPress={() => {
@@ -462,7 +467,11 @@ const MyDaeng = props => {
                       source={require('../assets/event-image2.png')}
                     />
                     <View
-                      style={[styles.eventText2, styles.eventText2Position]}>
+                      style={[
+                        styles.eventText2,
+                        styles.eventText2Position,
+                        {marginTop: 13},
+                      ]}>
                       <Text style={[styles.text21, styles.textPosition]}>
                         <Text style={[styles.text17, styles.mydogTypo]}>
                           멍줍 PLAY
@@ -497,7 +506,7 @@ const MyDaeng = props => {
                       </Text>
                     </Text>
                     <Text style={[styles.text110, styles.textTypo6]}>
-                      멍줍과 함께하는 기부 동참 캠페인
+                      멍줍과 함께하는 기부 캠페인
                     </Text>
                   </View>
                   <View style={[styles.eventImage1, styles.eventLayout]}>
@@ -522,22 +531,21 @@ const MyDaeng = props => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   detailBtn: {
     left: 175,
-    top: 70,
+    top: 64,
   },
 
   detailBtn2: {
     left: 175,
-    top: 125,
+    top: 119,
   },
 
   detailText: {
     top: 2,
     left: 5,
-    fontSize: FontSize.size_5xs,
+    fontSize: FontSize.size_2xs,
     fontWeight: '800',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,
@@ -573,7 +581,7 @@ const styles = StyleSheet.create({
     width: 150,
     color: Color.colorDarkslategray,
     lineHeight: 20,
-    fontSize: FontSize.size_base,
+    fontSize: FontSize.size_base + 2.5,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     textAlign: 'left',
@@ -606,8 +614,8 @@ const styles = StyleSheet.create({
   },
   healthboxPosition: {
     // 산책요약
-    //left: '5.28%',
-    left: 30,
+    left: '3.0%',
+    // left: 30,
     right: '10.83%',
     //width: '83.89%',
     width: 350,
@@ -693,7 +701,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   text10Position: {
-    top: 5,
+    top: 8,
     lineHeight: 20,
     textAlign: 'left',
     position: 'absolute',
@@ -707,8 +715,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventText1Position: {
-    // left: 20,
-    top: 11,
+    top: 20,
     position: 'absolute',
   },
 
@@ -718,7 +725,7 @@ const styles = StyleSheet.create({
   },
   arrowIconLayout: {
     bottom: '24%',
-    top: '36%',
+    top: '30%',
     width: '6.58%',
     height: '40%',
     maxHeight: '100%',
@@ -731,20 +738,22 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eventLayout2: {
-    left: 40,
+    // 이벤트 + 산책 시작 버튼
+    left: 10,
     width: 300,
+    // 가로 변경 금지.. 그림 깨짐
     position: 'absolute',
   },
   walkTextPosition: {
     // 산책시작 텍스트
     // 룰루
-    top: 9,
+    top: 8,
     position: 'absolute',
   },
   eventLayout1: {
     height: 120,
     width: 316,
-    left: 0,
+    left: 10,
     position: 'absolute',
   },
   eventPosition: {
@@ -773,7 +782,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textTypo6: {
-    fontSize: 9,
+    fontSize: FontSize.size_3xs + 5,
     color: Color.colorBlack,
   },
   eventLayout: {
@@ -813,7 +822,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   map1: {
-    backgroundColor: Color.colorGainsboro_200,
+    // backgroundColor: Color.colorGainsboro_200,
     height: 314,
     left: 0,
     top: 0,
@@ -831,16 +840,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   map: {
-    marginLeft: -200,
-    top: 1030,
+    // marginLeft: -200,
+    top: 1350,
     height: 455,
-    width: 360,
-    left: '50%',
+    width: 314,
+    left: '6%',
     position: 'absolute',
   },
   title: {
-    top: 1002,
-    left: 23,
+    // 마이댕 지도 글자
+    top: 1300,
+    left: 30,
     position: 'absolute',
   },
   backgroundIcon: {
@@ -959,8 +969,8 @@ const styles = StyleSheet.create({
   text8: {
     top: 3,
     left: 30,
-    fontSize: FontSize.size_smi,
-    width: 100,
+    fontSize: FontSize.size_xs + 3,
+    width: 56,
     color: Color.colorBlack,
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
@@ -976,10 +986,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   title2: {
-    left: 10,
+    left: 25,
     width: 86,
     height: 22,
-    top: 12,
+    top: 20,
     position: 'absolute',
   },
   km1: {
@@ -993,7 +1003,7 @@ const styles = StyleSheet.create({
     height: 20,
     lineHeight: 20,
     textAlign: 'left',
-    top: 0,
+    top: 3,
     position: 'absolute',
   },
   km: {
@@ -1038,7 +1048,7 @@ const styles = StyleSheet.create({
   },
   mingcuterightLineIcon1: {
     height: 20,
-    left: 273,
+    left: 295,
     width: 20,
     overflow: 'hidden',
   },
@@ -1095,7 +1105,7 @@ const styles = StyleSheet.create({
 
   petprofilebox: {
     top: 112,
-    right: 34,
+    right: 0,
   },
   profileTitle: {
     left: 29,
@@ -1109,6 +1119,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   walkDiv: {
+    // 산책 시작 회색 박스
     borderRadius: 8,
     backgroundColor: Color.colorGainsboro_100,
     height: 31,
@@ -1126,12 +1137,12 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
     color: Color.colorBlack,
     textAlign: 'left',
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_xs + 3,
   },
   walkbtn: {
-    top: 505,
-    //     top: 450,
-    left: 7,
+    // 산책 시작 버튼 박스
+    top: 750,
+    //left: 7,
     height: 31,
   },
   eventDiv: {
@@ -1243,10 +1254,10 @@ const styles = StyleSheet.create({
     left: 0,
   },
   donation: {
-    fontSize: FontSize.size_7xs,
+    fontSize: FontSize.size_7xs + 4,
     color: Color.colorDimgray_100,
     textAlign: 'center',
-    left: 0,
+    left: -20,
   },
   pawinhand: {
     width: 80,
@@ -1257,7 +1268,7 @@ const styles = StyleSheet.create({
   },
   eventImage1: {
     left: 159,
-    width: 103,
+    width: 200,
     top: 0,
   },
   event1: {
@@ -1269,13 +1280,15 @@ const styles = StyleSheet.create({
     top: 31,
   },
   title3: {
-    left: 4,
+    left: 17,
     top: 0,
     position: 'absolute',
   },
   event: {
-    top: 557,
-    left: 19,
+    // 이벤트 배너 전체
+    //top: 557,
+    top: 830,
+    left: 30,
     height: 410,
   },
   headerDiv: {
@@ -1305,19 +1318,20 @@ const styles = StyleSheet.create({
     left: '50%',
   },
   view: {
+    // backgroundColor: '#fff',
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
-    height: 1535,
+    height: 1900,
     overflow: 'hidden',
     width: '100%',
-    marginLeft: 30,
+    //marginLeft: 30,
   },
   skinDiseasePosition: {
     // 피부질환 박스
     height: 171,
     width: 360,
-    left: '47.5%',
-    top: '51%',
+    left: '48.5%',
+    top: '45%',
     position: 'absolute',
   },
   skinDisease: {
@@ -1330,9 +1344,9 @@ const styles = StyleSheet.create({
     marginLeft: -160,
   },
   inspect: {
-    marginLeft: 75,
+    marginLeft: 90,
     width: 68,
-    marginTop: -69.5,
+    marginTop: -80,
   },
   inspectPosition: {
     height: 23,
@@ -1341,14 +1355,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   text29: {
-    marginTop: -6.8,
+    marginTop: -9,
     marginLeft: -34,
     height: 13,
     width: 49,
     textAlign: 'right',
-    fontSize: FontSize.size_4xs,
+    fontSize: FontSize.size_4xs + 3,
     color: Color.colorDimgray,
-    lineHeight: 12,
+    // lineHeight: 12,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     left: '50%',
@@ -1357,8 +1371,8 @@ const styles = StyleSheet.create({
   },
 
   skinHome: {
-    marginLeft: -134,
-    marginTop: -72.5,
+    marginLeft: -130,
+    marginTop: -85,
     width: 85,
   },
 
@@ -1382,7 +1396,7 @@ const styles = StyleSheet.create({
   skinTxtTypo: {
     height: 17,
     width: 55,
-    fontSize: FontSize.size_smi,
+    fontSize: FontSize.size_xs + 3,
     color: Color.colorBlack,
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
@@ -1497,7 +1511,7 @@ const styles = StyleSheet.create({
     top: '10%',
     right: '65.62%',
     bottom: '15.25%',
-    left: '7.23%',
+    left: '11%',
     position: 'absolute',
   },
 
@@ -1530,6 +1544,20 @@ const styles = StyleSheet.create({
     maxHeight: '100%',
     maxWidth: '100%',
     overflow: 'hidden',
+  },
+  textD: {
+    marginTop: 24,
+    marginLeft: -34,
+    height: 13,
+    width: 49,
+    textAlign: 'right',
+    fontSize: FontSize.size_4xs + 3,
+    color: Color.colorDimgray,
+    // lineHeight: 12,
+    fontFamily: FontFamily.notoSansKRBold,
+    fontWeight: '700',
+    left: '80%',
+    position: 'absolute',
   },
 });
 

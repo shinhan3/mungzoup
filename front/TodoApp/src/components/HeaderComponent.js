@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   headerTitle: {
-    marginLeft: -102,
+    marginLeft: -130,
     zIndex: 101,
     top: 9,
     left: '50%',
-    fontSize: FontSize.size_xl,
+    fontSize: FontSize.size_xl + 10,
     fontWeight: '500',
     fontFamily: FontFamily.notoSansKRMedium,
     color: Color.colorDarkslategray_200,

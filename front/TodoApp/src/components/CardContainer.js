@@ -29,14 +29,14 @@ const CardContainer = ({data}) => {
       </View>
       <View style={[styles.background, styles.logoIconPosition]} />
       <View style={[styles.cardinfo3, styles.cardinfoLayout]}>
-        <Text style={styles.title1}>구독 시작일</Text>
+        <Text style={styles.title1}>카드 발급일</Text>
         <Text style={[styles.content, styles.contentTypo]}>{data[2]}</Text>
       </View>
       <View style={[styles.cardinfo2, styles.cardinfoPosition]}>
         <Text style={styles.title1}>멍줍카드</Text>
         <Text style={styles.contentTypo}>
           <Text style={styles.text1}>{data[1]}개월</Text>
-          <Text style={styles.text2}> 째 구독 혜택 중</Text>
+          <Text style={styles.text2}> 째 혜택 받는 중</Text>
         </Text>
       </View>
       <View style={[styles.cardinfo1, styles.cardinfoPosition]}>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   contentTypo: {
     top: 14,
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 3,
     left: 0,
     textAlign: 'left',
     fontFamily: FontFamily.iBMPlexSansKRBold,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   title: {
     top: 100,
     color: Color.bgWhite,
-    left: 110,
+    left: 140,
     position: 'absolute',
     transform: [
       {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   title1: {
     color: Color.colorDarkgray_100,
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 5,
     left: 0,
     textAlign: 'left',
     fontFamily: FontFamily.iBMPlexSansKRBold,

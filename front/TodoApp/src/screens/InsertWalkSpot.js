@@ -11,6 +11,7 @@ import {
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import {Input} from 'react-native-elements';
 import axios from 'axios';
+import HeaderComponent from '../components/HeaderComponent';
 function InsertWalkSpot(props) {
   var address = props.route.params ? props.route.params.address : '';
   var latitude = props.route.params ? props.route.params.latitude : '';
@@ -18,6 +19,7 @@ function InsertWalkSpot(props) {
   var distance = props.route.params ? props.route.params.distance : '';
   const [name, setName] = useState('');
   const [spotList, setSpotList] = useState([]);
+  console.log('aaaaaa');
 
   const insertWalkSpotfunction = () => {
     if (props.route.params) {
@@ -46,20 +48,13 @@ function InsertWalkSpot(props) {
     <ScrollView>
       <View style={styles.play}>
         {/*  Header  */}
-        <View style={styles.header}>
-          <View style={[styles.headerDiv, styles.divPosition]} />
-          <Text style={styles.headerTitle}>내 장소 등록</Text>
-          <TouchableOpacity
-            onPress={() => {
-              console.log(props.navigation);
-              props.navigation.goBack('PLAY');
-            }}>
-            <Image
-              style={[styles.arrowIcon, styles.arrowIconLayout]}
-              source={require('../assets/arrow2.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <HeaderComponent
+          navigation={props.navigation}
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="내 장소 등록"
+          go="PLAY"
+          backBool={true}
+        />
         {/*  //Header  */}
         {/*  Content  */}
         <View style={styles.content}>
@@ -72,7 +67,7 @@ function InsertWalkSpot(props) {
                 borderWidth: 1,
                 borderColor: '#DDDDDD',
                 borderRadius: 10,
-                width: 320,
+                width: 260,
                 height: 50,
                 marginLeft: 20,
                 marginBottom: 40,
@@ -96,7 +91,7 @@ function InsertWalkSpot(props) {
                 borderWidth: 1,
                 borderColor: '#DDDDDD',
                 borderRadius: 10,
-                width: 320,
+                width: 260,
                 height: 50,
                 marginLeft: 20,
                 marginBottom: 20,
@@ -128,7 +123,7 @@ function InsertWalkSpot(props) {
             onPress={() => {
               insertWalkSpotfunction();
             }}>
-            <Text style={styles.btnText}>등록</Text>
+            <Text style={[styles.btnText, {fontSize: 20}]}>등록</Text>
           </TouchableOpacity>
         </View>
         {/*  //Content  */}
@@ -145,9 +140,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   headerTitle: {
-    marginLeft: -102,
-    top: 9,
-    left: '50%',
+    top: 15,
+    marginLeft: 80,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
     width: 204,
@@ -175,7 +169,7 @@ const styles = StyleSheet.create({
   },
   content: {
     margin: 26,
-    width: 360,
+    width: 300,
     height: 560,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -218,7 +212,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    width: 300,
+    width: 200,
     borderRadius: 10,
     marginTop: 120,
   },
@@ -227,7 +221,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    width: 300,
+    width: 200,
     borderRadius: 10,
     marginTop: 120,
   },

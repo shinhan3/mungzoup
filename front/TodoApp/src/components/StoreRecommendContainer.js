@@ -13,7 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 const StoreRecommendContainer = ({dimensionCode}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.petBanner3}>
+    <View style={[styles.petBanner3, , {left: 29}]}>
       <Text style={[styles.petBannerTitle, styles.text2Typo]}>
         다른 반려인들이 방문한 장소는?
       </Text>
@@ -36,7 +36,8 @@ const StoreRecommendContainer = ({dimensionCode}) => {
           }}
           style={[styles.petplacebtn, styles.petplacebtnLayout]}>
           <View style={[styles.petplacediv, styles.petplacebtnLayout]} />
-          <Text style={[styles.petplacelink, styles.arrowIconPosition]}>
+          <Text
+            style={[styles.petplacelink, styles.arrowIconPosition, {top: 5}]}>
             추천받으러 가기
           </Text>
           <Image
@@ -44,8 +45,9 @@ const StoreRecommendContainer = ({dimensionCode}) => {
             source={require('../assets/arrow.png')}
           />
         </TouchableOpacity>
-        <Text style={styles.petBannerTxt2}>{`sns게시물 수 대비 실 결제건수로
-반려인들이 실제로 많이 찾는 장소를 알려드릴게요!`}</Text>
+        <Text style={styles.petBannerTxt2}>{`sns게시물 수 대비 실 결제로
+반려인들이 실제로 많이 찾는 
+장소를 알려드릴게요!`}</Text>
       </View>
     </View>
   );
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   },
   petplacebtnLayout: {
     height: 25,
-    width: 133,
+    width: 110,
     position: 'absolute',
   },
   arrowIconPosition: {
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   arrowIcon: {
-    left: 107,
+    left: 85,
     width: 20,
     height: 20,
     overflow: 'hidden',
@@ -140,8 +142,8 @@ const styles = StyleSheet.create({
     left: 25,
   },
   petBannerTxt2: {
-    top: 61,
-    fontSize: FontSize.size_3xs,
+    top: 50,
+    fontSize: FontSize.size_3xs + 6,
     fontFamily: FontFamily.notoSansKRRegular,
     left: 25,
     textAlign: 'left',
@@ -157,6 +159,7 @@ const styles = StyleSheet.create({
     height: 188,
     width: 302,
     position: 'absolute',
+    marginLeft: -20,
   },
 });
 

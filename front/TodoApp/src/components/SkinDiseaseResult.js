@@ -4,6 +4,7 @@ import {Image, Text, View} from 'react-native';
 import {Border, Color, FontFamily, FontSize} from '../GlobalStyles';
 
 const SkinDiseaseResult = ({disease}) => {
+  // disease = 'ㅁㅁㅁ';
   return (
     <>
       {!disease ? (
@@ -22,13 +23,13 @@ function UnHealthResult({disease}) {
     <>
       <View style={[styles.content, styles.contentLayout]}>
         <View style={[styles.background, styles.backgroundBg]} />
-        <View style={{marginTop: 205, marginRight: 350}}>
+        <View style={{marginTop: 205, marginRight: 425}}>
           <Text style={[styles.contenttext3, styles.ai1Typo]}>
             <Text style={{color: Color.new1}}>{disease}</Text>
             <Text>(이/가) 의심되니</Text>
           </Text>
         </View>
-        <Text style={[styles.contenttext2, styles.ai1Typo]}>
+        <Text style={[styles.contenttext2, styles.ai1Typo, {left: 70}]}>
           병원에 가보는 건 어떠하신가요?
         </Text>
       </View>
@@ -83,21 +84,21 @@ function NoResult() {
 const styles = StyleSheet.create({
   imageIcon: {
     top: 300,
-    left: 174,
+    left: 140,
     width: 55,
     height: 40,
     position: 'absolute',
   },
   imageIcon1: {
     top: 315,
-    left: 174,
+    left: 140,
     width: 43.5,
     height: 37,
     position: 'absolute',
   },
   imageIcon2: {
     top: 315,
-    left: 174,
+    left: 140,
     width: 43.5,
     height: 37,
     position: 'absolute',
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   },
   contenttext2: {
     top: 229,
-    left: 77,
+    left: 60,
     color: Color.colorBlack,
     textAlign: 'center',
     fontSize: FontSize.size_mini,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: Color.colorDimgray,
     borderWidth: 0.5,
-    width: 340,
+    width: 290,
     height: 169,
     position: 'absolute',
   },
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
   },
   contenttext1: {
     top: 215,
-    left: 115,
+    left: 100,
     color: Color.colorBlack,
     textAlign: 'center',
     fontSize: FontSize.size_mini,

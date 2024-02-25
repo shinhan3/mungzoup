@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState,useRef} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {
   StyleSheet,
@@ -14,12 +14,45 @@ import {getDistanceFormula} from './SelectMap';
 import LocationContext from '../test/LocationContext ';
 import FooterComponent from './FooterComponent';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/core';
+import Geolocation from '@react-native-community/geolocation';
+import HeaderComponent from '../components/HeaderComponent';
 
 function PLAY1(props) {
-  var {latitude, longitude} = useContext(LocationContext);
+  // var {latitude, longitude} = useContext(LocationContext);
+
+  const [latitude, setLatitude] = useState(37.55518333333333);
+  const [longitude, setLongitude] = useState(126.92099333333333);
+
+  const getGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(
+          'aaaagccccccccccaaaaaaaaaaac',
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        setLatitude(position.coords.latitude);
+        position.coords.longitude * -1 > 0.0
+          ? setLongitude(position.coords.longitude * -1)
+          : setLongitude(position.coords.longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+    );
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getGeolocation();
+    }, []),
+  );
+
   const [modalVisible, setModalVisible] = useState(false);
-  const dslatitude = 37.559245;
-  const dslongtitude = 126.92273666666667;
+  // const dslatitude = 37.559245;
+  // const dslongtitude = 126.92273666666667;
+  const dslatitude = latitude;
+  const dslongtitude = longitude;
   const spotLongitude = props.route.params.spotLongitude;
   const spotLatitude = props.route.params.spotLatitude;
   const spotName = props.route.params.spotName;
@@ -135,22 +168,15 @@ function PLAY1(props) {
       });
     }
   };
-
   return (
     <>
       {/* Header */}
-      <View style={styles.head}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.goBack();
-          }}>
-          <Image
-            style={styles.arrowIcon}
-            source={require('../assets/arrow2.png')}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>산책</Text>
-      </View>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="산책"
+        go={'PLAY'}
+        backBool={true}></HeaderComponent>
       {/* //Header */}
       {/* 지도 */}
       <MapView
@@ -163,6 +189,7 @@ function PLAY1(props) {
           longitudeDelta: 0.0025,
         }}>
         <Marker
+          key={-4}
           coordinate={{
             latitude: spotLatitude,
             longitude: spotLongitude,
@@ -174,6 +201,7 @@ function PLAY1(props) {
             resizeMethod="auto"></Image>
         </Marker>
         <Marker
+          key={-3}
           coordinate={{
             latitude: latitude,
             longitude: longitude,
@@ -270,11 +298,11 @@ function PLAY1(props) {
         </View>
       </Modal>
       {/*  //Modal  */}
-      <FooterComponent
+      {/* <FooterComponent
         petBoolean={false}
         playBoolean={true}
         cardBoolean={false}
-        navigation={props.navigation}></FooterComponent>
+        navigation={props.navigation}></FooterComponent> */}
     </>
   );
 }
@@ -297,8 +325,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 20,
-    top: 9,
-    marginLeft: 160,
+    top: 13,
+    marginLeft: 140,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
   },
@@ -376,6 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+    top: 5,
   },
   modal: {
     flex: 0.5,

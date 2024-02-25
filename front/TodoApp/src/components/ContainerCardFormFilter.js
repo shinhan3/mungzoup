@@ -13,7 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 const ContainerCardFormFilter = ({dimensions}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.petBanner2}>
+    <View style={[styles.petBanner2, , {left: 10}]}>
       <Text style={[styles.petBannerTitle, styles.eventTextTypo]}>
         이번 주말 여기는 어때요?
       </Text>
@@ -29,27 +29,25 @@ const ContainerCardFormFilter = ({dimensions}) => {
           style={[
             styles.petBannerTxt1,
             styles.petPosition,
-          ]}>{`멍줍이 ‘전국 반려동물 동반 가능 문화시설 위치 데이터’를
-기반으로 분석했어요.`}</Text>
+          ]}>{`멍줍이 ‘전국 반려동물 동반 가능 문화시설 위치
+데이터’를 기반으로 분석했어요.`}</Text>
         <TouchableOpacity
+          style={[styles.recommandplacebtn, styles.recommandplacebtnLayout]}
           onPress={() => {
             console.log(navigation);
             navigation.navigate('PLAY2');
           }}>
           <View
-            style={[styles.recommandplacebtn, styles.recommandplacebtnLayout]}>
-            <View
-              style={[styles.recommandplacediv, styles.recommandplacebtnLayout]}
-            />
-            <Image
-              style={[styles.arrowIcon, styles.iconPosition]}
-              source={require('../assets/arrow1.png')}
-            />
-            <View style={[styles.recommandplacelink, styles.eventTextLayout]}>
-              <Text style={[styles.eventText, styles.eventTextLayout]}>
-                보러가기
-              </Text>
-            </View>
+            style={[styles.recommandplacediv, styles.recommandplacebtnLayout]}
+          />
+          <Image
+            style={[styles.arrowIcon, styles.iconPosition]}
+            source={require('../assets/arrow1.png')}
+          />
+          <View style={[styles.recommandplacelink, styles.eventTextLayout]}>
+            <Text style={[styles.eventText, styles.eventTextLayout, {top: 2}]}>
+              보러가기
+            </Text>
           </View>
         </TouchableOpacity>
         <Image
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
   },
   recommandplacebtnLayout: {
     height: 25,
-    width: 91,
+    width: 110,
     position: 'absolute',
   },
   iconPosition: {
@@ -117,8 +115,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_mid,
   },
   petBannerTxt1: {
-    top: 18,
-    fontSize: FontSize.size_4xs,
+    top: 13,
+    fontSize: FontSize.size_4xs + 6,
     fontFamily: FontFamily.notoSansKRRegular,
   },
   recommandplacediv: {
@@ -133,7 +131,7 @@ const styles = StyleSheet.create({
     width: 91,
   },
   arrowIcon: {
-    left: 66,
+    left: 79,
     width: 22,
     height: 20,
     top: 3,
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     top: 0,
-    left: 0,
+    left: -3,
   },
   recommandplacelink: {
     left: 15,

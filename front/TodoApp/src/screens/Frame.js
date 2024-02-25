@@ -62,7 +62,7 @@ const Frame = props => {
         <View style={styles.view}>
           <View style={styles.main}>
             <FormContainer props={props} />
-            <View style={{marginLeft: -10}}>
+            <View style={{marginLeft: 15}}>
               <Text style={styles.bannerTitle}>
                 <Text style={styles.text}>{`멍줍 서비스 `}</Text>
                 <Text style={styles.text1}>{data[0]}개월</Text>
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 981,
     overflow: 'hidden',
-    marginLeft: 27,
+    // marginLeft: 27,
   },
 });
 

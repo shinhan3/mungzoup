@@ -65,7 +65,7 @@ class MyCarousel extends React.Component {
         </View>
       );
     } else {
-      console.log('item^^^^^^', item); // 이 코드를 추가하세요.
+      // console.log('item^^^^^^', item); // 이 코드를 추가하세요.
       return (
         <View key={item.petId} style={styles.petProfileContainer}>
           <Pressable
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   textbtn: {
-    fontSize: FontSize.size_sm,
+    fontSize: FontSize.size_sm + 4,
     color: Color.colorDimgray_100,
     textAlign: 'center',
     fontFamily: FontFamily.notoSansKRBold,

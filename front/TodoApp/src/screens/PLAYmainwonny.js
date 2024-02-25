@@ -18,7 +18,7 @@ const PLAYmainwonny = props => {
         benefits="PLAY"
         backBool={false}></HeaderComponent>
       <View style={styles.playmainwonny}>
-        <View style={styles.main}>
+        <View style={[styles.main]}>
           <FormContainer2
             dimensions={require('../assets/image-41.png')}
             productDimensions={require('../assets/dogimg.png')}
@@ -33,12 +33,6 @@ const PLAYmainwonny = props => {
           />
           <FormContainer1 navigation={props.navigation} />
         </View>
-        {/* <View style={styles.headerPosition}>
-          <View style={[styles.headerDiv, styles.headerPosition]} />
-          <Text style={[styles.headerTitle, styles.headerTitleFlexBox]}>
-            PLAY
-          </Text>
-        </View> */}
       </View>
     </ScrollView>
   );
@@ -105,10 +99,10 @@ const styles = StyleSheet.create({
   playmainwonny: {
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
-    width: '100%',
+    // width: '100%',
     height: 1200,
     overflow: 'hidden',
-    marginLeft: 27,
+    // marginLeft: 27,
   },
 });
 

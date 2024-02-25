@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: 'absolute',
-    top: 73,
-    left: 90,
+    top: 80,
+    left: 95,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRMedium,
   },
   textTypo1: {
-    fontSize: FontSize.size_smi_2,
+    fontSize: FontSize.size_smi_2 + 5,
     textAlign: 'left',
     position: 'absolute',
     top: 20,
@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
   },
   text: {
     top: 18,
-    left: 26,
+    left: 20,
     textAlign: 'left',
   },
   ai: {
-    fontSize: FontSize.size_3xs,
-    left: 0,
+    fontSize: FontSize.size_3xs + 3,
+    left: 5,
     top: 10,
     textAlign: 'left',
   },
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   text4: {
-    top: 4,
-    left: 45,
+    top: 6,
+    left: 60,
     color: Color.bgWhite,
     textAlign: 'left',
     fontSize: FontSize.size_xs,
@@ -203,11 +203,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   text6: {
-    fontSize: FontSize.size_4xs,
+    fontSize: FontSize.size_4xs + 3,
   },
   text7: {
     width: 100,
-    fontSize: FontSize.size_6xs,
+    fontSize: FontSize.size_6xs + 3,
   },
   text5: {
     top: 165,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   },
   petBanner4: {
     top: 656,
-    left: 1,
+    left: 10,
     height: 211,
     width: 299,
     position: 'absolute',
