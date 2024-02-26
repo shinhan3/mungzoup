@@ -21,7 +21,7 @@ const Frame1 = props => {
       console.log('test2007');
       axios
         .get(
-          `http://192.168.0.90:5000/getUserNameAndDiscountPrice.do/${userId}`,
+          `http://192.168.0.10:5000/getUserNameAndDiscountPrice.do/${userId}`,
         )
         .then(res => {
           console.log(res.data);

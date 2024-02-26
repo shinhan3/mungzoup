@@ -27,7 +27,7 @@ import {USERID} from '../UserId';
 
 function PLAY1(props) {
   // var {latitude, longitude} = useContext(LocationContext);
-
+  console.log(props.route, 'routeroute');
   const [latitude, setLatitude] = useState(37.55518333333333);
   const [longitude, setLongitude] = useState(126.92099333333333);
 
@@ -154,7 +154,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post('http://192.168.0.90:5000/insertPetHistory.do', data)
+      .post('http://192.168.0.10:5000/insertPetHistory.do', data)
       .then(res => {
         props.navigation.navigate('PLAYmainwonny');
       })

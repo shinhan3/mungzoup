@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
@@ -20,12 +21,66 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import Geolocation from '@react-native-community/geolocation';
 import HeaderComponent from '../components/HeaderComponent';
+import {USERID} from '../UserId';
 function Tofixed(x) {
   return x.toFixed(1);
 }
 
 function HiddenPopularStores(props) {
   // var {latitude, longitude} = React.useContext(LocationContext);
+
+  const insertWalkSpotfunction = (
+    spot_name,
+    spot_latitude,
+    spot_longitude,
+    spot_address,
+  ) => {
+    const data = {
+      spotName: spot_name,
+      spotLatitude: spot_latitude,
+      spotLongitude: spot_longitude,
+      spotAddress: spot_address,
+      user: {userId: USERID},
+    };
+    axios
+      .post('http://192.168.0.10:5000/insertWalkSpot.do', data)
+      .then(res => {
+        const newSpot = res.data;
+        Alert.alert(
+          '',
+          `내 장소 추가에 성공했습니다!
+바로 산책을 시작하겠습니까?`,
+          [
+            {
+              text: '이동',
+              onPress: () => {
+                // spotId: item.spotId,
+                // spotName: item.spotName,
+                // spotLongitude: item.spotLongitude,
+                // spotLatitude: item.spotLatitude,
+                props.navigation.navigate('PLAY1', {
+                  spotLongitude: data.spotLongitude,
+                  spotLatitude: data.spotLatitude,
+                  spotName: data.spotName,
+                  spotId: newSpot,
+                });
+              },
+              style: 'destructive',
+            },
+            {
+              text: '취소',
+              // onPress: () => {
+              //   navigation.navigate('HiddenPopularStores');
+              // },
+              style: 'destructive',
+            },
+          ],
+        );
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
 
   const [latitude, setLatitude] = React.useState(37.55518333333333);
   const [longitude, setLongitude] = React.useState(126.92099333333333);
@@ -89,7 +144,7 @@ function HiddenPopularStores(props) {
     React.useCallback(() => {
       axios
         .get(
-          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
+          `http://192.168.0.10:5000/storeListPay.do/${latitude}/${longitude}`,
         )
         .then(res => {
           setStoreList(res.data.slice(0, 10));
@@ -105,7 +160,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.10:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         setStoreList(res.data.slice(0, 10));
@@ -268,6 +323,23 @@ function HiddenPopularStores(props) {
                         {item.cnt_pay.toLocaleString()}
                       </Text>
                     </View>
+                    <TouchableOpacity
+                      style={styles.mydiv}
+                      onPress={() => {
+                        // console.log(item['STORE_LATITUDE'], 'itemitemitem');
+                        // console.log(item['STORE_LONGITUDE'], 'itemitemitem');
+                        // console.log(item['STORE_NAME'], 'itemitemitem');
+                        // console.log(item['STORE_ADDRESS'], 'itemitemitem');
+                        // console.log(item, 'itemitemitem');
+                        insertWalkSpotfunction(
+                          item['STORE_NAME'],
+                          item['STORE_LATITUDE'],
+                          item['STORE_LONGITUDE'],
+                          item['STORE_ADDRESS'],
+                        );
+                      }}>
+                      <Text style={styles.mydivText}>{`+ 내 장소`}</Text>
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.contentBottom}>
                     {item.cnt_pay * 100 > item.POST_COUNT * 0.9 && (
@@ -457,6 +529,23 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+  },
+  mydiv: {
+    borderRadius: 10,
+    borderColor: Color.new1,
+    borderWidth: 0.5,
+    borderStyle: 'solid',
+    height: 32,
+    width: 80,
+    top: -50,
+    left: 230,
+    position: 'absolute',
+  },
+  mydivText: {
+    color: Color.new1,
+    left: 10,
+    top: 5,
+    fontSize: FontSize.size_smi_2 + 5,
   },
 });
 
