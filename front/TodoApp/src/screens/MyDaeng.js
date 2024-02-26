@@ -61,7 +61,7 @@ const MyDaeng = props => {
 
   const getPet = () => {
     axios
-      .get(`http://10.0.2.2:5000/getPetMap.do/${userId}`)
+      .get(`http://192.168.0.90:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -121,9 +121,9 @@ const MyDaeng = props => {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
         .then(res => {
-          console.log('다녀왔습니다.');
+          console.log(res.data, 'ㅁㅁㅁㅁㅁㅁㅁㅁ');
           const rawData = res.data;
 
           // 이번 주의 일요일을 구하는 함수
@@ -170,7 +170,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://10.0.2.2:5000/petList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -178,7 +178,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://10.0.2.2:5000/dogCountList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })
@@ -217,6 +217,9 @@ const MyDaeng = props => {
           </View>
           <View style={styles.view}>
             <Text style={[styles.title, styles.titleTypo]}>마이댕 지도</Text>
+            <TouchableOpacity style={[styles.title, {left: 270}]}>
+              <Text>연동하기</Text>
+            </TouchableOpacity>
             <View style={styles.map}>
               <View style={pets.length != 0 && styles.map1} />
               {pets.length == 0 ? (

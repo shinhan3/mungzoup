@@ -13,7 +13,7 @@ const CardContainer = ({data}) => {
           locations={[0, 1]}
           colors={['#62aea9', 'rgba(163, 174, 98, 0.5)']}>
           <Text style={[styles.title, styles.titleTypo]}>
-            <Text style={styles.mg}>{`MG멍줍 카드
+            <Text style={styles.mg}>{`슈퍼SOL멍줍 카드
 `}</Text>
             <Text style={styles.text}>미라크루</Text>
           </Text>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   title: {
     top: 100,
     color: Color.bgWhite,
-    left: 140,
+    left: 110,
     position: 'absolute',
     transform: [
       {

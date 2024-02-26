@@ -17,7 +17,7 @@ const FormContainer1 = () => {
           <Text style={styles.text1}>가 우리 곁을 떠나고 있어요.</Text>
         </Text>
         <View style={styles.righttext}>
-          <Text
+          {/* <Text
             style={[
               styles.ai,
               styles.aiTypo,
@@ -25,7 +25,7 @@ const FormContainer1 = () => {
 비슷한 생김새의 보호 동물 정보를 알려줄게요.
 
 입양 동물을 찾거나, 내 반려동물이 실종되었을 때
-해당 기능을 활용해 보세요.`}</Text>
+해당 기능을 활용해 보세요.`}</Text> */}
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('FindMyDogAI');
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   findsimilarbtn: {
-    top: 97,
+    top: 10,
   },
   righttext: {
     top: 234,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     top: 40,
     left: 0,
     width: 302,
-    height: 385,
+    height: 300,
     position: 'absolute',
   },
   petBannerTitle: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   petBanner4: {
-    top: 656,
+    top: 590,
     left: 10,
     height: 211,
     width: 299,

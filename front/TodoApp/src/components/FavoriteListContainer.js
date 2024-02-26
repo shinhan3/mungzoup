@@ -13,6 +13,7 @@ import {getDistanceFormula} from '../screens/SelectMap';
 import LocationContext from '../test/LocationContext ';
 import {useFocusEffect} from '@react-navigation/core';
 import Geolocation from '@react-native-community/geolocation';
+import {USERID} from '../UserId';
 function FavoriteListContainer(props) {
   return (
     <View style={styles.main}>
@@ -24,7 +25,7 @@ function FavoriteListContainer(props) {
 
 export function FindWalkSpotByUser(props) {
   const [spotList, setSpotList] = useState([]);
-  const userId = 'user1';
+  const userId = USERID;
   // 재호 물어볼거
   // var {latitude, longitude} = useContext(LocationContext);
 
@@ -65,7 +66,7 @@ export function FindWalkSpotByUser(props) {
 
   const deleteWalkSpotfunction = spotId => {
     axios
-      .delete(`http://10.0.2.2:5000/deleteWalkSpot.do/${spotId}`)
+      .delete(`http://192.168.0.90:5000/deleteWalkSpot.do/${spotId}`)
       .then(res => {
         setSpotList(prevSpotList =>
           prevSpotList.filter(item => item.spotId !== spotId),
@@ -79,7 +80,7 @@ export function FindWalkSpotByUser(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/selectWalkSpotAll.do/${userId}`)
+        .get(`http://192.168.0.90:5000/selectWalkSpotAll.do/${userId}`)
         .then(res => {
           setSpotList(res.data);
         })

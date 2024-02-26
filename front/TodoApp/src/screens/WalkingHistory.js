@@ -18,10 +18,12 @@ import {
   VictoryVoronoiContainer,
 } from 'victory-native';
 import MyDaeng from './MyDaeng';
+import {USERID} from '../UserId';
+import HeaderComponent from '../components/HeaderComponent';
 
 function WalkingHistory(props) {
   const [petInfo, setPetInfo] = useState([]); //petInfo (List)
-  const userId = 'user1'; //UserId
+  const userId = USERID; //UserId
   const [selectedPetInfo, setSelectedPetInfo] = useState(null); //선택된 petInfo
   const [gasReduction, setGasReduction] = useState(0); //탄소 배출량
   const [calConsumption, setCalConsumption] = useState(0); //칼로리 소모량
@@ -91,7 +93,7 @@ function WalkingHistory(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           const rawData = res.data;
           console.log(res.data, 'res.datares.data');
@@ -146,7 +148,10 @@ function WalkingHistory(props) {
             (sum, item) => sum + item[3],
             0,
           );
-
+          console.log(
+            new Date(processedData[6][0]).getDay(),
+            'processedDataprocessedData',
+          );
           setPetInfo(processedData);
         })
         .catch(err => {
@@ -157,7 +162,7 @@ function WalkingHistory(props) {
   return (
     <ScrollView>
       {/*  Header  */}
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <View style={styles.headerDiv} />
         <Text style={styles.headerTitle}>산책의 역사</Text>
         <TouchableOpacity
@@ -169,6 +174,14 @@ function WalkingHistory(props) {
             source={require('../assets/arrow2.png')}
           />
         </TouchableOpacity>
+      </View> */}
+      <View style={{marginBottom: 50}}>
+        <HeaderComponent
+          navigation={props.navigation}
+          dimensionCode={require('../assets/arrow8.png')}
+          benefits="산책의 역사"
+          go={'MyDaeng'}
+          backBool={true}></HeaderComponent>
       </View>
       {/*  //Header  */}
       <View style={styles.containerHead}>
@@ -239,7 +252,7 @@ function WalkingHistory(props) {
           }>
           <VictoryAxis
             tickValues={dataVic.map(item => new Date(item.date).getDay())}
-            tickFormat={['일', '월', '화', '수', '목', '금', '토']}
+            tickFormat={['월', '화', '수', '목', '금', '토', '일']}
             // width={100}
             style={{
               axis: {stroke: 'transparent'},
@@ -312,7 +325,22 @@ function WalkingHistory(props) {
               </Text>
               {/*  월/일 =>EX) 2/15   */}
               <Text style={[styles.contentTopDayOfWeek, {top: 4}]}>
-                {dayOfWeek}
+                {/* {dayOfWeek} */}
+                {new Date(selectedPetInfo[0]).getDay() == 1
+                  ? '(월)'
+                  : new Date(selectedPetInfo[0]).getDay() == 2
+                  ? '(화)'
+                  : new Date(selectedPetInfo[0]).getDay() == 3
+                  ? '(수)'
+                  : new Date(selectedPetInfo[0]).getDay() == 4
+                  ? '(목)'
+                  : new Date(selectedPetInfo[0]).getDay() == 5
+                  ? '(금)'
+                  : new Date(selectedPetInfo[0]).getDay() == 6
+                  ? '(토)'
+                  : new Date(selectedPetInfo[0]).getDay() == 0
+                  ? '(일)'
+                  : ''}
               </Text>
               {/*  요일  */}
             </View>

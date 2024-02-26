@@ -42,7 +42,7 @@ const SkinDiseaseAI = ({navigation}) => {
       data.append('dname', dname);
       data.append('userId', USERID);
       axios
-        .post('http://10.0.2.2:5000/inspectSkin.do', data, {
+        .post('http://192.168.0.90:5000/inspectSkin.do', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -78,7 +78,7 @@ const SkinDiseaseAI = ({navigation}) => {
   const dogCheck = () => {
     if (dname) {
       axios
-        .get('http://10.0.2.2:5000/dogConfirm.do', {
+        .get('http://192.168.0.90:5000/dogConfirm.do', {
           params: {
             userId: USERID,
             dname: dname,
@@ -140,7 +140,7 @@ const SkinDiseaseAI = ({navigation}) => {
             <View style={[styles.dogBackgroundbtn, {left: -30}]} />
             <Text
               style={[styles.dogTextbtn, styles.ai1Typo, {left: -10, top: 10}]}>
-              등록
+              조회
             </Text>
           </Pressable>
           <TouchableOpacity

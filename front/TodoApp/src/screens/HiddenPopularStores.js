@@ -58,16 +58,16 @@ function HiddenPopularStores(props) {
   const mapRef = React.useRef();
   const [open, setOpen] = React.useState(false);
   const bottomSheetRef = React.useRef(null);
-  const [value, setValue] = React.useState('결제순');
+  const [value, setValue] = React.useState('거리순');
   const [items, setItems] = React.useState([
     {label: '결제순', value: '결제순'},
-    {label: '리뷰 개수순', value: '리뷰 개수순'},
+    // {label: '리뷰 개수순', value: '리뷰 개수순'},
     {label: '게시글순', value: '게시글순'},
     {label: '거리순', value: '거리순'},
   ]);
 
   //화면 비율
-  const snapPoints = ['15%', '45%', '90%'];
+  const snapPoints = ['18%', '45%', '90%'];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -88,7 +88,9 @@ function HiddenPopularStores(props) {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/storeListPay.do/${latitude}/${longitude}`)
+        .get(
+          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
+        )
         .then(res => {
           setStoreList(res.data.slice(0, 10));
         })
@@ -103,7 +105,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://10.0.2.2:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         setStoreList(res.data.slice(0, 10));
@@ -134,7 +136,7 @@ function HiddenPopularStores(props) {
       <HeaderComponent
         navigation={props.navigation}
         dimensionCode={require('../assets/arrow8.png')}
-        benefits="숨은 인기 가맹점"
+        benefits="가맹점 TOP 10"
         go="PLAYmainwonny"
         backBool={false}></HeaderComponent>
       {/* //Header */}
@@ -263,7 +265,7 @@ function HiddenPopularStores(props) {
                     <View style={styles.storeText3}>
                       <Text style={styles.storeText}> 결제건수 </Text>
                       <Text style={styles.storeTextPoint}>
-                        {(item.cnt_pay * 100).toLocaleString()}
+                        {item.cnt_pay.toLocaleString()}
                       </Text>
                     </View>
                   </View>
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chSecond: {
-    marginLeft: 190,
+    marginLeft: 180,
   },
   menuImg: {
     marginBottom: 7,

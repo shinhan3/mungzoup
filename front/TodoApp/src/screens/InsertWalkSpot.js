@@ -12,6 +12,7 @@ import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import {Input} from 'react-native-elements';
 import axios from 'axios';
 import HeaderComponent from '../components/HeaderComponent';
+import {USERID} from '../UserId';
 function InsertWalkSpot(props) {
   var address = props.route.params ? props.route.params.address : '';
   var latitude = props.route.params ? props.route.params.latitude : '';
@@ -29,10 +30,10 @@ function InsertWalkSpot(props) {
         spotLatitude: latitude,
         spotLongitude: longitude,
         spotAddress: address,
-        user: {userId: 'user1'},
+        user: {userId: USERID},
       };
       axios
-        .post('http://10.0.2.2:5000/insertWalkSpot.do', data)
+        .post('http://192.168.0.90:5000/insertWalkSpot.do', data)
         .then(res => {
           const newSpot = res.data;
           setSpotList(prevSpotList => [...prevSpotList, newSpot]);

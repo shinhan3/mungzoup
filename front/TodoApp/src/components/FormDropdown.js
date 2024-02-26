@@ -22,7 +22,7 @@ const FormDropdown = ({onDropdownData}) => {
     setDropdownBoxValue(value);
     try {
       const response = await axios.get(
-        `http://10.0.2.2:5000/areaPicking.do/${value}`,
+        `http://192.168.0.90:5000/areaPicking.do/${value}`,
       );
 
       const responseData = response.data;

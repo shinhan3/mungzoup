@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGhostwhite,
     flex: 1,
     // width: '100%',
-    height: 1200,
+    height: 1050,
     overflow: 'hidden',
     // marginLeft: 27,
   },
