@@ -164,6 +164,7 @@ function HiddenPopularStores(props) {
       )
       .then(res => {
         setStoreList(res.data.slice(0, 10));
+        n;
       })
       .catch(err => {
         console.log(err);

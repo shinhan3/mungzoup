@@ -2,10 +2,11 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useMemo,
   useRef,
+  useState,
 } from 'react';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Polyline} from 'react-native-maps';
 import {
   StyleSheet,
   View,
@@ -62,6 +63,13 @@ function PLAY1(props) {
   const dslongtitude = longitude;
   const spotLongitude = props.route.params.spotLongitude;
   const spotLatitude = props.route.params.spotLatitude;
+
+  //
+  const apiKey = '5b3ce3597851110001cf624806cb60ca6dae4dd4a62063d2c4b533cd';
+  const origin = useMemo(() => ({latitude, longitude}), [latitude, longitude]);
+  const destination = {latitude: spotLatitude, longitude: spotLongitude};
+
+  //
   const spotName = props.route.params.spotName;
   const spotId = props.route.params.spotId;
   const totalDistance = getDistanceFormula(
@@ -175,6 +183,33 @@ function PLAY1(props) {
       });
     }
   };
+  function fetchRoute(origin, destination) {
+    const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${apiKey}&start=${origin.longitude},${origin.latitude}&end=${destination.longitude},${destination.latitude}`;
+
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // 경로 데이터를 좌표 객체의 배열로 변환합니다.
+        const coordinates = data.features[0].geometry.coordinates.map(
+          ([longitude, latitude]) => ({
+            latitude,
+            longitude,
+          }),
+        );
+
+        return coordinates;
+      });
+  }
+
+  const [routeCoordinates, setRouteCoordinates] = useState(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchRoute(origin, destination).then(coordinates => {
+        setRouteCoordinates(coordinates);
+      });
+    }, [origin]),
+  );
   return (
     <>
       {/* Header */}
@@ -219,6 +254,13 @@ function PLAY1(props) {
             style={{width: 30, height: 30}}
             resizeMethod="auto"></Image>
         </Marker>
+        {routeCoordinates && (
+          <Polyline
+            coordinates={routeCoordinates}
+            strokeWidth={10}
+            strokeColor="pink"
+          />
+        )}
       </MapView>
       {/* //지도 */}
       {/* Content */}

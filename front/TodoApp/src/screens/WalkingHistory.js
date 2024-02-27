@@ -137,8 +137,6 @@ function WalkingHistory(props) {
               0,
             ];
           });
-
-          console.log(processedData, 'processedDataprocessedData');
           // 주간 산책 거리와 산책 시간 계산
           const totalDistance = processedData.reduce(
             (sum, item) => sum + item[2],

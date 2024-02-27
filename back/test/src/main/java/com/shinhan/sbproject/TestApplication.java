@@ -68,7 +68,8 @@ public class TestApplication {
 	}
 	
 	// @Scheduled(cron = "0 0 0 1 * *") 
-	// @Scheduled(fixedDelay = 10000000) 
+	@Scheduled(fixedDelay = 10000000)
+	// @Scheduled(fixedDelay = 10000000)
 	public void crawling() throws IOException {
 		
 		List<StoreVO> storeList = new ArrayList<>();
