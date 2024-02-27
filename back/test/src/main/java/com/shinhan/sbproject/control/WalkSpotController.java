@@ -32,9 +32,10 @@ public class WalkSpotController {
     PetHistoryRepository petHistoryRep;
 
     @PostMapping("/insertWalkSpot.do")
-    public void insertWalkSpot(@RequestBody WalkSpotVO walk) {
-        walkRep.save(walk);
+    public String insertWalkSpot(@RequestBody WalkSpotVO walk) {
+        walk=walkRep.save(walk);
         log.info(walk.toString());
+        return walk.getSpotId()+"";
     }
 
     @GetMapping("/selectWalkSpotAll.do/{userId}")

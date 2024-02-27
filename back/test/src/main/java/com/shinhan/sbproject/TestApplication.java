@@ -3,6 +3,7 @@ package com.shinhan.sbproject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class TestApplication {
 	
 	// @Scheduled(cron = "0 0 0 1 * *") 
 	@Scheduled(fixedDelay = 10000000)
+	// @Scheduled(fixedDelay = 10000000)
 	public void crawling() throws IOException {
 		
 		List<StoreVO> storeList = new ArrayList<>();
@@ -80,13 +82,16 @@ public class TestApplication {
 			cntC++;
 			Integer PostCountInt =0;
 			long PostCount =0;
-			String URL = "https://www.google.com/search?q=21세기맑은약국 인천광역시 부평구 길주로 623";
-			
-            // String URL = "https://www.google.com/search?q="+"%22"+store.getStoreName()+"%22"+" "+"%22"+store.getStoreAddress()+"%22";
+			// String URL = "https://www.google.com/search?q=21세기맑은약국 인천광역시 부평구 길주로 623";
+			// String URL = "https://www.google.com/search?q="+store.getStoreName()+" "+store.getStoreAddress();
+            String URL = '"'+store.getStoreName()+'"'+" "+'"'+store.getStoreAddress()+'"';
+			URL.replaceAll(" ", "+");
 			try{
-				
-				Thread.sleep(10000);
+			String urlData = URLEncoder.encode(URL,"UTF-8");
+			URL = "https://www.google.com/search?q=" + urlData;
+			System.out.println(URL);
 			Document doc = Jsoup.connect(URL).get();
+			Thread.sleep(60000);
 			System.out.println(doc.getElementById("result-stats").text().split(" ").length);
 			if(doc.getElementById("result-stats").text().split(" ").length == 4){
 				String data =  doc.getElementById("result-stats").text().split(" ")[2];

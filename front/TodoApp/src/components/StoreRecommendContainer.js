@@ -28,7 +28,12 @@ const StoreRecommendContainer = ({dimensionCode}) => {
             <Text style={styles.text}>{` `}</Text>
             <Text style={styles.text4}>숨은 인기 가맹점</Text>
           </Text>
-          <Text style={styles.text5}>을 추천해요!</Text>
+
+          <Text style={styles.text5}>
+            {' '}
+            {`
+추천해요!`}
+          </Text>
         </Text>
         <TouchableOpacity
           onPress={() => {
@@ -45,9 +50,9 @@ const StoreRecommendContainer = ({dimensionCode}) => {
             source={require('../assets/arrow.png')}
           />
         </TouchableOpacity>
-        <Text style={styles.petBannerTxt2}>{`sns게시물 수 대비 실 결제로
+        {/* <Text style={styles.petBannerTxt2}>{`sns게시물 수 대비 실 결제로
 반려인들이 실제로 많이 찾는 
-장소를 알려드릴게요!`}</Text>
+장소를 알려드릴게요!`}</Text> */}
       </View>
     </View>
   );
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   petLayout: {
-    height: 150,
+    height: 120,
     left: 0,
     width: 302,
     position: 'absolute',
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
     height: 150,
   },
   petBannerImgIcon: {
-    top: 52,
+    top: 15,
     left: 185,
     width: 95,
     height: 88,
@@ -101,7 +106,10 @@ const styles = StyleSheet.create({
     color: Color.colorDarkslategray_200,
   },
   text4: {
-    color: Color.new1,
+    // color: Color.new1,
+    fontFamily: FontFamily.notoSansKR,
+    fontWeight: '800',
+    color: '#2e2e2e',
   },
   text5: {
     fontFamily: FontFamily.notoSansKRRegular,
@@ -138,7 +146,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   petplacebtn: {
-    top: 107,
+    top: 80,
     left: 25,
   },
   petBannerTxt2: {
@@ -154,7 +162,7 @@ const styles = StyleSheet.create({
     top: 38,
   },
   petBanner3: {
-    top: 421,
+    top: 390,
     left: 1,
     height: 188,
     width: 302,

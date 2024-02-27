@@ -12,7 +12,7 @@ public interface UserRepository extends CrudRepository<UserVO, String>{
 	@Query(value ="SELECT (SELECT TIMESTAMPDIFF(MONTH,user.subscribe_day,NOW()) FROM user WHERE user_id = :userId) AS userMenth, "
     +"(SELECT TIMESTAMPDIFF(MONTH,card.INSERT_DAY,NOW()) FROM user JOIN card USING(card_id) WHERE user_id = :userId) AS cardMenth,"
     +"(SELECT DATE_FORMAT(card.INSERT_DAY,'%Y-%m-%d') FROM user JOIN card USING(card_id) WHERE user_id = :userId) AS insertCard, "
-    +"(SELECT  IFNULL(FORMAT( SUM(payment.PRICE),'#,#'),0) FROM payment WHERE user_id = :userId) AS price"
+    +"(SELECT  IFNULL(FORMAT( SUM(payment.PRICE),'#,#'),0) FROM payment WHERE user_id = :userId and TIMESTAMPDIFF(MONTH,payment.PAYMENT_DATE,NOW())=0 )  AS price"
     , nativeQuery = true)
     List<String[]> IssuedPageData(@Param("userId") String userId);
 

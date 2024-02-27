@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import DetailCard from '../components/DetailCard';
 import {FontFamily, FontSize, Color} from '../GlobalStyles';
@@ -20,12 +21,66 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import Geolocation from '@react-native-community/geolocation';
 import HeaderComponent from '../components/HeaderComponent';
+import {USERID} from '../UserId';
 function Tofixed(x) {
   return x.toFixed(1);
 }
 
 function HiddenPopularStores(props) {
   // var {latitude, longitude} = React.useContext(LocationContext);
+
+  const insertWalkSpotfunction = (
+    spot_name,
+    spot_latitude,
+    spot_longitude,
+    spot_address,
+  ) => {
+    const data = {
+      spotName: spot_name,
+      spotLatitude: spot_latitude,
+      spotLongitude: spot_longitude,
+      spotAddress: spot_address,
+      user: {userId: USERID},
+    };
+    axios
+      .post('http://192.168.0.90:5000/insertWalkSpot.do', data)
+      .then(res => {
+        const newSpot = res.data;
+        Alert.alert(
+          '',
+          `내 장소 추가에 성공했습니다!
+바로 산책을 시작하겠습니까?`,
+          [
+            {
+              text: '이동',
+              onPress: () => {
+                // spotId: item.spotId,
+                // spotName: item.spotName,
+                // spotLongitude: item.spotLongitude,
+                // spotLatitude: item.spotLatitude,
+                props.navigation.navigate('PLAY1', {
+                  spotLongitude: data.spotLongitude,
+                  spotLatitude: data.spotLatitude,
+                  spotName: data.spotName,
+                  spotId: newSpot,
+                });
+              },
+              style: 'destructive',
+            },
+            {
+              text: '취소',
+              // onPress: () => {
+              //   navigation.navigate('HiddenPopularStores');
+              // },
+              style: 'destructive',
+            },
+          ],
+        );
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
 
   const [latitude, setLatitude] = React.useState(37.55518333333333);
   const [longitude, setLongitude] = React.useState(126.92099333333333);
@@ -58,16 +113,16 @@ function HiddenPopularStores(props) {
   const mapRef = React.useRef();
   const [open, setOpen] = React.useState(false);
   const bottomSheetRef = React.useRef(null);
-  const [value, setValue] = React.useState('결제순');
+  const [value, setValue] = React.useState('거리순');
   const [items, setItems] = React.useState([
     {label: '결제순', value: '결제순'},
-    {label: '리뷰 개수순', value: '리뷰 개수순'},
+    // {label: '리뷰 개수순', value: '리뷰 개수순'},
     {label: '게시글순', value: '게시글순'},
     {label: '거리순', value: '거리순'},
   ]);
 
   //화면 비율
-  const snapPoints = ['15%', '45%', '90%'];
+  const snapPoints = ['18%', '45%', '90%'];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -88,7 +143,9 @@ function HiddenPopularStores(props) {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(`http://10.0.2.2:5000/storeListPay.do/${latitude}/${longitude}`)
+        .get(
+          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
+        )
         .then(res => {
           setStoreList(res.data.slice(0, 10));
         })
@@ -103,7 +160,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://10.0.2.2:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         setStoreList(res.data.slice(0, 10));
@@ -135,7 +192,7 @@ function HiddenPopularStores(props) {
       <HeaderComponent
         navigation={props.navigation}
         dimensionCode={require('../assets/arrow8.png')}
-        benefits="숨은 인기 가맹점"
+        benefits="가맹점 TOP 10"
         go="PLAYmainwonny"
         backBool={false}></HeaderComponent>
       {/* //Header */}
@@ -229,12 +286,20 @@ function HiddenPopularStores(props) {
             renderItem={({item}) => {
               return (
                 <View style={styles.contentList}>
-                  <View style={styles.storeFirst}>
+                  <TouchableOpacity
+                    style={styles.storeFirst}
+                    onPress={() => {
+                      props.navigation.navigate('Review', {
+                        storeId: item.STORE_ID,
+                      });
+                    }}>
+                    {/* <View style={styles.storeFirst}> */}
                     <Text style={styles.storeName}>{item.STORE_NAME}</Text>
                     <Text style={styles.storeCategory}>
                       {item.CATEGORY_NAME}
                     </Text>
-                  </View>
+                    {/* </View> */}
+                  </TouchableOpacity>
                   <View>
                     <Text style={styles.storeAddress}>
                       {item.STORE_ADDRESS}
@@ -256,26 +321,64 @@ function HiddenPopularStores(props) {
                     <View style={styles.storeText3}>
                       <Text style={styles.storeText}> 결제건수 </Text>
                       <Text style={styles.storeTextPoint}>
-                        {(item.cnt_pay * 100).toLocaleString()}
+                        {(item.cnt_pay * 3).toLocaleString()}
                       </Text>
                     </View>
+                    {/*<TouchableOpacity
+                      style={styles.mydiv}
+                      onPress={() => {
+                        insertWalkSpotfunction(
+                          item['STORE_NAME'],
+                          item['STORE_LATITUDE'],
+                          item['STORE_LONGITUDE'],
+                          item['STORE_ADDRESS'],
+                        );
+                      }}>
+                      <Text style={styles.mydivText}>{`+ 내 장소`}</Text>
+                    </TouchableOpacity>*/}
                   </View>
                   <View style={styles.contentBottom}>
-                    {item.cnt_pay * 100 > item.POST_COUNT / 2 && (
-                      <View>
-                        <Text style={styles.hiddenText}>숨은 명소</Text>
+                    {item.cnt_pay * 3 > item.POST_COUNT * 2 && (
+                      <View
+                        style={{
+                          backgroundColor: '#EAE03A',
+                          borderRadius: 10,
+                          height: 25,
+                          width: 70,
+                          flexDirection: 'row',
+                          left: 20,
+                          top: -115,
+                        }}>
+                        <Text style={{color: 'black', fontSize: 20, left: 5}}>
+                          숨은 명소
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            width: 300,
+                            left: 20,
+                            top: 3,
+                          }}>
+                          게시글 수에 비해 실 결제 건수가 월등히 높아요
+                        </Text>
                       </View>
                     )}
-                    <View style={styles.detail}>
-                      <TouchableOpacity
+                    <View
+                      style={[
+                        styles.detail,
+                        item.cnt_pay * 3 > item.POST_COUNT * 2 && {
+                          left: -70,
+                        },
+                      ]}>
+                      {/* <TouchableOpacity
                         style={styles.detailBtn}
                         onPress={() => {
                           props.navigation.navigate('Review', {
                             storeId: item.STORE_ID,
                           });
                         }}>
-                        <Text style={styles.btnText}>{`자세히`}</Text>
-                      </TouchableOpacity>
+                        <Text style={[styles.btnText]}>{`자세히`}</Text>
+                      </TouchableOpacity> */}
                     </View>
                   </View>
                 </View>
@@ -321,7 +424,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   chSecond: {
-    marginLeft: 190,
+    marginLeft: 180,
   },
   menuImg: {
     marginBottom: 7,
@@ -354,6 +457,7 @@ const styles = StyleSheet.create({
   storeFirst: {
     flexDirection: 'row',
     marginBottom: 5,
+    marginTop: 20,
   },
   storeName: {
     color: '#2E2E2E',
@@ -421,6 +525,23 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: FontFamily.notoSansKR,
     fontWeight: '800',
+  },
+  mydiv: {
+    borderRadius: 10,
+    borderColor: Color.new1,
+    borderWidth: 0.5,
+    borderStyle: 'solid',
+    height: 32,
+    width: 80,
+    top: -50,
+    left: 230,
+    position: 'absolute',
+  },
+  mydivText: {
+    color: Color.new1,
+    left: 10,
+    top: 5,
+    fontSize: FontSize.size_smi_2 + 5,
   },
 });
 

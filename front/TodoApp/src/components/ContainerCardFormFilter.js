@@ -25,12 +25,12 @@ const ContainerCardFormFilter = ({dimensions}) => {
           <Text style={styles.text1}>나들이 장소 줍줍</Text>
           <Text style={styles.text}>하자!</Text>
         </Text>
-        <Text
+        {/* <Text
           style={[
             styles.petBannerTxt1,
             styles.petPosition,
           ]}>{`멍줍이 ‘전국 반려동물 동반 가능 문화시설 위치
-데이터’를 기반으로 분석했어요.`}</Text>
+데이터’를 기반으로 분석했어요.`}</Text> */}
         <TouchableOpacity
           style={[styles.recommandplacebtn, styles.recommandplacebtnLayout]}
           onPress={() => {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   petLayout: {
-    height: 150,
+    height: 120,
     width: 302,
     left: 0,
     position: 'absolute',
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   petBannerTxt2: {
-    top: 46,
+    top: 30,
     fontSize: FontSize.size_mid,
   },
   petBannerTxt1: {
@@ -151,16 +151,18 @@ const styles = StyleSheet.create({
     top: 3,
   },
   recommandplacebtn: {
-    top: 105,
+    top: 85,
     left: 26,
   },
   petBannerImgIcon: {
-    height: '53.6%',
-    width: '32.09%',
-    top: '25.33%',
-    right: '4.01%',
-    bottom: '21.07%',
-    left: '63.91%',
+    height: 100,
+    width: 120,
+    left: 180,
+    top: 10,
+    // top: '25.33%',
+    // right: '4.01%',
+    // bottom: '21.07%',
+    // left: '63.91%',
     maxWidth: '100%',
     maxHeight: '100%',
   },

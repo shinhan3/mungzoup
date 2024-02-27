@@ -24,10 +24,11 @@ import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/core';
 import Geolocation from '@react-native-community/geolocation';
 import HeaderComponent from '../components/HeaderComponent';
+import {USERID} from '../UserId';
 
 function PLAY1(props) {
   // var {latitude, longitude} = useContext(LocationContext);
-
+  console.log(props.route, 'routeroute');
   const [latitude, setLatitude] = useState(37.55518333333333);
   const [longitude, setLongitude] = useState(126.92099333333333);
 
@@ -153,7 +154,7 @@ function PLAY1(props) {
   const modalBtnClick = () => {
     const petTime = intTime(seconds);
     const data = {
-      user: {userId: 'user1'},
+      user: {userId: USERID},
       spot: {spotId},
       petTime,
       distance: totalDistance,
@@ -161,7 +162,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post('http://10.0.2.2:5000/insertPetHistory.do', data)
+      .post('http://192.168.0.90:5000/insertPetHistory.do', data)
       .then(res => {
         props.navigation.navigate('PLAYmainwonny');
       })

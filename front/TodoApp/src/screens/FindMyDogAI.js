@@ -45,7 +45,7 @@ const FindMyDogAI = ({navigation}) => {
           uri: resizedImage.uri,
         });
         console.log(data['_parts'][0][1], 'ccc');
-        return axios.post('http://10.0.2.2:5000/findAnimals', data, {
+        return axios.post('http://192.168.0.90:5000/findAnimals', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -92,7 +92,7 @@ const FindMyDogAI = ({navigation}) => {
     <>
       <HeaderComponent
         navigation={navigation}
-        benefits="보호 중인 동물 알아보기 "
+        benefits="보호 중인 동물 "
         go="PLAY6FingMyDog"></HeaderComponent>
       <View style={styles.play}>
         <View style={[styles.main, styles.mainPosition]}>
@@ -124,7 +124,7 @@ const FindMyDogAI = ({navigation}) => {
                   source={
                     previewImage
                       ? {uri: previewImage}
-                      : require('../assets/inputImg2.png')
+                      : require('../assets/inputImg.png')
                   }
                 />
               </Pressable>
