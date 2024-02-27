@@ -12,7 +12,7 @@ import {FontSize, FontFamily, Color} from '../GlobalStyles';
 const MenuPlay1 = ({style}) => {
   return (
     <View style={[styles.menuPlay, style]}>
-      <Text style={styles.play}>PLAY</Text>
+      <Text style={styles.play}>플레이</Text>
       <Image
         style={styles.heartImgIcon}
         source={require('../assets/heardimg.png')}
@@ -24,8 +24,8 @@ const MenuPlay1 = ({style}) => {
 const styles = StyleSheet.create({
   play: {
     top: 26,
-    left: 3,
-    fontSize: FontSize.size_5xs,
+    left: -2,
+    fontSize: FontSize.size_xs + 2,
     fontWeight: '700',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.colorDarkgray_200,

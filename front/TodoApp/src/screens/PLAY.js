@@ -10,26 +10,21 @@ import {
 import FavoriteListContainer from '../components/FavoriteListContainer';
 import {Color, FontFamily, FontSize, Border} from '../GlobalStyles';
 import FooterComponent from './FooterComponent';
+import HeaderComponent from '../components/HeaderComponent';
 
 const PLAY = props => {
   return (
     <View style={styles.play}>
-      <View style={[styles.header, styles.divPosition1]}>
-        <View style={[styles.haederDiv, styles.divPosition]} />
-        <Text style={[styles.headerTitle, styles.txtFlexBox]}>
-          나의 산책 목록
-        </Text>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.goBack('PLAYmainwonny');
-          }}>
-          <Image
-            style={styles.arrowIcon}
-            source={require('../assets/arrow2.png')}
-          />
-        </TouchableOpacity>
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="나의 산책 목록"
+        go={'PLAYmainwonny'}
+        backBool={true}></HeaderComponent>
+
+      <View style={{height: '90%'}}>
+        <FavoriteListContainer navigation={props.navigation} />
       </View>
-      <FavoriteListContainer navigation={props.navigation} />
       <TouchableOpacity
         style={[styles.insertplaceBtn, styles.txtLayout]}
         onPress={() => {
@@ -38,6 +33,11 @@ const PLAY = props => {
         <View style={[styles.div, styles.divPosition1]} />
         <Text style={[styles.txt, styles.txtLayout]}>+ 내 장소</Text>
       </TouchableOpacity>
+      <FooterComponent
+        petBoolean={false}
+        playBoolean={true}
+        cardBoolean={false}
+        navigation={props.navigation}></FooterComponent>
     </View>
   );
 };
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     height: 52,
   },
   headerTitle: {
-    top: 9,
-    marginLeft: 100,
+    top: 15,
+    marginLeft: 80,
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
     width: 204,
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     marginLeft: 27,
   },
   insertplaceBtn: {
-    top: 92,
-    left: 252,
+    top: 90,
+    left: 220,
     width: 100,
   },
   play: {

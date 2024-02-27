@@ -58,7 +58,8 @@ const ReviewSelect = ({navigation, route}) => {
           {
             text: '확인',
             onPress: () => {
-              navigation.navigate('HiddenPopularStores');
+              //모달 추가 예정 동선
+              navigation.navigate('ModelComponent');
             },
             style: 'destructive',
           },
@@ -165,6 +166,7 @@ const ReviewSelect = ({navigation, route}) => {
             dimensionCode={require('../assets/arrow8.png')}
             benefits="리뷰 등록"
             navigation={navigation}
+            backBool={true}
             go="HiddenPopularStores"
           />
           <View style={styles.main}>
@@ -431,7 +433,7 @@ const styles = StyleSheet.create({
     top: 60,
     height: 1037,
     width: 360,
-    left: 24,
+    left: 0,
     position: 'absolute',
   },
   headerChild: {

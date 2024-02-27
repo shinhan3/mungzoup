@@ -264,10 +264,10 @@ const styles = StyleSheet.create({
   percentTypo: {
     color: Color.colorWhitesmoke_300,
     textAlign: 'right',
-    fontSize: FontSize.size_4xs_6,
+    fontSize: FontSize.size_4xs_6 + 5,
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
-    top: 0,
+    top: -2,
     position: 'absolute',
   },
   cate5Position: {
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
-    top: 0,
+    top: -3,
     position: 'absolute',
   },
   cateDiv: {
@@ -293,9 +293,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   cateName: {
-    fontSize: FontSize.size_smi_2,
+    fontSize: FontSize.size_smi_2 + 4,
     textAlign: 'left',
-    top: 0,
+    top: -2,
     left: 0,
     position: 'absolute',
   },
@@ -325,9 +325,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontFamily: FontFamily.notoSansKRMedium,
     fontWeight: '500',
-    top: 0,
+    top: -1,
     position: 'absolute',
-    fontSize: FontSize.size_4xs_6,
+    fontSize: FontSize.size_4xs_6 + 4,
     width: 26,
     alignItems: 'center',
     display: 'flex',
@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
   },
   legendText: {
     left: 10,
-    fontSize: FontSize.size_6xs_1,
+    fontSize: FontSize.size_6xs_1 + 7,
     color: Color.colorDarkgray_200,
   },
   color: {
@@ -451,8 +451,8 @@ const styles = StyleSheet.create({
   },
   legend: {
     top: 109,
-    left: 274,
-    width: 64,
+    left: 220,
+    width: 90,
     height: 9,
     position: 'absolute',
   },

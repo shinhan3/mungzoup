@@ -36,8 +36,9 @@ const styles = StyleSheet.create({
   },
   mungzoupcard: {
     top: 25,
-    left: 0,
-    fontSize: FontSize.size_5xs,
+    width: 50,
+    left: -10,
+    fontSize: FontSize.size_xs + 2,
     fontWeight: '700',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,

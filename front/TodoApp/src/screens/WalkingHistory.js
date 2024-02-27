@@ -151,7 +151,6 @@ function WalkingHistory(props) {
         });
     }, [weekOffset]),
   );
-
   return (
     <ScrollView>
       {/*  Header  */}
@@ -201,7 +200,7 @@ function WalkingHistory(props) {
         </TouchableOpacity>
       </View>
       {/*  Victory_native  */}
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <VictoryChart
           width={380}
           height={200}
@@ -213,6 +212,7 @@ function WalkingHistory(props) {
               onActivated={points => {
                 //points는 onActivated 이벤트 핸들러에서 제공하는 매개변수
                 //클릭한 데이터의 정보를 가지고 있음
+                console.log(points);
                 if (points.length > 0) {
                   const clickedDate = points[0].date;
                   const selectedData = petInfo.find(
@@ -237,6 +237,7 @@ function WalkingHistory(props) {
           <VictoryAxis
             tickValues={dataVic.map(item => new Date(item.date).getDay())}
             tickFormat={['일', '월', '화', '수', '목', '금', '토']}
+            // width={100}
             style={{
               axis: {stroke: 'transparent'},
               ticks: {stroke: 'transparent'},
@@ -265,7 +266,7 @@ function WalkingHistory(props) {
                 padding: 5,
               },
             }}
-            offsetX={390}
+            offsetX={380}
             tickValues={[0, 30, 60]}
             tickFormat={t => `${t}분`}
           />
@@ -291,7 +292,9 @@ function WalkingHistory(props) {
                 {selectedPetInfo[0].substring(8, 10)}
               </Text>
               {/*  월/일 =>EX) 2/15   */}
-              <Text style={styles.contentTopDayOfWeek}>{dayOfWeek}</Text>
+              <Text style={[styles.contentTopDayOfWeek, {top: 4}]}>
+                {dayOfWeek}
+              </Text>
               {/*  요일  */}
             </View>
             <View style={styles.contentMiddle}>
@@ -303,7 +306,7 @@ function WalkingHistory(props) {
               {/*  산책 시간  */}
               <Text style={styles.walkTimeText}>분</Text>
             </View>
-            <View style={styles.contentBottom}>
+            <View style={[styles.contentBottom, {top: 10}]}>
               <Text style={styles.distanceTextBefore}>오늘 멍멍이와 </Text>
               <Text style={styles.distance}>{selectedPetInfo[2]}</Text>
               {/*  거리  */}
@@ -346,7 +349,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     marginLeft: -102,
-    top: 9,
+    top: 13,
     left: '50%',
     fontSize: FontSize.size_xl,
     color: Color.colorDarkslategray_200,
@@ -374,9 +377,9 @@ const styles = StyleSheet.create({
     elevation: 5, // Android에서 그림자 효과를 주기 위한 설정
   },
   content: {
-    marginLeft: 26,
-    marginRight: 26,
-    width: 360,
+    marginLeft: 15,
+    // marginRight: 26,
+    width: 330,
     height: 208,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -402,14 +405,16 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRMedium,
     marginLeft: 5,
     marginRight: 5,
+    top: 4,
   },
   container: {
     justifyContent: 'center',
+    left: -23,
   },
   beforeSelect: {
     fontSize: 30,
-    marginLeft: 44,
-    marginTop: 70,
+    marginLeft: 60,
+    marginTop: 80,
     fontFamily: FontFamily.notoSansKRBold,
   },
   contentTop: {

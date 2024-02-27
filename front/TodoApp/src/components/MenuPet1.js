@@ -24,8 +24,8 @@ const MenuPet1 = ({style}) => {
 const styles = StyleSheet.create({
   mydog: {
     top: 26,
-    left: 2,
-    fontSize: FontSize.size_5xs,
+    left: -2,
+    fontSize: FontSize.size_xs + 2,
     fontWeight: '700',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.colorDarkgray_200,

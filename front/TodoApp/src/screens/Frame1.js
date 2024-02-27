@@ -45,9 +45,11 @@ const Frame1 = props => {
             backBool={true}
           />
           <View
-            style={{
-              marginLeft: 27,
-            }}>
+            style={
+              {
+                // marginLeft: 27,
+              }
+            }>
             <FormContainer3 discount={discountPrice.discount} />
             <Text style={styles.ment1}>
               <Text>
@@ -85,11 +87,6 @@ const Frame1 = props => {
           </View>
         </View>
       </ScrollView>
-      <FooterComponent
-        petBoolean={false}
-        playBoolean={false}
-        cardBoolean={true}
-        navigation={props.navigation}></FooterComponent>
     </>
   );
 };
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   text: {
-    fontSize: FontSize.size_xs,
+    fontSize: FontSize.size_xs + 3,
     color: Color.colorDimgray_100,
   },
   text1: {

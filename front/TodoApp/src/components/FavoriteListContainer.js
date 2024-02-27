@@ -12,6 +12,7 @@ import axios from 'axios';
 import {getDistanceFormula} from '../screens/SelectMap';
 import LocationContext from '../test/LocationContext ';
 import {useFocusEffect} from '@react-navigation/core';
+import Geolocation from '@react-native-community/geolocation';
 function FavoriteListContainer(props) {
   return (
     <View style={styles.main}>
@@ -24,7 +25,44 @@ function FavoriteListContainer(props) {
 export function FindWalkSpotByUser(props) {
   const [spotList, setSpotList] = useState([]);
   const userId = 'user1';
-  var {latitude, longitude} = useContext(LocationContext);
+  // 재호 물어볼거
+  // var {latitude, longitude} = useContext(LocationContext);
+
+  // const [latitude, setLatitude] = useState(37.55518333333333);
+  // const [longitude, setLongitude] = useState(126.92099333333333);
+  const [mylocation, setMylocation] = useState({
+    latitude: 37.55518333333333,
+    longitude: 126.92099333333333,
+  });
+  const getGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(
+          'aaaagccccccccccaaaaaaaaaaac',
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        position.coords.longitude * -1 > 0.0
+          ? setMylocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude * -1,
+            })
+          : setMylocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+    );
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getGeolocation();
+    }, []),
+  );
+
   const deleteWalkSpotfunction = spotId => {
     axios
       .delete(`http://10.0.2.2:5000/deleteWalkSpot.do/${spotId}`)
@@ -57,8 +95,8 @@ export function FindWalkSpotByUser(props) {
       renderItem={({item}) => {
         // 현재 위치와 spot 위치 간의 거리 계산
         const distance = getDistanceFormula(
-          latitude,
-          longitude,
+          mylocation.latitude,
+          mylocation.longitude,
           item.spotLatitude,
           item.spotLongitude,
         );

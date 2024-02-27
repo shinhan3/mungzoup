@@ -101,20 +101,34 @@ const FindMyDogAI = ({navigation}) => {
             {animalData && (
               <Text style={[styles.text1, styles.textTypo1]}>매칭 결과</Text>
             )}
-            <Pressable onPress={onSelectImage}>
-              <Image
+            <View style={{top: 60, left: 15}}>
+              <Pressable
                 style={[
                   styles.inputimgIcon,
+                  {
+                    borderStyle: 'solid',
+                    borderWidth: 0.5,
+                    borderRadius: Border.br_3xs,
+                  },
                   previewImage ? {borderRadius: 10} : {},
                 ]}
-                resizeMode="cover"
-                source={
-                  previewImage
-                    ? {uri: previewImage}
-                    : require('../assets/inputImg.png')
-                }
-              />
-            </Pressable>
+                onPress={onSelectImage}>
+                <Image
+                  style={[
+                    styles.inputimgIcon,
+                    previewImage
+                      ? {borderRadius: 10, left: 0}
+                      : {width: '104%', height: '103%', left: -3},
+                  ]}
+                  resizeMode="cover"
+                  source={
+                    previewImage
+                      ? {uri: previewImage}
+                      : require('../assets/inputImg2.png')
+                  }
+                />
+              </Pressable>
+            </View>
             <TouchableOpacity
               style={[
                 styles.uploadBtn,
@@ -200,11 +214,17 @@ const styles = StyleSheet.create({
     top: 355,
   },
   inputimgIcon: {
-    top: 70,
-    height: 210,
+    // top: 70,
+    // height: 210,
+    // width: 302,
+    // left: 29,
+    // position: 'absolute',
+    top: 0,
+    left: 13,
     width: 302,
-    left: 29,
+    height: 171,
     position: 'absolute',
+    overflow: 'hidden',
   },
   similarImgChild: {
     backgroundColor: Color.bgWhite,
@@ -400,7 +420,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 892,
     overflow: 'hidden',
-    marginLeft: 27,
+    // marginLeft: 27,
   },
 });
 

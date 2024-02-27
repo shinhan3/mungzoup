@@ -55,7 +55,7 @@ function CardInsert(props) {
       <View style={styles.contents}>
         <View style={[styles.content, hidden && {height: 200}]}>
           <View style={{left: -5}}>
-            <Text style={hidden && styles.textContentTitle}>
+            <Text style={[{fontSize: 15}, hidden && styles.textContentTitle]}>
               (필수) 개인 정보 수집 동의서
             </Text>
           </View>
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     top: 10,
     left: -210,
     width: 250,
-    fontSize: 10,
+    fontSize: 12,
   },
   textContentTitle: {
     top: -75,

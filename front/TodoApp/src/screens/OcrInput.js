@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     top: 150,
     height: 200,
     width: 350,
-    left: 35,
+    left: 10,
     position: 'absolute',
   },
   img: {

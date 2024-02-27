@@ -43,6 +43,7 @@ const Review = ({navigation, route}) => {
             benefits="리뷰"
             navigation={navigation}
             go="HiddenPopularStores"
+            backBool={true}
           />
           <View style={styles.main}>
             <StoreInfoContainer storeInfo={storeInfo} />
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   text: {
     top: 5,
     left: 22,
-    fontSize: FontSize.size_5xs,
+    fontSize: FontSize.size_5xs + 3,
     fontWeight: '800',
     fontFamily: FontFamily.notoSansKRBold,
     color: Color.new1,
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     top: 60,
     height: 570,
     width: 360,
-    left: 24,
+    left: 0,
     position: 'absolute',
   },
 

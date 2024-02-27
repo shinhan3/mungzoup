@@ -8,6 +8,7 @@ import {
   ScrollView,
   VirtualizedList,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {FontFamily, Color, Border, FontSize} from '../GlobalStyles';
 import HeaderComponent from '../components/HeaderComponent';
@@ -30,6 +31,7 @@ const SkinDiseaseAI = ({navigation}) => {
   const [disease, setDisease] = useState();
 
   const onSubmitImage = () => {
+    console.log('0000');
     const data = new FormData();
     if (response['assets']) {
       data.append('imageFile', {
@@ -53,6 +55,7 @@ const SkinDiseaseAI = ({navigation}) => {
   };
 
   const onSelectImage = () => {
+    console.log('onSelectImageonSelectImageonSelectImageonSelectImage');
     launchImageLibrary(
       {
         madiaType: 'photo',
@@ -122,7 +125,7 @@ const SkinDiseaseAI = ({navigation}) => {
             benefits="펫 건강 분석"
             navigation={navigation}
             go="MyDaeng"
-            backBool="true"
+            backBool={false}
           />
           <Input
             placeholder="강아지 이름"
@@ -134,12 +137,23 @@ const SkinDiseaseAI = ({navigation}) => {
             }}
           />
           <Pressable style={styles.dogInsertbtn} onPress={() => dogCheck()}>
-            <View style={styles.dogBackgroundbtn} />
-            <Text style={[styles.dogTextbtn, styles.ai1Typo]}>등록</Text>
+            <View style={[styles.dogBackgroundbtn, {left: -30}]} />
+            <Text
+              style={[styles.dogTextbtn, styles.ai1Typo, {left: -10, top: 10}]}>
+              등록
+            </Text>
           </Pressable>
-          <Pressable
-            onPress={onSubmitImage}
-            style={styles.insertbtn}
+          <TouchableOpacity
+            onPress={() => {
+              onSubmitImage();
+            }}
+            style={[
+              styles.insertbtn,
+              {
+                height: 40,
+                width: 121,
+              },
+            ]}
             disabled={isDog != 1 && !previewImage}>
             <View
               style={[
@@ -151,7 +165,7 @@ const SkinDiseaseAI = ({navigation}) => {
               ]}
             />
             <Text style={[styles.textbtn, styles.ai1Typo]}>이미지 등록</Text>
-          </Pressable>
+          </TouchableOpacity>
           <View style={styles.main}>
             <View style={[styles.serviceDetail, styles.textPosition]}>
               <Text style={[styles.text, styles.textPosition]}>
@@ -163,11 +177,23 @@ const SkinDiseaseAI = ({navigation}) => {
               </Text>
             </View>
             <SkinDiseaseResult disease={disease}></SkinDiseaseResult>
-            <Pressable onPress={onSelectImage}>
+            <Pressable
+              style={[
+                styles.phimageThinIcon,
+                {
+                  borderStyle: 'solid',
+                  borderWidth: 0.5,
+                  borderRadius: Border.br_3xs,
+                },
+                previewImage ? {borderRadius: 10} : {},
+              ]}
+              onPress={onSelectImage}>
               <Image
                 style={[
                   styles.phimageThinIcon,
-                  previewImage ? {borderRadius: 10} : {},
+                  previewImage
+                    ? {borderRadius: 10, left: -0}
+                    : {width: '104%', height: '103%', left: -3},
                 ]}
                 resizeMode="cover"
                 source={
@@ -265,7 +291,7 @@ const styles = StyleSheet.create({
   backgroundbtn: {
     backgroundColor: Color.new1,
     borderRadius: Border.br_2xs,
-    left: 0,
+    left: -30,
     top: 0,
     height: 40,
     width: 121,
@@ -281,8 +307,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   textbtn: {
-    top: 8,
-    left: 22,
+    top: 10,
+    left: 3,
     color: '#fff',
     textAlign: 'center',
     fontSize: FontSize.size_mini,
@@ -349,7 +375,7 @@ const styles = StyleSheet.create({
   },
   phimageThinIcon: {
     top: 0,
-    left: 40,
+    left: 13,
     width: 302,
     height: 171,
     position: 'absolute',
@@ -373,7 +399,7 @@ const styles = StyleSheet.create({
 
   main: {
     top: 273,
-    left: 16,
+    left: 13,
     width: 708,
     height: 711,
     position: 'absolute',
@@ -484,7 +510,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 104,
     height: 40,
-    marginLeft: 60,
+    marginLeft: 31,
     marginTop: 220,
   },
   dogInputContainer: {

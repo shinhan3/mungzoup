@@ -18,12 +18,42 @@ import MapView, {Marker} from 'react-native-maps';
 import DropDownPicker from 'react-native-dropdown-picker';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import Geolocation from '@react-native-community/geolocation';
+import HeaderComponent from '../components/HeaderComponent';
 function Tofixed(x) {
   return x.toFixed(1);
 }
 
 function HiddenPopularStores(props) {
-  var {latitude, longitude} = React.useContext(LocationContext);
+  // var {latitude, longitude} = React.useContext(LocationContext);
+
+  const [latitude, setLatitude] = React.useState(37.55518333333333);
+  const [longitude, setLongitude] = React.useState(126.92099333333333);
+
+  const getGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(
+          'aaaagccccccccccaaaaaaaaaaac',
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        setLatitude(position.coords.latitude);
+        position.coords.longitude * -1 > 0.0
+          ? setLongitude(position.coords.longitude * -1)
+          : setLongitude(position.coords.longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+    );
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getGeolocation();
+    }, []),
+  );
+
   const [storeList, setStoreList] = React.useState([]);
   const mapRef = React.useRef();
   const [open, setOpen] = React.useState(false);
@@ -37,11 +67,23 @@ function HiddenPopularStores(props) {
   ]);
 
   //화면 비율
-  const snapPoints = ['15%', '45%', '100%'];
+  const snapPoints = ['15%', '45%', '90%'];
 
-  React.useEffect(() => {
-    handleSortChange(value);
-  }, [value]);
+  useFocusEffect(
+    React.useCallback(() => {
+      handleSortChange(value);
+    }, [value]),
+  );
+  useFocusEffect(
+    React.useCallback(() => {
+      handleSortChange(value);
+    }, [latitude]),
+  );
+  useFocusEffect(
+    React.useCallback(() => {
+      handleSortChange(value);
+    }, [longitude]),
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -84,13 +126,18 @@ function HiddenPopularStores(props) {
       });
     }
   };
-
   return (
     <>
       {/* Header */}
-      <View style={styles.head}>
+      {/* <View style={styles.head}>
         <Text style={styles.headerTitle}>숨은 인기 가맹점</Text>
-      </View>
+      </View> */}
+      <HeaderComponent
+        navigation={props.navigation}
+        dimensionCode={require('../assets/arrow8.png')}
+        benefits="숨은 인기 가맹점"
+        go="PLAYmainwonny"
+        backBool={false}></HeaderComponent>
       {/* //Header */}
       {/*  main  */}
       <View style={{flex: 1}}>
@@ -105,6 +152,7 @@ function HiddenPopularStores(props) {
             longitudeDelta: 0.0025,
           }}>
           <Marker
+            key={-2}
             coordinate={{
               latitude: latitude,
               longitude: longitude,
@@ -236,9 +284,13 @@ function HiddenPopularStores(props) {
           />
           {/*  //BottomSheetFlatList  */}
         </View>
+        <View
+          style={{
+            height: 62,
+          }}></View>
       </BottomSheet>
-      {/*  //main  */}
 
+      {/*  //main  */}
       <FooterComponent
         petBoolean={false}
         playBoolean={true}
@@ -361,7 +413,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#62AEA9',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 290,
+    marginLeft: 250,
     borderRadius: 10,
   },
   btnText: {

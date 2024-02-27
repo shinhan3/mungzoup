@@ -118,7 +118,7 @@ const MyDaenegRegister = props => {
         dimensionCode={require('../assets/arrow8.png')}
         benefits="펫 프로필"
         navigation={props.navigation}
-        go="MyDaengRegister"
+        go="MyDaeng"
         backBool={true}
       />
       <View style={styles.view1}>
@@ -390,13 +390,13 @@ const styles = StyleSheet.create({
   },
   textbtn: {
     marginLeft: -24.6,
-    fontSize: FontSize.size_mini,
-    color: Color.colorWhite,
+    fontSize: FontSize.size_mini + 8,
+    color: Color.bgWhite,
     width: 46,
     height: 37,
     justifyContent: 'center',
     textAlign: 'center',
-    marginTop: -17,
+    marginTop: -18,
     fontFamily: FontFamily.notoSansKRBold,
     fontWeight: '700',
     alignItems: 'center',
@@ -461,6 +461,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     overflow: 'hidden',
+  },
+  error: {
+    top: 650,
+    left: 120,
+    color: 'red',
   },
 });
 

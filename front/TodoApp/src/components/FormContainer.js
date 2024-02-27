@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   benefitLayout: {
-    height: 14,
-    width: 72,
+    height: 20,
+    width: 115,
     position: 'absolute',
   },
   headerDiv: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   text: {
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 4,
   },
   text1: {
     fontSize: FontSize.size_mini,
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
     left: 0,
   },
   text2: {
-    top: 2,
+    top: 3,
     left: 5,
-    fontSize: FontSize.size_6xs,
-    lineHeight: 10,
+    fontSize: FontSize.size_6xs + 8,
+    lineHeight: 20,
     fontWeight: '500',
     fontFamily: FontFamily.notoSansKRMedium,
     color: Color.colorSteelblue_100,
@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
   },
   benefitIcon: {
     top: 3,
-    left: 63,
-    width: 4,
-    height: 9,
+    left: 103,
+    width: 6,
+    height: 15,
     position: 'absolute',
   },
   benefitBtn: {

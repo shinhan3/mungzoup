@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   txt: {
-    fontSize: FontSize.size_smi_2,
+    fontSize: FontSize.size_smi_2 + 5,
     letterSpacing: 0,
     lineHeight: 28,
     color: Color.new1,
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     left: 10,
     height: 32,
     position: 'absolute',
-    top: 0,
+    top: 4,
   },
   insertplaceBtn: {
     top: 75,
@@ -234,11 +234,11 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.notoSansKRBold,
   },
   text4: {
-    fontSize: FontSize.size_4xs,
+    fontSize: FontSize.size_4xs + 3,
     letterSpacing: 0.8,
   },
   text5: {
-    fontSize: FontSize.size_3xs,
+    fontSize: FontSize.size_3xs + 5,
     marginRight: 3,
     // position: 'relative',
     // top: 53,
@@ -266,8 +266,9 @@ const styles = StyleSheet.create({
 
   toggleChild: {
     borderRadius: Border.br_10xs,
-    backgroundColor: Color.colorWhitesmoke_200,
-    borderWidth: 0.3,
+    // backgroundColor: Color.colorWhitesmoke_200,
+    backgroundColor: Color.bgWhite,
+    // borderWidth: 0.3,
     height: 46.5,
     width: 270,
     top: 0,
@@ -276,15 +277,15 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_12xs_5,
   },
   text6: {
-    left: 3,
-    fontSize: FontSize.size_6xs,
+    left: 2,
+    fontSize: FontSize.size_6xs + 3,
     fontFamily: FontFamily.notoSansKRRegular,
     top: 1,
     color: Color.colorDarkgray_200,
   },
   opentimetext: {
     left: 36,
-    fontSize: FontSize.size_5xs,
+    fontSize: FontSize.size_5xs + 3,
     color: Color.colorDarkslategray_200,
     width: 200,
     height: 15,
@@ -294,18 +295,18 @@ const styles = StyleSheet.create({
     top: 7.5,
   },
   text7: {
-    fontSize: FontSize.size_6xs,
+    fontSize: FontSize.size_6xs + 4,
     fontFamily: FontFamily.notoSansKRRegular,
-    top: 1,
+    top: 0,
     color: Color.colorDarkgray_200,
-    left: 5,
+    left: 4,
   },
   opentimeline1: {
     top: 25.5,
   },
   toggle: {
     top: 70,
-    left: 80,
+    left: 70,
     height: 46.5,
     width: 270,
     position: 'absolute',
