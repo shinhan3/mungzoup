@@ -66,7 +66,8 @@ public class TestApplication {
 		SpringApplication.run(TestApplication.class, args);
 	}
 	
-	@Scheduled(cron = "0 0 0 1 * *") 
+	// @Scheduled(cron = "0 0 0 1 * *") 
+	@Scheduled(fixedDelay = 10000000)
 	public void crawling() throws IOException {
 		
 		List<StoreVO> storeList = new ArrayList<>();
@@ -79,9 +80,12 @@ public class TestApplication {
 			cntC++;
 			Integer PostCountInt =0;
 			long PostCount =0;
-			// String URL = "https://www.google.com/search?q=21세기맑은약국 인천광역시 부평구 길주로 623";
-			String URL = "https://www.google.com/search?q="+store.getStoreName()+" "+store.getStoreAddress();
+			String URL = "https://www.google.com/search?q=21세기맑은약국 인천광역시 부평구 길주로 623";
+			
+            // String URL = "https://www.google.com/search?q="+"%22"+store.getStoreName()+"%22"+" "+"%22"+store.getStoreAddress()+"%22";
 			try{
+				
+				Thread.sleep(10000);
 			Document doc = Jsoup.connect(URL).get();
 			System.out.println(doc.getElementById("result-stats").text().split(" ").length);
 			if(doc.getElementById("result-stats").text().split(" ").length == 4){
@@ -99,7 +103,6 @@ public class TestApplication {
 				}else{
 					PostCountInt = Integer.parseInt(valueStr);
 				}
-				Thread.sleep(10000);
 				System.out.println("Store: "+store);
 				System.out.println("valueStr: "+valueStr);
 				System.out.println("Postcount: "+PostCountInt);

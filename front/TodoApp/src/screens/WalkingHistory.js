@@ -107,9 +107,9 @@ function WalkingHistory(props) {
           const sunday = getSunday();
 
           // 일요일부터 7일간의 날짜를 생성
-          const lastSevenDays = Array.from({length: 7}, (value, index) => {
-            const d = new Date(sunday);
-            d.setDate(d.getDate() + index);
+          const lastSevenDays = Array.from({length: 7}, (_, index) => {
+            const d = new Date(sunday.getTime()); // 주의 일요일부터 시작
+            d.setDate(sunday.getDate() + index); // 일요일부터 하루씩 증가
             d.setHours(0, 0, 0, 0);
             return d;
           });
@@ -133,7 +133,7 @@ function WalkingHistory(props) {
               0,
             ];
           });
-
+          console.log(processedData, 'proceedData');
           // 주간 산책 거리와 산책 시간 계산
           const totalDistance = processedData.reduce(
             (sum, item) => sum + item[2],
