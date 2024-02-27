@@ -33,7 +33,7 @@ function InsertWalkSpot(props) {
         user: {userId: USERID},
       };
       axios
-        .post('http://192.168.0.10:5000/insertWalkSpot.do', data)
+        .post('http://192.168.0.88:5000/insertWalkSpot.do', data)
         .then(res => {
           const newSpot = res.data;
           setSpotList(prevSpotList => [...prevSpotList, newSpot]);

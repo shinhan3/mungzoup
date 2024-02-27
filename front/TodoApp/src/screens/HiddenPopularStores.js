@@ -43,7 +43,7 @@ function HiddenPopularStores(props) {
       user: {userId: USERID},
     };
     axios
-      .post('http://192.168.0.10:5000/insertWalkSpot.do', data)
+      .post('http://192.168.0.88:5000/insertWalkSpot.do', data)
       .then(res => {
         const newSpot = res.data;
         Alert.alert(
@@ -144,7 +144,7 @@ function HiddenPopularStores(props) {
     React.useCallback(() => {
       axios
         .get(
-          `http://192.168.0.10:5000/storeListPay.do/${latitude}/${longitude}`,
+          `http://192.168.0.88:5000/storeListPay.do/${latitude}/${longitude}`,
         )
         .then(res => {
           setStoreList(res.data.slice(0, 10));
@@ -160,7 +160,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://192.168.0.10:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.88:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         setStoreList(res.data.slice(0, 10));
@@ -320,17 +320,12 @@ function HiddenPopularStores(props) {
                     <View style={styles.storeText3}>
                       <Text style={styles.storeText}> 결제건수 </Text>
                       <Text style={styles.storeTextPoint}>
-                        {item.cnt_pay.toLocaleString()}
+                        {(item.cnt_pay * 3).toLocaleString()}
                       </Text>
                     </View>
-                    <TouchableOpacity
+                    {/*<TouchableOpacity
                       style={styles.mydiv}
                       onPress={() => {
-                        // console.log(item['STORE_LATITUDE'], 'itemitemitem');
-                        // console.log(item['STORE_LONGITUDE'], 'itemitemitem');
-                        // console.log(item['STORE_NAME'], 'itemitemitem');
-                        // console.log(item['STORE_ADDRESS'], 'itemitemitem');
-                        // console.log(item, 'itemitemitem');
                         insertWalkSpotfunction(
                           item['STORE_NAME'],
                           item['STORE_LATITUDE'],
@@ -339,10 +334,10 @@ function HiddenPopularStores(props) {
                         );
                       }}>
                       <Text style={styles.mydivText}>{`+ 내 장소`}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                   </View>
                   <View style={styles.contentBottom}>
-                    {item.cnt_pay * 100 > item.POST_COUNT * 0.9 && (
+                    {item.cnt_pay * 3 > item.POST_COUNT * 2 && (
                       <View
                         style={{
                           backgroundColor: '#EAE03A',
@@ -370,7 +365,7 @@ function HiddenPopularStores(props) {
                     <View
                       style={[
                         styles.detail,
-                        item.cnt_pay * 100 > item.POST_COUNT * 0.9 && {
+                        item.cnt_pay * 3 > item.POST_COUNT * 2 && {
                           left: -70,
                         },
                       ]}>

@@ -24,7 +24,7 @@ const DogHealthDetail = ({navigation}) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.10:5000/dogSkinDiseaseList.do/${userId}`)
+      .get(`http://192.168.0.88:5000/dogSkinDiseaseList.do/${userId}`)
       .then(res => {
         console.log(res.data.healthList);
         setHealthList(res.data.healthList);

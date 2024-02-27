@@ -61,7 +61,7 @@ const MyDaeng = props => {
 
   const getPet = () => {
     axios
-      .get(`http://192.168.0.10:5000/getPetMap.do/${userId}`)
+      .get(`http://192.168.0.88:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -121,7 +121,7 @@ const MyDaeng = props => {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.10:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.88:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           console.log(res.data, 'ㅁㅁㅁㅁㅁㅁㅁㅁ');
           const rawData = res.data;
@@ -165,12 +165,15 @@ const MyDaeng = props => {
     }, []),
   );
 
+  function Tofixed(x) {
+    return x.toFixed(1);
+  }
   // setInterval(getPet, 60000);
   const isFocused = useIsFocused();
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.10:5000/petList.do/${userId}`)
+      .get(`http://192.168.0.88:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -178,7 +181,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://192.168.0.10:5000/dogCountList.do/${userId}`)
+      .get(`http://192.168.0.88:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })
@@ -277,25 +280,27 @@ const MyDaeng = props => {
                   source={require('../assets/vector.png')}
                 />
               </View>
+
               <TouchableOpacity
-                style={{padding: 1}}
+                style={[styles.walkDetailbtn, styles.walkbtnPosition]}
                 onPress={() => {
                   props.navigation.navigate('PLAY4');
                 }}>
+                <Text style={styles.textD}>상세보기</Text>
                 <Image
                   style={[
-                    styles.mingcuterightLineIcon1,
+                    styles.skinMingcuterightLineIcon2,
                     styles.eventText1Position,
                   ]}
                   resizeMode="cover"
                   source={require('../assets/mingcuterightline1.png')}
                 />
-                <Text style={styles.textD}>상세보기</Text>
               </TouchableOpacity>
+
               <View style={[styles.km, styles.kmPosition]}>
                 <Text style={[styles.km1, styles.km1Typo]}>km</Text>
                 <Text style={[styles.text9, styles.textTypo1]}>
-                  {totalDistance}
+                  {Tofixed(totalDistance)}
                 </Text>
               </View>
               <View style={styles.time}>
@@ -997,7 +1002,7 @@ const styles = StyleSheet.create({
   },
   km1: {
     width: 33,
-    left: 29,
+    left: 40,
     top: 2,
     height: 15,
     position: 'absolute',
@@ -1357,6 +1362,17 @@ const styles = StyleSheet.create({
     top: '50%',
     position: 'absolute',
   },
+  walkDetailbtn: {
+    marginLeft: 60,
+    width: 68,
+    marginTop: -65,
+  },
+  walkbtnPosition: {
+    height: 23,
+    left: '50%',
+    top: '50%',
+    position: 'absolute',
+  },
   text29: {
     marginTop: -9,
     marginLeft: -34,
@@ -1525,6 +1541,13 @@ const styles = StyleSheet.create({
   skinMingcuterightLineIcon1: {
     marginTop: -13.4,
     marginLeft: 19,
+    width: 20,
+    height: 23,
+    overflow: 'hidden',
+  },
+  skinMingcuterightLineIcon2: {
+    marginTop: -1.4,
+    marginLeft: 69,
     width: 20,
     height: 23,
     overflow: 'hidden',

@@ -66,7 +66,7 @@ export function FindWalkSpotByUser(props) {
 
   const deleteWalkSpotfunction = spotId => {
     axios
-      .delete(`http://192.168.0.10:5000/deleteWalkSpot.do/${spotId}`)
+      .delete(`http://192.168.0.88:5000/deleteWalkSpot.do/${spotId}`)
       .then(res => {
         setSpotList(prevSpotList =>
           prevSpotList.filter(item => item.spotId !== spotId),
@@ -80,7 +80,7 @@ export function FindWalkSpotByUser(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.10:5000/selectWalkSpotAll.do/${userId}`)
+        .get(`http://192.168.0.88:5000/selectWalkSpotAll.do/${userId}`)
         .then(res => {
           setSpotList(res.data);
         })
