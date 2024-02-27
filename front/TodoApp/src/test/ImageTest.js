@@ -31,7 +31,7 @@ const ImageTest = ({navigation}) => {
     });
     console.log(data['_parts'][0][1]);
     axios
-      .post('http://192.168.0.88:5000/imageTest', data, {
+      .post('http://192.168.0.90:5000/imageTest', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

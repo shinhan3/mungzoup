@@ -61,7 +61,7 @@ const MyDaeng = props => {
 
   const getPet = () => {
     axios
-      .get(`http://192.168.0.88:5000/getPetMap.do/${userId}`)
+      .get(`http://192.168.0.90:5000/getPetMap.do/${userId}`)
       .then(res => {
         console.log([...res.data].length, 'asdf');
         setPets([...res.data]);
@@ -121,7 +121,7 @@ const MyDaeng = props => {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.88:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           console.log(res.data, 'ㅁㅁㅁㅁㅁㅁㅁㅁ');
           const rawData = res.data;
@@ -173,7 +173,7 @@ const MyDaeng = props => {
   const [petList, setPetList] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.88:5000/petList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/petList.do/${userId}`)
       .then(res => {
         console.log('----------------');
         console.log('list', res.data);
@@ -181,7 +181,7 @@ const MyDaeng = props => {
       })
       .catch(err => {});
     axios
-      .get(`http://192.168.0.88:5000/dogCountList.do/${userId}`)
+      .get(`http://192.168.0.90:5000/dogCountList.do/${userId}`)
       .then(res => {
         setCountList(res.data);
       })

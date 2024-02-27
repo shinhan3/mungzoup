@@ -24,7 +24,7 @@ const MyDaenegUpdate = props => {
   const [petProfile, setPetProfile] = React.useState({});
   React.useEffect(() => {
     axios
-      .get(`http://192.168.0.88:5000/petProfile.do/${petId}`)
+      .get(`http://192.168.0.90:5000/petProfile.do/${petId}`)
       .then(res => {
         console.log(res.data, 'aaaaaaa');
         setPetProfile(res.data);
@@ -51,7 +51,7 @@ const MyDaenegUpdate = props => {
     data.append('imageFile', form.image);
 
     axios
-      .post('http://192.168.0.88:5000/uploadProfileFile.do', data, {
+      .post('http://192.168.0.90:5000/uploadProfileFile.do', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -65,7 +65,7 @@ const MyDaenegUpdate = props => {
         };
 
         axios
-          .put('http://192.168.0.88:5000/updatePetProfile.do', formData)
+          .put('http://192.168.0.90:5000/updatePetProfile.do', formData)
           .then(res => {
             console.log(res.data);
             props.navigation.navigate('MyDaeng');
@@ -151,7 +151,7 @@ const MyDaenegUpdate = props => {
 
   const deletePetProfile = () => {
     axios
-      .delete(`http://192.168.0.88:5000/deletePetProfile.do/${petId}`)
+      .delete(`http://192.168.0.90:5000/deletePetProfile.do/${petId}`)
       .then(res => {
         alert('삭제에 성공했습니다.');
         console.log(res.data);

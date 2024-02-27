@@ -43,7 +43,7 @@ function HiddenPopularStores(props) {
       user: {userId: USERID},
     };
     axios
-      .post('http://192.168.0.88:5000/insertWalkSpot.do', data)
+      .post('http://192.168.0.90:5000/insertWalkSpot.do', data)
       .then(res => {
         const newSpot = res.data;
         Alert.alert(
@@ -144,7 +144,7 @@ function HiddenPopularStores(props) {
     React.useCallback(() => {
       axios
         .get(
-          `http://192.168.0.88:5000/storeListPay.do/${latitude}/${longitude}`,
+          `http://192.168.0.90:5000/storeListPay.do/${latitude}/${longitude}`,
         )
         .then(res => {
           setStoreList(res.data.slice(0, 10));
@@ -160,7 +160,7 @@ function HiddenPopularStores(props) {
   function handleSortChange(value) {
     axios
       .get(
-        `http://192.168.0.88:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
+        `http://192.168.0.90:5000/storeSelectedList.do/${latitude}/${longitude}/${value}`,
       )
       .then(res => {
         setStoreList(res.data.slice(0, 10));

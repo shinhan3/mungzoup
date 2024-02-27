@@ -46,98 +46,189 @@ class TestApplicationTests {
 	void contextLoads() {
 		Random random = new Random();
 		UserVO user = uRep.findById("user3").orElse(null);
+		StoreVO store_aaa=sRep.findById(20930).orElse(null);
+		int cnt = 832;
+		totalCnt = cnt + totalCnt;
+
 		List<PaymentVO> payList = new ArrayList<>();
-		sRep.findAll().forEach(store -> {
-			int cnt = (int) (store.getPostCount() * random.nextFloat() / 100);
-			totalCnt = cnt + totalCnt;
+		for (int i = 0; i < cnt; i++) {
+			PaymentVO pay = new PaymentVO();
+			pay.setStore(store_aaa);
+			pay.setUser(user);
+			pay.setPrice(1);
+			if (random.nextFloat() < 1.2) {
 
-			for (int i = 0; i < cnt; i++) {
-				PaymentVO pay = new PaymentVO();
-				pay.setStore(store);
-				pay.setUser(user);
-				pay.setPrice(1);
-				if (random.nextFloat() < 0.8) {
-
-					switch (store.getCategory().getCategoryId()) {
-					case 1: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId1[random.nextInt(categoryId1.length)]).build());
-						break;
-					}
-					
-					case 2: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId2[random.nextInt(categoryId2.length)]).build());
-						break;
-					}
-					
-					case 3: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId3[random.nextInt(categoryId3.length)]).build());
-						break;
-					}
-					
-					case 4: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId4[random.nextInt(categoryId4.length)]).build());
-						break;
-					}
-					
-					case 5: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId5[random.nextInt(categoryId5.length)]).build());
-						break;
-					}
-					
-					case 6: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId6[random.nextInt(categoryId6.length)]).build());
-						break;
-					}
-					
-					case 7: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId7[random.nextInt(categoryId7.length)]).build());
-						break;
-					}
-					
-					case 8: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId8[random.nextInt(categoryId8.length)]).build());
-						break;
-					}
-					
-					case 9: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId9[random.nextInt(categoryId9.length)]).build());
-						break;
-					}
-					
-					case 10: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId10[random.nextInt(categoryId10.length)]).build());
-						break;
-					}
-					
-					case 12: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId12[random.nextInt(categoryId12.length)]).build());
-						break;
-					}
-					
-					case 13: {
-						pay.setRatingCategory(new RatingCategoryVO().builder()
-								.ratingCategoryId(categoryId13[random.nextInt(categoryId13.length)]).build());
-						break;
-					}
-					
-					}
-
+				switch (store_aaa.getCategory().getCategoryId()) {
+				case 1: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId1[random.nextInt(categoryId1.length)]).build());
+					break;
 				}
-				payList.add(pay);
-			}
+				
+				case 2: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId2[random.nextInt(categoryId2.length)]).build());
+					break;
+				}
+				
+				case 3: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId3[random.nextInt(categoryId3.length)]).build());
+					break;
+				}
+				
+				case 4: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId4[random.nextInt(categoryId4.length)]).build());
+					break;
+				}
+				
+				case 5: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId5[random.nextInt(categoryId5.length)]).build());
+					break;
+				}
+				
+				case 6: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId6[random.nextInt(categoryId6.length)]).build());
+					break;
+				}
+				
+				case 7: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId7[random.nextInt(categoryId7.length)]).build());
+					break;
+				}
+				
+				case 8: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId8[random.nextInt(categoryId8.length)]).build());
+					break;
+				}
+				
+				case 9: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId9[random.nextInt(categoryId9.length)]).build());
+					break;
+				}
+				
+				case 10: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId10[random.nextInt(categoryId10.length)]).build());
+					break;
+				}
+				
+				case 12: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId12[random.nextInt(categoryId12.length)]).build());
+					break;
+				}
+				
+				case 13: {
+					pay.setRatingCategory(new RatingCategoryVO().builder()
+							.ratingCategoryId(categoryId13[random.nextInt(categoryId13.length)]).build());
+					break;
+				}
+				
+				}
 
-		});
+			}
+			payList.add(pay);
+		}
+		
+//		List<PaymentVO> payList = new ArrayList<>();
+//		sRep.findAll().forEach(store -> {
+//			int cnt = (int) (store.getPostCount() * random.nextFloat() / 100);
+//			totalCnt = cnt + totalCnt;
+//
+//			for (int i = 0; i < cnt; i++) {
+//				PaymentVO pay = new PaymentVO();
+//				pay.setStore(store);
+//				pay.setUser(user);
+//				pay.setPrice(1);
+//				if (random.nextFloat() < 0.8) {
+//
+//					switch (store.getCategory().getCategoryId()) {
+//					case 1: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId1[random.nextInt(categoryId1.length)]).build());
+//						break;
+//					}
+//					
+//					case 2: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId2[random.nextInt(categoryId2.length)]).build());
+//						break;
+//					}
+//					
+//					case 3: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId3[random.nextInt(categoryId3.length)]).build());
+//						break;
+//					}
+//					
+//					case 4: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId4[random.nextInt(categoryId4.length)]).build());
+//						break;
+//					}
+//					
+//					case 5: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId5[random.nextInt(categoryId5.length)]).build());
+//						break;
+//					}
+//					
+//					case 6: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId6[random.nextInt(categoryId6.length)]).build());
+//						break;
+//					}
+//					
+//					case 7: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId7[random.nextInt(categoryId7.length)]).build());
+//						break;
+//					}
+//					
+//					case 8: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId8[random.nextInt(categoryId8.length)]).build());
+//						break;
+//					}
+//					
+//					case 9: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId9[random.nextInt(categoryId9.length)]).build());
+//						break;
+//					}
+//					
+//					case 10: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId10[random.nextInt(categoryId10.length)]).build());
+//						break;
+//					}
+//					
+//					case 12: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId12[random.nextInt(categoryId12.length)]).build());
+//						break;
+//					}
+//					
+//					case 13: {
+//						pay.setRatingCategory(new RatingCategoryVO().builder()
+//								.ratingCategoryId(categoryId13[random.nextInt(categoryId13.length)]).build());
+//						break;
+//					}
+//					
+//					}
+//
+//				}
+//				payList.add(pay);
+//			}
+//
+//		});
 		System.out.println(payList.size());
 		System.out.println(totalCnt);
 		pRep.saveAll(payList);

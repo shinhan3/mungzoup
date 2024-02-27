@@ -26,7 +26,7 @@ const PLAY2 = ({navigation}) => {
   console.log(navigation, 'navigationnavigationnavigationnavigationnavigation');
   useFocusEffect(
     useCallback(() => {
-      axios.get(`http://192.168.0.88:5000/areaPicking.do/강남구`).then(res => {
+      axios.get(`http://192.168.0.90:5000/areaPicking.do/강남구`).then(res => {
         setDropdownData(res.data);
       });
     }, []),

@@ -93,7 +93,7 @@ function WalkingHistory(props) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://192.168.0.88:5000/selectPetHistory.do/${userId}`)
+        .get(`http://192.168.0.90:5000/selectPetHistory.do/${userId}`)
         .then(res => {
           const rawData = res.data;
           console.log(res.data, 'res.datares.data');

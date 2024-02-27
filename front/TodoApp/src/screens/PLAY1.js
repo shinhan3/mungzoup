@@ -154,7 +154,7 @@ function PLAY1(props) {
       startLongitude: dslongtitude,
     };
     axios
-      .post('http://192.168.0.88:5000/insertPetHistory.do', data)
+      .post('http://192.168.0.90:5000/insertPetHistory.do', data)
       .then(res => {
         props.navigation.navigate('PLAYmainwonny');
       })
