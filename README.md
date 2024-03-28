@@ -31,38 +31,18 @@
 <table>
   <tbody>
     <tr>
-      <td>[임동선](https://github.com/limdongsun0814)</td>
-      <td>김지원</td>
-      <td>박지원</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-   <tr>
-      <td>배재호</td>
-      <td>이예나</td>
-      <td>조선희</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <tbody>
-    <tr>
       <td align="center"><a href="https://github.com/limdongsun0814">
        <img src="https://github.com/changi123/9dorak/assets/77386337/e8b8a33c-2f5a-42f6-8fd0-aa88196fda5a" width="100px;" alt=""/><br /><sub><b>임동선</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/ksweeni"><img src="https://github.com/changi123/9dorak/assets/77386337/a8a5befd-02e0-44dd-94d3-8fb1c474e194" width="100px;" alt=""/><br /><sub><b>김지원</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/Han-JB15"><img src="https://github.com/changi123/9dorak/assets/77386337/6b238ade-5bab-4d35-8806-8a7a453b5b05" width="100px;" alt=""/><br /><sub><b>박지원</b></sub></a><br /></td>
+     
+      <td align="center"><a href="https://github.com/wldnjs127"><img src="https://github.com/changi123/9dorak/assets/77386337/a8a5befd-02e0-44dd-94d3-8fb1c474e194" width="100px;" alt=""/><br /><sub><b>김지원</b></sub></a><br /></td>
+      
+      <td align="center"><a href="https://github.com/wldnjsrla1324"><img src="https://github.com/changi123/9dorak/assets/77386337/6b238ade-5bab-4d35-8806-8a7a453b5b05" width="100px;" alt=""/><br /><sub><b>박지원</b></sub></a><br /></td>
+      
      <tr/>
-      <td align="center"><a href="https://github.com/mmmmmam"><img src="https://github.com/changi123/9dorak/assets/77386337/fd6a9104-c51b-43fa-a916-daf8716ab15e" width="100px;" alt=""/><br /><sub><b>배재호</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/purbluue"><img src="https://github.com/changi123/9dorak/assets/77386337/d1a3766c-4843-49d1-b677-c68b507778a6" width="100px;" alt=""/><br /><sub><b>이예나</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/rudtnrdid123"><img src="https://github.com/changi123/9dorak/assets/77386337/fd6a9104-c51b-43fa-a916-daf8716ab15e" width="100px;" alt=""/><br /><sub><b>배재호</b></sub></a><br /></td>
+      
+      <td align="center"><a href="https://github.com/aeyena"><img src="https://github.com/changi123/9dorak/assets/77386337/d1a3766c-4843-49d1-b677-c68b507778a6" width="100px;" alt=""/><br /><sub><b>이예나</b></sub></a><br /></td>
+      
       <td align="center"><a href="https://github.com/sunhcho227"><img src="https://github.com/changi123/9dorak/assets/77386337/b2b663b7-27a3-4ae4-85eb-97eb5a33ea42" width="100px;" alt=""/><br /><sub><b>조선희</b></sub></a><br /></td>
     </tr>
   </tbody>
