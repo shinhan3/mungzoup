@@ -127,8 +127,10 @@
 <img width="1000" alt="ERD025" src="https://github.com/limdongsun0814/4shinhan/assets/89927567/649f50d2-1a4a-48cf-b892-3904fbca2aa4">
 
 # 🐶 페이지 구성 및 프리뷰
-### 내용 내용
+### 마이댕/main
 - 영상
+### 마이댕/산책요약
+
 # 🐶 주요 메소드
 ### E
 - VictoryNative
