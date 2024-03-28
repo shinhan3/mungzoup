@@ -126,7 +126,7 @@
 <br/>
 
 # 🐶 ERD 설계
-<img width="1000" alt="ERD025" src="https://github.com/limdongsun0814/4shinhan/assets/89927567/649f50d2-1a4a-48cf-b892-3904fbca2aa4">
+<img width="1000" alt="ERD025" src="https://github.com/shinhan3/project3/assets/118763659/96ed906c-148e-4cae-a680-3f6ceea94433">
 
 # 🐶 페이지 구성 및 프리뷰
 ### 마이댕/main
