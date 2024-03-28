@@ -74,9 +74,6 @@
   <img alt="SQL Developer" src ="https://img.shields.io/badge/SQL Developer-2AB1AC.svg?&style=for-the-badge&logo=Databricks&logoColor=white"/>
   <img alt="VScode" src ="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
   <img alt="Android Studio" src ="https://img.shields.io/badge/android%20studio-346ac1?style=for-the-badge&logo=android%20studio&logoColor=white"/>
-  <img alt="slcak" src ="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"/>
-  <img alt="Notion" src ="https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white"/>
-  <img alt="git" src ="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"/>
   
 </div>
 
