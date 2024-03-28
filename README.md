@@ -96,15 +96,15 @@
 # 🐶 페이지 구성 및 프리뷰
 ### 내용 내용
 
-
-# 🐶 사용한 API
-### 내용 내용
-- NaverClovaOcr API
-### 내용 내용
-- OpenRouterService API
-### 내용 내용
-- GoogleMaps API
-
-
 # 🐶 주요 메소드
-- 
+### E
+- VictoryNative
+### S
+- GoogleMaps API, OpenRouterService API
+### G
+- jsoup
+### AI
+- tensorflow
+### F
+- backtracking
+
