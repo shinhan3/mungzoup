@@ -10,7 +10,12 @@
 
 ![3조 멍줍_page-0011](https://github.com/shinhan3/project3/assets/141472393/db238cd7-72e9-4018-835c-e87dd476daee)
 
+- 반려동물 앱 실태
+  
 ![3조 멍줍_page-0009](https://github.com/shinhan3/project3/assets/141472393/554f7c73-12ae-4227-a5ce-132485de8c6f)
+
+- 하나의 슈퍼앱으로 통합
+  
 ![3조 멍줍_page-0010](https://github.com/shinhan3/project3/assets/141472393/bb7ea9f8-8717-4c88-ab9e-746c897fb90b)
 
 
