@@ -31,7 +31,7 @@
 <table>
   <tbody>
     <tr>
-      <td>임동선(https://github.com/limdongsun0814)</td>
+      <td>[임동선](https://github.com/limdongsun0814)</td>
       <td>김지원</td>
       <td>박지원</td>
     </tr>
