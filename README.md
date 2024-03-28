@@ -37,7 +37,7 @@
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/limdongsun0814">
-       <img src="https://github.com/changi123/9dorak/assets/77386337/e8b8a33c-2f5a-42f6-8fd0-aa88196fda5a" width="100px;" alt=""/><br /><sub><b>임동선</b></sub></a><br /></td>
+       <img src="https://github.com/shinhan3/project3/assets/118763659/5ab9178b-6c1c-46c2-b414-253112a39d63" width="100px;" alt=""/><br /><sub><b>임동선</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/wldnjs127"><img src="https://github.com/changi123/9dorak/assets/77386337/a8a5befd-02e0-44dd-94d3-8fb1c474e194" width="100px;" alt=""/><br /><sub><b>김지원</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/wldnjsrla1324"><img src="https://github.com/changi123/9dorak/assets/77386337/6b238ade-5bab-4d35-8806-8a7a453b5b05" width="100px;" alt=""/><br /><sub><b>박지원</b></sub></a><br /></td><tr/>
       <td align="center"><a href="https://github.com/rudtnrdid123"><img src="https://github.com/changi123/9dorak/assets/77386337/fd6a9104-c51b-43fa-a916-daf8716ab15e" width="100px;" alt=""/><br /><sub><b>배재호</b></sub></a><br /></td>
