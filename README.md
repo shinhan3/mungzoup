@@ -99,12 +99,12 @@
 
 # 🐶 사용한 API
 ### 내용 내용
-- naver clova ocr api
+- NaverClovaOcr API
 ### 내용 내용
 - OpenRouterService API
 ### 내용 내용
-- GoogleMaps Api
+- GoogleMaps API
 
 
-# 🐶 사용한 라이브러리
-- 내용 내용
+# 🐶 주요 메소드
+- 
