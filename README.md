@@ -99,7 +99,7 @@
 
 # 🐶 사용한 API
 ### 내용 내용
-- OCR
+- naver clova ocr api
 ### 내용 내용
 - OpenRouterService API
 ### 내용 내용
