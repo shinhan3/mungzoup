@@ -22,11 +22,45 @@
 
 <br/>
 
+
 # 🐶 서비스 특징
-- 내용 내용
+
+<p>
+AI와 금융 기술을 결합한 카드 기능을 통해 지속 가능한 미래를 위한 ESG 가치 창출에 앞장서는 어플입니다.
+</p>
+
+**🌏 Environment**
+
+![3조 멍줍_page-0016](https://github.com/shinhan3/project3/assets/141472393/959dcafb-d16a-4795-a1dd-edf756d41dbf)
+    <br/>
+    
+**👨‍👩‍👧‍👦 Social**
+
+![3조 멍줍_page-0017](https://github.com/shinhan3/project3/assets/141472393/5c73e6ca-51df-4780-9afb-2eea1067d629)
+    <br/>
+    
+**⚖ Governance**
+
+![3조 멍줍_page-0018](https://github.com/shinhan3/project3/assets/141472393/7394c24e-6b74-4115-bbdf-6125731e481d)
+    <br/>
+
+**🤖 Artificial Intelligence**
+
+![3조 멍줍_page-0019](https://github.com/shinhan3/project3/assets/141472393/01f1f4e8-1a17-4f8a-9af9-600c8582e207)
+
+  
+    <br/>
+
+
+**💸 Finance**
+
+![3조 멍줍_page-0020](https://github.com/shinhan3/project3/assets/141472393/fcbe84bf-9cef-4ca3-ae46-086f145444a2)
+  
+    <br/>
+  
   
 # 🐶 진행 기간 및 절차
-🗓️ 2024.01.08 - 2024.02.29
+🗓️ 2024.1.8 - 2024.2.29
 <p align="center">
 내용 내용
 </p>
