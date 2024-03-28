@@ -56,26 +56,28 @@
 
 ### FrontEnd
 <div>
-  <img alt="Html" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/>
-  <img alt="Css" src ="https://img.shields.io/badge/CSS3-1572B6.svg?&style=for-the-badge&logo=CSS3&logoColor=white"/> 
   <img alt="JavaScript" src ="https://img.shields.io/badge/JavaScriipt-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=black"/>
-  <img alt="JQuery" src ="https://img.shields.io/badge/JQuery-0769AD.svg?&style=for-the-badge&logo=JQuery&logoColor=black"/>
+  <img alt="React Native" src ="https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
 </div>
 
 ### DataBase
 <div>
   <img alt="JDBC" src ="https://img.shields.io/badge/JDBC-B8DBE4.svg?&style=for-the-badge&logo=Databricks&logoColor=black"/>
-  <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white"/> 
-  <img alt="Apache Tomcat" src ="https://img.shields.io/badge/Apache Tomcat-F8DC75.svg?&style=for-the-badge&logo=Apache Tomcat&logoColor=black"/>
+  <img alt="mysql" src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white"/> 
 </div>
 
 ### Tools
 <div>
+ 
   <img alt="Figma" src ="https://img.shields.io/badge/Figma-F24E1E.svg?&style=for-the-badge&logo=Figma&logoColor=white"/>
   <img alt="STS" src ="https://img.shields.io/badge/STS-6DB33F.svg?&style=for-the-badge&logo=Spring&logoColor=white"/>
   <img alt="SQL Developer" src ="https://img.shields.io/badge/SQL Developer-2AB1AC.svg?&style=for-the-badge&logo=Databricks&logoColor=white"/>
-  <img alt="EXERD" src ="https://img.shields.io/badge/EXERD-DD282E.svg?&style=for-the-badge&logo=Databricks&logoColor=white"/>
-  <img alt="Clipchamp" src ="https://img.shields.io/badge/Clipchamp-770C56.svg?&style=for-the-badge&logo=Microsoft&logoColor=white"/>
+  <img alt="VScode" src ="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
+  <img alt="Android Studio" src ="https://img.shields.io/badge/android%20studio-346ac1?style=for-the-badge&logo=android%20studio&logoColor=white"/>
+  <img alt="slcak" src ="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"/>
+  <img alt="Notion" src ="https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white"/>
+  <img alt="git" src ="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"/>
+  
 </div>
 
 
