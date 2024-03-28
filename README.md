@@ -137,7 +137,7 @@
 ### S
 - GoogleMaps API, OpenRouterService API
 ### G
-- jsoup
+- jsoup, NaverClovaOcr API
 ### AI
 - tensorflow
 ### F
