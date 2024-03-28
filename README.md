@@ -129,8 +129,10 @@
 
 # 🐶 페이지 구성 및 프리뷰
 ### 마이댕/main
-- 영상
+<img src="https://github.com/limdongsun0814/4shinhan/assets/117821590/deb5ccf4-7904-44e9-8599-e5da7393799b" width="600" height="400">
+
 ### 마이댕/산책요약
+<img src="https://github.com/limdongsun0814/4shinhan/assets/117821590/deb5ccf4-7904-44e9-8599-e5da7393799b" width="600" height="400">
 
 # 🐶 주요 메소드
 ### E
