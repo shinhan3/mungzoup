@@ -99,7 +99,12 @@
 
 # 🐶 사용한 API
 ### 내용 내용
-- 내용 내용
+- OCR
+### 내용 내용
+- OpenRouterService API
+### 내용 내용
+- GoogleMaps Api
+
 
 # 🐶 사용한 라이브러리
 - 내용 내용
