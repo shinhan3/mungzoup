@@ -129,7 +129,7 @@
 
 # 🐶 페이지 구성 및 프리뷰
 ### 마이댕/main
-<img src="https://github.com/shinhan3/project3/assets/118763659/5b884d7a-f242-454e-9c39-9d436a831306" width="600" height="400">
+<img src="https://github.com/shinhan3/project3/assets/118763659/5b884d7a-f242-454e-9c39-9d436a831306" width="100%">
 
 ### 마이댕/산책요약
 <img src="https://github.com/limdongsun0814/4shinhan/assets/117821590/deb5ccf4-7904-44e9-8599-e5da7393799b" width="600" height="400">
