@@ -131,8 +131,44 @@
 ### 마이댕/main
 <img src="https://github.com/shinhan3/project3/assets/118763659/5b884d7a-f242-454e-9c39-9d436a831306" width="100%">
 
-### 마이댕/산책요약
-<img src="https://github.com/limdongsun0814/4shinhan/assets/117821590/deb5ccf4-7904-44e9-8599-e5da7393799b" width="600" height="400">
+### 플레이/main
+<img src="https://github.com/shinhan3/project3/assets/118763659/11fb8f6a-9991-48ba-b1fe-67a63991b214" width="100%">
+
+### 멍줍카드/main
+<img src="https://github.com/shinhan3/project3/assets/118763659/79ff53b8-a2b9-4300-9463-77c05c6b3fa6" width="100%">
+
+### 플레이/산책/산책장소등록
+<img src="https://github.com/shinhan3/project3/assets/118763659/fd993f72-58ee-4c18-973a-039a131d39c7" width="100%">
+
+### 플레이/산책
+<img src="https://github.com/shinhan3/project3/assets/118763659/f7941f83-f9c6-4f08-ac30-21b1cda8bc2f" width="100%">
+
+### 마이댕/산책 요약
+<img src="https://github.com/shinhan3/project3/assets/118763659/e837cc96-ec78-4743-89b9-696243303659" width="100%">
+
+### 마이댕/마이댕 지도
+<img src="https://github.com/shinhan3/project3/assets/118763659/a5a225c6-03f4-4acb-be5c-4807066d97cd" width="100%">
+
+### 플레이/숨은 인기 가맹점 추천
+<img src="https://github.com/shinhan3/project3/assets/118763659/a47b8c43-92d8-464a-b83d-7a9a3a44b4a0" width="100%">
+
+### 플레이/숨은 가맹점 추천/영수증 리뷰 등록
+<img src="https://github.com/shinhan3/project3/assets/118763659/0cec9444-1d2c-4050-aa5e-c23c48614996" width="100%">
+
+### 플레이/보호 중인 동물
+<img src="https://github.com/shinhan3/project3/assets/118763659/b4ebe102-8566-44ac-9775-236c78634b58" width="100%">
+
+### 마이댕/피부 질환
+<img src="https://github.com/shinhan3/project3/assets/118763659/ae414744-0ba5-47f7-9722-f3fefc43d3ae" width="100%">
+
+### 마이댕/피부 질환 결과 상세보기
+<img src="https://github.com/shinhan3/project3/assets/118763659/85b19f03-034b-4672-ac0a-6ab4a7e83944" width="100%">
+
+### 멍줍카드/카드 등록
+<img src="https://github.com/shinhan3/project3/assets/118763659/0adaac15-b89c-4864-ad17-47e24c03e226" width="100%">
+
+### 멍줍카드/최대 혜택
+<img src="https://github.com/shinhan3/project3/assets/118763659/54ea3f35-c1f5-4f25-ab81-01c2f040abae" width="100%">
 
 # 🐶 주요 메소드
 ### E
