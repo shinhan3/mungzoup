@@ -1,12 +1,13 @@
 # OSX
 #
 .DS_Store
-
+package-lock.json
 # Xcode
 #
 build/
 *.pbxuser
 !default.pbxuser
+android/app/src/main/AndroidManifest.xml
 *.mode1v3
 !default.mode1v3
 *.mode2v3
@@ -39,7 +40,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-
+package-lock.json
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the

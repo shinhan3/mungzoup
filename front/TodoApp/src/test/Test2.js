@@ -31,7 +31,7 @@ function Test2(props) {
   const deleteTest = e => {
     console.log(e);
     //axios delete
-    axios.delete(`http://10.0.2.2:5000/delete.do/${e}`).then(res => {
+    axios.delete(`http://192.168.0.90:5000/delete.do/${e}`).then(res => {
       console.log(res.data);
       setTestList([...res.data]);
     });
@@ -52,7 +52,7 @@ function Test2(props) {
     console.log(seq, content, 'enter');
     //axios put
     axios
-      .put('http://10.0.2.2:5000/updateTest.do', {
+      .put('http://192.168.0.90:5000/updateTest.do', {
         seqno: seq,
         content: content,
       })
@@ -79,7 +79,7 @@ function Test2(props) {
     console.log(test);
     //axios post
     axios
-      .post('http://10.0.2.2:5000/insertTest.do', test)
+      .post('http://192.168.0.90:5000/insertTest.do', test)
       .then(res => {
         console.log(res.data);
         setTestList([...res.data]);
@@ -93,7 +93,7 @@ function Test2(props) {
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
     //axios get
     axios
-      .get('http://10.0.2.2:5000/getTest.do')
+      .get('http://192.168.0.90:5000/getTest.do')
       .then(res => {
         console.log(res.data);
         setTestList([...res.data]);
@@ -106,7 +106,7 @@ function Test2(props) {
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
     //axios get
     axios
-      .get('http://10.0.2.2:5000/getTest.do')
+      .get('http://192.168.0.90:5000/getTest.do')
       .then(res => {
         console.log(res.data);
         setTestList([...res.data]);
@@ -168,10 +168,21 @@ function Test2(props) {
           <Button onPress={aaa} title="aaa"></Button>
           <Button onPress={insertTest} title="input"></Button>
           <Button
-            title="Test3로 이동"
+            title="내 장소 등록"
             onPress={() => {
-              // 페이지 이동 버튼
-              props.navigation.navigate('P3');
+              props.navigation.navigate('InsertWalkSpot');
+            }}></Button>
+          <Button
+            title="테스트"
+            onPress={() => {
+              axios.post('http://192.168.0.90:5000/test.do', null, {
+                params: {
+                  SPOT_NAME: 'test',
+                  SPOT_LATITUDE: 127.01235,
+                  SPOT_LONGITUDE: 36.465423,
+                  SPOT_ADDRESS: 'test2',
+                },
+              });
             }}></Button>
         </View>
       </View>

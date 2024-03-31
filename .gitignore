@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 back/.metadata
+front/TOdoApp/package-lock.json
 ### STS ###
 .apt_generated
 .classpath
@@ -13,10 +14,12 @@ back/.metadata
 .springBeans
 .sts4-cache
 yarn.lock
+package-lock.json
 # *.properties
 application.properties
 awsAuth.properties
 *.vscode
+OcrSecretKey.js
 # mvnw
 # mvnw.cmd
 # .mvn/*
@@ -38,3 +41,7 @@ build/
 
 ### VS Code ###
 .vscode/
+front/TodoApp/package-lock.json
+front/TodoApp/package-lock.json
+front/TodoApp/package-lock.json
+front/TodoApp/package-lock.json
