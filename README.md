@@ -60,7 +60,7 @@
 # 🐶 진행 기간 및 절차
 🗓️ 2024.1.8 - 2024
 ![업무흐름도 (1)](https://github.com/shinhan3/project3/assets/141472393/c65afd0f-c734-4cf2-bede-d7a18ea42aca)
-.2.29
+
 
 <br/>
 
