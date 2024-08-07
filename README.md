@@ -94,7 +94,8 @@
 
 ### DataBase
 <div>
-  <img alt="JDBC" src ="https://img.shields.io/badge/JDBC-B8DBE4.svg?&style=for-the-badge&logo=Databricks&logoColor=black"/>
+  <!-- <img alt="JDBC" src ="https://img.shields.io/badge/JDBC-B8DBE4.svg?&style=for-the-badge&logo=Databricks&logoColor=black"/> -->
+  <img alt="JDBC" src ="https://img.shields.io/badge/JPA-5.0.0-brightgreen"/>
   <img alt="mysql" src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white"/> 
 </div>
 
